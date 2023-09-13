@@ -2,10 +2,11 @@
   "lock": false,
   "tasks": {
     "check": "deno fmt --check && deno lint && deno check **/*.ts && deno check **/*.tsx",
-    "start": "deno run -A --watch=static/,routes/ dev.ts",
-    "build": "deno run -A dev.ts build",
+    "fmt": "deno fmt",
+    "start": "deno run -A --unstable --watch=static/,routes/ dev.ts",
+    "build": "deno run -A --unstable dev.ts build",
     "preview": "deno run -A main.ts",
-    "update": "deno run -A -r https://fresh.deno.dev/update ."
+    "update": "deno run --unstable -A -r https://fresh.deno.dev/update ."
   },
   "lint": {
     "rules": {
@@ -30,7 +31,8 @@
     "preact-render-to-string": "https://esm.sh/*preact-render-to-string@6.2.1",
     "@preact/signals": "https://esm.sh/*@preact/signals@1.1.3",
     "@preact/signals-core": "https://esm.sh/*@preact/signals-core@1.2.3",
-    "$std/": "https://deno.land/std@0.193.0/"
+    "$std/": "https://deno.land/std@0.193.0/",
+    "@/": "./"
   },
   "compilerOptions": {
     "jsx": "react-jsx",
