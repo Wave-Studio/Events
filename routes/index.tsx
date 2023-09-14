@@ -41,13 +41,15 @@ export default function Home() {
         </p>
         <h2 className="text-2xl font-bold mt-16">Why reservations?</h2>
         <p className="mt-4 ">
-          When it comes to managing reservations, traditional systems can be
-          cumbersome and challenging to use. reservations offers a simple,
-          easy-to-use ticketing system for events. Our registration process,
-          lets users can sign up online using their email and receive a QR code
-          that serves as their ticket, which an event organizer can scan to
-          confirm their reservation. Simplify your reservation management and
-          provide your customers with a seamless booking experience today!
+          When it comes to managing or creating reservation systems for a
+          ticketed event, traditional solutions can be cumbersome and
+          challenging to use. Our platform, reservations, offers a simple,
+          easy-to-use ticketing system for events that allows users to reserve
+          their seats ahead of time. Our registration process lets users sign up
+          online using their email and receive a QR code that serves as their
+          ticket, which an event organizer can scan to confirm their
+          reservation. Simplify your reservation management and provide your
+          customers with a seamless booking experience today!
         </p>
         <h2 className="text-2xl font-bold mt-16">Have reservations?</h2>
         <p className="mt-4 ">
