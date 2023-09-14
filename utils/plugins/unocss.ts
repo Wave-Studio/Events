@@ -4,8 +4,7 @@ import {
 } from "https://esm.sh/@unocss/core@0.55.1";
 import type { Theme } from "https://esm.sh/@unocss/preset-uno@0.55.1";
 import { Plugin } from "$fresh/server.ts";
-import { exists } from "$std/fs/exists.ts";
-export { exists } from "https://deno.land/std@0.193.0/fs/exists.ts";
+import config from "@/uno.config.ts";
 
 // inline reset from https://esm.sh/@unocss/reset@0.54.2/tailwind.css
 const unoResetCSS = `/* reset */
@@ -38,7 +37,6 @@ export default async function unocss(
   const runtime = opts.runtime ?? true;
 
   // If a config object is not provided, a uno.config.ts file is required in the project directory
-  const configURL = new URL("./uno.config.ts", Deno.mainModule);
 //   if (
 //     opts.config === undefined &&
 //     !await exists(configURL, { isFile: true, isReadable: true })
@@ -48,9 +46,6 @@ export default async function unocss(
 //     );
 //   }
 
-  const config: UserConfig = opts.config ??
-    (await import(configURL.toString())).default;
-
   const uno = new UnoGenerator(config);
 
   return {
@@ -59,7 +54,7 @@ export default async function unocss(
       ? {
         "main": `
 		  data:application/javascript,
-		  import config from "${configURL}";
+		  import config from "@/uno.config.ts";
 		  import init from "https://esm.sh/@unocss/runtime@0.55.1";
 		  export default function() {
 			window.__unocss = config;
