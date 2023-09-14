@@ -6,12 +6,15 @@
     "editor.defaultFormatter": "denoland.vscode-deno"
   },
   "[typescript]": {
-    "editor.defaultFormatter": "denoland.vscode-deno"
+    "editor.defaultFormatter": "ms-vsliveshare.vsliveshare"
   },
   "[javascriptreact]": {
     "editor.defaultFormatter": "denoland.vscode-deno"
   },
   "[javascript]": {
     "editor.defaultFormatter": "denoland.vscode-deno"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "ms-vsliveshare.vsliveshare"
   }
 }

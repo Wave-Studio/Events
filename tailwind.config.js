@@ -1,2 +1,4 @@
 // So tailwind picks up
-module.exports = {};
+module.exports = {
+	
+};
