@@ -39,14 +39,14 @@ export default async function unocss(
 
   // If a config object is not provided, a uno.config.ts file is required in the project directory
   const configURL = new URL("./uno.config.ts", Deno.mainModule);
-  if (
-    opts.config === undefined &&
-    !await exists(configURL, { isFile: true, isReadable: true })
-  ) {
-    throw new Error(
-      "uno.config.ts not found in the project directory! Please create it or pass a config object to the UnoCSS plugin",
-    );
-  }
+//   if (
+//     opts.config === undefined &&
+//     !await exists(configURL, { isFile: true, isReadable: true })
+//   ) {
+//     throw new Error(
+//       "uno.config.ts not found in the project directory! Please create it or pass a config object to the UnoCSS plugin",
+//     );
+//   }
 
   const config: UserConfig = opts.config ??
     (await import(configURL.toString())).default;
