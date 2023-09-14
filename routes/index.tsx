@@ -1,33 +1,63 @@
 import { useSignal } from "@preact/signals";
 import CTA from "@/components/buttons/cta.tsx";
 import Button from "@/components/buttons/button.tsx";
-import HiOutlineChevronDown from "react-icons/hi2/HiOutlineChevronDown.ts";
-
+import ChevronDown from "@/heroicons/ChevronDown.tsx";
 
 export default function Home() {
   const count = useSignal(3);
   return (
     <>
-    <div className="flex flex-col h-[calc(100vh-4.5rem)] items-center">
-      <div class="flex flex-col px-2 items-center ">
-        <h1 class="text-center text-4xl font-bold -mt-4">reservations</h1>
-        <div class="w-44 flex items-center mt-2">
-          <div class="grow bg-gray-200 h-0.5 rounded-full" />
-          <p class="w-max mx-1.5 leading-3">made simple</p>
-          <div class="grow bg-gray-200 h-0.5 rounded-full" />
+      <div className="flex flex-col h-[calc(100vh-4.5rem)] items-center">
+        <div class="flex flex-col px-2 items-center ">
+          <h1 class="text-center text-4xl font-bold -mt-4">reservations</h1>
+          <div class="w-44 flex items-center mt-2">
+            <div class="grow bg-gray-200 h-0.5 rounded-full" />
+            <p class="w-max mx-1.5 leading-3">made simple</p>
+            <div class="grow bg-gray-200 h-0.5 rounded-full" />
+          </div>
         </div>
+        <div className="my-auto flex flex-col gap-4 pb-12">
+          <CTA>
+            i'm organizing
+          </CTA>
+          <Button>
+            i'm attending
+          </Button>
+        </div>
+
+        <div class="text-lg text-gray-400">scroll for more</div>
+        <ChevronDown class="h-5 w-5 animate-bounce text-gray-500" />
       </div>
-      <div className="my-auto flex flex-col gap-4 pb-12">
-        <CTA>
-          i'm organizing
-        </CTA>
-        <Button>
-          i'm attending
-        </Button>
-      </div>
-      
-      <div class="mb-1 text-lg text-gray-400">learn more</div>
-      <HiOutlineChevronDown class="h-6 w-6"/>
+
+      <div className="py-24 text-center px-2 max-w-xl w-full mx-auto">
+        <h2 className="text-2xl font-bold">Our Mission</h2>
+        <p className="mt-4 ">
+          Reservation systems are often complex, monolithic platforms that are
+          hard to use and harder to manage. Our mission is to create a simple
+          and easy-to-use ticketing system for events that don't require seating
+          arrangements. We strive to create a frictionless experience for your
+          attendees, boosting signup numbers and making sure your attendees
+          arrive the day of.
+        </p>
+        <h2 className="text-2xl font-bold mt-16">Why reservations?</h2>
+        <p className="mt-4 ">
+          When it comes to managing reservations, traditional systems can be
+          cumbersome and challenging to use. reservations offers a simple,
+          easy-to-use ticketing system for events. Our registration process,
+          lets users can sign up online using their email and receive a QR code
+          that serves as their ticket, which an event organizer can scan to
+          confirm their reservation. Simplify your reservation management and
+          provide your customers with a seamless booking experience today!
+        </p>
+        <h2 className="text-2xl font-bold mt-16">Have reservations?</h2>
+        <p className="mt-4 ">
+          Our platform has been built from the ground up with usability in mind.
+          Each feature has been precision-engineered to work well on all
+          devices, and looks esspecilly great on mobile. The user-friendly
+          interface simplifies the reservation process, ensuring a seamless
+          booking experience for both you and your attendees. So, put aside your
+          reservations and give reservations a try!
+        </p>
       </div>
     </>
   );

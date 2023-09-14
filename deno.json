@@ -32,8 +32,7 @@
     "@preact/signals": "https://esm.sh/*@preact/signals@1.1.3",
     "@preact/signals-core": "https://esm.sh/*@preact/signals-core@1.2.3",
     "$std/": "https://deno.land/std@0.193.0/",
-    "@/": "./",
-    "react-icons/hi2/": "https://cdn.jsdelivr.net/gh/urielch/react-icons-hi2@1.0.9/ico/"
+    "@/": "./"
   },
   "compilerOptions": {
     "jsx": "react-jsx",
