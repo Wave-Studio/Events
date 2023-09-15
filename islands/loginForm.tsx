@@ -4,12 +4,13 @@ import { JSX } from "preact/jsx-runtime";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
-  const [code, setCode] = useState<number>();
+  const [code, setCode] = useState("");
   const [error, setError] = useState<string>();
-  const [stage, setStage] = useState(0);
+  const [stage, setStage] = useState(1);
+  const [updateState, setUpdateState] = useState(false);
 
   const sendEmail = (e: JSX.TargetedEvent<HTMLFormElement, Event>) => {
-		e.stopImmediatePropagation()
+    e.stopImmediatePropagation();
     e.preventDefault();
     const passed = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(email);
     if (!passed) {
@@ -29,20 +30,35 @@ const LoginForm = () => {
     e.preventDefault();
   };
 
-	const differentEmail = () => {
-		setError(undefined)
-		setEmail("")
-		setCode(undefined)
-		setStage(0)
-		
+  const differentEmail = () => {
+    setError(undefined);
+    setEmail("");
+    setCode("");
+    setStage(0);
+  };
 
-	}
+  const updateCode = (code: string) => {
+    code = code.replace(/[^0-9]/g, "");
+    setCode(code.slice(0, 6));
+    setUpdateState((u) => !u);
+  };
 
   return (
     <div className="w-[18.5rem] overflow-hidden p-1">
-			{/* damn were going jank already */}
-      <div className={`flex ${stage == 1 ? "-translate-x-[18.25rem]" : ""} transition duration-300 ease-in-out`}>
-        <form class={`mt-10 ${stage == 1 && "opacity-0 -translate-x-14"} transition duration-150`} onSubmit={sendEmail} noValidate>
+      {/* damn were going jank already */}
+      <div
+        className={`flex ${
+          stage == 1 ? "-translate-x-[18.25rem]" : ""
+        } transition duration-300 ease-in-out`}
+      >
+        {/* email input */}
+        <form
+          class={`mt-10 ${
+            stage == 1 && "opacity-0 -translate-x-14"
+          } transition duration-150`}
+          onSubmit={sendEmail}
+          noValidate
+        >
           <label htmlFor="email" class="flex flex-col">
             <span class="text-sm font-medium">email</span>
             <input
@@ -64,23 +80,41 @@ const LoginForm = () => {
             confirm email
           </CTA>
         </form>
+        {/* login code input */}
         <div class="ml-1">
           <p class="mt-2 mb-8 w-72 text-center">
-            We just emailed you a login code! Please enter it below
+            We just emailed you a login code! Please enter it below.
           </p>
           <form onSubmit={login} noValidate>
-            <label htmlFor="email" class="flex flex-col">
+            <label class="flex flex-col">
               <span class="text-sm font-medium">code</span>
-              <input
-                autofocus
-                type="number"
-                class="p-2 border rounded-md border-gray-300"
-                name="code"
-                value={code}
-                onChange={(e) =>
-                  //@ts-expect-error deno moment
-                  setCode(e.target!.value)}
-              />
+              <div className="grid grid-cols-6 gap-3 w-72 cursor-text">
+                {[...new Array(6)].map((_, i) => (
+                  <div class=" border-b-2 border-gray-300 w-full h-8 grid place-items-center text-xl font-medium">
+                    {code && code.toString().split("")[i]}
+                  </div>
+                ))}
+              </div>
+              <div class="h-0 overflow-hidden">
+                <input
+                  autofocus
+                  type="text"
+                  class="p-2 -translate-y-10 w-72"
+                  name="code"
+                  autoComplete="off"
+                  value={code}
+                  onInput={(e) =>
+                    //@ts-expect-error deno moment
+                    updateCode(e.target!.value)}
+                />
+                {
+                  /* This is so unbelivably jank
+              I hate preact
+              why isn't fresh based off core react
+              ughhhhhhhh */
+                }
+                {updateState ? "s" : "t"}
+              </div>
             </label>
             <p
               className={`mb-2 text-sm text-red-500 ${!error && "invisible"} `}
@@ -91,7 +125,12 @@ const LoginForm = () => {
               login
             </CTA>
           </form>
-					<p className="mt-2 text-center underline text-sm" onClick={differentEmail}>different email</p>
+          <p
+            className="mt-2 text-center underline text-sm"
+            onClick={differentEmail}
+          >
+            different email
+          </p>
         </div>
       </div>
     </div>
