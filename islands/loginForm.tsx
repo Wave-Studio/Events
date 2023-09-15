@@ -1,13 +1,16 @@
 import CTA from "@/components/buttons/cta.tsx";
-import { useState } from "preact/hooks";
+import { useMemo, useRef, useState } from "preact/hooks";
 import { JSX } from "preact/jsx-runtime";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
   const [error, setError] = useState<string>();
-  const [stage, setStage] = useState(1);
+  const [stage, setStage] = useState(0);
   const [updateState, setUpdateState] = useState(false);
+
+  const codeRef = useRef<HTMLInputElement>(null);
+  const [focused, setFocused] = useState(false);
 
   const sendEmail = (e: JSX.TargetedEvent<HTMLFormElement, Event>) => {
     e.stopImmediatePropagation();
@@ -24,6 +27,12 @@ const LoginForm = () => {
     setError(undefined);
     // send code to email here
     setStage(1);
+    if (codeRef.current) {
+      setTimeout(() => {
+        codeRef.current!.focus();
+        setFocused(true);
+      }, 300);
+    }
   };
 
   const login = (e: JSX.TargetedEvent<HTMLFormElement, Event>) => {
@@ -89,26 +98,43 @@ const LoginForm = () => {
             <label class="flex flex-col">
               <span class="text-sm font-medium">code</span>
               <div className="grid grid-cols-6 gap-3 w-72 cursor-text">
-                {[...new Array(6)].map((_, i) => (
-                  <div class=" border-b-2 border-gray-300 w-full h-8 grid place-items-center text-xl font-medium">
-                    {code && code.toString().split("")[i]}
-                  </div>
-                ))}
+                {[...new Array(6)].map((_, i) => {
+                  const selected = code.length == i;
+                  return (
+                    <div
+                      class={`border-b-2 relative ${
+                        selected && focused
+                          ? "border-gray-400"
+                          : "border-gray-300"
+                      }  w-full h-8 grid place-items-center text-xl font-medium`}
+                    >
+                      {code && code.toString().split("")[i]}
+                      {selected && (
+                        <div
+                          className={`absolute h-6 border-l-0.5 border-gray-600 cursor-blink left-1 !animate-[pulse_1s_cubic-bezier(0.4,_0,_0.6,_1)_infinite] animate-pulse`}
+                        />
+                      )}
+                    </div>
+                  );
+                })}
               </div>
               <div class="h-0 overflow-hidden">
                 <input
-                  autofocus
-                  type="text"
-                  class="p-2 -translate-y-10 w-72"
+                  type="number"
+                  class={`p-2 -translate-y-10 w-72 `}
                   name="code"
                   autoComplete="off"
+                  id="test"
                   value={code}
                   onInput={(e) =>
                     //@ts-expect-error deno moment
                     updateCode(e.target!.value)}
+                  ref={codeRef}
+                  onBlur={() => setFocused(false)}
+                  onFocus={() => setFocused(true)}
                 />
                 {
-                  /* This is so unbelivably jank
+           /* This is so unbelivably jank
               I hate preact
               why isn't fresh based off core react
               ughhhhhhhh */
@@ -121,12 +147,12 @@ const LoginForm = () => {
             >
               Error: {error}
             </p>
-            <CTA btnType="cta">
+            <CTA btnType="cta" disabled={code.length != 6}>
               login
             </CTA>
           </form>
           <p
-            className="mt-2 text-center underline text-sm"
+            className="mt-2 text-center underline text-sm cursor-pointer"
             onClick={differentEmail}
           >
             different email

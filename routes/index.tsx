@@ -45,7 +45,7 @@ export default defineRoute<{ balls: string }>(async (req, ctx) => {
         <h2 className="text-2xl font-bold">Our Mission</h2>
         <p className="mt-4 ">
           Event booking/reservation systems are often complex, monolithic platforms that are
-          hard to use and harder to manage. Our mission is to create a simple
+          hard to use and harder to manage. Our mission is to create a simple, open source,
           and easy-to-use event ticketing system for events that don't require seating
           arrangements. We strive to create a frictionless experience for your
           attendees, boosting signup numbers and making sure your attendees
@@ -55,7 +55,7 @@ export default defineRoute<{ balls: string }>(async (req, ctx) => {
         <p className="mt-4 ">
           When it comes to managing or creating reservation systems for a
           ticketed event, traditional solutions can be cumbersome and
-          challenging to use. Our platform, reservations, offers a simple,
+          challenging to use. Our platform, reservations, offers a simple, OSS,
           easy-to-use ticketing system for events that allows users to reserve
           their seats ahead of time. Our registration process lets users sign up
           online using their email and receive a QR code that serves as their
