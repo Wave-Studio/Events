@@ -9,6 +9,7 @@ const LoginForm = () => {
   const [stage, setStage] = useState(0);
 
   const sendEmail = (e: JSX.TargetedEvent<HTMLFormElement, Event>) => {
+		e.stopImmediatePropagation()
     e.preventDefault();
     const passed = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(email);
     if (!passed) {
@@ -38,9 +39,9 @@ const LoginForm = () => {
 	}
 
   return (
-    <div className="w-72 overflow-hidden">
+    <div className="w-[18.5rem] overflow-hidden p-1">
 			{/* damn were going jank already */}
-      <div className={`flex ${stage == 1 ? "-translate-x-[9.25rem]" : "translate-x-36"} transition duration-300 ease-in-out`}>
+      <div className={`flex ${stage == 1 ? "-translate-x-[18.25rem]" : ""} transition duration-300 ease-in-out`}>
         <form class={`mt-10 ${stage == 1 && "opacity-0 -translate-x-14"} transition duration-150`} onSubmit={sendEmail} noValidate>
           <label htmlFor="email" class="flex flex-col">
             <span class="text-sm font-medium">email</span>
