@@ -19,6 +19,7 @@ type UnoCssPluginOptions = {
 /**
  * Helper function for typing of config objects
  */
+// deno-lint-ignore ban-types
 export function defineConfig<T extends object = Theme>(config: UserConfig<T>) {
   return config;
 }
@@ -30,6 +31,7 @@ export function defineConfig<T extends object = Theme>(config: UserConfig<T>) {
  * @param [opts.runtime] By default the UnoCSS runtime will run in the browser. Set to `false` to disable this.
  * @param [opts.config] Explicit UnoCSS config object. By default `uno.config.ts` file. Not supported with the browser runtime.
  */
+// deno-lint-ignore require-await
 export default async function unocss(
   opts: UnoCssPluginOptions = {},
 ): Promise<Plugin> {

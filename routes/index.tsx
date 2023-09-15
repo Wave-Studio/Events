@@ -2,9 +2,17 @@ import { useSignal } from "@preact/signals";
 import CTA from "@/components/buttons/cta.tsx";
 import Button from "@/components/buttons/button.tsx";
 import ChevronDown from "@/heroicons/ChevronDown.tsx";
+import { useState } from "preact/hooks";
+import { defineRoute } from "$fresh/server.ts";
+import { getUser } from "@/utils/db/kv.ts";
 
-export default function Home() {
-  const count = useSignal(3);
+export default defineRoute<{ balls: string }>(async (req, ctx) => {
+  const user = await getUser(req);
+  const loggedIn = user != undefined;
+  const param = ctx.params.balls;
+
+  // DENO_DEPLOYMENT_ID will be set on prod, not local
+  // 👍
   return (
     <>
       <div className="flex flex-col h-[calc(100vh-4.5rem)] items-center">
@@ -17,12 +25,16 @@ export default function Home() {
           </div>
         </div>
         <div className="my-auto flex flex-col gap-4 pb-12">
-          <CTA>
-            i'm organizing
-          </CTA>
-          <Button>
-            i'm attending
-          </Button>
+          <a href={loggedIn ? "/events" : "/login"}>
+            <CTA btnType="cta">
+              i'm organizing
+            </CTA>
+          </a>
+          <a href={loggedIn ? "/events?attending=true" : "/login?attending=true"}>
+            <CTA btnType="secondary">
+              i'm attending
+            </CTA>
+          </a>
         </div>
 
         <div class="text-lg text-gray-400">scroll for more</div>
@@ -32,9 +44,9 @@ export default function Home() {
       <div className="py-24 text-center px-2 max-w-xl w-full mx-auto">
         <h2 className="text-2xl font-bold">Our Mission</h2>
         <p className="mt-4 ">
-          Reservation systems are often complex, monolithic platforms that are
+          Event booking/reservation systems are often complex, monolithic platforms that are
           hard to use and harder to manage. Our mission is to create a simple
-          and easy-to-use ticketing system for events that don't require seating
+          and easy-to-use event ticketing system for events that don't require seating
           arrangements. We strive to create a frictionless experience for your
           attendees, boosting signup numbers and making sure your attendees
           arrive the day of.
@@ -63,4 +75,4 @@ export default function Home() {
       </div>
     </>
   );
-}
+});
