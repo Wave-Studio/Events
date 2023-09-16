@@ -5,6 +5,7 @@ import ChevronDown from "@/heroicons/ChevronDown.tsx";
 import { useState } from "preact/hooks";
 import { defineRoute } from "$fresh/server.ts";
 import { getUser } from "@/utils/db/kv.ts";
+import StarIcon from "../heroicons/Star.tsx";
 
 export default defineRoute<{ balls: string }>(async (req, ctx) => {
   const user = await getUser(req);
@@ -24,16 +25,28 @@ export default defineRoute<{ balls: string }>(async (req, ctx) => {
             <div class="grow bg-gray-200 h-0.5 rounded-full" />
           </div>
         </div>
-        <div className="my-auto flex flex-col gap-4 pb-12">
-          <a href={loggedIn ? "/events" : "/login"}>
+        <div className="my-auto flex flex-col pb-12">
+          <a href={loggedIn ? "/events" : "/login"} >
             <CTA btnType="cta">
               i'm organizing
             </CTA>
           </a>
-          <a href={loggedIn ? "/events?attending=true" : "/login?attending=true"}>
+          <a
+            href={loggedIn ? "/events?attending=true" : "/login?attending=true"}
+            class="mt-4 mb-3"
+          >
             <CTA btnType="secondary">
               i'm attending
             </CTA>
+          </a>
+          <a
+            href="https://github.com/Wave-Studio/reservations"
+            referrerpolicy="no-referrer"
+            target="_blank"
+            class="mx-auto text-sm font-medium flex rounded hover:bg-gray-200 text-gray-400 hover:text-gray-800 py-0.5 px-2 transition group"
+          >
+            <StarIcon class="h-5 w-5 mr-1 group-hover:text-yellow-500 transition" />
+            star us on github
           </a>
         </div>
 
@@ -44,12 +57,12 @@ export default defineRoute<{ balls: string }>(async (req, ctx) => {
       <div className="py-24 text-center px-2 max-w-xl w-full mx-auto">
         <h2 className="text-2xl font-bold">Our Mission</h2>
         <p className="mt-4 ">
-          Event booking/reservation systems are often complex, monolithic platforms that are
-          hard to use and harder to manage. Our mission is to create a simple, open source,
-          and easy-to-use event ticketing system for events that don't require seating
-          arrangements. We strive to create a frictionless experience for your
-          attendees, boosting signup numbers and making sure your attendees
-          arrive the day of.
+          Event booking/reservation systems are often complex, monolithic
+          platforms that are hard to use and harder to manage. Our mission is to
+          create a simple, open source, and easy-to-use event ticketing system
+          for events that don't require seating arrangements. We strive to
+          create a frictionless experience for your attendees, boosting signup
+          numbers and making sure your attendees arrive the day of.
         </p>
         <h2 className="text-2xl font-bold mt-16">Why reservations?</h2>
         <p className="mt-4 ">

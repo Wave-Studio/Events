@@ -1,6 +1,6 @@
 import { JSX } from "preact";
 
-const Icon = (props: JSX.SVGAttributes<SVGSVGElement>) => {
+const ChevronDownIcon = (props: JSX.SVGAttributes<SVGSVGElement>) => {
   return (
     <svg
       {...props}
@@ -20,4 +20,4 @@ const Icon = (props: JSX.SVGAttributes<SVGSVGElement>) => {
   );
 };
 
-export default Icon;
+export default ChevronDownIcon;
