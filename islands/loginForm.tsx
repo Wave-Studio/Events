@@ -1,13 +1,6 @@
 import CTA from "@/components/buttons/cta.tsx";
 import { useMemo, useRef, useState } from "preact/hooks";
 import { JSX } from "preact/jsx-runtime";
-import { Handlers } from "$fresh/server.ts";
-
-export const handler: Handlers = {
-  async POST(req, ctx) {
-    return new Response("Amogus");
-  },
-};
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
