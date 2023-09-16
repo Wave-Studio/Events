@@ -65,7 +65,7 @@ export default defineRoute<{ balls: string }>(async (req, ctx) => {
           numbers and making sure your attendees arrive the day of.
         </p>
         <h2 className="text-2xl font-bold mt-16">Why reservations?</h2>
-        <p className="mt-4 ">
+        <p className="my-4 ">
           When it comes to managing or creating reservation systems for a
           ticketed event, traditional solutions can be cumbersome and
           challenging to use. Our platform, reservations, offers a simple, OSS,
@@ -74,17 +74,15 @@ export default defineRoute<{ balls: string }>(async (req, ctx) => {
           online using their email and receive a QR code that serves as their
           ticket, which an event organizer can scan to confirm their
           reservation. Simplify your reservation management and provide your
-          customers with a seamless booking experience today!
+          customers with a seamless booking experience today! Contact quick007 on discord to join the closed beta.
         </p>
-        <h2 className="text-2xl font-bold mt-16">Have reservations?</h2>
-        <p className="mt-4 ">
-          Our platform has been built from the ground up with usability in mind.
-          Each feature has been precision-engineered to work well on all
-          devices, and looks esspecilly great on mobile. The user-friendly
-          interface simplifies the reservation process, ensuring a seamless
-          booking experience for both you and your attendees. So, put aside your
-          reservations and give reservations a try!
+        <CTA btnType="secondary" size="sm">All Features</CTA>
+        <h2 className="text-2xl font-bold mt-16">Pricing</h2>
+        <p className="my-4 ">
+          As we're still in a closed beta, reservations is currently free for to use. In the future, reservations will be free to use for small free events. Larger events or paid events will have a small fee. See our expected future pricing:
         </p>
+        <CTA btnType="cta" size="sm">Future Pricing</CTA>
+        <input type="text" value="test" />
       </div>
     </>
   );
