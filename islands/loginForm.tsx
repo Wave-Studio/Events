@@ -1,6 +1,13 @@
 import CTA from "@/components/buttons/cta.tsx";
 import { useMemo, useRef, useState } from "preact/hooks";
 import { JSX } from "preact/jsx-runtime";
+import { Handlers } from "$fresh/server.ts";
+
+export const handler: Handlers = {
+  async POST(req, ctx) {
+    return new Response("Amogus");
+  },
+};
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -26,6 +33,9 @@ const LoginForm = () => {
     }
     setError(undefined);
     // send code to email here
+    // code would not be genned on client normally
+    const authCode = Math.floor(Math.random() * (900000)) + 100000;
+    
     setStage(1);
     if (codeRef.current) {
       setTimeout(() => {
@@ -135,7 +145,7 @@ const LoginForm = () => {
                   onFocus={() => setFocused(true)}
                 />
                 {
-           /* This is so unbelivably jank
+                  /* This is so unbelivably jank
               I hate preact
               why isn't fresh based off core react
               ughhhhhhhh */

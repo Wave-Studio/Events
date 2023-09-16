@@ -49,3 +49,8 @@ export interface User {
   events: string[];
   authToken: string;
 }
+
+// ["authcode", code, email] 
+export interface AuthCode {
+  exists: string // as date
+}
