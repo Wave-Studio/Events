@@ -138,7 +138,7 @@ const LoginForm = () => {
                   pattern="[0-9]*"
                   value={code}
                   onInput={(e) =>
-                    //@ts-expect-error deno moment
+                    //@ts-expect-error deno moment (e has incorrect types and idk what the correct types are)
                     updateCode(e.target!.value)}
                   ref={codeRef}
                   onBlur={() => setFocused(false)}
