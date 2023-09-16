@@ -125,6 +125,7 @@ const LoginForm = () => {
                   name="code"
                   autoComplete="off"
                   id="test"
+                  pattern="[0-9]*"
                   value={code}
                   onInput={(e) =>
                     //@ts-expect-error deno moment
