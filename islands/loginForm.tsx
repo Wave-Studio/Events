@@ -144,12 +144,6 @@ const LoginForm = () => {
                   onBlur={() => setFocused(false)}
                   onFocus={() => setFocused(true)}
                 />
-                {
-                  /* This is so unbelivably jank
-              I hate preact
-              why isn't fresh based off core react
-              ughhhhhhhh */
-                }
                 {updateState ? "s" : "t"}
               </div>
             </label>
