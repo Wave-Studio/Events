@@ -11,6 +11,7 @@ export default function App({ Component }: AppProps) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>reservations</title>
         <link rel="icon" href={logo} />
+        <link rel="stylesheet" href={asset("output.css")} />
       </head>
       <body class="text-gray-900">
         <Component />

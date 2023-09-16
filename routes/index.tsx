@@ -18,7 +18,7 @@ export default defineRoute<{ balls: string }>(async (req, ctx) => {
     <>
       <div className="flex flex-col h-[calc(100vh-4.5rem)] items-center">
         <div class="flex flex-col px-2 items-center ">
-          <h1 class="text-center text-4xl font-bold -mt-4">reservations</h1>
+          <h1 class="text-center text-4xl font-bold -mt-3">reservations</h1>
           <div class="w-44 flex items-center mt-2">
             <div class="grow bg-gray-200 h-0.5 rounded-full" />
             <p class="w-max mx-1.5 leading-3">made simple</p>
@@ -26,18 +26,14 @@ export default defineRoute<{ balls: string }>(async (req, ctx) => {
           </div>
         </div>
         <div className="my-auto flex flex-col pb-12">
-          <a href={loggedIn ? "/events" : "/login"} >
-            <CTA btnType="cta">
-              i'm organizing
-            </CTA>
+          <a href={loggedIn ? "/events" : "/login"}>
+            <CTA btnType="cta">i'm organizing</CTA>
           </a>
           <a
             href={loggedIn ? "/events?attending=true" : "/login?attending=true"}
             class="mt-4 mb-3"
           >
-            <CTA btnType="secondary">
-              i'm attending
-            </CTA>
+            <CTA btnType="secondary">i'm attending</CTA>
           </a>
           <a
             href="https://github.com/Wave-Studio/reservations"
@@ -74,15 +70,26 @@ export default defineRoute<{ balls: string }>(async (req, ctx) => {
           online using their email and receive a QR code that serves as their
           ticket, which an event organizer can scan to confirm their
           reservation. Simplify your reservation management and provide your
-          customers with a seamless booking experience today! Contact quick007 on discord to join the closed beta.
+          customers with a seamless booking experience today! Contact quick007
+          on discord to join the closed beta.
         </p>
-        <CTA btnType="secondary" size="sm">All Features</CTA>
+        <a href="/features">
+          <CTA btnType="secondary" size="sm">
+            All Features
+          </CTA>
+        </a>
         <h2 className="text-2xl font-bold mt-16">Pricing</h2>
         <p className="my-4 ">
-          As we're still in a closed beta, reservations is currently free for to use. In the future, reservations will be free to use for small free events. Larger events or paid events will have a small fee. See our expected future pricing:
+          As we're still in a closed beta, reservations is currently free for to
+          use. In the future, reservations will be free to use for small free
+          events. Larger events or paid events will have a small fee. See our
+          expected future pricing:
         </p>
-        <CTA btnType="cta" size="sm">Future Pricing</CTA>
-        <input type="text" value="test" />
+        <a href="/pricing">
+          <CTA btnType="cta" size="sm">
+            Future Pricing
+          </CTA>
+        </a>
       </div>
     </>
   );

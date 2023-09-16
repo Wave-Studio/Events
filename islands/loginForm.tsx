@@ -32,7 +32,7 @@ const LoginForm = () => {
     setStage(1);
     if (codeRef.current) {
       setTimeout(() => {
-        codeRef.current!.focus();
+        //codeRef.current!.focus();
         setFocused(true);
       }, 300);
     }
@@ -60,8 +60,8 @@ const LoginForm = () => {
       {/* damn were going jank already */}
       <div
         className={`flex ${
-          stage == 1 ? "-translate-x-[18.25rem]" : ""
-        } transition duration-300 ease-in-out`}
+          stage == 1 ? "translate-x-[-18.25rem]" : ""
+        } transition duration-300`}
       >
         {/* email input */}
         <form
@@ -114,7 +114,7 @@ const LoginForm = () => {
                       {code && code.toString().split("")[i]}
                       {selected && focused && (
                         <div
-                          className={`absolute h-6 border-l-0.5 border-gray-600 cursor-blink left-1 !animate-[pulse_1s_cubic-bezier(0.4,_0,_0.6,_1)_infinite] animate-pulse`}
+                          className={`absolute h-6 border-l w-2 border-gray-600 left-1 cursor-blink`}
                         />
                       )}
                     </div>
