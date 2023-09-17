@@ -1,21 +1,25 @@
 import CTA from "@/components/buttons/cta.tsx";
 import { useMemo, useRef, useState } from "preact/hooks";
 import { JSX } from "preact/jsx-runtime";
+import { checkCode, genCode } from "@/utils/db/auth.ts";
 
-const LoginForm = () => {
+const LoginForm = ({attending}: {attending: boolean}) => {
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
   const [error, setError] = useState<string>();
   const [stage, setStage] = useState(0);
+  const [loading, setLoading] = useState(false);
   const [updateState, setUpdateState] = useState(false);
 
   const codeRef = useRef<HTMLInputElement>(null);
   const [focused, setFocused] = useState(false);
 
-  const sendEmail = (e: JSX.TargetedEvent<HTMLFormElement, Event>) => {
+  const sendEmail = async (e: JSX.TargetedEvent<HTMLFormElement, Event>) => {
     e.stopImmediatePropagation();
     e.preventDefault();
-    const passed = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(email);
+    const passed =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        .test(email);
     if (!passed) {
       setError("Enter a valid email");
       return;
@@ -25,21 +29,35 @@ const LoginForm = () => {
       return;
     }
     setError(undefined);
-    // send code to email here
-    // code would not be genned on client normally
-    const authCode = Math.floor(Math.random() * (900000)) + 100000;
-    
+    setLoading(true);
+
+    const code = await genCode(email);
+
+    setLoading(false);
+    alert("yeur logn code: " + code);
+
     setStage(1);
     if (codeRef.current) {
       setTimeout(() => {
-        //codeRef.current!.focus();
+        codeRef.current!.focus();
         setFocused(true);
       }, 300);
     }
   };
 
-  const login = (e: JSX.TargetedEvent<HTMLFormElement, Event>) => {
+  const login = async (e: JSX.TargetedEvent<HTMLFormElement, Event>) => {
     e.preventDefault();
+    setLoading(true);
+
+    const response = await checkCode(email, code);
+    
+    setLoading(false);
+    
+    if (response.error || !response.success) {
+      setError(response.error!);
+      return;
+    }
+    window.location.href = `/dashboard${attending ? "?attending=true" : ""}`
   };
 
   const differentEmail = () => {
@@ -88,9 +106,7 @@ const LoginForm = () => {
           <p className={`mb-2 text-sm text-red-500 ${!error && "invisible"} `}>
             Error: {error}
           </p>
-          <CTA btnType="cta">
-            confirm email
-          </CTA>
+          <CTA btnType="cta">confirm email</CTA>
         </form>
         {/* login code input */}
         <div class="ml-1">

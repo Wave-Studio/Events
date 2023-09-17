@@ -79,7 +79,7 @@ export const validateOTP = async (
   email: string,
   otp: string,
   deleteOTP = true,
-) => {
+): Promise<User | false | undefined> => {
   const [authCodeData, user] = await kv.getMany<[AuthCode, User]>([[
     "authCode",
     email,
@@ -87,7 +87,7 @@ export const validateOTP = async (
   ], ["user", email]]);
 
   if (authCodeData.value == undefined) return undefined;
-  if (user.value == undefined) return undefined;
+  if (user.value == undefined) return false;
 
   if (deleteOTP) {
     await kv.delete(["authCode", email, otp]);

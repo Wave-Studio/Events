@@ -13,11 +13,11 @@
 }
 
 @keyframes blink {
-  0% {
+  50% {
     opacity: 0;
   }
 }
 
 .cursor-blink {
-  animation: blink 1s steps(2) infinite;
+  animation: blink 1s steps(1) infinite;
 }

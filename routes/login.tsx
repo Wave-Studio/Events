@@ -7,10 +7,11 @@ import { defineRoute } from "$fresh/server.ts";
 import { getUser } from "@/utils/db/kv.ts";
 import LoginForm from "../islands/loginForm.tsx";
 
-export default defineRoute<{ balls: string }>(async (req, ctx) => {
+export default defineRoute(async (req, ctx) => {
   const user = await getUser(req);
   const loggedIn = user != undefined;
-  const param = ctx.params.balls;
+  const url = new URL(req.url);
+  const attending = url.searchParams.get("attending");
 
   // DENO_DEPLOYMENT_ID will be set on prod, not local
   // 👍
@@ -20,7 +21,7 @@ export default defineRoute<{ balls: string }>(async (req, ctx) => {
       <div className="flex flex-col grow items-center">
       <h1 class="text-center text-4xl font-bold">login</h1>
         <div className="my-auto flex flex-col gap-4 pb-36 pt-6">
-					<LoginForm />
+					<LoginForm attending={Boolean(attending)} />
         </div>
       </div>
     </>
