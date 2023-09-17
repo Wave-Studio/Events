@@ -1,17 +1,22 @@
-const Pricing = async () => {
+import { getUser } from "../../utils/db/kv.ts";
+import CTA from "@/components/buttons/cta.tsx";
 
-	const user = await getUser(req);
+const Pricing = async (req: Request) => {
+  const user = await getUser(req);
   const loggedIn = user != undefined;
 
   return (
-    <div class="px-2 max-w-screen-lg w-full mx-auto">
+    <div class="px-2 max-w-screen-lg w-full mx-auto mb-20">
       <h1 class="text-center text-4xl font-bold">(proposed) pricing</h1>
-      <div className="grid grid-cols-3 gap-8 mt-16">
+      <p class="max-w-xl w-full text-center mx-auto mt-4">
+        To keep pricing simple, we've created 3 simple subscription plans. For enterprise use-cases, please contact us. reservations is currently free for beta testers.
+      </p>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mt-16">
         {plans.slice(0, 3).map((plan) => (
           <section
-            className={`rounded p-4  relative ${
+            className={`rounded-md p-4 flex flex-col relative ${
               plan.best
-                ? "-translate-y-4 border-theme-normal border-2"
+                ? "md:-translate-y-4 border-theme-normal border-2"
                 : "border-gray-300 border"
             }`}
           >
@@ -21,11 +26,45 @@ const Pricing = async () => {
               </div>
             )}
             <div className="flex">
-              <div className="rounded-full px-1 py-0.5 mr-2 bg-theme-normal"></div>
+              <div
+                className={`rounded-full px-1 py-0.5 mr-2 ${plan.color} `}
+              ></div>
               <h2 class="font-bold ">{plan.name}</h2>
+              <p className="ml-auto text-gray-600 ">
+                {plan.cost == 0 ? "0.00" : `${plan.cost}.00/mo`}
+              </p>
             </div>
+            <ul class="text-sm flex flex-col gap-2 mt-6 list-disc list-inside mb-8">
+              {plan.features.map((feature) => (
+                <li>{feature}</li>
+              ))}
+            </ul>
+            <CTA
+              btnType={plan.cost == 0 ? "secondary" : "cta"}
+              className={`!w-full mt-auto ${plan.color} ${
+                plan.cost == 0 && "!text-gray-900 !bg-gray-300"
+              }`}
+            >
+              select plan
+            </CTA>
           </section>
         ))}
+      </div>
+      <div className="grow border-gray-300 border rounded-md p-4 mt-8">
+        <div className="flex flex-col sm:flex-row justify-between">
+          <div>
+            <div className="flex">
+              <div
+                className={`rounded-full px-1 py-0.5 mr-2 ${plans[3].color} `}
+              ></div>
+              <h2 class="font-bold ">{plans[3].name}</h2>
+            </div>
+            <p className="text-sm mt-4">Contact us for a plan that suits your needs.</p>
+          </div>
+          <CTA btnType="secondary" size="sm" className="my-auto mx-auto mt-4 w-full sm:mr-0 sm:w-40 sm:mt-auto">
+            contact us
+          </CTA>
+        </div>
       </div>
     </div>
   );
@@ -38,19 +77,21 @@ const plans: {
   cost: number;
   features: string[];
   best: boolean;
+  color: string;
 }[] = [
   {
-    name: "free forever",
+    name: "Free Forever",
     best: false,
     cost: 0.0,
     features: [
-      "2 concurrent events",
+      "1 concurrent event",
       "2 additional team slots",
       "Up to 75 attendees per event",
     ],
+    color: "bg-gray-300",
   },
   {
-    name: "plus",
+    name: "Plus",
     best: true,
     cost: 12.0,
     features: [
@@ -60,9 +101,10 @@ const plans: {
       "Up to 250 attendees per event",
       "Event color themes",
     ],
+    color: "bg-theme-normal",
   },
   {
-    name: "pro",
+    name: "Pro",
     cost: 25.0,
     best: false,
     features: [
@@ -73,11 +115,13 @@ const plans: {
       "Up to 500 attendees per event",
       "Event color themes",
     ],
+    color: "bg-gradient-to-br from-purple-500 to-purple-700",
   },
   {
-    name: "One Time",
-    cost: 20,
+    name: "Enterprise",
+    cost: -1,
     best: false,
     features: ["only for one event", "up to 500 attendees", "25 team slots"],
+    color: "bg-blue-800",
   },
 ];

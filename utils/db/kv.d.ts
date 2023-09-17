@@ -41,16 +41,27 @@ export interface Ticket {
 }
 
 // ["user", email]
-export interface User {
-  email: string;
+export type User = OnboardedUser | UnonboardedUser;
+
+export interface OnboardedUser extends UserPartial {
   name: string;
+  onboarded: true;
+}
+
+export interface UnonboardedUser extends UserPartial {
+  name?: string;
+  onboarded: false;
+}
+
+export interface UserPartial {
+  email: string;
   /** Stored as eventId-ticketId */
   tickets: string[];
   events: string[];
   authToken: string;
 }
 
-// ["authcode", code, email] 
+// ["authcode", email, code] 
 export interface AuthCode {
-  exists: string // as date
+  existsSince: string // as date
 }

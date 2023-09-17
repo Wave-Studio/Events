@@ -1,16 +1,14 @@
 import { useSignal } from "@preact/signals";
 import CTA from "@/components/buttons/cta.tsx";
-import Button from "@/components/buttons/button.tsx";
-import ChevronDown from "@/heroicons/ChevronDown.tsx";
 import { useState } from "preact/hooks";
 import { defineRoute } from "$fresh/server.ts";
 import { getUser } from "@/utils/db/kv.ts";
-import StarIcon from "../heroicons/Star.tsx";
+import ChevronDown from "$tabler/chevron-down.tsx";
+import StarFilled from "$tabler/star-filled.tsx";
 
-export default defineRoute<{ balls: string }>(async (req, ctx) => {
+export default defineRoute(async (req, ctx) => {
   const user = await getUser(req);
   const loggedIn = user != undefined;
-  const param = ctx.params.balls;
 
   // DENO_DEPLOYMENT_ID will be set on prod, not local
   // 👍
@@ -41,7 +39,7 @@ export default defineRoute<{ balls: string }>(async (req, ctx) => {
             target="_blank"
             class="mx-auto text-sm font-medium flex rounded hover:bg-gray-200 text-gray-400 hover:text-gray-800 py-0.5 px-2 transition group"
           >
-            <StarIcon class="h-5 w-5 mr-1 group-hover:text-yellow-500 transition" />
+            <StarFilled class="h-5 w-5 mr-1 group-hover:text-yellow-500 transition" />
             star us on github
           </a>
         </div>
@@ -51,7 +49,7 @@ export default defineRoute<{ balls: string }>(async (req, ctx) => {
       </div>
 
       <div className="py-24 text-center px-2 max-w-xl w-full mx-auto">
-        <h2 className="text-2xl font-bold">Our Mission</h2>
+        <h2 className="text-2xl font-bold">our mission</h2>
         <p className="mt-4 ">
           Event booking/reservation systems are often complex, monolithic
           platforms that are hard to use and harder to manage. Our mission is to
@@ -60,7 +58,7 @@ export default defineRoute<{ balls: string }>(async (req, ctx) => {
           create a frictionless experience for your attendees, boosting signup
           numbers and making sure your attendees arrive the day of.
         </p>
-        <h2 className="text-2xl font-bold mt-16">Why reservations?</h2>
+        <h2 className="text-2xl font-bold mt-16">why reservations?</h2>
         <p className="my-4 ">
           When it comes to managing or creating reservation systems for a
           ticketed event, traditional solutions can be cumbersome and
@@ -75,10 +73,10 @@ export default defineRoute<{ balls: string }>(async (req, ctx) => {
         </p>
         <a href="/features">
           <CTA btnType="secondary" size="sm">
-            All Features
+            all features
           </CTA>
         </a>
-        <h2 className="text-2xl font-bold mt-16">Pricing</h2>
+        <h2 className="text-2xl font-bold mt-16">pricing</h2>
         <p className="my-4 ">
           As we're still in a closed beta, reservations is currently free for to
           use. In the future, reservations will be free to use for small free
@@ -87,7 +85,7 @@ export default defineRoute<{ balls: string }>(async (req, ctx) => {
         </p>
         <a href="/pricing">
           <CTA btnType="cta" size="sm">
-            Future Pricing
+            future pricing
           </CTA>
         </a>
       </div>

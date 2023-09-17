@@ -1,9 +1,0 @@
-import { JSX } from "preact";
-
-const Icon = (props: JSX.SVGAttributes<SVGSVGElement>) => {
-  return (
-
-  );
-};
-
-export default Icon;
