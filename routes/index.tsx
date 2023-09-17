@@ -7,6 +7,8 @@ import ChevronDown from "$tabler/chevron-down.tsx";
 import StarFilled from "$tabler/star-filled.tsx";
 import { Head } from "$fresh/runtime.ts";
 
+const metaDescription = "Event booking/reservation systems are often complex, monolithic platforms that are hard to use and harder to manage. Our mission is to create a simple, open source, and easy-to-use event ticketing system for events that don't require seating arrangements.";
+
 export default defineRoute(async (req, ctx) => {
   const user = await getUser(req);
   const loggedIn = user != undefined;
@@ -28,8 +30,9 @@ export default defineRoute(async (req, ctx) => {
         />
         <meta
           property="og:description"
-          content="Event booking/reservation systems are often complex, monolithic platforms that are hard to use and harder to manage. Our mission is to create a simple, open source, and easy-to-use event ticketing system for events that don't require seating arrangements. We strive to create a frictionless experience for your attendees, boosting signup numbers and making sure your attendees arrive the day of."
+          content={metaDescription}
         />
+        <meta property="description" content={metaDescription} />
         <meta name="theme-color" content="#DC6843" />
       </Head>
 
@@ -56,14 +59,14 @@ export default defineRoute(async (req, ctx) => {
             href="https://github.com/Wave-Studio/reservations"
             referrerpolicy="no-referrer"
             target="_blank"
-            class="mx-auto text-sm font-medium flex rounded hover:bg-gray-200 text-gray-400 hover:text-gray-800 py-0.5 px-2 transition group"
+            class="mx-auto text-sm font-medium flex rounded hover:bg-gray-200 text-gray-500 hover:text-gray-800 py-0.5 px-2 transition group"
           >
             <StarFilled class="h-5 w-5 mr-1 group-hover:text-yellow-500 transition" />
             star us on github
           </a>
         </div>
 
-        <div class="text-lg text-gray-400">scroll for more</div>
+        <div class="text-lg text-gray-500">scroll for more</div>
         <ChevronDown class="h-5 w-5 animate-bounce text-gray-500" />
       </div>
 
