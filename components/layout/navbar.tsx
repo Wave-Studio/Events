@@ -5,7 +5,7 @@ const Navbar = () => {
   return (
     <div class="flex mt-1 md:mt-2 mb-2 sticky top-0 bg-white h-14 z-30">
       <div className={`fixed left-0 right-0 top-0 flex justify-center items-center h-14`}>
-        <a href="/"><Logo /></a>
+        <a href="/" aria-label="back to homepage"><Logo /></a>
       </div>
     </div>
   );

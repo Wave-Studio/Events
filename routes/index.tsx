@@ -5,6 +5,7 @@ import { defineRoute } from "$fresh/server.ts";
 import { getUser } from "@/utils/db/kv.ts";
 import ChevronDown from "$tabler/chevron-down.tsx";
 import StarFilled from "$tabler/star-filled.tsx";
+import { Head } from "$fresh/runtime.ts";
 
 export default defineRoute(async (req, ctx) => {
   const user = await getUser(req);
@@ -14,6 +15,24 @@ export default defineRoute(async (req, ctx) => {
   // 👍
   return (
     <>
+      <Head>
+        <meta
+          property="og:title"
+          content="Reservations - Open Source Ticketing tool"
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="http://reservations.deno.dev" />
+        <meta
+          property="og:image"
+          content="http://reservations.deno.dev/favicon.ico"
+        />
+        <meta
+          property="og:description"
+          content="Event booking/reservation systems are often complex, monolithic platforms that are hard to use and harder to manage. Our mission is to create a simple, open source, and easy-to-use event ticketing system for events that don't require seating arrangements. We strive to create a frictionless experience for your attendees, boosting signup numbers and making sure your attendees arrive the day of."
+        />
+        <meta name="theme-color" content="#DC6843" />
+      </Head>
+
       <div className="flex flex-col h-[calc(100vh-4.5rem)] items-center">
         <div class="flex flex-col px-2 items-center ">
           <h1 class="text-center text-4xl font-bold -mt-3">reservations</h1>
