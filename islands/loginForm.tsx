@@ -82,11 +82,11 @@ const LoginForm = ({attending}: {attending: boolean}) => {
   };
 
   return (
-    <div className="w-[18.5rem] overflow-hidden p-1">
+    <div className="w-[16.5rem] [@media(min-width:300px)]:w-[18.5rem] overflow-hidden p-1">
       {/* damn were going jank already */}
       <div
         className={`flex ${
-          stage == 1 ? "translate-x-[-18.25rem]" : ""
+          stage == 1 ? "translate-x-[-16.25rem] [@media(min-width:300px)]:translate-x-[-18.25rem]" : ""
         } transition duration-300`}
       >
         {/* email input */}
@@ -118,13 +118,13 @@ const LoginForm = ({attending}: {attending: boolean}) => {
         </form>
         {/* login code input */}
         <div class="ml-1">
-          <p class="mt-2 mb-8 w-72 text-center">
+          <p class="mt-2 mb-8 w-64 [@media(min-width:300px)]:w-72 text-center">
             We just emailed you a login code! Please enter it below.
           </p>
           <form onSubmit={login} noValidate>
             <label class="flex flex-col">
               <span class="text-sm font-medium">code</span>
-              <div className="grid grid-cols-6 gap-3 w-72 cursor-text">
+              <div className="grid grid-cols-6 gap-3 w-64 [@media(min-width:300px)]:w-72  cursor-text">
                 {[...new Array(6)].map((_, i) => {
                   const selected = code.length == i;
                   return (
@@ -148,7 +148,7 @@ const LoginForm = ({attending}: {attending: boolean}) => {
               <div class="h-0 overflow-hidden">
                 <input
                   type="number"
-                  class={`p-2 -translate-y-10 w-72 `}
+                  class={`p-2 -translate-y-10 w-64 [@media(min-width:300px)]:w-72  `}
                   name="code"
                   autoComplete="off"
                   id="test"
