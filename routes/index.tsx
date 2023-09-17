@@ -95,7 +95,7 @@ export default defineRoute(async (req, ctx) => {
         </p>
         <a href="/features">
           <CTA btnType="secondary" size="sm">
-            all features
+            All Features
           </CTA>
         </a>
         <h2 className="text-2xl font-bold mt-16">pricing</h2>
@@ -106,8 +106,8 @@ export default defineRoute(async (req, ctx) => {
           expected future pricing:
         </p>
         <a href="/pricing">
-          <CTA btnType="cta" size="sm">
-            future pricing
+          <CTA btnType="secondary" size="sm">
+            Pricing
           </CTA>
         </a>
       </div>

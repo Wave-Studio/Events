@@ -34,7 +34,13 @@ const LoginForm = ({attending}: {attending: boolean}) => {
     const code = await genCode(email);
 
     setLoading(false);
-    alert("yeur logn code: " + code);
+
+    if (code.error) {
+      setError(code.error);
+      return;
+    }
+
+    alert("yeur logn code: " + code.otp);
 
     setStage(1);
     if (codeRef.current) {

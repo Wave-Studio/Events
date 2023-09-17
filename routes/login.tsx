@@ -5,7 +5,7 @@ import ChevronDown from "$tabler/chevron-down.tsx";
 import { useState } from "preact/hooks";
 import { defineRoute } from "$fresh/server.ts";
 import { getUser } from "@/utils/db/kv.ts";
-import LoginForm from "../islands/loginForm.tsx";
+import LoginForm from "@/islands/loginForm.tsx";
 
 export default defineRoute(async (req, ctx) => {
   const user = await getUser(req);

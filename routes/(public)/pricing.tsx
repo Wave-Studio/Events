@@ -85,8 +85,9 @@ const plans: {
     cost: 0.0,
     features: [
       "1 concurrent event",
-      "2 additional team slots",
+      "2 team slots",
       "Up to 75 attendees per event",
+      "Host free and paid events"
     ],
     color: "bg-gray-300",
   },
@@ -97,8 +98,10 @@ const plans: {
     features: [
       "2 concurrent events",
       "Purchase additional concurrent event slots for $9 each",
-      "10 additional team slots",
+      "10 team slots",
       "Up to 250 attendees per event",
+      "Host free and paid events",
+      "Basic email customization",
       "Event color themes",
     ],
     color: "bg-theme-normal",
@@ -110,9 +113,11 @@ const plans: {
     features: [
       "4 concurrent events",
       "Purchase additional concurrent event slots for $5 each",
-      "25 additional team slots",
+      "25 team slots",
       "Purchase additional team slots for $1 each",
       "Up to 500 attendees per event",
+      "Host free and paid events",
+      "Full event and email customization",
       "Event color themes",
     ],
     color: "bg-gradient-to-br from-purple-500 to-purple-700",

@@ -3,10 +3,10 @@ export const genCode = async (email: string) => {
 		method: 'GET'
 	});
 
-	const res = await req.json() as { otp: string };
+	const res = await req.json() as { otp?: string, error?: string };
 	console.log(res)
 
-	return res.otp
+	return res
 }
 
 export const checkCode = async (email: string, code: string) => {
