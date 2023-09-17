@@ -1,8 +1,14 @@
 import { Handlers } from "$fresh/server.ts";
-import { generateOTP, validateOTP, generateAuthToken, createUser } from "@/utils/db/kv.ts";
+import {
+  createUser,
+  generateAuthToken,
+  generateOTP,
+  validateOTP,
+} from "@/utils/db/kv.ts";
 import { setCookie } from "$std/http/cookie.ts";
 
-const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const emailRegex =
+  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 export const handler: Handlers<{ email: string; otp: string }> = {
   async GET(req, _ctx) {
@@ -56,9 +62,6 @@ export const handler: Handlers<{ email: string; otp: string }> = {
       return new Response(JSON.stringify({ error: "Invalid OTP" }), {
         status: 400,
       });
-
-      // Eventually create a user if the OTP is valid but they don't have an account
-      // const createdUser = await createUser(email);
     }
 
     if (user == false) {

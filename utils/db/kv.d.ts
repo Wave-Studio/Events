@@ -27,8 +27,9 @@ export interface Event {
   additionalFields: Field[];
 }
 
-export interface FieldEntry extends Omit<Field, 'type' | 'name' | 'description'> {
-	value: string;
+export interface FieldEntry
+  extends Omit<Field, "type" | "name" | "description"> {
+  value: string;
 }
 
 // ["ticket", eventId, ticketId]
@@ -61,7 +62,7 @@ export interface UserPartial {
   authToken: string;
 }
 
-// ["authcode", email, code] 
+// ["authcode", email, code]
 export interface AuthCode {
-  existsSince: string // as date
+  existsSince: string; // as date
 }

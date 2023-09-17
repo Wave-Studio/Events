@@ -1,9 +1,11 @@
 import { getUser } from "@/utils/db/kv.ts";
 
 export default async function Homepage(req: Request) {
-	const user = await getUser(req); 
+  const user = await getUser(req);
 
-	return <>
-		<h1>Hi mom</h1>
-	</>
+  return (
+    <>
+      <h1>Hi mom</h1>
+    </>
+  );
 }

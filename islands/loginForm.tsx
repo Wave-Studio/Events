@@ -3,7 +3,7 @@ import { useMemo, useRef, useState } from "preact/hooks";
 import { JSX } from "preact/jsx-runtime";
 import { checkCode, genCode } from "@/utils/db/auth.ts";
 
-const LoginForm = ({attending}: {attending: boolean}) => {
+const LoginForm = ({ attending }: { attending: boolean }) => {
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
   const [error, setError] = useState<string>();
@@ -58,14 +58,14 @@ const LoginForm = ({attending}: {attending: boolean}) => {
     setLoading(true);
 
     const response = await checkCode(email, code);
-    
+
     setLoading(false);
-    
+
     if (response.error || !response.success) {
       setError(response.error!);
       return;
     }
-    window.location.href = `/dashboard${attending ? "?attending=true" : ""}`
+    window.location.href = `/dashboard${attending ? "?attending=true" : ""}`;
   };
 
   const differentEmail = () => {
@@ -86,9 +86,11 @@ const LoginForm = ({attending}: {attending: boolean}) => {
       {/* damn were going jank already */}
       <div
         className={`flex ${
-          stage == 1 ? "translate-x-[-16.25rem] [@media(min-width:300px)]:translate-x-[-18.25rem]" : ""
+          stage == 1
+            ? "translate-x-[-16.25rem] [@media(min-width:300px)]:translate-x-[-18.25rem]"
+            : ""
         } transition duration-300`}
-      > 
+      >
         {/* email input */}
         <form
           class={`mt-10 ${

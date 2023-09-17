@@ -5,15 +5,11 @@ const FAQS = () => {
   return (
     <div class="px-2 max-w-xl w-full mx-auto mb-20 flex flex-col">
       <h1 class="text-center text-4xl font-bold">faq</h1>
-      <p class=" text-center mt-4">frequently asked questions </p>
+      <p class=" text-center mt-4">frequently asked questions</p>
       <Heading name="General" />
-      {faqs.map(({ a, q }) => (
-        <QA q={q} a={a} />
-      ))}
+      {faqs.map(({ a, q }) => <QA q={q} a={a} />)}
       <Heading name="Pricing" />
-			{pricingfaqs.map(({ a, q }) => (
-        <QA q={q} a={a} />
-      ))}
+      {pricingfaqs.map(({ a, q }) => <QA q={q} a={a} />)}
     </div>
   );
 };

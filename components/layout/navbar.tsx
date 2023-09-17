@@ -1,18 +1,21 @@
 const Navbar = () => {
-
-  const loggedIn = true
+  const loggedIn = true;
 
   return (
     <div class="flex mt-1 md:mt-2 mb-2 sticky top-0 bg-white h-14 z-30">
-      <div className={`fixed left-0 right-0 top-0 flex justify-center items-center h-14`}>
-        <a href="/" aria-label="back to homepage"><Logo /></a>
+      <div
+        className={`fixed left-0 right-0 top-0 flex justify-center items-center h-14`}
+      >
+        <a href="/" aria-label="back to homepage">
+          <Logo />
+        </a>
       </div>
     </div>
   );
 };
 
-const Logo =
-  () => (<svg
+const Logo = () => (
+  <svg
     width="56"
     height="58"
     viewBox="0 0 56 58"
@@ -35,7 +38,8 @@ const Logo =
       fill="black"
       class="transition group-hover:-translate-y-0.5 group-hover:-translate-x-0.5"
     />
-  </svg>);
+  </svg>
+);
 
 //export const Logo = asset("/logo.svg");
 

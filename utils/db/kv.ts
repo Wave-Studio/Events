@@ -56,11 +56,10 @@ export const getUserEmailCode = async (
   authCode: string,
   req: Request,
 ) => {
-  const [authCodeData, user] = await kv.getMany<[AuthCode, User]>([[
-    "authCode",
-    authCode,
-    email,
-  ], ["user", email]]);
+  const [authCodeData, user] = await kv.getMany<[AuthCode, User]>([
+    ["authCode", authCode, email],
+    ["user", email],
+  ]);
 
   if (authCodeData.value == undefined) return undefined;
   if (user.value == undefined) return undefined;
@@ -80,11 +79,10 @@ export const validateOTP = async (
   otp: string,
   deleteOTP = true,
 ): Promise<User | false | undefined> => {
-  const [authCodeData, user] = await kv.getMany<[AuthCode, User]>([[
-    "authCode",
-    email,
-    otp,
-  ], ["user", email]]);
+  const [authCodeData, user] = await kv.getMany<[AuthCode, User]>([
+    ["authCode", email, otp],
+    ["user", email],
+  ]);
 
   if (authCodeData.value == undefined) return undefined;
   if (user.value == undefined) return false;
@@ -97,16 +95,17 @@ export const validateOTP = async (
 };
 
 export const generateAuthToken = async (email: string, save = true) => {
-  const user = await kv.get<User>(["user", email]);
-
-  if (user.value == undefined) return undefined;
   const token = `${btoa(email)}_${btoa(crypto.randomUUID().replace(/-/g, ""))}`;
 
   if (save) {
-    await kv.set(["user", email], {
-      ...user.value,
-      authToken: token,
-    });
+    const user = await kv.get<User>(["user", email]);
+
+    if (user.value != undefined) {
+      await kv.set(["user", email], {
+        ...user.value,
+        authToken: token,
+      });
+    }
   }
 
   return token;
@@ -117,11 +116,15 @@ export const generateOTP = async (email: string) => {
   crypto.getRandomValues(otpArray);
   const otp = otpArray[0].toString().substring(0, 6);
 
-  await kv.set(["authCode", email, otp], {
-    existsSince: Date.now(),
-  }, {
-    expireIn: 5 * 60 * 1000,
-  });
+  await kv.set(
+    ["authCode", email, otp],
+    {
+      existsSince: Date.now(),
+    },
+    {
+      expireIn: 5 * 60 * 1000,
+    },
+  );
 
   return otp;
 };
