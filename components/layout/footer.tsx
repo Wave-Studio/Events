@@ -30,7 +30,7 @@ const Footer = () => {
         </a>{" "}
         project
       </p>
-      <div className="flex my-2 underline gap-8 font-medium">
+      <div className="flex my-4 underline gap-8 font-medium">
         {links.map(link => (
           <a href={link.link} target={link.diffSite ? "_blank" : "_self"} referrerpolicy={link.diffSite ? "no-referrer" : undefined}>{link.name}</a>
         ))}
