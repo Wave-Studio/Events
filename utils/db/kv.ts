@@ -1,7 +1,8 @@
-import { AuthCode, Event, Ticket, User } from "./kv.d.ts";
-import { deleteCookie, getCookies, setCookie } from "$std/http/cookie.ts";
+import { AuthCode, Event, Ticket, User, Plan } from "./kv.types.ts";
+import { getCookies, setCookie } from "$std/http/cookie.ts";
+import { useState } from "preact/hooks";
 
-export * from "./kv.d.ts";
+export * from "./kv.types.ts";
 
 export const kv = await Deno.openKv(
   Deno.env.get("DENO_DEPLOYMENT_ID") == undefined
@@ -10,27 +11,34 @@ export const kv = await Deno.openKv(
 );
 
 export const getUser = async (req: Request) => {
+  // const [cachedUser, setCachedUser] = useState<User | undefined>(undefined);
+
+  // if (cachedUser != undefined) return cachedUser;
+
   const cookies = getCookies(req.headers);
   const authToken = cookies.authToken;
 
   if (authToken == undefined) return undefined;
 
   const [email] = authToken.split("_");
+
+  try {
+    atob(email);
+  } catch {
+    return undefined;
+  }
+
   const user = await kv.get<User>(["user", atob(email)]);
 
   if (user.value == undefined) {
-    deleteCookie(req.headers, "authToken", {
-      path: "/",
-    });
     return undefined;
   }
 
   if (user.value.authToken != authToken) {
-    deleteCookie(req.headers, "authToken", {
-      path: "/",
-    });
     return undefined;
   }
+
+  // setCachedUser(user.value);
 
   return user.value;
 };
@@ -44,6 +52,8 @@ export const createUser = async (email: string) => {
     events: [],
     tickets: [],
     onboarded: false,
+    plan: Plan.BASIC,
+    joinedAt: Date.now().toString(),
   };
 
   await kv.set(["user", email], userInfo);

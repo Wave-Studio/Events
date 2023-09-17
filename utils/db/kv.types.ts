@@ -60,6 +60,15 @@ export interface UserPartial {
   tickets: string[];
   events: string[];
   authToken: string;
+  plan: Plan;
+  joinedAt: string;
+}
+
+export const enum Plan {
+  BASIC = "basic",
+  PLUS = "plus",
+  PRO = "pro",
+  ENTERPRISE = "enterprise",
 }
 
 // ["authcode", email, code]

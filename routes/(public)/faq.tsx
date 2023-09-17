@@ -14,13 +14,13 @@ const FAQS = () => {
   );
 };
 
-const Heading = ({ name }: { name: string }) => (
+export const Heading = ({ name }: { name: string }) => (
   <div className="flex mt-10 items-center">
     <div className="invisible -translate-y-20" id={name.toLowerCase()} />
     <h2 className="font-bold">
       {name}
     </h2>
-    <div class="w-full ml-8 h-0.5 bg-gray-300 rounded-full" />
+    <div class="grow ml-6 h-0.5 bg-gray-300 rounded-full" />
   </div>
 );
 
