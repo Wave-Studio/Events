@@ -32,7 +32,7 @@ export default defineRoute(async (req, ctx) => {
           property="og:description"
           content={metaDescription}
         />
-        <meta property="description" content={metaDescription} />
+        <meta name="description" content={metaDescription} />
         <meta name="theme-color" content="#DC6843" />
       </Head>
 
