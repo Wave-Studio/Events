@@ -88,7 +88,7 @@ const LoginForm = ({attending}: {attending: boolean}) => {
         className={`flex ${
           stage == 1 ? "translate-x-[-16.25rem] [@media(min-width:300px)]:translate-x-[-18.25rem]" : ""
         } transition duration-300`}
-      >
+      > 
         {/* email input */}
         <form
           class={`mt-10 ${

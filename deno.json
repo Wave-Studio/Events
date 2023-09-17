@@ -6,7 +6,8 @@
     "start": "deno run -A --unstable --watch=static/,routes/ dev.ts",
     "build": "deno run -A --unstable dev.ts build",
     "preview": "deno run -A main.ts",
-    "update": "deno run --unstable -A -r https://fresh.deno.dev/update ."
+    "update": "deno run --unstable -A -r https://fresh.deno.dev/update .",
+    "css": "npx tailwindcss -i ./static/styles.css -o ./static/output.css --watch --minify"
   },
   "lint": {
     "rules": {
