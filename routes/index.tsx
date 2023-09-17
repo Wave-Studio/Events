@@ -7,7 +7,8 @@ import ChevronDown from "$tabler/chevron-down.tsx";
 import StarFilled from "$tabler/star-filled.tsx";
 import { Head } from "$fresh/runtime.ts";
 
-const metaDescription = "Event booking/reservation systems are often complex, monolithic platforms that are hard to use and harder to manage. Our mission is to create a simple, open source, and easy-to-use event ticketing system for events that don't require seating arrangements.";
+const metaDescription =
+  "Event booking/reservation systems are often complex, monolithic platforms that are hard to use and harder to manage. Our mission is to create a simple, open source, and easy-to-use event ticketing system for events that don't require seating arrangements.";
 
 export default defineRoute(async (req, ctx) => {
   const user = await getUser(req);
@@ -28,10 +29,7 @@ export default defineRoute(async (req, ctx) => {
           property="og:image"
           content="http://reservations.deno.dev/favicon.ico"
         />
-        <meta
-          property="og:description"
-          content={metaDescription}
-        />
+        <meta property="og:description" content={metaDescription} />
         <meta name="description" content={metaDescription} />
         <meta name="theme-color" content="#DC6843" />
       </Head>
@@ -93,11 +91,18 @@ export default defineRoute(async (req, ctx) => {
           customers with a seamless booking experience today! Contact quick007
           on discord to join the closed beta.
         </p>
-        <a href="/features">
-          <CTA btnType="secondary" size="sm">
-            All Features
-          </CTA>
-        </a>
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+          <a href="/features">
+            <CTA btnType="secondary" size="sm">
+              All Features
+            </CTA>
+          </a>
+          <a href="/faq">
+            <CTA btnType="secondary" size="sm">
+              FAQ
+            </CTA>
+          </a>
+        </div>
         <h2 className="text-2xl font-bold mt-16">pricing</h2>
         <p className="my-4 ">
           As we're still in a closed beta, reservations is currently free for to

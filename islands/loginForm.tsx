@@ -17,6 +17,7 @@ const LoginForm = ({attending}: {attending: boolean}) => {
   const sendEmail = async (e: JSX.TargetedEvent<HTMLFormElement, Event>) => {
     e.stopImmediatePropagation();
     e.preventDefault();
+    setError(undefined);
     const passed =
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         .test(email);
@@ -53,6 +54,7 @@ const LoginForm = ({attending}: {attending: boolean}) => {
 
   const login = async (e: JSX.TargetedEvent<HTMLFormElement, Event>) => {
     e.preventDefault();
+    setError(undefined);
     setLoading(true);
 
     const response = await checkCode(email, code);

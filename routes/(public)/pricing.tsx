@@ -9,7 +9,10 @@ const Pricing = async (req: Request) => {
     <div class="px-2 max-w-screen-lg w-full mx-auto mb-20">
       <h1 class="text-center text-4xl font-bold">(proposed) pricing</h1>
       <p class="max-w-xl w-full text-center mx-auto mt-4">
-        To keep pricing simple, we've created 3 simple subscription plans. For enterprise use-cases, please contact us. reservations is currently free for beta testers.
+        To keep pricing simple, we've created 3 simple subscription plans. For
+        enterprise use-cases, please contact us. reservations is currently free
+        for beta testers. If you have any questions they might be in our{" "}
+        <a href="/faq#pricing" class="font-medium underline">FAQ</a>.
       </p>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mt-16">
         {plans.slice(0, 3).map((plan) => (
@@ -28,16 +31,15 @@ const Pricing = async (req: Request) => {
             <div className="flex">
               <div
                 className={`rounded-full px-1 py-0.5 mr-2 ${plan.color} `}
-              ></div>
+              >
+              </div>
               <h2 class="font-bold ">{plan.name}</h2>
               <p className="ml-auto text-gray-600 ">
                 {plan.cost == 0 ? "0.00" : `${plan.cost}.00/mo`}
               </p>
             </div>
             <ul class="text-sm flex flex-col gap-2 mt-6 list-disc list-inside mb-8">
-              {plan.features.map((feature) => (
-                <li>{feature}</li>
-              ))}
+              {plan.features.map((feature) => <li>{feature}</li>)}
             </ul>
             <CTA
               btnType={plan.cost == 0 ? "secondary" : "cta"}
@@ -56,12 +58,19 @@ const Pricing = async (req: Request) => {
             <div className="flex">
               <div
                 className={`rounded-full px-1 py-0.5 mr-2 ${plans[3].color} `}
-              ></div>
+              >
+              </div>
               <h2 class="font-bold ">{plans[3].name}</h2>
             </div>
-            <p className="text-sm mt-4">Contact us for a plan that suits your needs.</p>
+            <p className="text-sm mt-4">
+              Contact us for a plan that suits your needs.
+            </p>
           </div>
-          <CTA btnType="secondary" size="sm" className="my-auto mx-auto mt-4 w-full sm:mr-0 sm:w-40 sm:mt-auto">
+          <CTA
+            btnType="secondary"
+            size="sm"
+            className="my-auto mx-auto mt-4 w-full sm:mr-0 sm:w-40 sm:mt-auto"
+          >
             contact us
           </CTA>
         </div>
@@ -87,7 +96,8 @@ const plans: {
       "1 concurrent event",
       "2 team slots",
       "Up to 75 attendees per event",
-      "Host free and paid events"
+      "Host free and paid events",
+      "10 day post-event persistance",
     ],
     color: "bg-gray-300",
   },
@@ -99,6 +109,7 @@ const plans: {
       "2 concurrent events",
       "Purchase additional concurrent event slots for $9 each",
       "10 team slots",
+      "30 day post-event persistance",
       "Up to 250 attendees per event",
       "Host free and paid events",
       "Basic email customization",
@@ -114,6 +125,7 @@ const plans: {
       "4 concurrent events",
       "Purchase additional concurrent event slots for $5 each",
       "25 team slots",
+      "60 day post-event persistance",
       "Purchase additional team slots for $1 each",
       "Up to 500 attendees per event",
       "Host free and paid events",

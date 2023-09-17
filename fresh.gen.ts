@@ -2,32 +2,34 @@
 // This file SHOULD be checked into source version control.
 // This file is automatically updated during development when running `dev.ts`.
 
-import * as $0 from "./routes/(public)/features.tsx";
-import * as $1 from "./routes/(public)/pricing.tsx";
-import * as $2 from "./routes/(public)/privacy-policy.tsx";
-import * as $3 from "./routes/_404.tsx";
-import * as $4 from "./routes/_app.tsx";
-import * as $5 from "./routes/_layout.tsx";
-import * as $6 from "./routes/api/auth/login.ts";
-import * as $7 from "./routes/dashboard/index.tsx";
-import * as $8 from "./routes/events/[id].tsx";
-import * as $9 from "./routes/index.tsx";
-import * as $10 from "./routes/login.tsx";
+import * as $0 from "./routes/(public)/faq.tsx";
+import * as $1 from "./routes/(public)/features.tsx";
+import * as $2 from "./routes/(public)/pricing.tsx";
+import * as $3 from "./routes/(public)/privacy-policy.tsx";
+import * as $4 from "./routes/_404.tsx";
+import * as $5 from "./routes/_app.tsx";
+import * as $6 from "./routes/_layout.tsx";
+import * as $7 from "./routes/api/auth/login.ts";
+import * as $8 from "./routes/dashboard/index.tsx";
+import * as $9 from "./routes/events/[id].tsx";
+import * as $10 from "./routes/index.tsx";
+import * as $11 from "./routes/login.tsx";
 import * as $$0 from "./islands/loginForm.tsx";
 
 const manifest = {
   routes: {
-    "./routes/(public)/features.tsx": $0,
-    "./routes/(public)/pricing.tsx": $1,
-    "./routes/(public)/privacy-policy.tsx": $2,
-    "./routes/_404.tsx": $3,
-    "./routes/_app.tsx": $4,
-    "./routes/_layout.tsx": $5,
-    "./routes/api/auth/login.ts": $6,
-    "./routes/dashboard/index.tsx": $7,
-    "./routes/events/[id].tsx": $8,
-    "./routes/index.tsx": $9,
-    "./routes/login.tsx": $10,
+    "./routes/(public)/faq.tsx": $0,
+    "./routes/(public)/features.tsx": $1,
+    "./routes/(public)/pricing.tsx": $2,
+    "./routes/(public)/privacy-policy.tsx": $3,
+    "./routes/_404.tsx": $4,
+    "./routes/_app.tsx": $5,
+    "./routes/_layout.tsx": $6,
+    "./routes/api/auth/login.ts": $7,
+    "./routes/dashboard/index.tsx": $8,
+    "./routes/events/[id].tsx": $9,
+    "./routes/index.tsx": $10,
+    "./routes/login.tsx": $11,
   },
   islands: {
     "./islands/loginForm.tsx": $$0,

@@ -1,3 +1,5 @@
+import { ComponentChildren } from "preact";
+
 export const faqs: FAQ[] = [
   {
     q: "How can I get beta access?",
@@ -15,5 +17,5 @@ export const faqs: FAQ[] = [
 
 export interface FAQ {
   q: string;
-  a: string;
+  a: ComponentChildren;
 }
