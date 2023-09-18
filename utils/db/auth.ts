@@ -4,7 +4,6 @@ export const genCode = async (email: string) => {
   });
 
   const res = await req.json() as { otp?: string; error?: string };
-  console.log(res);
 
   return res;
 };

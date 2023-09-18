@@ -1,7 +1,7 @@
 export default function PrivacyPolicy() {
   return (
     <>
-      <div class="px-2 max-w-xl w-full mx-auto prose">
+      <div class="px-4 max-w-xl w-full mx-auto prose">
         <h1>Privacy Policy</h1>
         <p>Last updated: September 16, 2023</p>
         <p>

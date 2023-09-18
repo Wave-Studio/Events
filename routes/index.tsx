@@ -35,7 +35,7 @@ export default defineRoute(async (req, ctx) => {
       </Head>
 
       <div className="flex flex-col h-[calc(100vh-4.5rem)] items-center">
-        <div class="flex flex-col px-2 items-center ">
+        <div class="flex flex-col px-4 items-center ">
           <h1 class="text-center text-4xl font-bold -mt-3">reservations</h1>
           <div class="w-44 flex items-center mt-2">
             <div class="grow bg-gray-200 h-0.5 rounded-full" />
@@ -68,7 +68,7 @@ export default defineRoute(async (req, ctx) => {
         <ChevronDown class="h-5 w-5 animate-bounce text-gray-500" />
       </div>
 
-      <div className="py-24 text-center px-2 max-w-xl w-full mx-auto">
+      <div className="py-24 text-center px-4 max-w-xl w-full mx-auto">
         <h2 className="text-2xl font-bold">our mission</h2>
         <p className="mt-4 ">
           Event booking/reservation systems are often complex, monolithic
