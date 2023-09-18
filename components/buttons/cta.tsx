@@ -18,7 +18,7 @@ const CTA = (
             : "w-40 h-10"
         } rounded-md font-semibold peer z-10 hover:brightness-95 transition focus:ring-1 focus:brightness-100 disabled:brightness-90 disabled:cursor-not-allowed ${
           btnType == "cta"
-            ? "bg-theme-normal ring-[#da7351] text-white"
+            ? "bg-theme-normal ring-[#da7351] text-white "
             : "bg-gray-300 ring-gray-400/50 text-gray-800"
         }`}
         disabled={disabled}

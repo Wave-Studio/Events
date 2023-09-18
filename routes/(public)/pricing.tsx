@@ -24,8 +24,8 @@ const Pricing = async (req: Request) => {
           <section
             className={`rounded-md p-4 flex flex-col relative ${
               plan.best
-                ? "md:-translate-y-4 border-theme-normal border-2"
-                : "border-gray-300 border"
+                ? "md:-translate-y-6 h-[calc(100%+1.625rem)] border-2 border-transparent [background:linear-gradient(white,white)_padding-box,linear-gradient(to_bottom,theme(colors.theme.normal),rgba(209,85,44,0)_97%)_border-box] "
+                : "border-2 border-transparent [background:linear-gradient(white,white)_padding-box,linear-gradient(to_bottom,theme(colors.gray.200),transparent)_border-box]"
             }`}
           >
             {plan.best && (
@@ -51,6 +51,8 @@ const Pricing = async (req: Request) => {
               btnType={plan.cost == 0 ? "secondary" : "cta"}
               className={`!w-full mt-auto ${plan.color} ${
                 plan.cost == 0 && "!text-gray-900 !bg-gray-300"
+              } ${
+                plan.cost == 11.99 && "rffesfs"
               }`}
             >
               select plan
@@ -58,7 +60,7 @@ const Pricing = async (req: Request) => {
           </section>
         ))}
       </div>
-      <div className="grow border-gray-300 border rounded-md p-4 mt-8">
+      <div className="grow rounded-md  p-4 pt-8">
         <div className="flex flex-col sm:flex-row justify-between">
           <div>
             <div className="flex">

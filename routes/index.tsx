@@ -1,6 +1,4 @@
-import { useSignal } from "@preact/signals";
 import CTA from "@/components/buttons/cta.tsx";
-import { useState } from "preact/hooks";
 import { defineRoute } from "$fresh/server.ts";
 import { getUser } from "@/utils/db/kv.ts";
 import ChevronDown from "$tabler/chevron-down.tsx";
