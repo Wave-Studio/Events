@@ -19,7 +19,11 @@ export const pricingfaqs: FAQ[] = [
   },
   {
     q: "What is post-event persistance?",
-    a: "Post-event persistance is the amount of time an event stays on your account after the date of the event before it gets auto deleted.",
+    a: "Post-event persistance is the amount of time an event stays on your account after the date of the event before it gets auto deleted. Pro plan users will gave their events archived instead of deleted.",
+  },
+  {
+    q: "What does it mean to have my event archived?",
+    a: "Your event will no longer show up for event team members or event attendees."
   },
   {
     q: "How much customization do I get with 'Basic email customization'",

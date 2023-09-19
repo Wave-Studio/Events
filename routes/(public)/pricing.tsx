@@ -92,8 +92,8 @@ const Pricing = async (req: Request) => {
           <Heading name="Host Applicable Fees" />
           {adminFees.map((u) => Fees(u))}
         </div>
-        <details className="mt-16">
-          <summary class="text-sm underline cursor-pointer">
+        <details className="mt-6">
+          <summary class="text-xs cursor-pointer list-none">
             Guest Applicable Fees
           </summary>
           <p className="mt-2 text-center">
