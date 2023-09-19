@@ -50,7 +50,7 @@ export const plans: {
       "Full event and email customization",
       "Event color themes",
     ],
-    color: "bg-purple-700",
+    color: "!bg-purple-700",
   },
   {
     name: "Enterprise",
