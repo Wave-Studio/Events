@@ -23,7 +23,7 @@ const Pricing = async (req: Request) => {
         {plans.slice(0, 3).map((plan) => (
           <section
             className={`rounded-md p-4 flex flex-col relative ${
-              plan.best
+              plan.best // gradient border moment
                 ? "md:-translate-y-6 h-[calc(100%+1.5rem)] border-2 border-transparent [background:linear-gradient(white,white)_padding-box,linear-gradient(to_bottom,theme(colors.theme.normal),rgba(209,85,44,0)_97%)_border-box] "
                 : "border-2 border-transparent [background:linear-gradient(white,white)_padding-box,linear-gradient(to_bottom,theme(colors.gray.200),transparent)_border-box]"
             }`}

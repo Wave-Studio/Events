@@ -1,6 +1,5 @@
 import { AuthCode, Event, Ticket, User, Plan } from "./kv.types.ts";
 import { getCookies, setCookie } from "$std/http/cookie.ts";
-import { useState } from "preact/hooks";
 
 export * from "./kv.types.ts";
 
@@ -28,7 +27,7 @@ export const getUser = async (req: Request) => {
     return undefined;
   }
 
-  const user = await kv.get<User>(["user", atob(email)]);
+  const user = await kv.get<User>(["user", email]);
 
   if (user.value == undefined) {
     return undefined;
@@ -56,7 +55,7 @@ export const createUser = async (email: string) => {
     joinedAt: Date.now().toString(),
   };
 
-  await kv.set(["user", email], userInfo);
+  await kv.set(["user", btoa(email)], userInfo);
 
   return userAuthToken;
 };
@@ -68,7 +67,7 @@ export const getUserEmailCode = async (
 ) => {
   const [authCodeData, user] = await kv.getMany<[AuthCode, User]>([
     ["authCode", authCode, email],
-    ["user", email],
+    ["user", btoa(email)],
   ]);
 
   if (authCodeData.value == undefined) return undefined;
@@ -108,7 +107,7 @@ export const generateAuthToken = async (email: string, save = true) => {
   const token = `${btoa(email)}_${btoa(crypto.randomUUID().replace(/-/g, ""))}`;
 
   if (save) {
-    const user = await kv.get<User>(["user", email]);
+    const user = await kv.get<User>(["user", btoa(email)]);
 
     if (user.value != undefined) {
       await kv.set(["user", email], {

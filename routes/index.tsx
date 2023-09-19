@@ -33,7 +33,7 @@ export default defineRoute(async (req, ctx) => {
       </Head>
 
       <div className="flex flex-col h-[calc(100vh-4.5rem)] items-center">
-        <div class="flex flex-col px-4 items-center ">
+        <div class="flex flex-col px-4 items-center">
           <h1 class="text-center text-4xl font-bold">Reservations</h1>
           <div class="w-44 flex items-center mt-2">
             <div class="grow bg-gray-200 h-0.5 rounded-full" />
@@ -46,7 +46,7 @@ export default defineRoute(async (req, ctx) => {
             <CTA btnType="cta">I'm organizing</CTA>
           </a>
           <a
-            href={loggedIn ? "/events?attending=true" : "/login?attending=true"}
+            href={loggedIn ? "/events?tab=1" : "/login?attending=true"}
             class="mt-4 mb-3"
           >
             <CTA btnType="secondary">I'm attending</CTA>
@@ -68,7 +68,7 @@ export default defineRoute(async (req, ctx) => {
 
       <div className="py-24 text-center px-4 max-w-xl w-full mx-auto">
         <h2 className="text-2xl font-bold">Our Mission</h2>
-        <p className="mt-4 ">
+        <p className="mt-4">
           Event booking/reservation systems are often complex, monolithic
           platforms that are hard to use and harder to manage. Our mission is to
           create a simple, open source, and easy-to-use event ticketing system
@@ -77,7 +77,7 @@ export default defineRoute(async (req, ctx) => {
           numbers and making sure your attendees arrive the day of.
         </p>
         <h2 className="text-2xl font-bold mt-16">Why Reservations?</h2>
-        <p className="my-4 ">
+        <p className="my-4">
           When it comes to managing or creating reservation systems for a
           ticketed event, traditional solutions can be cumbersome and
           challenging to use. Our platform, reservations, offers a simple, OSS,
@@ -102,7 +102,7 @@ export default defineRoute(async (req, ctx) => {
           </a>
         </div>
         <h2 className="text-2xl font-bold mt-16">Pricing</h2>
-        <p className="my-4 ">
+        <p className="my-4">
           As we're still in a closed beta, reservations is currently free for to
           use. In the future, reservations will be free to use for small free
           events. Larger events or paid events will have a small fee. See our
