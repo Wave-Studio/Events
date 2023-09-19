@@ -93,7 +93,7 @@ const Pricing = async (req: Request) => {
           {adminFees.map((u) => Fees(u))}
         </div>
         <details className="mt-6">
-          <summary class="text-xs cursor-pointer list-none">
+          <summary class="text-sm cursor-pointer list-none underline">
             Guest Applicable Fees
           </summary>
           <p className="mt-2 text-center">
