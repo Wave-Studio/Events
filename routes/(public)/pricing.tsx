@@ -9,7 +9,7 @@ const Pricing = async (req: Request) => {
 
   return (
     <div class="px-4 max-w-screen-lg w-full mx-auto mb-20">
-      <h1 class="text-center text-4xl font-bold">(proposed) pricing</h1>
+      <h1 class="text-center text-4xl font-bold">(proposed) Pricing</h1>
       <p class="max-w-xl w-full text-center mx-auto mt-4">
         To keep pricing simple, we've created 3 simple subscription plans. For
         enterprise use-cases, please contact us. reservations is currently free
@@ -24,7 +24,7 @@ const Pricing = async (req: Request) => {
           <section
             className={`rounded-md p-4 flex flex-col relative ${
               plan.best
-                ? "md:-translate-y-6 h-[calc(100%+1.625rem)] border-2 border-transparent [background:linear-gradient(white,white)_padding-box,linear-gradient(to_bottom,theme(colors.theme.normal),rgba(209,85,44,0)_97%)_border-box] "
+                ? "md:-translate-y-6 h-[calc(100%+1.5rem)] border-2 border-transparent [background:linear-gradient(white,white)_padding-box,linear-gradient(to_bottom,theme(colors.theme.normal),rgba(209,85,44,0)_97%)_border-box] "
                 : "border-2 border-transparent [background:linear-gradient(white,white)_padding-box,linear-gradient(to_bottom,theme(colors.gray.200),transparent)_border-box]"
             }`}
           >
@@ -51,11 +51,9 @@ const Pricing = async (req: Request) => {
               btnType={plan.cost == 0 ? "secondary" : "cta"}
               className={`!w-full mt-auto ${plan.color} ${
                 plan.cost == 0 && "!text-gray-900 !bg-gray-300"
-              } ${
-                plan.cost == 11.99 && "rffesfs"
-              }`}
+              } ${plan.cost == 11.99 && "rffesfs"}`}
             >
-              select plan
+              Select Plan
             </CTA>
           </section>
         ))}
@@ -78,25 +76,36 @@ const Pricing = async (req: Request) => {
             size="sm"
             className="my-auto mx-auto mt-4 w-full sm:mr-0 sm:w-40 sm:mt-auto"
           >
-            contact us
+            Contact Us
           </CTA>
         </div>
       </div>
       <div class="max-w-xl w-full mx-auto">
-        <h2 class="text-center text-4xl font-bold mt-16">paid event fees</h2>
+        <h2 class="text-center text-4xl font-bold mt-16">Paid Event Fees</h2>
         <p class=" text-center mx-auto mt-4">
           In order to run reservations, we have some basic fees that are
-          applicable to event guests (guests) and event organizers (hosts). All
-          prices are in USD
+          applicable to event guests (guests) and event organizers (hosts).
+          Guests have to pay fees that may be used for proccessing, handling,
+          and delivery. All prices are in USD
         </p>
-        <div>
-          <Heading name="Guest Applicable Fees" />
-          {userFees.map((u) => Fees(u))}
-        </div>
         <div>
           <Heading name="Host Applicable Fees" />
           {adminFees.map((u) => Fees(u))}
         </div>
+        <details className="mt-16">
+          <summary class="text-sm underline cursor-pointer">
+            Guest Applicable Fees
+          </summary>
+          <p className="mt-2 text-center">
+            When checking out, guests will have to pay the fees listed below and
+            may be subject to paying taxes. These help us cover the costs of the
+            platform and things like transaction fees.
+          </p>
+          <div class="-translate-y-6">
+            <Heading name="Guest Applicable Fees" />
+            {userFees.map((u) => Fees(u))}
+          </div>
+        </details>
       </div>
     </div>
   );
@@ -104,7 +113,7 @@ const Pricing = async (req: Request) => {
 
 export default Pricing;
 
-const Fees = ({ name, description, cost }: Fee) => (
+export const Fees = ({ name, description, cost }: Fee) => (
   <div class="mt-5 flex justify-between items-center">
     <div>
       <h3 class="mb-1 font-medium">{name}</h3>
@@ -114,7 +123,7 @@ const Fees = ({ name, description, cost }: Fee) => (
   </div>
 );
 
-const userFees: Fee[] = [
+export const userFees: Fee[] = [
   {
     name: "Processing",
     description: "Payment proccessing and other costs",

@@ -100,7 +100,7 @@ const LoginForm = ({ attending }: { attending: boolean }) => {
           noValidate
         >
           <label htmlFor="email" class="flex flex-col">
-            <span class="text-sm font-medium">email</span>
+            <span class="text-sm font-medium">Email</span>
             <input
               autofocus
               type="email"
@@ -116,7 +116,7 @@ const LoginForm = ({ attending }: { attending: boolean }) => {
           <p className={`mb-2 text-sm text-red-500 ${!error && "invisible"} `}>
             Error: {error}
           </p>
-          <CTA btnType="cta">confirm email</CTA>
+          <CTA btnType="cta">Confirm Email</CTA>
         </form>
         {/* login code input */}
         <div class="ml-1">
@@ -172,14 +172,14 @@ const LoginForm = ({ attending }: { attending: boolean }) => {
               Error: {error}
             </p>
             <CTA btnType="cta" disabled={code.length != 6}>
-              login
+              Login
             </CTA>
           </form>
           <p
             className="mt-2 text-center underline text-sm cursor-pointer"
             onClick={differentEmail}
           >
-            different email
+            Select Different Email
           </p>
         </div>
       </div>

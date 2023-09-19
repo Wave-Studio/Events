@@ -19,7 +19,7 @@ export default defineRoute(async (req, ctx) => {
   return (
     <>
       <div className="flex flex-col grow items-center">
-        <h1 class="text-center text-4xl font-bold">login</h1>
+        <h1 class="text-center text-4xl font-bold">Login</h1>
         <div className="my-auto flex flex-col gap-4 pb-36 pt-6">
           <LoginForm attending={Boolean(attending)} />
         </div>

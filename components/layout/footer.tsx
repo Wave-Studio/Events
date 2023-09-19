@@ -6,15 +6,15 @@ const Footer = () => {
     //   link: "/faq"
     // },
     {
-      name: "privacy",
+      name: "Privacy",
       link: "/privacy-policy",
     },
     {
-      name: "terms",
+      name: "Terms",
       link: "/terms-of-service",
     },
     {
-      name: "github",
+      name: "GitHub",
       link: "https://github.com/Wave-Studio/reservations",
       diffSite: true,
     },
