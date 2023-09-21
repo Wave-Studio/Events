@@ -117,6 +117,11 @@ const LoginForm = ({ attending }: { attending: boolean }) => {
             Error: {error}
           </p>
           <CTA btnType="cta">Confirm Email</CTA>
+          <p
+            className="mt-2 text-center text-sm cursor-pointer text-gray-500"
+          >
+            By clicking "Confirm Email", you agree to us sending you a one-time authentication code via email.
+          </p>
         </form>
         {/* login code input */}
         <div class="ml-1">
@@ -179,7 +184,7 @@ const LoginForm = ({ attending }: { attending: boolean }) => {
             className="mt-2 text-center underline text-sm cursor-pointer"
             onClick={differentEmail}
           >
-            Select Different Email
+            Enter a Different Email
           </p>
         </div>
       </div>
