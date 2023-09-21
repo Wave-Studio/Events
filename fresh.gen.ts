@@ -6,15 +6,16 @@ import * as $0 from "./routes/(public)/faq.tsx";
 import * as $1 from "./routes/(public)/features.tsx";
 import * as $2 from "./routes/(public)/pricing.tsx";
 import * as $3 from "./routes/(public)/privacy-policy.tsx";
-import * as $4 from "./routes/_404.tsx";
-import * as $5 from "./routes/_app.tsx";
-import * as $6 from "./routes/_layout.tsx";
-import * as $7 from "./routes/api/auth/login.ts";
-import * as $8 from "./routes/api/auth/signout.ts";
-import * as $9 from "./routes/events/[id].tsx";
-import * as $10 from "./routes/events/index.tsx";
-import * as $11 from "./routes/index.tsx";
-import * as $12 from "./routes/login.tsx";
+import * as $4 from "./routes/(public)/terms-of-service.tsx";
+import * as $5 from "./routes/_404.tsx";
+import * as $6 from "./routes/_app.tsx";
+import * as $7 from "./routes/_layout.tsx";
+import * as $8 from "./routes/api/auth/login.ts";
+import * as $9 from "./routes/api/auth/signout.ts";
+import * as $10 from "./routes/events/[id].tsx";
+import * as $11 from "./routes/events/index.tsx";
+import * as $12 from "./routes/index.tsx";
+import * as $13 from "./routes/login.tsx";
 import * as $$0 from "./islands/loginForm.tsx";
 
 const manifest = {
@@ -23,15 +24,16 @@ const manifest = {
     "./routes/(public)/features.tsx": $1,
     "./routes/(public)/pricing.tsx": $2,
     "./routes/(public)/privacy-policy.tsx": $3,
-    "./routes/_404.tsx": $4,
-    "./routes/_app.tsx": $5,
-    "./routes/_layout.tsx": $6,
-    "./routes/api/auth/login.ts": $7,
-    "./routes/api/auth/signout.ts": $8,
-    "./routes/events/[id].tsx": $9,
-    "./routes/events/index.tsx": $10,
-    "./routes/index.tsx": $11,
-    "./routes/login.tsx": $12,
+    "./routes/(public)/terms-of-service.tsx": $4,
+    "./routes/_404.tsx": $5,
+    "./routes/_app.tsx": $6,
+    "./routes/_layout.tsx": $7,
+    "./routes/api/auth/login.ts": $8,
+    "./routes/api/auth/signout.ts": $9,
+    "./routes/events/[id].tsx": $10,
+    "./routes/events/index.tsx": $11,
+    "./routes/index.tsx": $12,
+    "./routes/login.tsx": $13,
   },
   islands: {
     "./islands/loginForm.tsx": $$0,
