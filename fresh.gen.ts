@@ -22,7 +22,8 @@ import * as $16 from "./routes/events/(pages)/organizing/index.tsx";
 import * as $17 from "./routes/events/[id].tsx";
 import * as $18 from "./routes/index.tsx";
 import * as $19 from "./routes/login.tsx";
-import * as $$0 from "./islands/loginForm.tsx";
+import * as $$0 from "./islands/events/one.tsx";
+import * as $$1 from "./islands/loginForm.tsx";
 
 const manifest = {
   routes: {
@@ -48,7 +49,8 @@ const manifest = {
     "./routes/login.tsx": $19,
   },
   islands: {
-    "./islands/loginForm.tsx": $$0,
+    "./islands/events/one.tsx": $$0,
+    "./islands/loginForm.tsx": $$1,
   },
   baseUrl: import.meta.url,
 };

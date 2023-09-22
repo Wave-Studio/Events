@@ -24,7 +24,7 @@ export default async function Homepage(req: Request, ctx: AppContext) {
       <div class="my-auto py-10 flex flex-col gap-8 items-center font-bold max-w-md mx-auto text-center">
         No events found! Create your first event or ask an organizer to invite
         you to one.
-        <a href="/events/organize/create">
+        <a href="/events/organizing/create">
           <CTA btnType="cta">Create Event</CTA>
         </a>
       </div>

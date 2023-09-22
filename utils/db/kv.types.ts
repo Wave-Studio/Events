@@ -15,17 +15,46 @@ export interface Event {
   multiEntry: boolean;
 
   maxTickets?: number;
-  startDate: string;
-  startTime?: string;
-  endTime?: string;
-  lastPurchaseDate?: string;
+  showTimes: {
+    startDate: string;
+    startTime?: string;
+    endTime?: string;
+    lastPurchaseDate?: string;
+  }[];
 
-  location?: string;
+  venue?: string;
   soldTickets: number;
   price: number;
 
   additionalFields: Field[];
+  owner: string;
 }
+
+export const defaultEvent = (email: string) => ({
+  name: "",
+  supportEmail: "",
+  description: "",
+  bannerImage: undefined,
+  published: false,
+  multiEntry: true,
+
+  maxTickets: undefined,
+  showTimes: [
+    {
+      startDate: new Date().toISOString(),
+      startTime: undefined,
+      endTime: undefined,
+      lastPurchaseDate: undefined,
+    },
+  ],
+
+  venue: undefined,
+  soldTickets: 0,
+  price: 0,
+
+  additionalFields: [],
+  owner: email,
+});
 
 export interface FieldEntry
   extends Omit<Field, "type" | "name" | "description"> {

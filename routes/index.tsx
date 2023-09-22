@@ -42,11 +42,11 @@ export default defineRoute(async (req, ctx) => {
           </div>
         </div>
         <div className="my-auto flex flex-col pb-12">
-          <a href={loggedIn ? "/events" : "/login"}>
+          <a href={loggedIn ? "/events/organizing" : "/login"}>
             <CTA btnType="cta">I'm organizing</CTA>
           </a>
           <a
-            href={loggedIn ? "/events?tab=1" : "/login?attending=true"}
+            href={loggedIn ? "/events/attending" : "/login?attending=true"}
             class="mt-4 mb-3"
           >
             <CTA btnType="secondary">I'm attending</CTA>
