@@ -3,6 +3,7 @@ import { useState } from "preact/hooks";
 import StageOne from "@/islands/events/one.tsx";
 import { Event, defaultEvent } from "@/utils/db/kv.types.ts";
 import { getUser } from "@/utils/db/kv.ts";
+import { signal } from "@preact/signals-core";
 
 export default async function Create(req: Request) {
 	const user = await getUser(req);
@@ -16,7 +17,7 @@ export default async function Create(req: Request) {
     });
   }
 
-	const [eventData, setEventData] = useState<Event>(defaultEvent(user.email));
+	const eventData = signal<Event>(defaultEvent(user.email));
 
 	return (
 		<div>
