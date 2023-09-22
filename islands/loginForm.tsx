@@ -105,7 +105,6 @@ const LoginForm = ({ attending }: { attending: boolean }) => {
               autofocus
               type="email"
               placeholder="rick@example.com"
-              class="p-2 border rounded-md border-gray-300"
               name="email"
               value={email}
               onChange={(e) =>

@@ -22,17 +22,8 @@
   animation: blink 1s steps(1) infinite;
 }
 
+/* Tailwind forms */
 
-/* Hide number input arrows */
-
-/* Chrome, Safari, Edge, Opera */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-/* Firefox */
-input[type=number] {
-  -moz-appearance: textfield;
+[type="text"],input:where([type="email"]) {
+  @apply p-2 border rounded-md border-gray-300;
 }
