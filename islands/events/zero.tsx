@@ -4,9 +4,10 @@ import useForm from "@/components/fakeFormik/index.tsx";
 import * as Yup from "yup";
 import CTA from "@/components/buttons/cta.tsx";
 import PhotoPlus from "$tabler/photo-plus.tsx";
-import { useMemo } from "preact/hooks";
+import { StateUpdater, useMemo,  } from "preact/hooks";
 
-export default function StageZero({ state, page }: { state: Signal<Event>, page: Signal<number> }) {
+export default function StageZero({ eventState, setPage }: { eventState: Signal<Event>, setPage: StateUpdater<number> }) {
+  const {name, supportEmail, description} = eventState.value
   const [Field, Form, formState, submitForm] = useForm<{
     name: string;
     supportEmail: string;
@@ -14,31 +15,33 @@ export default function StageZero({ state, page }: { state: Signal<Event>, page:
     bannerImage?: File;
   }>({
     initialState: {
-      name: "amongus",
-      supportEmail: "",
-      description: "",
+      name,
+      supportEmail,
+      description: description ?? "",
       bannerImage: undefined,
     },
     onSubmit: (form) => {
       const { bannerImage: _, ...formState } = form;
-      state.value = { ...state.value, ...formState, bannerImage: form.bannerImage?.webkitRelativePath };
-      page.value = 1
+      eventState.value = { ...eventState.value, ...formState, bannerImage: form.bannerImage?.webkitRelativePath };
+      setPage(1)
+      console.log("test")
     },
     validationSchema: Yup.object({
-      test: Yup.string().min(3).required(),
+      name: Yup.string().min(3).max(75).required(),
+      supportEmail: Yup.string().email().required(),
+      description: Yup.string(),
+      bannerImage: Yup.string()
     }),
   });
 
-  const form = useMemo(() => formState, [formState]);
-
   return (
-    <div class="">
+    <div class="max-w-xl">
       {/* <input type="text" value={state.value.name} onInput={(e) => state.value = {...state.value, name: e.currentTarget.value}} /> */}
       <Form class="flex flex-col gap-6">
         <div className="flex gap-4 flex-col md:flex-row">
           <label class="flex flex-col grow">
             <p class="label-text label-required">Event Name</p>
-            <Field name="name" />
+            <Field name="name" autoComplete="off" />
           </label>
           <label class="flex flex-col ">
             <p class="label-text label-required">Event Support Email</p>
@@ -66,7 +69,7 @@ export default function StageZero({ state, page }: { state: Signal<Event>, page:
             accept="image/png, image/jpeg"
           />
         </label>
-        <CTA btnType="cta" size="sm">
+        <CTA btnType="cta" size="sm" className="ml-auto">
           Next
         </CTA>
       </Form>

@@ -9,7 +9,7 @@ export interface Field {
 export interface Event {
   name: string;
   supportEmail: string;
-  description?: string | null;
+  description?: string;
   bannerImage?: string;
   published: boolean;
   multiEntry: boolean;
@@ -30,7 +30,7 @@ export interface Event {
   owner: string;
 }
 
-export const defaultEvent = (email: string) => ({
+export const defaultEvent = (email: string): Event => ({
   name: "",
   supportEmail: "",
   description: "",
@@ -38,7 +38,7 @@ export const defaultEvent = (email: string) => ({
   published: false,
   multiEntry: true,
 
-  maxTickets: undefined,
+  maxTickets: 75,
   showTimes: [
     {
       startDate: new Date().toISOString(),
