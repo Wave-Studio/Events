@@ -1,4 +1,4 @@
-import { signal } from "@preact/signals";
+import { Signal, signal } from "@preact/signals";
 import { ComponentChild, JSX } from "preact";
 import * as Yup from "yup";
 
@@ -91,7 +91,7 @@ function useForm<T = Record<string, unknown>>({
 }): [
   (props: FieldProps) => JSX.Element,
   (props: FormProps) => JSX.Element,
-  T,
+  Signal<T>,
   () => void
 ] {
   const formState = signal(initialState);
@@ -126,11 +126,12 @@ function useForm<T = Record<string, unknown>>({
           e.preventDefault();
           onSubmit(formState.value);
         }}
+        noValidate={true}
       >
         {props.children}
       </form>
     ),
-    formState.value,
+    formState,
     () => onSubmit(formState.value),
   ];
 }

@@ -65,7 +65,7 @@ const LoginForm = ({ attending }: { attending: boolean }) => {
       setError(response.error!);
       return;
     }
-    window.location.href = `/events${attending ? "attending" : "organizing"}`;
+    window.location.href = `/events/${attending ? "attending" : "organizing"}`;
   };
 
   const differentEmail = () => {
