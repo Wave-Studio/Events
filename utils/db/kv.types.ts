@@ -9,7 +9,7 @@ export interface Field {
 export interface Event {
   name: string;
   supportEmail: string;
-  description: string;
+  description?: string | null;
   bannerImage?: string;
   published: boolean;
   multiEntry: boolean;

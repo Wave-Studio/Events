@@ -22,8 +22,17 @@
   animation: blink 1s steps(1) infinite;
 }
 
-/* Tailwind forms */
+/* forms */
 
-[type="text"],input:where([type="email"]) {
+[type="text"],input:where([type="email"]),textarea {
   @apply p-2 border rounded-md border-gray-300;
+}
+
+.label-text {
+	@apply font-medium text-sm mb-0.5;
+}
+
+.label-required:after {
+	content: " *";
+	@apply text-red-500 font-normal;
 }
