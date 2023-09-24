@@ -52,8 +52,7 @@ export default function StageZero({
   });
 
   return (
-    <div class="max-w-xl w-full">
-      {/* <input type="text" value={state.value.name} onInput={(e) => state.value = {...state.value, name: e.currentTarget.value}} /> */}
+
       <Form class="flex flex-col gap-4">
         <div className="flex gap-4 flex-col md:flex-row">
           <label class="flex flex-col grow">
@@ -87,7 +86,6 @@ export default function StageZero({
           </CTA>
         </div>
       </Form>
-      {/* {JSON.stringify(formState.value)} */}
-    </div>
+
   );
 }

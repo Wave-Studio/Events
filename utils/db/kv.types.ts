@@ -11,23 +11,23 @@ export interface Event {
   supportEmail: string;
   description?: string;
   bannerImage?: string;
-  published: boolean;
-  multiEntry: boolean;
+  venue?: string;
 
-  maxTickets?: number;
   showTimes: {
     startDate: string;
-    startTime?: string;
-    endTime?: string;
+    startTime?: Date;
+    endTime?: Date;
     lastPurchaseDate?: string;
   }[];
 
-  venue?: string;
+  multiEntry: boolean;
+  maxTickets?: number;
+  additionalFields: Field[];
+
   soldTickets: number;
   price: number;
-
-  additionalFields: Field[];
   owner: string;
+  published: boolean;
 }
 
 export const defaultEvent = (email: string): Event => ({
@@ -41,8 +41,8 @@ export const defaultEvent = (email: string): Event => ({
   maxTickets: 75,
   showTimes: [
     {
-      startDate: new Date().toISOString(),
-      startTime: undefined,
+      startDate: new Date().toString(),
+      startTime: new Date(),
       endTime: undefined,
       lastPurchaseDate: undefined,
     },
@@ -53,7 +53,7 @@ export const defaultEvent = (email: string): Event => ({
   price: 0,
 
   additionalFields: [],
-  owner: email, 
+  owner: email,
 });
 
 export interface FieldEntry

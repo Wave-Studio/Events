@@ -24,12 +24,17 @@
 
 /* forms */
 
-[type="text"],input:where([type="email"]),textarea {
+input:where([type="email"],[type="text"]):not(.nostyle),textarea {
   @apply p-2 border rounded-md border-gray-300;
 }
 
+.nostyle {
+  @apply focus:outline-none;
+  caret-color: transparent;
+}
+
 .label-text {
-	@apply font-medium text-sm mb-0.5;
+	@apply font-medium text-sm mb-0.5 capitalize;
 }
 
 .label-required:after {
