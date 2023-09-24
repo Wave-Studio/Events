@@ -53,7 +53,7 @@ export const defaultEvent = (email: string): Event => ({
   price: 0,
 
   additionalFields: [],
-  owner: email,
+  owner: email, 
 });
 
 export interface FieldEntry

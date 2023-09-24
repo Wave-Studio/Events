@@ -1,4 +1,5 @@
 import { Signal, signal } from "@preact/signals";
+import { useState } from "preact/hooks";
 import { ComponentChild, JSX } from "preact";
 import * as Yup from "yup";
 
@@ -9,8 +10,8 @@ type Json =
   | boolean
   | Array<JSON>
   | {
-      [prop: string]: Json;
-    };
+    [prop: string]: Json;
+  };
 
 // const useOldForm = <
 //   Key extends PropertyKey,
@@ -72,67 +73,89 @@ type Json =
 //   ];
 // };
 
-interface FieldProps extends JSX.HTMLAttributes<HTMLInputElement> {
-  name: string;
-}
-
 interface FormProps extends JSX.HTMLAttributes<HTMLFormElement> {
   children: ComponentChild;
 }
 
-function useForm<T = Record<string, unknown>>({
-  initialState,
-  onSubmit,
-  validationSchema,
-}: {
-  initialState: T;
-  onSubmit: (values: T) => void;
-  validationSchema: Yup.ObjectSchema<Record<string, unknown>>;
-}): [
-  (props: FieldProps) => JSX.Element,
+interface HTMLInputProps extends JSX.HTMLAttributes<HTMLInputElement> {
+  name: string;
+}
+
+interface HTMLTextAreaProps extends JSX.HTMLAttributes<HTMLTextAreaElement> {
+  name: string;
+}
+
+function useForm<T>(
+  { validationSchema, initialState, onSubmit }: {
+    validationSchema: Yup.ObjectSchema<Record<string, unknown>>;
+    initialState: T;
+    onSubmit: (
+      { success, error, formState }: {
+        success: boolean;
+        error?: Error;
+        formState?: T;
+      },
+    ) => void;
+  },
+): [
   (props: FormProps) => JSX.Element,
-  Signal<T>,
-  () => void
+  [
+    (props: HTMLInputProps) => JSX.Element,
+    (props: HTMLTextAreaProps) => JSX.Element,
+  ],
+  T,
 ] {
-  const formState = signal(initialState);
+  const [formState, setFormState] = useState<T>(initialState);
+
+  const onSubmitHandler: JSX.GenericEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault();
+
+    try {
+      validationSchema.validateSync(formState);
+    } catch (error) {
+      onSubmit({
+        success: false,
+        error,
+      });
+      return;
+    }
+
+    onSubmit({
+      success: true,
+      formState,
+    });
+  };
 
   return [
-    (props: FieldProps) =>
-      props.as == "textarea" ? (
-        // @ts-expect-error Types my beloved
-        <textarea
-          {...props}
-          value={formState.value[props.name as keyof T] as string}
-          onInput={(e) =>
-            // @ts-expect-error Types my beloved
-            (formState.value[props.name as string] = e.currentTarget.value)
-          }
-        ></textarea>
-      ) : (
-        <input
-          {...props}
-          value={formState.value[props.name as keyof T] as string}
-          onInput={(e) =>
-            // @ts-expect-error Types my beloved
-            (formState.value[props.name as string] = e.currentTarget.value)
-          }
-          type={props.type ?? "text"}
-        />
-      ),
-    (props: FormProps) => (
-      <form
-        {...props}
-        onSubmit={(e) => {
-          e.preventDefault();
-          onSubmit(formState.value);
-        }}
-        noValidate={true}
-      >
-        {props.children}
-      </form>
-    ),
+    (props: FormProps) => {
+      return (
+        <form {...props} onSubmit={onSubmitHandler}>
+          {props.children}
+        </form>
+      );
+    },
+    [
+      (props: HTMLInputProps) => {
+        return (
+          <input
+            {...props as HTMLInputProps}
+            type={props.type ?? "text"}
+            value={formState[props.name as keyof T] as string}
+            onInput={(e) => (formState[props.name as keyof T] as string) = e.currentTarget.value}
+          />
+        );
+      },
+      (props: HTMLTextAreaProps) => {
+        return (
+          <textarea
+            {...props as HTMLTextAreaProps}
+            value={formState[props.name as keyof T] as string}
+            onInput={(e) => (formState[props.name as keyof T] as string) = e.currentTarget.value}
+          />
+        );
+      },
+    ],
     formState,
-    () => onSubmit(formState.value),
   ];
 }
 

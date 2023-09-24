@@ -9,7 +9,8 @@ import { StateUpdater, useMemo,  } from "preact/hooks";
 export default function StageOne({ eventState, setPage }: { eventState: Signal<Event>, setPage: StateUpdater<number> }) {
   const {maxTickets, showTimes, venue} = eventState.value
   
-
+	
+	
   return (
     <div class="max-w-xl w-full">
       {/* <input type="text" value={state.value.name} onInput={(e) => state.value = {...state.value, name: e.currentTarget.value}} /> */}
@@ -36,7 +37,7 @@ export default function StageOne({ eventState, setPage }: { eventState: Signal<E
           </div>
           
         </label>
-        <CTA btnType="cta" size="sm" className="ml-auto">
+        <CTA btnType="cta" btnSize="sm" className="ml-auto">
           Next
         </CTA>
       </div>

@@ -73,7 +73,7 @@ const Pricing = async (req: Request) => {
           </div>
           <CTA
             btnType="secondary"
-            size="sm"
+            btnSize="sm"
             className="my-auto mx-auto mt-4 w-full sm:mr-0 sm:w-40 sm:mt-auto"
           >
             Contact Us

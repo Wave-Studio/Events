@@ -91,12 +91,12 @@ export default defineRoute(async (req, ctx) => {
         </p>
         <div class="flex flex-col sm:flex-row justify-center gap-4">
           <a href="/features">
-            <CTA btnType="secondary" size="sm">
+            <CTA btnType="secondary" btnSize="sm">
               All Features
             </CTA>
           </a>
           <a href="/faq">
-            <CTA btnType="secondary" size="sm">
+            <CTA btnType="secondary" btnSize="sm">
               FAQ
             </CTA>
           </a>
@@ -109,7 +109,7 @@ export default defineRoute(async (req, ctx) => {
           expected future pricing:
         </p>
         <a href="/pricing">
-          <CTA btnType="secondary" size="sm">
+          <CTA btnType="secondary" btnSize="sm">
             Pricing
           </CTA>
         </a>
