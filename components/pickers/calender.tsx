@@ -9,8 +9,10 @@ export default function CalenderPicker({
   updateDate: (date: Date | undefined) => void;
 }) {
   const [eventDate, setEventDate] = useState(initialDate);
+	const [open, setOpen] = useState(false)
+
   return (
-    <div class="border-gray-300 border rounded-md px-3 flex items-center h-12">
+    <div class="border-gray-300 border rounded-md px-3 flex items-center h-12 cursor-pointer">
       {eventDate ? (
         <>
           <p class="font-semibold">{eventDate.getMonth() + 1}</p>

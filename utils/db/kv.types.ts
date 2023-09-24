@@ -15,8 +15,8 @@ export interface Event {
 
   showTimes: {
     startDate: string;
-    startTime?: Date;
-    endTime?: Date;
+    startTime?: string;
+    endTime?: string;
     lastPurchaseDate?: string;
   }[];
 
@@ -42,7 +42,7 @@ export const defaultEvent = (email: string): Event => ({
   showTimes: [
     {
       startDate: new Date().toString(),
-      startTime: new Date(),
+      startTime: new Date().toString(),
       endTime: undefined,
       lastPurchaseDate: undefined,
     },

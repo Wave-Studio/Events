@@ -9,13 +9,14 @@ export default function TimePicker({
   updateTime: (date: Date | undefined) => void;
 }) {
   const [eventTime, setEventTime] = useState(initialTime);
+  const [open, setOpen] = useState(false)
   const formatter = new Intl.DateTimeFormat("en-US", {
     hour12: true,
     hour: "2-digit"
   })
 
   return (
-    <div class="border-gray-300 border rounded-md px-3 flex items-center h-12">
+    <div class="border-gray-300 border rounded-md px-3 flex items-center h-12 cursor-pointer">
       {eventTime ? (
         <>
           <p class="font-semibold">

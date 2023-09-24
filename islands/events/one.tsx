@@ -38,9 +38,9 @@ export default function StageOne({
                 : undefined
             }
             updateDate={(date) =>
-              (showTimes[0].lastPurchaseDate = (
-                date ?? new Date()
-              ).toString())
+              (showTimes[0].lastPurchaseDate = date
+                ? date.toString()
+                : undefined)
             }
           />
         </label>
@@ -48,18 +48,24 @@ export default function StageOne({
         <label class="flex flex-col">
           <p class="label-text">Start Time</p>
           <TimePicker
-            initialTime={showTimes[0].startTime}
+            initialTime={
+              showTimes[0].startTime
+                ? new Date(showTimes[0].startTime)
+                : undefined
+            }
             updateTime={(time) =>
-              (showTimes[0].startTime = time)
+              (showTimes[0].startTime = time ? time.toString() : undefined)
             }
           />
         </label>
         <label class="flex flex-col">
           <p class="label-text">end time</p>
           <TimePicker
-            initialTime={showTimes[0].endTime}
+            initialTime={
+              showTimes[0].endTime ? new Date(showTimes[0].endTime) : undefined
+            }
             updateTime={(time) =>
-              (showTimes[0].endTime = time)
+              (showTimes[0].endTime = time ? time.toString() : undefined)
             }
           />
         </label>
