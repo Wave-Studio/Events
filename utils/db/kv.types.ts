@@ -18,6 +18,7 @@ export interface Event {
     startTime?: string;
     endTime?: string;
     lastPurchaseDate?: string;
+    id: string
   }[];
 
   multiEntry: boolean;
@@ -45,6 +46,7 @@ export const defaultEvent = (email: string): Event => ({
       startTime: new Date().toString(),
       endTime: undefined,
       lastPurchaseDate: undefined,
+      id: crypto.randomUUID()
     },
   ],
 
