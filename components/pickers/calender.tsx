@@ -38,10 +38,6 @@ export default function CalenderPicker({
     year: initialDate ? initialDate.getFullYear() : today.getFullYear(),
   });
 
-  const calenderRef = useRef<HTMLDivElement>(null)
-
-  useClickAway(calenderRef, () => console.log("cliked away"))
-
   const addMonths = (months: number) => {
     setCal(({ month, year }) => {
       year += Math.floor((month + months) / 12);
@@ -77,20 +73,36 @@ export default function CalenderPicker({
   };
 
   return (
-    <div class="border-gray-300 border rounded-md px-3 flex items-center h-12 cursor-pointer group/main relative" ref={calenderRef}>
-      {date ? (
-        <>
-          <p class="font-semibold">{date.getMonth() + 1}</p>
-          <p class="text-xl text-gray-400 mx-2.5">/</p>
-          <p class="font-semibold">{date.getDate()}</p>
-          <p class="text-xl text-gray-400 mx-2.5">/</p>
-          <p class="font-semibold">{date.getFullYear().toString().slice(2)}</p>
-        </>
-      ) : (
-        <p class="text-gray-500 font-medium">No date selected</p>
-      )}
-      <Calendar class="ml-auto text-gray-500" />
-      <div class="absolute left-1 right-1 z-10 translate-y-44 bg-white border border-gray-300 rounded-md px-1 py-2 shadow-xl cursor-default select-none">
+    <div class="relative flex flex-col">
+      <div class="border-gray-300 border rounded-md px-3 flex items-center h-12 cursor-pointer group/main" onClick={() => setOpen(open => !open)}>
+        {date ? (
+          <>
+            <p class="font-semibold">{date.getMonth() + 1}</p>
+            <p class="text-xl text-gray-400 mx-2.5">/</p>
+            <p class="font-semibold">{date.getDate()}</p>
+            <p class="text-xl text-gray-400 mx-2.5">/</p>
+            <p class="font-semibold">
+              {date.getFullYear().toString().slice(2)}
+            </p>
+          </>
+        ) : (
+          <p class="text-gray-500 font-medium">No date selected</p>
+        )}
+        <Calendar class="ml-auto text-gray-500" />
+      </div>
+      {open && <Cal />}
+    </div>
+  );
+
+  function Cal() {
+    const calenderRef = useRef<HTMLDivElement>(null);
+    useClickAway(calenderRef, () => setOpen(false));
+
+    return (
+      <div
+        class="absolute left-1 right-1 z-10 top-14 bg-white border border-gray-300 rounded-md px-1 py-2 shadow-xl cursor-default select-none"
+        ref={calenderRef}
+      >
         <div class="flex justify-between">
           <div
             class="group hover:bg-gray-200 rounded transition"
@@ -107,11 +119,17 @@ export default function CalenderPicker({
           </div>
         </div>
         <div class="flex justify-center items-center gap-2">
-          <p class="text-xs text-gray-500 hover:text-gray-600 hover:font-medium transition cursor-pointer w-[1.85rem]" onClick={() => subtractMonths(12)}>
+          <p
+            class="text-xs text-gray-500 hover:text-gray-600 hover:font-medium transition cursor-pointer w-[1.85rem]"
+            onClick={() => subtractMonths(12)}
+          >
             {cal.year - 1}
           </p>
           <p class="text-sm text-gray-600 font-semibold">{cal.year}</p>
-          <p class="text-xs text-gray-500 hover:text-gray-600 hover:font-medium transition w-[1.85rem] cursor-pointer" onClick={() => addMonths(12)}>
+          <p
+            class="text-xs text-gray-500 hover:text-gray-600 hover:font-medium transition w-[1.85rem] cursor-pointer"
+            onClick={() => addMonths(12)}
+          >
             {cal.year + 1}
           </p>
         </div>
@@ -150,8 +168,8 @@ export default function CalenderPicker({
           Clear
         </p>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
 // chatgpt wrote this and every time it tried to make it smaller smth broke

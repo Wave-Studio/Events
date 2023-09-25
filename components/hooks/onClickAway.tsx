@@ -1,20 +1,19 @@
 import { useEffect, Ref } from "preact/hooks";
 
 const useClickAway = (ref: Ref<HTMLDivElement>, callback: () => void) => {
-  const handleClick = (e: MouseEvent) => {
-    if (ref.current && !ref.current.contains(e.target as Node)) {
-			console.log(e.target)
-      callback();
-    }
-  };
-
   useEffect(() => {
-    document.addEventListener("click", handleClick, {capture: true});
+    const handleClick = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        callback();
+      }
+    };
+
+    addEventListener("mousedown", handleClick);
 
     return () => {
-      document.removeEventListener("click", handleClick, {capture: true});
+      removeEventListener("mousedown", handleClick);
     };
-  });
+  }, []);
 };
 
 export default useClickAway;
