@@ -86,11 +86,16 @@ export default function CalenderPicker({
     });
   };
 
-  const changeDate = (day: number) => {
-    const date = new Date(cal.year, cal.month, day)
-    setDate(date)
-    updateDate(date)
-  }
+  const changeDate = (day: number | undefined) => {
+    if (day == undefined) {
+      setDate(undefined);
+      updateDate(undefined);
+      return;
+    }
+    const date = new Date(cal.year, cal.month, day);
+    setDate(date);
+    updateDate(date);
+  };
 
   return (
     <div class="border-gray-300 border rounded-md px-3 flex items-center h-12 cursor-pointer group/main relative">
@@ -135,15 +140,15 @@ export default function CalenderPicker({
           {getMonthDays(cal.month, cal.year).map((day) =>
             day.inMonth ? (
               <div
-              onClick={() => changeDate(day.number)}
+                onClick={() => changeDate(day.number)}
                 class={` w-7 h-7 rounded grid place-items-center hover:text-gray-700 cursor-pointer text-gray-600 transition ${
-                  (date &&
+                  date &&
                   cal.year == date.getFullYear() &&
                   cal.month == date.getMonth() &&
-                  day.number == date.getDate()) ?
-                  // is selected date
-                  "border-2 border-gray-300 hover:bg-gray-50" :
-                  "hover:bg-gray-200"
+                  day.number == date.getDate()
+                    ? // is selected date
+                      "border-2 border-gray-300 hover:bg-gray-50"
+                    : "hover:bg-gray-200"
                 }`}
               >
                 {day.number}
@@ -154,7 +159,17 @@ export default function CalenderPicker({
               </div>
             )
           )}
-        </div>
+        </div>{" "}
+        <p
+          className={`text-xs text-right mr-2 transition ${
+            date
+              ? "text-gray-400 hover:text-gray-600 cursor-pointer"
+              : "text-gray-200"
+          }`}
+          onClick={() => changeDate(undefined)}
+        >
+          Clear
+        </p>
       </div>
     </div>
   );
