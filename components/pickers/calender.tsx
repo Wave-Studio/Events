@@ -1,7 +1,8 @@
 import Calendar from "$tabler/calendar.tsx";
 import Left from "$tabler/chevron-left.tsx";
 import Right from "$tabler/chevron-right.tsx";
-import { useState } from "preact/hooks";
+import { useRef, useState } from "preact/hooks";
+import useClickAway from "@/components/hooks/onClickAway.tsx";
 
 export default function CalenderPicker({
   initialDate,
@@ -24,37 +25,11 @@ export default function CalenderPicker({
     "November",
     "December",
   ];
+  // Even though it's pretty trivial to do so, I decided not to show dates for 2 reasons:
+  // 1: it makes the design feel a bit more cluttered
+  // 2: people generally already know the date their event is going to happen, this UI is just for inputting that date, not figuring it out.
   const days = ["Sun", "Mon", "Tue", "Wen", "Thu", "Fri", "Sat"];
   const today = new Date();
-
-  // chatgpt wrote this and every time it tried to make it smaller smth broke
-  function getMonthDays(
-    month: number,
-    year: number
-  ): { number: number; inMonth: boolean }[] {
-    const daysInMonth = new Date(year, month + 1, 0).getDate();
-    const firstDay = new Date(year, month, 1).getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
-    const result: { number: number; inMonth: boolean }[] = [];
-
-    // Fill in the previous month's days
-    const lastMonthDays = new Date(year, month, 0).getDate();
-    for (let i = firstDay - 1; i >= 0; i--) {
-      result.push({ number: lastMonthDays - i, inMonth: false });
-    }
-
-    // Fill in the current month's days
-    for (let i = 1; i <= daysInMonth; i++) {
-      result.push({ number: i, inMonth: true });
-    }
-
-    // Fill in the next month's days to reach 42 days
-    const daysToAdd = 42 - result.length;
-    for (let i = 1; i <= daysToAdd; i++) {
-      result.push({ number: i, inMonth: false });
-    }
-
-    return result;
-  }
 
   const [date, setDate] = useState(initialDate);
   const [open, setOpen] = useState(false);
@@ -62,6 +37,10 @@ export default function CalenderPicker({
     month: initialDate ? initialDate.getMonth() : today.getMonth(),
     year: initialDate ? initialDate.getFullYear() : today.getFullYear(),
   });
+
+  const calenderRef = useRef<HTMLDivElement>(null)
+
+  useClickAway(calenderRef, () => console.log("cliked away"))
 
   const addMonths = (months: number) => {
     setCal(({ month, year }) => {
@@ -98,7 +77,7 @@ export default function CalenderPicker({
   };
 
   return (
-    <div class="border-gray-300 border rounded-md px-3 flex items-center h-12 cursor-pointer group/main relative">
+    <div class="border-gray-300 border rounded-md px-3 flex items-center h-12 cursor-pointer group/main relative" ref={calenderRef}>
       {date ? (
         <>
           <p class="font-semibold">{date.getMonth() + 1}</p>
@@ -111,15 +90,15 @@ export default function CalenderPicker({
         <p class="text-gray-500 font-medium">No date selected</p>
       )}
       <Calendar class="ml-auto text-gray-500" />
-      <div className="absolute left-1 right-1 z-10 translate-y-44 bg-white border border-gray-300 rounded-md px-1 py-2 shadow-xl cursor-default select-none">
-        <div className="flex justify-between">
+      <div class="absolute left-1 right-1 z-10 translate-y-44 bg-white border border-gray-300 rounded-md px-1 py-2 shadow-xl cursor-default select-none">
+        <div class="flex justify-between">
           <div
             class="group hover:bg-gray-200 rounded transition"
             onClick={() => subtractMonths(1)}
           >
             <Left class="text-gray-500 group-hover:text-gray-700 transition cursor-pointer" />
           </div>
-          <p className="font-medium">{months[cal.month]}</p>
+          <p class="font-medium">{months[cal.month]}</p>
           <div
             class="group hover:bg-gray-200 rounded transition"
             onClick={() => addMonths(1)}
@@ -127,16 +106,16 @@ export default function CalenderPicker({
             <Right class="text-gray-500 group-hover:text-gray-700 transition cursor-pointer" />
           </div>
         </div>
-        <div className="flex justify-center items-center gap-2">
-          <p className="text-xs text-gray-500 hover:text-gray-600 hover:font-medium transition w-[1.85rem] cursor-pointer">
+        <div class="flex justify-center items-center gap-2">
+          <p class="text-xs text-gray-500 hover:text-gray-600 hover:font-medium transition cursor-pointer w-[1.85rem]" onClick={() => subtractMonths(12)}>
             {cal.year - 1}
           </p>
-          <p className="text-sm text-gray-600 font-semibold">{cal.year}</p>
-          <p className="text-xs text-gray-500 hover:text-gray-600 hover:font-medium transition w-[1.85rem] cursor-pointer">
+          <p class="text-sm text-gray-600 font-semibold">{cal.year}</p>
+          <p class="text-xs text-gray-500 hover:text-gray-600 hover:font-medium transition w-[1.85rem] cursor-pointer" onClick={() => addMonths(12)}>
             {cal.year + 1}
           </p>
         </div>
-        <div className="grid grid-cols-7 place-items-center gap-2 mt-3 mx-1 font-medium">
+        <div class="grid grid-cols-7 place-items-center gap-2 mt-3 mx-1 font-medium">
           {getMonthDays(cal.month, cal.year).map((day) =>
             day.inMonth ? (
               <div
@@ -161,7 +140,7 @@ export default function CalenderPicker({
           )}
         </div>{" "}
         <p
-          className={`text-xs text-right mr-2 transition ${
+          class={`text-xs text-right mr-2 transition ${
             date
               ? "text-gray-400 hover:text-gray-600 cursor-pointer"
               : "text-gray-200"
@@ -173,4 +152,33 @@ export default function CalenderPicker({
       </div>
     </div>
   );
+}
+
+// chatgpt wrote this and every time it tried to make it smaller smth broke
+function getMonthDays(
+  month: number,
+  year: number
+): { number: number; inMonth: boolean }[] {
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const firstDay = new Date(year, month, 1).getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+  const result: { number: number; inMonth: boolean }[] = [];
+
+  // Fill in the previous month's days
+  const lastMonthDays = new Date(year, month, 0).getDate();
+  for (let i = firstDay - 1; i >= 0; i--) {
+    result.push({ number: lastMonthDays - i, inMonth: false });
+  }
+
+  // Fill in the current month's days
+  for (let i = 1; i <= daysInMonth; i++) {
+    result.push({ number: i, inMonth: true });
+  }
+
+  // Fill in the next month's days to reach 42 days
+  const daysToAdd = 42 - result.length;
+  for (let i = 1; i <= daysToAdd; i++) {
+    result.push({ number: i, inMonth: false });
+  }
+
+  return result;
 }
