@@ -41,7 +41,7 @@ export const defaultEvent = (email: string): Event => ({
   maxTickets: 75,
   showTimes: [
     {
-      startDate: new Date().toString(),
+      startDate: new Date("7-24-2003").toString(),
       startTime: new Date().toString(),
       endTime: undefined,
       lastPurchaseDate: undefined,

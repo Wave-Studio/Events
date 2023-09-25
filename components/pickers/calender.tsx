@@ -71,6 +71,28 @@ export default function CalenderPicker({
     year: initialDate ? initialDate.getFullYear() : today.getFullYear(),
   });
 
+  const addMonths = (months: number) => {
+    setCal(({month, year}) => {
+      year += Math.floor((month + months) / 12)
+      month = ((months + month) % 12)
+
+      console.log(month, year)
+      return ({month, year});
+    })
+  }
+
+  const subtractMonths = (months: number) => {
+    setCal(({ month, year }) => {
+      const newMonth = month - months;
+      if (newMonth < 0) {
+        year -= Math.ceil(-newMonth / 12);
+      }
+      month = ((newMonth % 12) + 12) % 12;
+  
+      console.log(month, year);
+      return { month, year };
+    });
+  };
 
   return (
     <div class="border-gray-300 border rounded-md px-3 flex items-center h-12 cursor-pointer group/main relative">
@@ -88,25 +110,27 @@ export default function CalenderPicker({
         <p class="text-gray-500 font-medium">No date selected</p>
       )}
       <Calendar class="ml-auto text-gray-500" />
-      <div className="absolute left-1 right-1 z-10 translate-y-12 bg-white border border-gray-300 rounded-md px-1 py-2 shadow-xl cursor-default">
+      <div className="absolute left-1 right-1 z-10 translate-y-44 bg-white border border-gray-300 rounded-md px-1 py-2 shadow-xl cursor-default">
         <div className="flex justify-between">
-          <div class="group hover:bg-gray-200 rounded transition">
+          <div class="group hover:bg-gray-200 rounded transition" onClick={() => subtractMonths(1)}>
             <Left class="text-gray-500 group-hover:text-gray-700 transition cursor-pointer" />
           </div>
           <p className="font-medium">{months[cal.month]}</p>
-          <div class="group hover:bg-gray-200 rounded transition">
+          <div class="group hover:bg-gray-200 rounded transition" onClick={() => addMonths(1)}>
             <Right class="text-gray-500 group-hover:text-gray-700 transition cursor-pointer" />
           </div>
         </div>
         <div className="flex justify-center items-center gap-2">
-          <p className="text-xs text-gray-500">{cal.year - 1}</p>
-          <p className="text-sm text-gray-700 font-semibold">{cal.year}</p>
-          <p className="text-xs text-gray-500">{cal.year + 1}</p>
+          <p className="text-xs text-gray-500 hover:text-gray-600 hover:font-medium transition w-[1.85rem] cursor-pointer">{cal.year - 1}</p>
+          <p className="text-sm text-gray-600 font-semibold">{cal.year}</p>
+          <p className="text-xs text-gray-500 hover:text-gray-600 hover:font-medium transition w-[1.85rem] cursor-pointer">{cal.year + 1}</p>
         </div>
-				<div className="grid grid-cols-7 place-items-center gap-2 mt-2 mx-1 mb-1">
-					{getMonthDays(cal.month, cal.year).map(day => (
-						<div class=" bg-red-500 w-7 h-7 rounded grid place-items-center">{day.number}</div>
-					))}
+				<div className="grid grid-cols-7 place-items-center gap-2 mt-3 mx-1 mb-1 font-medium">
+					{getMonthDays(cal.month, cal.year).map(day => day.inMonth ? (
+						<div class=" w-7 h-7 rounded grid place-items-center hover:bg-gray-200 hover:text-gray-700 cursor-pointer text-gray-600 transition">{day.number}</div>
+					) : (
+          <div class=" w-7 h-7 rounded grid place-items-center text-gray-300">{day.number}</div>
+          ))}
 				</div>
       </div>
     </div>
