@@ -1,12 +1,10 @@
-
-
 import { getUser } from "@/utils/db/kv.ts";
 import CreateEvent from "@/islands/events/createForm.tsx";
 
 export default async function Create(req: Request) {
-	const user = await getUser(req);
-	
-	if (user == undefined) {
+  const user = await getUser(req);
+
+  if (user == undefined) {
     return new Response(undefined, {
       headers: {
         Location: "/login",
@@ -15,9 +13,5 @@ export default async function Create(req: Request) {
     });
   }
 
-
-
-	return (
-		<CreateEvent user={user} />
-	)
+  return <CreateEvent user={user} />;
 }

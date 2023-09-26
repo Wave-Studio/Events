@@ -1,7 +1,6 @@
-export default function Attending () {
-	return (
-		<div>
-			
-		</div>
-	)
+export default function Attending() {
+  return (
+    <div>
+    </div>
+  );
 }

@@ -23,7 +23,7 @@ export const pricingfaqs: FAQ[] = [
   },
   {
     q: "What does it mean to have my event archived?",
-    a: "Your event will no longer show up for event team members or event attendees."
+    a: "Your event will no longer show up for event team members or event attendees.",
   },
   {
     q: "How much customization do I get with 'Basic email customization'",

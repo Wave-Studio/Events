@@ -1,15 +1,33 @@
-import { useSignal } from "@preact/signals";
-import CTA from "@/components/buttons/cta.tsx";
-import Button from "@/components/buttons/button.tsx";
-import ChevronDown from "$tabler/chevron-down.tsx";
-import { useState } from "preact/hooks";
-import { defineRoute } from "$fresh/server.ts";
+import { defineRoute, Handlers } from "$fresh/server.ts";
 import { getUser } from "@/utils/db/kv.ts";
 import LoginForm from "@/islands/loginForm.tsx";
+import { deleteCookie } from "$std/http/cookie.ts";
+import { User } from "@/utils/db/kv.ts";
 
-export default defineRoute(async (req, ctx) => {
-  const user = await getUser(req);
-  const loggedIn = user != undefined;
+export const handler: Handlers = {
+  async GET(req, ctx) {
+    const user = await getUser(req);
+
+    const response = await ctx.render({ user });
+
+    if (user == undefined) {
+      deleteCookie(response.headers, "authToken", { path: "/" });
+    } else {
+      return new Response(undefined, {
+        headers: {
+          Location: "/events/organizing",
+        },
+        status: 307,
+      });
+    }
+
+    return response;
+  },
+};
+
+export default defineRoute((req, ctx) => {
+  // Weird types
+  const user = (ctx.data as unknown as { user: User | undefined }).user;
   const url = new URL(req.url);
   const attending = url.searchParams.get("attending");
 

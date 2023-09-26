@@ -15,7 +15,7 @@ export const faqs: FAQ[] = [
   },
   {
     q: "Can users register after my event has started?",
-    a: "By default, users can sign up before the event has started or an hour after starting. You can change this in your event settings."
+    a: "By default, users can sign up before the event has started or an hour after starting. You can change this in your event settings.",
   },
 ];
 

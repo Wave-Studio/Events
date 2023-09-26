@@ -1,9 +1,15 @@
-import { useEffect, Ref } from "preact/hooks";
+import { Ref, useEffect } from "preact/hooks";
 
-const useClickAway = (ref: Ref<HTMLDivElement>, callback: () => void) => {
+const useClickAway = (ref: Ref<HTMLDivElement>[], callback: () => void) => {
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) {
+      let shouldClose = true;
+      for (const r of ref) {
+        if (r.current && r.current.contains(e.target as Node)) {
+          shouldClose = false;
+        }
+      }
+      if (shouldClose) {
         callback();
       }
     };

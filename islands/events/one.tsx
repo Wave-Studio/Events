@@ -24,49 +24,43 @@ export default function StageOne({
           <p class="label-text label-required">Event Date</p>
           <CalenderPicker
             initialDate={new Date(showTimes[0].startDate)}
-            updateDate={(date) =>
-              (showTimes[0].startDate = (date ?? new Date()).toString())
-            }
+            updateDate={(
+              date,
+            ) => (showTimes[0].startDate = (date ?? new Date()).toString())}
           />
         </label>
         <label class="col-span-2 flex flex-col">
           <p class="label-text">Last Purchase Date</p>
           <CalenderPicker
-            initialDate={
-              showTimes[0].lastPurchaseDate
-                ? new Date(showTimes[0].lastPurchaseDate)
-                : undefined
-            }
-            updateDate={(date) =>
-              (showTimes[0].lastPurchaseDate = date
-                ? date.toString()
-                : undefined)
-            }
+            initialDate={showTimes[0].lastPurchaseDate
+              ? new Date(showTimes[0].lastPurchaseDate)
+              : undefined}
+            updateDate={(date) => (showTimes[0].lastPurchaseDate = date
+              ? date.toString()
+              : undefined)}
           />
         </label>
         <div class="col-span-2">s</div>
         <label class="flex flex-col">
           <p class="label-text">Start Time</p>
           <TimePicker
-            initialTime={
-              showTimes[0].startTime
-                ? new Date(showTimes[0].startTime)
-                : undefined
-            }
-            updateTime={(time) =>
-              (showTimes[0].startTime = time ? time.toString() : undefined)
-            }
+            initialTime={showTimes[0].startTime
+              ? new Date(showTimes[0].startTime)
+              : undefined}
+            updateTime={(
+              time,
+            ) => (showTimes[0].startTime = time ? time.toString() : undefined)}
           />
         </label>
         <label class="flex flex-col">
           <p class="label-text">end time</p>
           <TimePicker
-            initialTime={
-              showTimes[0].endTime ? new Date(showTimes[0].endTime) : undefined
-            }
-            updateTime={(time) =>
-              (showTimes[0].endTime = time ? time.toString() : undefined)
-            }
+            initialTime={showTimes[0].endTime
+              ? new Date(showTimes[0].endTime)
+              : undefined}
+            updateTime={(
+              time,
+            ) => (showTimes[0].endTime = time ? time.toString() : undefined)}
           />
         </label>
       </div>

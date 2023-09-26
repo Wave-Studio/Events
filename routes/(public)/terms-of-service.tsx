@@ -48,8 +48,7 @@ export default function TOS() {
         This will let Wave Studio to terminate upon violations of any of these
         restrictions. Upon termination, your viewing right will also be
         terminated and you should destroy any downloaded materials in your
-        possession whether it is printed or electronic format.
-        .
+        possession whether it is printed or electronic format. .
       </p>
 
       <h2>3. Disclaimer</h2>

@@ -1,4 +1,4 @@
-import { getUser, kv, Event } from "@/utils/db/kv.ts";
+import { Event, getUser, kv } from "@/utils/db/kv.ts";
 import { AppContext } from "$fresh/server.ts";
 import { renderToString } from "preact-render-to-string";
 import CTA from "@/components/buttons/cta.tsx";
@@ -16,7 +16,7 @@ export default async function Homepage(req: Request, ctx: AppContext) {
   }
 
   const events = await kv.getMany<Event[]>(
-    user.events.map((e) => ["event", e])
+    user.events.map((e) => ["event", e]),
   );
 
   if (events.length == 0) {

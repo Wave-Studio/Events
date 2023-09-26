@@ -1,5 +1,5 @@
 import { useState } from "preact/hooks";
-import { User, defaultEvent } from "@/utils/db/kv.types.ts";
+import { defaultEvent, User } from "@/utils/db/kv.types.ts";
 import StageZero from "./zero.tsx";
 import StageOne from "@/islands/events/one.tsx";
 import { useSignal } from "@preact/signals";

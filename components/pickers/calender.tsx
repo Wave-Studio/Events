@@ -33,6 +33,7 @@ export default function CalenderPicker({
 
   const [date, setDate] = useState(initialDate);
   const [open, setOpen] = useState(false);
+  const calInputRef = useRef<HTMLDivElement>(null);
   const [cal, setCal] = useState({
     month: initialDate ? initialDate.getMonth() : today.getMonth(),
     year: initialDate ? initialDate.getFullYear() : today.getFullYear(),
@@ -74,20 +75,24 @@ export default function CalenderPicker({
 
   return (
     <div class="relative flex flex-col">
-      <div class="border-gray-300 border rounded-md px-3 flex items-center h-12 cursor-pointer group/main" onClick={() => setOpen(open => !open)}>
-        {date ? (
-          <>
-            <p class="font-semibold">{date.getMonth() + 1}</p>
-            <p class="text-xl text-gray-400 mx-2.5">/</p>
-            <p class="font-semibold">{date.getDate()}</p>
-            <p class="text-xl text-gray-400 mx-2.5">/</p>
-            <p class="font-semibold">
-              {date.getFullYear().toString().slice(2)}
-            </p>
-          </>
-        ) : (
-          <p class="text-gray-500 font-medium">No date selected</p>
-        )}
+      <div
+        class="border-gray-300 border rounded-md px-3 flex items-center h-12 cursor-pointer group/main"
+        onClick={() => setOpen((open) => !open)}
+        ref={calInputRef}
+      >
+        {date
+          ? (
+            <>
+              <p class="font-semibold">{date.getMonth() + 1}</p>
+              <p class="text-xl text-gray-400 mx-2.5">/</p>
+              <p class="font-semibold">{date.getDate()}</p>
+              <p class="text-xl text-gray-400 mx-2.5">/</p>
+              <p class="font-semibold">
+                {date.getFullYear().toString().slice(2)}
+              </p>
+            </>
+          )
+          : <p class="text-gray-500 font-medium">No date selected</p>}
         <Calendar class="ml-auto text-gray-500" />
       </div>
       {open && <Cal />}
@@ -96,7 +101,7 @@ export default function CalenderPicker({
 
   function Cal() {
     const calenderRef = useRef<HTMLDivElement>(null);
-    useClickAway(calenderRef, () => setOpen(false));
+    useClickAway([calenderRef, calInputRef], () => setOpen(false));
 
     return (
       <div
@@ -135,26 +140,28 @@ export default function CalenderPicker({
         </div>
         <div class="grid grid-cols-7 place-items-center gap-2 mt-3 mx-1 font-medium">
           {getMonthDays(cal.month, cal.year).map((day) =>
-            day.inMonth ? (
-              <div
-                onClick={() => changeDate(day.number)}
-                class={` w-7 h-7 rounded grid place-items-center hover:text-gray-700 cursor-pointer text-gray-600 transition ${
-                  date &&
-                  cal.year == date.getFullYear() &&
-                  cal.month == date.getMonth() &&
-                  day.number == date.getDate()
-                    ? // is selected date
-                      "border-2 border-gray-300 hover:bg-gray-50"
-                    : "hover:bg-gray-200"
-                }`}
-              >
-                {day.number}
-              </div>
-            ) : (
-              <div class=" w-7 h-7 rounded grid place-items-center text-gray-300">
-                {day.number}
-              </div>
-            )
+            day.inMonth
+              ? (
+                <div
+                  onClick={() => changeDate(day.number)}
+                  class={` w-7 h-7 rounded grid place-items-center hover:text-gray-700 cursor-pointer text-gray-600 transition ${
+                    date &&
+                      cal.year == date.getFullYear() &&
+                      cal.month == date.getMonth() &&
+                      day.number == date.getDate()
+                      // is selected date
+                      ? "border-2 border-gray-300 hover:bg-gray-50"
+                      : "hover:bg-gray-200"
+                  }`}
+                >
+                  {day.number}
+                </div>
+              )
+              : (
+                <div class=" w-7 h-7 rounded grid place-items-center text-gray-300">
+                  {day.number}
+                </div>
+              )
           )}
         </div>{" "}
         <p
@@ -175,7 +182,7 @@ export default function CalenderPicker({
 // chatgpt wrote this and every time it tried to make it smaller smth broke
 function getMonthDays(
   month: number,
-  year: number
+  year: number,
 ): { number: number; inMonth: boolean }[] {
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   const firstDay = new Date(year, month, 1).getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday

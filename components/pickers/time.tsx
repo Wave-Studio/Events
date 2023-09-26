@@ -17,22 +17,24 @@ export default function TimePicker({
 
   return (
     <div class="border-gray-300 border rounded-md px-3 flex items-center h-12 cursor-pointer group relative">
-      {eventTime ? (
-        <>
-          <p class="font-semibold">{formatter.format(eventTime).slice(0, 2)}</p>
-          <p class="text-x text-gray-400 mx-0.5">:</p>
-          <p class="font-semibold">
-            {eventTime.getMinutes() < 10
-              ? "0" + eventTime.getMinutes()
-              : eventTime.getMinutes()}
-            <span class="lowercase">
-              {formatter.format(eventTime).slice(2)}
-            </span>
-          </p>
-        </>
-      ) : (
-        <p class="text-gray-500 font-medium">No time</p>
-      )}
+      {eventTime
+        ? (
+          <>
+            <p class="font-semibold">
+              {formatter.format(eventTime).slice(0, 2)}
+            </p>
+            <p class="text-x text-gray-400 mx-0.5">:</p>
+            <p class="font-semibold">
+              {eventTime.getMinutes() < 10
+                ? "0" + eventTime.getMinutes()
+                : eventTime.getMinutes()}
+              <span class="lowercase">
+                {formatter.format(eventTime).slice(2)}
+              </span>
+            </p>
+          </>
+        )
+        : <p class="text-gray-500 font-medium">No time</p>}
       <ClockHour5 class="ml-auto text-gray-500 group-hover:text-gray-600 transition" />
     </div>
   );

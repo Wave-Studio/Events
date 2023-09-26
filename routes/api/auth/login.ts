@@ -5,7 +5,7 @@ import {
   generateOTP,
   validateOTP,
 } from "@/utils/db/kv.ts";
-import { setCookie } from "$std/http/cookie.ts";
+import { deleteCookie, setCookie } from "$std/http/cookie.ts";
 
 const emailRegex =
   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -17,9 +17,14 @@ export const handler: Handlers<{ email: string; otp: string }> = {
     const email = searchParams.get("email")!;
 
     if (!emailRegex.test(email ?? "")) {
-      return new Response(JSON.stringify({ error: "Invalid email" }), {
-        status: 400,
-      });
+      const response = new Response(
+        JSON.stringify({ error: "Invalid email" }),
+        {
+          status: 400,
+        },
+      );
+      deleteCookie(response.headers, "authToken", { path: "/" });
+      return response;
     }
 
     // fetch(`/api/auth/login?email=${email}`)
@@ -35,33 +40,46 @@ export const handler: Handlers<{ email: string; otp: string }> = {
     const otp = await generateOTP(email);
 
     // Currently used for development as we don't have a way to send emails currently
-    return new Response(JSON.stringify({ otp }), {
+    const response = new Response(JSON.stringify({ otp }), {
       status: 200,
     });
+
+    deleteCookie(response.headers, "authToken", { path: "/" });
+
+    return response;
   },
 
   async POST(req, _ctx) {
     const { email, otp } = await req.json();
 
     if (!emailRegex.test(email ?? "")) {
-      return new Response(JSON.stringify({ error: "Invalid email" }), {
-        status: 400,
-      });
+      const response = new Response(
+        JSON.stringify({ error: "Invalid email" }),
+        {
+          status: 400,
+        },
+      );
+      deleteCookie(response.headers, "authToken", { path: "/" });
+      return response;
     }
 
     if (!/[0-9]{6}/.test(otp)) {
-      return new Response(JSON.stringify({ error: "Invalid OTP" }), {
+      const response = new Response(JSON.stringify({ error: "Invalid OTP" }), {
         status: 400,
       });
+      deleteCookie(response.headers, "authToken", { path: "/" });
+      return response;
     }
 
     const user = await validateOTP(email, otp);
     let userAuthToken = typeof user == "object" ? user.authToken : undefined;
 
     if (user == undefined) {
-      return new Response(JSON.stringify({ error: "Invalid OTP" }), {
+      const response = new Response(JSON.stringify({ error: "Invalid OTP" }), {
         status: 400,
       });
+      deleteCookie(response.headers, "authToken", { path: "/" });
+      return response;
     }
 
     if (user == false) {
@@ -75,6 +93,8 @@ export const handler: Handlers<{ email: string; otp: string }> = {
     const resp = new Response(JSON.stringify({ success: true }), {
       status: 200,
     });
+
+    deleteCookie(resp.headers, "authToken", { path: "/" });
 
     setCookie(resp.headers, {
       name: "authToken",

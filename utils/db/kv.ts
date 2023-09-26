@@ -1,4 +1,4 @@
-import { AuthCode, User, Plan } from "./kv.types.ts";
+import { AuthCode, Plan, User } from "./kv.types.ts";
 import { getCookies, setCookie } from "$std/http/cookie.ts";
 
 export * from "./kv.types.ts";
