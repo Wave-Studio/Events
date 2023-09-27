@@ -105,7 +105,7 @@ export default function CalenderPicker({
 
     return (
       <div
-        class="absolute left-1 right-1 z-10 top-14 bg-white border border-gray-300 rounded-md px-1 py-2 shadow-xl cursor-default select-none"
+        class="absolute left-1 right-1 z-10 top-14 bg-white border border-gray-300 rounded-md px-1 py-2 shadow-xl cursor-default select-none max-w-xs"
         ref={calenderRef}
       >
         <div class="flex justify-between">

@@ -19,8 +19,8 @@ export default function StageOne({
 
   return (
     <>
-      <div class="grid grid-cols-4 [&>div]:border [&>div]:border-gray-300 [&>div]:rounded-md gap-4">
-        <label class="col-span-2 flex flex-col">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <label class="md:col-span-2 flex flex-col">
           <p class="label-text label-required">Event Date</p>
           <CalenderPicker
             initialDate={new Date(showTimes[0].startDate)}
@@ -29,7 +29,7 @@ export default function StageOne({
             ) => (showTimes[0].startDate = (date ?? new Date()).toString())}
           />
         </label>
-        <label class="col-span-2 flex flex-col">
+        <label class="md:col-span-2 flex flex-col">
           <p class="label-text">Last Purchase Date</p>
           <CalenderPicker
             initialDate={showTimes[0].lastPurchaseDate
@@ -40,7 +40,6 @@ export default function StageOne({
               : undefined)}
           />
         </label>
-        <div class="col-span-2">s</div>
         <label class="flex flex-col">
           <p class="label-text">Start Time</p>
           <TimePicker

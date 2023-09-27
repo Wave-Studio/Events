@@ -41,3 +41,22 @@ input:where([type="email"],[type="text"]):not(.nostyle),textarea {
 	content: " *";
 	@apply text-red-500 font-normal;
 }
+
+.scrollbar-fancy::-webkit-scrollbar {
+	width: 10px;
+}
+
+.scrollbar-fancy:not(.scrollbar-fancy-glass)::-webkit-scrollbar-thumb {
+	@apply dark:bg-neutral-900;
+	border: 4px solid rgba(0, 0, 0, 0);
+	background-clip: padding-box;
+	border-radius: 9999px;
+	background-color: #d1d5db;
+}
+
+.scrollbar-fancy-glass::-webkit-scrollbar-thumb {
+	@apply bg-[rgba(255,255,255,0.5)] dark:bg-[rgba(0,0,0,0.2)];
+	border: 4px solid rgba(0, 0, 0, 0);
+	background-clip: padding-box;
+	border-radius: 9999px;
+}
