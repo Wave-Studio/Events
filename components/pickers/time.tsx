@@ -11,7 +11,7 @@ export default function TimePicker({
   updateTime: (date: Date | undefined) => void;
 }) {
   const hrs = [...new Array(12)].map((_, i) => i + 1);
-  const mins = [...new Array(60)].map((_, i) => i + 1);
+  const mins = [...new Array(60)].map((_, i) => i);
   const meridiems = [
     { name: "am", id: Meridiem.ANTE },
     { name: "pm", id: Meridiem.POST },
@@ -36,22 +36,32 @@ export default function TimePicker({
       return;
     }
     const date = time ? new Date(time) : new Date();
-    if (!newTime.meridiem) {
+    if (newTime.meridiem == undefined) {
       newTime.meridiem =
         (time?.getHours() ?? 0) < 12 ? Meridiem.ANTE : Meridiem.POST;
     }
-    date.setHours(
-      newTime.hour ??
-        (time &&
-          // handle switching from pm to am
-          (time.getHours() > 12 && newTime.meridiem == Meridiem.ANTE
-            ? time.getHours() - 12
-            : time.getHours())) ??
-        0
-    );
+
+    if (newTime.hour) {
+      date.setHours(
+        newTime.meridiem == Meridiem.POST ? newTime.hour + 12 : newTime.hour
+      );
+      // handle switching from pm to am
+    } else if (time == undefined) {
+      date.setHours(1);
+    } else if (newTime.meridiem == Meridiem.ANTE) {
+      date.setHours(
+        time.getHours() > 12 ? time.getHours() - 12 : time.getHours()
+      );
+      // handle switching from am to pm
+    } else if (newTime.meridiem == Meridiem.POST) {
+      date.setHours(
+        time.getHours() > 12 ? time.getHours() : time.getHours() + 12
+      );
+    }
+
     date.setMinutes(newTime.minutes ?? time?.getMinutes() ?? 0);
     setTime(date);
-    updateTime(date)
+    updateTime(date);
   };
 
   return (
@@ -100,7 +110,7 @@ export default function TimePicker({
                   ? "border-2 border-gray-300 hover:bg-gray-50"
                   : "hover:bg-gray-200"
               }`}
-              onClick={() => changeTime({hour: h})}
+              onClick={() => changeTime({ hour: h })}
             >
               {h}
             </div>
@@ -114,7 +124,7 @@ export default function TimePicker({
                   ? "border-2 border-gray-300 hover:bg-gray-50"
                   : "hover:bg-gray-200"
               }`}
-              onClick={() => changeTime({minutes: h})}
+              onClick={() => changeTime({ minutes: h })}
             >
               {h}
             </div>
@@ -131,7 +141,7 @@ export default function TimePicker({
                   ? "border-2 border-gray-300 hover:bg-gray-50"
                   : "hover:bg-gray-200"
               }`}
-              onClick={() => changeTime({meridiem: h.id})}
+              onClick={() => changeTime({ meridiem: h.id })}
             >
               {h.name}
             </div>
