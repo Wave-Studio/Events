@@ -47,7 +47,7 @@ export default function TimePicker({
       );
       // handle switching from pm to am
     } else if (time == undefined) {
-      date.setHours(1);
+      date.setHours(newTime.meridiem == Meridiem.POST ? 13 : 1);
     } else if (newTime.meridiem == Meridiem.ANTE) {
       date.setHours(
         time.getHours() > 12 ? time.getHours() - 12 : time.getHours()
