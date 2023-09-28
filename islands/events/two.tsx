@@ -8,7 +8,7 @@ import { StateUpdater, useMemo, useState } from "preact/hooks";
 import CalenderPicker from "@/components/pickers/calender.tsx";
 import TimePicker from "@/components/pickers/time.tsx";
 
-export default function StageOne({
+export default function StageTwo({
   eventState,
   setPage,
 }: {

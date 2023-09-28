@@ -98,10 +98,10 @@ export default function TimePicker({
 
     return (
       <div
-        class="absolute left-1 right-1 z-10 top-14 bg-white font-medium border border-gray-300 rounded-md px-2 py-2 shadow-xl cursor-default select-none max-w-xs flex"
+        class="absolute left-1 right-1 z-20 top-14 bg-white font-medium border border-gray-300 rounded-md px-2 py-2 shadow-xl cursor-default select-none max-w-xs flex"
         ref={timeRef}
       >
-        {/* could probably consolidate this into a component */}
+        {/* could probably consolidate this into a component that I pass params into*/}
         <div className=" h-[18rem] overflow-y-scroll gap-2 scrollbar-fancy flex flex-col px-2">
           {hrs.map((h) => (
             <div

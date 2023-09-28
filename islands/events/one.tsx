@@ -1,9 +1,6 @@
 import { Signal } from "@preact/signals";
 import { Event } from "@/utils/db/kv.ts";
-import useForm from "@/components/hooks/fakeFormik/index.tsx";
-import * as Yup from "yup";
 import CTA from "@/components/buttons/cta.tsx";
-import PhotoPlus from "$tabler/photo-plus.tsx";
 import { StateUpdater, useMemo, useState } from "preact/hooks";
 import CalenderPicker from "@/components/pickers/calender.tsx";
 import TimePicker from "@/components/pickers/time.tsx";

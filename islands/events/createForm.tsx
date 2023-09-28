@@ -3,15 +3,19 @@ import { defaultEvent, User } from "@/utils/db/kv.types.ts";
 import StageZero from "./zero.tsx";
 import StageOne from "@/islands/events/one.tsx";
 import { useSignal } from "@preact/signals";
+import StageTwo from "@/islands/events/two.tsx";
 
 export default function CreateEvent({ user }: { user: User }) {
   const eventData = useSignal(defaultEvent(user.email));
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(2);
   const [error, setError] = useState<string>();
+
+  const pageNames = ["Lets start with some basic details.", "When do you plan to host your event?", "Create the your tickets!"]
 
   return (
     <div class="flex flex-col items-center mt-4">
       <div class="max-w-xl w-full flex flex-col gap-4">
+        <h2 className="font-semibold text-lg text-center mb-2 mt-6">{pageNames[page]}</h2>
         {page === 0 && (
           <StageZero
             eventState={eventData}
@@ -20,6 +24,7 @@ export default function CreateEvent({ user }: { user: User }) {
           />
         )}
         {page === 1 && <StageOne eventState={eventData} setPage={setPage} />}
+        {page === 2 && <StageTwo eventState={eventData} setPage={setPage} />}
       </div>
       {JSON.stringify(eventData.value)}
       {page}
