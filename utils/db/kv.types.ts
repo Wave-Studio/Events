@@ -2,7 +2,7 @@ export interface Field {
   id: string;
   name: string;
   description: string;
-  type: "text" | "email" | "number" | "checkbox";
+  type: "text" | "email" | "number" | "toggle";
 }
 
 // ["event", eventId]

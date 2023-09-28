@@ -32,7 +32,7 @@ export const handler: Handlers<{ email: string; otp: string }> = {
     const allowedEmails = JSON.parse(Deno.env.get("ALLOWED_EMAILS") ?? "[]");
 
     if (!allowedEmails.includes(email)) {
-      return new Response(JSON.stringify({ error: "Email not allowed" }), {
+      return new Response(JSON.stringify({ error: "Your email isn't whitelisted" }), {
         status: 400,
       });
     }

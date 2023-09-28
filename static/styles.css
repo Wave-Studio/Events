@@ -30,7 +30,7 @@ input:where([type="email"],[type="text"]):not(.nostyle),textarea {
 
 .nostyle {
   @apply focus:outline-none;
-  caret-color: transparent;
+  /* caret-color: transparent; */
 }
 
 .label-text {
