@@ -34,7 +34,7 @@ export default function StageZero({
         setError(form.error.message);
       } else {
         setError(undefined);
-        eventState.value = { ...eventState.value, ...form };
+        eventState.value = { ...eventState.value, ...form.formState };
         setPage(1);
       }
     },

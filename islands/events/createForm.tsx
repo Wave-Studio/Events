@@ -6,7 +6,7 @@ import { useSignal } from "@preact/signals";
 
 export default function CreateEvent({ user }: { user: User }) {
   const eventData = useSignal(defaultEvent(user.email));
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
   const [error, setError] = useState<string>();
 
   return (
