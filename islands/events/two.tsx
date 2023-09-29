@@ -6,8 +6,9 @@ import CTA from "@/components/buttons/cta.tsx";
 import Plus from "$tabler/plus.tsx";
 import Trash from "$tabler/trash.tsx";
 import ChevronDown from "$tabler/chevron-down.tsx";
-import { StateUpdater, useState } from "preact/hooks";
+import { StateUpdater, useRef, useState } from "preact/hooks";
 import { Toggle } from "@/components/buttons/toggle.tsx";
+import useClickAway from "@/components/hooks/onClickAway.tsx";
 
 export default function StageTwo({
   eventState,
@@ -17,6 +18,8 @@ export default function StageTwo({
   setPage: StateUpdater<number>;
 }) {
   const { multiEntry, maxTickets, additionalFields } = eventState.value;
+  const typeRef = useRef<HTMLButtonElement>(null);
+
   const [fields, setFields] = useState<Field[]>([
     {
       name: "",
@@ -56,6 +59,37 @@ export default function StageTwo({
   };
 
   const FieldInput = ({ field }: { field: Field }) => {
+    const [typeOpen, setTypeOpen] = useState(false);
+
+    const FieldPicker = ({
+      field,
+      id,
+    }: {
+      id: string;
+      field: Field["type"];
+    }) => {
+      const pickerRef = useRef<HTMLDivElement>(null);
+      useClickAway([pickerRef, typeRef], () => setTypeOpen(false));
+
+      const types: Field["type"][] = ["number", "text", "toggle", "email"];
+
+      return (
+        <div
+          className="absolute  z-20 top-7 bg-white font-medium border border-gray-300 rounded-md px-2 py-2 shadow-xl cursor-default select-none flex flex-col items-start gap-2"
+          ref={pickerRef}
+        >
+          {types.map((type) => (
+            <button
+              className="rounded-md border border-gray-300 font-medium text-gray-500 px-2 h-6 bg-gray-100"
+              onClick={() => setTypeOpen((t) => !t)}
+            >
+              {type}
+            </button>
+          ))}
+        </div>
+      );
+    };
+
     return (
       <div className="flex justify-between items-center mt-4" key={field.id}>
         <div class="flex flex-col">
@@ -79,14 +113,18 @@ export default function StageTwo({
           />
         </div>
         <div className="flex gap-2">
-          <div>
-            <button className="rounded-md border border-gray-300 font-medium text-gray-500 pl-2 bg-gray-100 flex items-center">
+          <div class="relative flex flex-col">
+            <button
+              className="rounded-md border border-gray-300 font-medium text-gray-500 pl-2 h-6 bg-gray-100 flex items-center"
+              ref={typeRef}
+              onClick={() => setTypeOpen((t) => !t)}
+            >
               {field.type} <ChevronDown class="w-4 h-4 ml-1 mr-1" />
             </button>
-						
+            {typeOpen && <FieldPicker field={field.type} id={field.id} />}
           </div>
           <button
-            className="rounded-md border border-red-300 font-medium text-red-500 grid place-items-center w-7 h-7 bg-red-100"
+            className="rounded-md border border-red-300 font-medium text-red-500 grid place-items-center w-6 h-6 bg-red-100"
             onClick={() => removeField(field.id)}
           >
             <Trash class="w-4 h-4" />

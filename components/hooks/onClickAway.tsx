@@ -1,6 +1,6 @@
 import { Ref, useEffect } from "preact/hooks";
 
-const useClickAway = (ref: Ref<HTMLDivElement>[], callback: () => void) => {
+const useClickAway = (ref: Ref<HTMLElement>[], callback: () => void) => {
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
       let shouldClose = true;
