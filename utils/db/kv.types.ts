@@ -22,6 +22,7 @@ export interface Event {
   }[];
 
   multiEntry: boolean;
+  multiPurchase: boolean;
   maxTickets?: number;
   additionalFields: Field[];
   price: number;
@@ -50,6 +51,7 @@ export const defaultEvent = (email: string): Event => ({
     },
   ],
 
+  multiPurchase: true,
   venue: undefined,
   soldTickets: 0,
   price: 0,

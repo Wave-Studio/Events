@@ -17,18 +17,30 @@ export default function StageTwo({
   eventState: Signal<Event>;
   setPage: StateUpdater<number>;
 }) {
-  const { multiEntry, maxTickets, additionalFields } = eventState.value;
+  const { multiEntry, multiPurchase, maxTickets, additionalFields } =
+    eventState.value;
   const typeRef = useRef<HTMLButtonElement>(null);
 
-  const [fields, setFields] = useState<Field[]>([
-    {
-      name: "",
-      description: "",
-      id: crypto.randomUUID(),
-      type: "text",
-    },
-  ]);
+  const [fields, setFields] = useState<Field[]>(
+    additionalFields.length == 0
+      ? [
+          {
+            name: "",
+            description: "",
+            id: crypto.randomUUID(),
+            type: "text",
+          },
+        ]
+      : additionalFields
+  );
   const [mEntry, setMEntry] = useState(multiEntry);
+  const [mPurchase, setMPurchase] = useState(multiPurchase);
+
+  const save = () => {
+    eventState.value.multiEntry = mEntry;
+    eventState.value.multiPurchase = mPurchase;
+    eventState.value.additionalFields = fields.filter((f) => Boolean(f.name));
+  };
 
   const addField = () => {
     setFields((f) => [
@@ -73,6 +85,11 @@ export default function StageTwo({
 
       const types: Field["type"][] = ["number", "text", "toggle", "email"];
 
+      const changeType = (type: Field["type"]) => {
+        updateField({ id, type });
+        setTypeOpen((t) => !t);
+      };
+
       return (
         <div
           className="absolute  z-20 top-7 bg-white font-medium border border-gray-300 rounded-md px-2 py-2 shadow-xl cursor-default select-none flex flex-col items-start gap-2"
@@ -80,8 +97,12 @@ export default function StageTwo({
         >
           {types.map((type) => (
             <button
-              className="rounded-md border border-gray-300 font-medium text-gray-500 px-2 h-6 bg-gray-100"
-              onClick={() => setTypeOpen((t) => !t)}
+              className={`rounded-md border font-medium  px-2 h-6  ${
+                type == field
+                  ? "border-theme-normal/50 text-gray-600 bg-theme-normal/10"
+                  : "border-gray-300 text-gray-500 bg-gray-100"
+              }`}
+              onClick={() => changeType(type)}
             >
               {type}
             </button>
@@ -91,7 +112,7 @@ export default function StageTwo({
     };
 
     return (
-      <div className="flex justify-between items-center mt-4" key={field.id}>
+      <div className="flex justify-between items-center mb-4" key={field.id}>
         <div class="flex flex-col">
           <input
             placeholder="Input Name"
@@ -144,12 +165,22 @@ export default function StageTwo({
             setEnabled={setMEntry}
             enabled={mEntry}
           />
+          <Toggle
+            name="Allow Multiple Ticket Sales"
+            description="Allow attendees to buy multiple tickets across one or multiple transactions (tracked using their email)"
+            setEnabled={setMPurchase}
+            enabled={mPurchase}
+          />
           <label htmlFor="" class="flex flex-col md:w-44s">
             <p className="label-text">Maximum Attendees</p>
             <input
               type="number"
               class="p-2 border rounded-md border-gray-300"
               pattern="\d*"
+              value={maxTickets?.toString() ?? ""}
+              onChange={(e) =>
+                (eventState.value.maxTickets = parseInt(e.currentTarget.value))
+              }
             />
           </label>
         </section>
@@ -174,7 +205,7 @@ export default function StageTwo({
           </div>
         </section>
         <section>
-          <h4 class="text-sm font-medium">Additional Inputs</h4>
+          <h4 class="text-sm font-medium mb-2">Additional Inputs</h4>
           {fields.map((field) => (
             <FieldInput field={field} />
           ))}
@@ -195,7 +226,10 @@ export default function StageTwo({
             btnSize="sm"
             className="!w-20 md:!w-40"
             type="button"
-            onClick={() => setPage(1)}
+            onClick={() => {
+              save();
+              setPage(1);
+            }}
           >
             Back
           </CTA>
@@ -203,9 +237,12 @@ export default function StageTwo({
             btnType="cta"
             btnSize="sm"
             className="!w-20 md:!w-40"
-            onClick={() => {}}
+            onClick={() => {
+              save();
+              setPage(3);
+            }}
           >
-            Next
+            Create Event
           </CTA>
         </div>
       </div>

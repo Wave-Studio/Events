@@ -34,7 +34,7 @@ export default defineRoute(async (req, ctx) => {
 
       <div className="flex flex-col h-[calc(100vh-4.5rem)] items-center">
         <div class="flex flex-col px-4 items-center">
-          <h1 class="text-center text-4xl font-bold">Reservations</h1>
+          <h1 class="text-center text-4xl font-bold">Event Ticketing</h1>
           <div class="w-44 flex items-center mt-2">
             <div class="grow bg-gray-200 h-0.5 rounded-full" />
             <p class="w-max mx-1.5 leading-3">Made Simple</p>

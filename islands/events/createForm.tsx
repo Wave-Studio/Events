@@ -4,10 +4,11 @@ import StageZero from "./zero.tsx";
 import StageOne from "@/islands/events/one.tsx";
 import { useSignal } from "@preact/signals";
 import StageTwo from "@/islands/events/two.tsx";
+import StageThree from "@/islands/events/three.tsx";
 
 export default function CreateEvent({ user }: { user: User }) {
   const eventData = useSignal(defaultEvent(user.email));
-  const [page, setPage] = useState(2);
+  const [page, setPage] = useState(3);
   const [error, setError] = useState<string>();
 
   const pageNames = ["Lets start with some basic details.", "When do you plan to host your event?", "Create the your tickets!"]
@@ -25,9 +26,10 @@ export default function CreateEvent({ user }: { user: User }) {
         )}
         {page === 1 && <StageOne eventState={eventData} setPage={setPage} />}
         {page === 2 && <StageTwo eventState={eventData} setPage={setPage} />}
+        {page === 3 && <StageThree eventState={eventData} setPage={setPage} setError={setError} />}
       </div>
-      {JSON.stringify(eventData.value)}
-      {page}
+      {/* {JSON.stringify(eventData.value)} */}
+      {/* {page} */}
       {error && <p className="mt-6 text-red-500">{error}</p>}
     </div>
   );
