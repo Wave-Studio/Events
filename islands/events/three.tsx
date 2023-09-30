@@ -13,23 +13,24 @@ export default function StageThree({
   setError: StateUpdater<string | undefined>;
 }) {
   const [eventID, setEventID] = useState();
-  const [error, setError] = useState()
+  const [error, setError] = useState();
   const [fileLink, setFileLink] = useState<string>();
   const [fill, setFill] = useState(false);
 
   useEffect(() => {
     (async () => {
-      const data = await (await fetch("/api/events/create", {
-        body: JSON.stringify(eventState.value),
-        method: "POST"
-      })).json()
+      const data = await (
+        await fetch("/api/events/create", {
+          body: JSON.stringify(eventState.value),
+          method: "POST",
+        })
+      ).json();
       if (data.errors) {
-        setError(data.errors[0])
+        setError(data.errors[0]);
       } else {
         setEventID(data.eventID);
       }
-      console.log(data)
-      
+      console.log(data);
     })();
   }, []);
 
@@ -42,20 +43,19 @@ export default function StageThree({
         {/* btw fresh does caching automagiclly for images */}
         {/* <img src="/loading (2).svg" class="animate-spin" /> */}
         <img src="/logo.svg" class="animate-ping" />
-        {error && 
-        <>
-        <p className="text-red-500 mt-20">
-          Error: {error}
-        </p> 
-        <CTA
-          btnType="cta"
-          btnSize="sm"
-          className=" mt-4"
-          onClick={() => setPage(2)}
-        >
-          Back
-        </CTA>
-        </>}
+        {error && (
+          <>
+            <p className="text-red-500 mt-20">Error: {error}</p>
+            <CTA
+              btnType="cta"
+              btnSize="sm"
+              className=" mt-4"
+              onClick={() => setPage(2)}
+            >
+              Back
+            </CTA>
+          </>
+        )}
       </div>
     );
   }
@@ -70,16 +70,15 @@ export default function StageThree({
         eventID={eventID}
       />
       <div className="flex justify-between mt-6 ">
-        
         <a href="/events/organizing">
-        <CTA
-          btnType="secondary"
-          btnSize="sm"
-          className="!w-20 md:!w-40"
-          disabled={fileLink == "loading"}
-        >
-          All Events
-        </CTA>
+          <CTA
+            btnType="secondary"
+            btnSize="sm"
+            className="!w-20 md:!w-40"
+            disabled={fileLink == "loading"}
+          >
+            All Events
+          </CTA>
         </a>
         <CTA
           btnType="cta"

@@ -109,6 +109,13 @@ export const enum Plan {
   ENTERPRISE = "enterprise",
 }
 
+export const PlanMaxEvents = {
+  [Plan.BASIC]: 1,
+  [Plan.PLUS]: 5,
+  [Plan.PRO]: 10,
+  [Plan.ENTERPRISE]: Infinity,
+};
+
 // ["authcode", email, code]
 export interface AuthCode {
   existsSince: string; // as date

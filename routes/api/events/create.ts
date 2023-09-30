@@ -1,6 +1,23 @@
 import { Handlers } from "$fresh/server.ts";
-import { Event, Roles, User, getUser, kv } from "@/utils/db/kv.ts";
+import {
+  Event,
+  Roles,
+  User,
+  getUser,
+  kv,
+  PlanMaxEvents,
+} from "@/utils/db/kv.ts";
 import * as Yup from "yup";
+
+const dateTransformer = (_: undefined, originalValue: string) => {
+  const date = new Date(originalValue);
+
+  if (isNaN(date.getTime())) {
+    return undefined;
+  }
+
+  return date;
+};
 
 const validation = Yup.object({
   name: Yup.string().min(3).max(75).required(),
@@ -15,13 +32,12 @@ const validation = Yup.object({
     .required()
     .of(
       Yup.object({
-        // 65 is a guess of how long a normal JS date can be
-        startDate: Yup.string().max(65).required(),
-        startTime: Yup.string().max(65),
-        endTime: Yup.string().max(65),
-        lastPurchaseDate: Yup.string().max(65),
+        startDate: Yup.date().transform(dateTransformer).required(),
+        startTime: Yup.date().transform(dateTransformer),
+        endTime: Yup.date().transform(dateTransformer),
+        lastPurchaseDate: Yup.date().transform(dateTransformer),
         id: Yup.string().uuid().required(),
-      })
+      }),
     ),
 
   multiEntry: Yup.boolean().required(),
@@ -37,7 +53,7 @@ const validation = Yup.object({
         name: Yup.string().min(3).max(35),
         description: Yup.string().min(3).max(150),
         type: Yup.string().matches(/^(text|email|number|toggle)$/g),
-      })
+      }),
     ),
   price: Yup.number().required(),
 
@@ -46,22 +62,45 @@ const validation = Yup.object({
   published: Yup.boolean().required(),
 });
 
+const generateEventId = async (): Promise<string> => {
+  const id = crypto.randomUUID();
+
+  const event = await kv.get<Event>(["event", id]);
+
+  if (event.value != undefined) {
+    return generateEventId();
+  }
+
+  return id;
+};
+
 export const handler: Handlers = {
   async POST(req) {
     const user = await getUser(req);
 
     if (!user) {
-      return new Response(JSON.stringify({ error: "No user found" }), {
+      return new Response(JSON.stringify({ error: "Not logged in" }), {
         status: 401,
       });
     }
 
+    // Will prob be modified if we do support purchasing more event slots
+    if (user.events.length >= PlanMaxEvents[user.plan]) {
+      return new Response(
+        JSON.stringify({
+          error: "You have reached the maximum number of events",
+        }),
+        {
+          status: 400,
+        },
+      );
+    }
+
     const event: Event = await req.json();
-    // console.log(event)
-    const eventID = crypto.randomUUID();
+    const eventID = await generateEventId();
 
     try {
-      validation.validateSync(event);
+      validation.validateSync(event, { strict: false });
     } catch (e) {
       return new Response(JSON.stringify(e), {
         status: 400,
@@ -87,11 +126,8 @@ export const handler: Handlers = {
       });
     }
 
-    return new Response(
-      JSON.stringify({ error: "Lukas was too lazy to finish this - Bloxs" }),
-      {
-        status: 400,
-      }
-    );
+    return new Response(JSON.stringify({ error: "Unknown error occured" }), {
+      status: 400,
+    });
   },
 };

@@ -76,11 +76,21 @@ export default function StageZero({
       </label>
       <div className="flex justify-between">
         <a href="/events/organizing">
-          <CTA btnType="secondary" btnSize="sm" className="!w-20 md:!w-40" type="button">
+          <CTA
+            btnType="secondary"
+            btnSize="sm"
+            className="!w-20 md:!w-40"
+            type="button"
+          >
             Cancel
           </CTA>
         </a>
-        <CTA btnType="cta" btnSize="sm" className="!w-20 md:!w-40" type="submit">
+        <CTA
+          btnType="cta"
+          btnSize="sm"
+          className="!w-20 md:!w-40"
+          type="submit"
+        >
           Next
         </CTA>
       </div>
