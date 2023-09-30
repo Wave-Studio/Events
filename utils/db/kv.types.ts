@@ -30,6 +30,7 @@ export interface Event {
   soldTickets: number;
   owner: string;
   published: boolean;
+  id: string
 }
 
 export const defaultEvent = (email: string): Event => ({
@@ -58,6 +59,7 @@ export const defaultEvent = (email: string): Event => ({
 
   additionalFields: [],
   owner: email,
+  id: crypto.randomUUID(),
 });
 
 export interface FieldEntry

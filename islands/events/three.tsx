@@ -13,8 +13,12 @@ export default function StageThree({
   setError: StateUpdater<string | undefined>;
 }) {
   const [loading, setLoading] = useState(false);
-  const [file, setFile] = useState<File>();
+  const [fileLink, setFileLink] = useState<string>();
   const [fill, setFill] = useState(false);
+  const [uploading, setUploading] = useState(false)
+
+  const { id } = eventState.value
+
   useEffect(() => {
     (async () => {
       //const data = await (await fetch("https://api.sampleapis.com/coffee/hot")).json()
@@ -36,26 +40,28 @@ export default function StageThree({
   }
 
   return (
-    <div class="flex flex-col items-center justify-center w-full">
+    <div class="flex flex-col justify-center w-full0">
       <h2 class="font-semibold text-xl mb-20 text-center">Event Created!</h2>
-      <ImagePicker fill={fill} setFill={setFill} updateImage={setFile} />
-      <div className="flex justify-between mt-6">
+      <ImagePicker fill={fill} setFill={setFill} updateImage={setFileLink} eventID={id} />
+      <div className="flex justify-between mt-6 ">
         <CTA
           btnType="secondary"
           btnSize="sm"
           className="!w-20 md:!w-40"
           type="button"
           onClick={() => setPage(1)}
+          disabled={fileLink == "loading"}
         >
-          Back
+         All Events
         </CTA>
         <CTA
           btnType="cta"
           btnSize="sm"
           className="!w-20 md:!w-40"
           onClick={() => setPage(3)}
+          disabled={fileLink == "loading"}
         >
-          Create Event
+          View Event
         </CTA>
       </div>
     </div>
