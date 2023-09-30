@@ -31,7 +31,7 @@ export default function StageTwo({
             type: "text",
           },
         ]
-      : additionalFields
+      : additionalFields,
   );
   const [mEntry, setMEntry] = useState(multiEntry);
   const [mPurchase, setMPurchase] = useState(multiPurchase);
@@ -66,7 +66,7 @@ export default function StageTwo({
           ...field,
           ...update,
         };
-      })
+      }),
     );
   };
 

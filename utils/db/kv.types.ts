@@ -28,12 +28,11 @@ export interface Event {
   price: number;
 
   soldTickets: number;
-  owner: string;
+  members: { email: string; role: Roles }[];
   published: boolean;
-  id: string
 }
 
-export const defaultEvent = (email: string): Event => ({
+export const defaultEvent = {
   name: "",
   supportEmail: "",
   description: "",
@@ -58,9 +57,8 @@ export const defaultEvent = (email: string): Event => ({
   price: 0,
 
   additionalFields: [],
-  owner: email,
-  id: crypto.randomUUID(),
-});
+  members: [],
+};
 
 export interface FieldEntry
   extends Omit<Field, "type" | "name" | "description"> {
@@ -97,6 +95,11 @@ export interface UserPartial {
   authToken: string;
   plan: Plan;
   joinedAt: string;
+}
+
+export const enum Roles {
+  OWNER = 0,
+  ADMIN = 1,
 }
 
 export const enum Plan {

@@ -36,15 +36,16 @@ const Pricing = async (req: Request) => {
             <div className="flex">
               <div
                 className={`rounded-full px-1 py-0.5 mr-2 ${plan.color} `}
-              >
-              </div>
+              ></div>
               <h2 class="font-bold ">{plan.name}</h2>
               <p className="ml-auto text-gray-600 ">
                 {plan.cost == 0 ? "0.00" : `${plan.cost}/mo`}
               </p>
             </div>
             <ul class="text-sm flex flex-col gap-2 mt-6 list-disc list-inside mb-8">
-              {plan.features.map((feature) => <li>{feature}</li>)}
+              {plan.features.map((feature) => (
+                <li>{feature}</li>
+              ))}
             </ul>
             <CTA
               btnType={plan.cost == 0 ? "secondary" : "cta"}
@@ -63,8 +64,7 @@ const Pricing = async (req: Request) => {
             <div className="flex">
               <div
                 className={`rounded-full px-1 py-0.5 mr-2 ${plans[3].color} `}
-              >
-              </div>
+              ></div>
               <h2 class="font-bold ">{plans[3].name}</h2>
             </div>
             <p className="text-sm mt-4">

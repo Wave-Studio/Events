@@ -15,16 +15,19 @@ export const handler: Handlers = {
 
     const image = encode(await file.arrayBuffer());
 
-    imageKit.upload({
-      file: image,
-      fileName: name,
-    }, (err, res) => {
-      if (err) {
-        return new Response(JSON.stringify({ error: "Invalid OTP" }), {
-          status: 400,
-        });
-      }
-    });
+    imageKit.upload(
+      {
+        file: image,
+        fileName: name,
+      },
+      (err, res) => {
+        if (err) {
+          return new Response(JSON.stringify({ error: "Invalid OTP" }), {
+            status: 400,
+          });
+        }
+      },
+    );
 
     return new Response(
       JSON.stringify({ error: "Lukas was too lazy to finish this - Bloxs" }),

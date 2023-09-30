@@ -43,19 +43,19 @@ export default function TimePicker({
 
     if (newTime.hour) {
       date.setHours(
-        newTime.meridiem == Meridiem.POST ? newTime.hour + 12 : newTime.hour
+        newTime.meridiem == Meridiem.POST ? newTime.hour + 12 : newTime.hour,
       );
       // handle switching from pm to am
     } else if (time == undefined) {
       date.setHours(newTime.meridiem == Meridiem.POST ? 13 : 1);
     } else if (newTime.meridiem == Meridiem.ANTE) {
       date.setHours(
-        time.getHours() > 12 ? time.getHours() - 12 : time.getHours()
+        time.getHours() > 12 ? time.getHours() - 12 : time.getHours(),
       );
       // handle switching from am to pm
     } else if (newTime.meridiem == Meridiem.POST) {
       date.setHours(
-        time.getHours() > 12 ? time.getHours() : time.getHours() + 12
+        time.getHours() > 12 ? time.getHours() : time.getHours() + 12,
       );
     }
 

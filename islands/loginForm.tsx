@@ -19,8 +19,9 @@ const LoginForm = ({ attending }: { attending: boolean }) => {
     e.preventDefault();
     setError(undefined);
     const passed =
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-        .test(email);
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+        email,
+      );
     if (!passed) {
       setError("Enter a valid email");
       return;
@@ -109,7 +110,8 @@ const LoginForm = ({ attending }: { attending: boolean }) => {
               value={email}
               onChange={(e) =>
                 //@ts-expect-error deno moment
-                setEmail(e.target!.value)}
+                setEmail(e.target!.value)
+              }
             />
           </label>
           <p className={`mb-2 text-sm text-red-500 ${!error && "invisible"} `}>
@@ -161,7 +163,8 @@ const LoginForm = ({ attending }: { attending: boolean }) => {
                   value={code}
                   onInput={(e) =>
                     //@ts-expect-error deno moment (e has incorrect types and idk what the correct types are)
-                    updateCode(e.target!.value)}
+                    updateCode(e.target!.value)
+                  }
                   ref={codeRef}
                   onBlur={() => setFocused(false)}
                   onFocus={() => setFocused(true)}

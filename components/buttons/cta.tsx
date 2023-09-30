@@ -6,9 +6,13 @@ interface CTATypes extends JSX.HTMLAttributes<HTMLButtonElement> {
   btnSize?: "norm" | "sm";
 }
 
-const CTA = (
-  { children, btnType, btnSize = "norm", className, ...props }: CTATypes,
-) => {
+const CTA = ({
+  children,
+  btnType,
+  btnSize = "norm",
+  className,
+  ...props
+}: CTATypes) => {
   return (
     <>
       <button

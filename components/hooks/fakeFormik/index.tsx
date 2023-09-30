@@ -10,8 +10,8 @@ type Json =
   | boolean
   | Array<JSON>
   | {
-    [prop: string]: Json;
-  };
+      [prop: string]: Json;
+    };
 
 // const useOldForm = <
 //   Key extends PropertyKey,
@@ -85,19 +85,23 @@ interface HTMLTextAreaProps extends JSX.HTMLAttributes<HTMLTextAreaElement> {
   name: string;
 }
 
-function useForm<T>(
-  { validationSchema, initialState, onSubmit }: {
-    validationSchema: Yup.ObjectSchema<Record<string, unknown>>;
-    initialState: T;
-    onSubmit: (
-      { success, error, formState }: {
-        success: boolean;
-        error?: Error;
-        formState?: T;
-      },
-    ) => void;
-  },
-): [
+function useForm<T>({
+  validationSchema,
+  initialState,
+  onSubmit,
+}: {
+  validationSchema: Yup.ObjectSchema<Record<string, unknown>>;
+  initialState: T;
+  onSubmit: ({
+    success,
+    error,
+    formState,
+  }: {
+    success: boolean;
+    error?: Error;
+    formState?: T;
+  }) => void;
+}): [
   (props: FormProps) => JSX.Element,
   [
     (props: HTMLInputProps) => JSX.Element,
@@ -138,7 +142,7 @@ function useForm<T>(
       (props: HTMLInputProps) => {
         return (
           <input
-            {...props as HTMLInputProps}
+            {...(props as HTMLInputProps)}
             type={props.type ?? "text"}
             value={formState[props.name as keyof T] as string}
             onInput={(e) => {
@@ -153,7 +157,7 @@ function useForm<T>(
       (props: HTMLTextAreaProps) => {
         return (
           <textarea
-            {...props as HTMLTextAreaProps}
+            {...(props as HTMLTextAreaProps)}
             value={formState[props.name as keyof T] as string}
             onInput={(e) => {
               setFormState({

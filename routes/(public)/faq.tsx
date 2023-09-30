@@ -7,9 +7,13 @@ const FAQS = () => {
       <h1 class="text-center text-4xl font-bold">faq</h1>
       <p class=" text-center mt-4">frequently asked questions</p>
       <Heading name="General" />
-      {faqs.map(({ a, q }) => <QA q={q} a={a} />)}
+      {faqs.map(({ a, q }) => (
+        <QA q={q} a={a} />
+      ))}
       <Heading name="Pricing" />
-      {pricingfaqs.map(({ a, q }) => <QA q={q} a={a} />)}
+      {pricingfaqs.map(({ a, q }) => (
+        <QA q={q} a={a} />
+      ))}
     </div>
   );
 };
@@ -17,9 +21,7 @@ const FAQS = () => {
 export const Heading = ({ name }: { name: string }) => (
   <div className="flex mt-10 items-center">
     <div className="invisible -translate-y-20" id={name.toLowerCase()} />
-    <h2 className="font-bold">
-      {name}
-    </h2>
+    <h2 className="font-bold">{name}</h2>
     <div class="grow ml-6 h-0.5 bg-gray-300 rounded-full" />
   </div>
 );

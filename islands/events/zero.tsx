@@ -46,8 +46,8 @@ export default function StageZero({
       supportEmail: Yup.string()
         .email("Enter a valid support email")
         .required("We require a support email for all events"),
-      description: Yup.string(),
-      venue: Yup.string(),
+      description: Yup.string().max(1500),
+      venue: Yup.string().max(150),
     }),
   });
 
@@ -76,11 +76,11 @@ export default function StageZero({
       </label>
       <div className="flex justify-between">
         <a href="/events/organizing">
-          <CTA btnType="secondary" btnSize="sm" className="=" type="button">
+          <CTA btnType="secondary" btnSize="sm" className="!w-20 md:!w-40" type="button">
             Cancel
           </CTA>
         </a>
-        <CTA btnType="cta" btnSize="sm" className="">
+        <CTA btnType="cta" btnSize="sm" className="!w-20 md:!w-40" type="submit">
           Next
         </CTA>
       </div>

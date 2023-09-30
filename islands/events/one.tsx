@@ -66,10 +66,21 @@ export default function StageOne({
           />
         </label>
         <div className="flex justify-between md:col-span-2">
-            <CTA btnType="secondary" btnSize="sm" className="!w-20 md:!w-40" type="button" onClick={() => setPage(0)}>
-              Back
-            </CTA>
-          <CTA btnType="cta" btnSize="sm" className="!w-20 md:!w-40" onClick={() => setPage(2)}>
+          <CTA
+            btnType="secondary"
+            btnSize="sm"
+            className="!w-20 md:!w-40"
+            type="button"
+            onClick={() => setPage(0)}
+          >
+            Back
+          </CTA>
+          <CTA
+            btnType="cta"
+            btnSize="sm"
+            className="!w-20 md:!w-40"
+            onClick={() => setPage(2)}
+          >
             Next
           </CTA>
         </div>

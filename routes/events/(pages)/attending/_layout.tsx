@@ -10,9 +10,11 @@ export default defineLayout((req: Request, ctx) => {
       <div className="mx-auto gap-4 flex mt-4 overflow-x-auto w-[calc(100vw-2rem)] max-w-max">
         {organizingTabs.map((tab) => (
           <a
-            href={tab == "upcoming"
-              ? "/events/attending"
-              : `/events/attending/${tab}`}
+            href={
+              tab == "upcoming"
+                ? "/events/attending"
+                : `/events/attending/${tab}`
+            }
             class={`border-2 rounded-md px-2.5 py-0.5 capitalize ${
               tab == tabName && "font-medium border-theme-normal"
             }`}

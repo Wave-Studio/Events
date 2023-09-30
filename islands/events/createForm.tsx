@@ -7,16 +7,22 @@ import StageTwo from "@/islands/events/two.tsx";
 import StageThree from "@/islands/events/three.tsx";
 
 export default function CreateEvent({ user }: { user: User }) {
-  const eventData = useSignal(defaultEvent(user.email));
-  const [page, setPage] = useState(3);
+  const eventData = useSignal(defaultEvent);
+  const [page, setPage] = useState(0);
   const [error, setError] = useState<string>();
 
-  const pageNames = ["Lets start with some basic details.", "When do you plan to host your event?", "Create the your tickets!"]
+  const pageNames = [
+    "Lets start with some basic details.",
+    "When do you plan to host your event?",
+    "Create the your tickets!",
+  ];
 
   return (
     <div class="flex flex-col items-center mt-4">
       <div class="max-w-xl w-full flex flex-col gap-4">
-        <h2 className="font-semibold text-lg text-center mb-2 mt-6">{pageNames[page]}</h2>
+        <h2 className="font-semibold text-lg text-center mb-2 mt-6">
+          {pageNames[page]}
+        </h2>
         {page === 0 && (
           <StageZero
             eventState={eventData}
@@ -26,7 +32,13 @@ export default function CreateEvent({ user }: { user: User }) {
         )}
         {page === 1 && <StageOne eventState={eventData} setPage={setPage} />}
         {page === 2 && <StageTwo eventState={eventData} setPage={setPage} />}
-        {page === 3 && <StageThree eventState={eventData} setPage={setPage} setError={setError} />}
+        {page === 3 && (
+          <StageThree
+            eventState={eventData}
+            setPage={setPage}
+            setError={setError}
+          />
+        )}
       </div>
       {/* {JSON.stringify(eventData.value)} */}
       {/* {page} */}
