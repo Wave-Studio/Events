@@ -1,6 +1,7 @@
 import { StateUpdater, useRef, useState } from "preact/hooks";
 import { Toggle } from "@/components/buttons/toggle.tsx";
 import CameraPlus from "$tabler/photo-plus.tsx";
+import UpArrow from "$tabler/arrow-up.tsx";
 import { encode } from "$std/encoding/base64.ts";
 import { JSX } from "preact";
 
@@ -61,9 +62,13 @@ export default function ImagePicker({
             file ? "h-12" : "h-36"
           } grow border border-gray-300 border-dashed rounded-md flex items-center justify-center group cursor-pointer transition hover:bg-gray-100`}
         >
-          <CameraPlus class="text-gray-500 group-hover:text-gray-600 transition" />{" "}
+          {dragging ? (
+            <UpArrow class="text-gray-500 group-hover:text-gray-600 transition animate-bounce mt-1" />
+          ) : (
+            <CameraPlus class="text-gray-500 group-hover:text-gray-600 transition" />
+          )}
           <p class="ml-2 font-medium text-gray-600 group-hover:text-gray-700 transition">
-            Upload Banner Image
+            {dragging ? "Drop Image to Upload" : "Upload Banner Image"}
           </p>
         </div>
         <input
