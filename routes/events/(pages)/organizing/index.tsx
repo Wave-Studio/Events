@@ -43,21 +43,28 @@ export default async function Homepage(req: Request, ctx: AppContext) {
 
           return (
             <div className="rounded-md overflow-hidden">
-              {e.banner.path ? (() => { 
-                const url = imageKit.url({
-                  path: e.banner.path,
-                  transformation: [{
-                    width: "400",
-                    quality: "85"
-                  }],
-                })
-                return (
-                <img
-                  src={url}
-                  alt=""
-                  class={`w-full h-52 ${e.banner.fill ? "object-fill" : "object-cover"}`}
-                />
-              )})() : (
+              {e.banner.path ? (
+                (() => {
+                  const url = imageKit.url({
+                    path: e.banner.path,
+                    transformation: [
+                      {
+                        width: "400",
+                        quality: "85",
+                      },
+                    ],
+                  });
+                  return (
+                    <img
+                      src={url}
+                      alt=""
+                      class={`w-full h-52 ${
+                        e.banner.fill ? "object-fill" : "object-cover"
+                      }`}
+                    />
+                  );
+                })()
+              ) : (
                 <div className=""></div>
               )}
               <div className="flex flex-col grow px-2">
