@@ -14,35 +14,39 @@ export default function StageThree({
 }) {
   const [eventID, setEventID] = useState<string>();
   const [error, setError] = useState();
-  const [fileLink, setFileLink] = useState<string>();
-  const [fill, setFill] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    setEventID("test")
-    // (async () => {
-    //   const data = await (
-    //     await fetch("/api/events/create", {
-    //       body: JSON.stringify(eventState.value),
-    //       method: "POST",
-    //     })
-    //   ).json();
-    //   if (data.errors) {
-    //     setError(data.errors[0]);
-    //   } else {
-    //     setEventID(data.eventID);
-    //   }
-    // })();
+    (async () => {
+      setError(undefined);
+      const data = await (
+        await fetch("/api/events/create", {
+          body: JSON.stringify(eventState.value),
+          method: "POST",
+        })
+      ).json();
+      if (data.errors) {
+        setError(data.errors[0]);
+      } else {
+        setEventID(data.eventID);
+      }
+    })();
   }, []);
 
   if (!eventID) {
     return (
       <div className="flex flex-col items-center justify-center">
         <h2 class="font-semibold text-xl mb-20 text-center">
-          Creating your event...
+          {error ? "Event Creation Failed" : "Creating your event..."}
         </h2>
         {/* btw fresh does caching automagiclly for images */}
         {/* <img src="/loading (2).svg" class="animate-spin" /> */}
-        <img src="/logo.svg" class="animate-ping" />
+        {error ? (
+          <p className="text-8xl">🫠</p>
+        ) : (
+          <img src="/logo.svg" class="animate-ping" />
+        )}
+
         {error && (
           <>
             <p className="text-red-500 mt-20">Error: {error}</p>
@@ -64,9 +68,8 @@ export default function StageThree({
     <div class="flex flex-col justify-center w-full0">
       <h2 class="font-semibold text-xl mb-20 text-center">Event Created!</h2>
       <ImagePicker
-        fill={fill}
-        setFill={setFill}
-        updateImage={setFileLink}
+        uploading={loading}
+        setUploading={setLoading}
         eventID={eventID}
       />
       <div className="flex justify-between mt-6 ">
@@ -75,7 +78,7 @@ export default function StageThree({
             btnType="secondary"
             btnSize="sm"
             className="!w-20 md:!w-40"
-            disabled={fileLink == "loading"}
+            disabled={loading}
           >
             All Events
           </CTA>
@@ -85,7 +88,7 @@ export default function StageThree({
           btnSize="sm"
           className="!w-20 md:!w-40"
           onClick={() => setPage(3)}
-          disabled={fileLink == "loading"}
+          disabled={loading}
         >
           View Event
         </CTA>

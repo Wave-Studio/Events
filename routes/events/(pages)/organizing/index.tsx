@@ -2,6 +2,7 @@ import { Event, getUser, kv } from "@/utils/db/kv.ts";
 import { AppContext } from "$fresh/server.ts";
 import { renderToString } from "preact-render-to-string";
 import CTA from "@/components/buttons/cta.tsx";
+import imageKit from "@/utils/imagekit.ts";
 
 export default async function Homepage(req: Request, ctx: AppContext) {
   const user = await getUser(req);
@@ -34,18 +35,46 @@ export default async function Homepage(req: Request, ctx: AppContext) {
   return (
     <>
       <div className="grid grid-cols-2 gap-8">
-        {events.map((event) => (
-          <div className="rounded-md overflow-hidden">
-            <img
-              src="https://images.unsplash.com/photo-1647123817877-a35e45f66e9c?&auto=format&fit=crop&w=1887&q=80"
-              alt=""
-              class="w-full h-52 object-cover"
-            />
-            <div className="flex flex-col grow px-2">
-              <h3 className="font-semibold text-2xl -translate-y-4 bg-white">{event.value?.name}</h3>
+        {events.map((event) => {
+          const e = event.value;
+          if (!e) {
+            return null;
+          }
+
+          return (
+            <div className="rounded-md overflow-hidden">
+              {e.banner.path ? (
+                (() => {
+                  const url = imageKit.url({
+                    path: e.banner.path,
+                    transformation: [
+                      {
+                        width: "400",
+                        quality: "85",
+                      },
+                    ],
+                  });
+                  return (
+                    <img
+                      src={url}
+                      alt=""
+                      class={`w-full h-52 ${
+                        e.banner.fill ? "object-fill" : "object-cover"
+                      }`}
+                    />
+                  );
+                })()
+              ) : (
+                <div className=""></div>
+              )}
+              <div className="flex flex-col grow px-2">
+                <h3 className="font-semibold text-2xl -translate-y-4 bg-white">
+                  {event.value?.name}
+                </h3>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
       <a href="/events/organizing/create" className="mt-10 mx-auto">
         <CTA btnType="cta" btnSize="sm">

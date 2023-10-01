@@ -10,7 +10,12 @@ export interface Event {
   name: string;
   supportEmail: string;
   description?: string;
-  bannerImage?: string;
+  banner: {
+    path?: string;
+    id?: string;
+    fill: boolean;
+    uploading: boolean;
+  };
   venue?: string;
 
   showTimes: {
@@ -32,11 +37,14 @@ export interface Event {
   published: boolean;
 }
 
-export const defaultEvent = {
+export const defaultEvent: Event = {
   name: "",
   supportEmail: "",
   description: "",
-  bannerImage: undefined,
+  banner: {
+    fill: false,
+    uploading: false,
+  },
   published: false,
   multiEntry: true,
 

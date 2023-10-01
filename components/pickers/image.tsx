@@ -7,20 +7,21 @@ import { encode } from "$std/encoding/base64.ts";
 import { JSX } from "preact";
 
 export default function ImagePicker({
-  fill,
-  setFill,
-  updateImage,
+  defaultFill = false,
+  uploading,
+  setUploading,
   eventID,
 }: {
-  updateImage: (link: string | undefined) => void;
-  fill: boolean;
-  setFill: StateUpdater<boolean>;
+  defaultFill?: boolean;
+  uploading: boolean;
+  setUploading: StateUpdater<boolean>;
   eventID: string;
 }) {
   const [file, setFile] = useState<string>();
   const [dragging, setDragging] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [uploading, setUploading] = useState(false);
+  const [fill, setFill] = useState(defaultFill);
+  const [error, setError] = useState<string>();
 
   const inputRef = useRef<HTMLLabelElement>(null);
 
@@ -31,17 +32,40 @@ export default function ImagePicker({
     setFile(b64);
     setLoading(false);
     setUploading(true);
-    updateImage("loading");
     // TODO: minimal client side rezising/optimization
-    await fetch("/api/events/image", {
+
+    // upload file to imagekit
+    const data = await fetch("/api/events/image/upload", {
       body: JSON.stringify({
-        file: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAApgAAAKYB3X3/OAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAANCSURBVEiJtZZPbBtFFMZ/M7ubXdtdb1xSFyeilBapySVU8h8OoFaooFSqiihIVIpQBKci6KEg9Q6H9kovIHoCIVQJJCKE1ENFjnAgcaSGC6rEnxBwA04Tx43t2FnvDAfjkNibxgHxnWb2e/u992bee7tCa00YFsffekFY+nUzFtjW0LrvjRXrCDIAaPLlW0nHL0SsZtVoaF98mLrx3pdhOqLtYPHChahZcYYO7KvPFxvRl5XPp1sN3adWiD1ZAqD6XYK1b/dvE5IWryTt2udLFedwc1+9kLp+vbbpoDh+6TklxBeAi9TL0taeWpdmZzQDry0AcO+jQ12RyohqqoYoo8RDwJrU+qXkjWtfi8Xxt58BdQuwQs9qC/afLwCw8tnQbqYAPsgxE1S6F3EAIXux2oQFKm0ihMsOF71dHYx+f3NND68ghCu1YIoePPQN1pGRABkJ6Bus96CutRZMydTl+TvuiRW1m3n0eDl0vRPcEysqdXn+jsQPsrHMquGeXEaY4Yk4wxWcY5V/9scqOMOVUFthatyTy8QyqwZ+kDURKoMWxNKr2EeqVKcTNOajqKoBgOE28U4tdQl5p5bwCw7BWquaZSzAPlwjlithJtp3pTImSqQRrb2Z8PHGigD4RZuNX6JYj6wj7O4TFLbCO/Mn/m8R+h6rYSUb3ekokRY6f/YukArN979jcW+V/S8g0eT/N3VN3kTqWbQ428m9/8k0P/1aIhF36PccEl6EhOcAUCrXKZXXWS3XKd2vc/TRBG9O5ELC17MmWubD2nKhUKZa26Ba2+D3P+4/MNCFwg59oWVeYhkzgN/JDR8deKBoD7Y+ljEjGZ0sosXVTvbc6RHirr2reNy1OXd6pJsQ+gqjk8VWFYmHrwBzW/n+uMPFiRwHB2I7ih8ciHFxIkd/3Omk5tCDV1t+2nNu5sxxpDFNx+huNhVT3/zMDz8usXC3ddaHBj1GHj/As08fwTS7Kt1HBTmyN29vdwAw+/wbwLVOJ3uAD1wi/dUH7Qei66PfyuRj4Ik9is+hglfbkbfR3cnZm7chlUWLdwmprtCohX4HUtlOcQjLYCu+fzGJH2QRKvP3UNz8bWk1qMxjGTOMThZ3kvgLI5AzFfo379UAAAAASUVORK5CYII=",
-        name: eventID,
+        file: b64,
+        eventID,
       }),
       method: "POST",
     });
-    // upload file to imagekit
-    updateImage("link here");
+    const res = await data.json();
+    if (res.error) {
+      setError(res.error);
+    }
+    setUploading(false);
+  };
+
+  const setStretch = async (fill: boolean) => {
+    setUploading(true);
+    // optimistically update UI
+    setFill(fill);
+    console.log(fill);
+    const data = await fetch("/api/events/image/fill", {
+      body: JSON.stringify({
+        fill,
+        eventID,
+      }),
+      method: "POST",
+    });
+    const res = await data.json();
+    if (res.error || res.success == false) {
+      setError(res.error ?? "An unknown error occurred, please try again");
+      setFill(false);
+    }
     setUploading(false);
   };
 
@@ -106,6 +130,9 @@ export default function ImagePicker({
       <p className="text-center mt-1 mb-2 text-sm text-gray-600">
         We reccomend images at least 1440 x 360 at an aspect ratio of 4:1
       </p>
+      {error && (
+        <p className="text-center mt-1 mb-2 text-red-500">Error: {error}</p>
+      )}
       {file && (
         <>
           <div className="relative flex flex-col items-center">
@@ -122,9 +149,10 @@ export default function ImagePicker({
             )}
           </div>
           <Toggle
+            disabled={uploading}
             name="Stretch to Fit"
             description="Stretch your image to fit the width of banner box. The way an image stretchs will vary based on device screen size. "
-            setEnabled={setFill}
+            setEnabled={setStretch as StateUpdater<boolean>}
             enabled={fill}
           />
         </>

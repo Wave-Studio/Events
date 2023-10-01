@@ -29,7 +29,7 @@
     "@/": "./",
     "$tabler/": "https://deno.land/x/tabler_icons_tsx@0.0.4/tsx/",
     "yup": "https://esm.sh/yup@1.2.0",
-    "imagekit": "https://esm.sh/imagekit@4.1.3"
+    "imagekit": "npm:imagekit@4.1.3"
   },
   "compilerOptions": {
     "jsx": "react-jsx",
