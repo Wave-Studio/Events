@@ -111,42 +111,41 @@ export const handler: Handlers = {
     }
 
     // I feel like this may not be the best way to do this
-    // for some reason when using atoimic transatcions, it sets the user object to version 2, idk why
-    // const response = await kv
-    //   .atomic()
-    //   .set(["event", eventID], {
-    //     ...event,
-    //     members: [{ email: user.email, role: Roles.OWNER }],
-    //   } as Event)
-    //   .set(["user", user.email], {
-    //     ...user,
-    //     events: [...user.events, eventID],
-    //   } as User)
-    //   .commit();
-
-    // if (response.ok) {
-    //   return new Response(JSON.stringify({ success: true, eventID }), {
-    //     status: 200,
-    //   });
-    // }
-
-    const response = await Promise.all([
-      await kv.set(["event", eventID], {
+    const response = await kv
+      .atomic()
+      .set(["event", eventID], {
         ...event,
         members: [{ email: user.email, role: Roles.OWNER }],
-      } as Event),
-
-      await kv.set(["user", btoa(user.email)], {
+      } as Event)
+      .set(["user", user.email], {
         ...user,
         events: [...user.events, eventID],
-      } as User),
-    ]);
+      } as User)
+      .commit();
 
-    if (response.every((res) => res.ok)) {
+    if (response.ok) {
       return new Response(JSON.stringify({ success: true, eventID }), {
         status: 200,
       });
     }
+
+    // const response = await Promise.all([
+    //   await kv.set(["event", eventID], {
+    //     ...event,
+    //     members: [{ email: user.email, role: Roles.OWNER }],
+    //   } as Event),
+
+    //   await kv.set(["user", btoa(user.email)], {
+    //     ...user,
+    //     events: [...user.events, eventID],
+    //   } as User),
+    // ]);
+
+    // if (response.every((res) => res.ok)) {
+    //   return new Response(JSON.stringify({ success: true, eventID }), {
+    //     status: 200,
+    //   });
+    // }
 
     return new Response(JSON.stringify({ error: "Unknown error occured" }), {
       status: 400,

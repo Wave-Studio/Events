@@ -1,6 +1,6 @@
 import { Handlers } from "$fresh/server.ts";
 // @deno-types="npm:@types/imagekit"
-import ImageKit, { UploadResponse } from "imagekit";
+import { UploadResponse } from "imagekit";
 import { Event, getUser, kv } from "@/utils/db/kv.ts";
 import { isUUID } from "@/utils/db/misc.ts";
 import imageKit from "@/utils/imagekit.ts";

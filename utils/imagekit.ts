@@ -1,3 +1,6 @@
+// @deno-types="npm:@types/imagekit"
+import ImageKit from "imagekit";
+
 const imageKit = new ImageKit({
   publicKey: Deno.env.get("IMAGEKIT_PUBLIC_KEY")!,
   privateKey: Deno.env.get("IMAGEKIT_PRIVATE_KEY")!,
