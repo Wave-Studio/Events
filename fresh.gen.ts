@@ -13,7 +13,7 @@ import * as $7 from "./routes/_layout.tsx";
 import * as $8 from "./routes/api/auth/login.ts";
 import * as $9 from "./routes/api/auth/signout.ts";
 import * as $10 from "./routes/api/events/create.ts";
-import * as $11 from "./routes/api/events/images/image.ts";
+import * as $11 from "./routes/api/events/image.ts";
 import * as $12 from "./routes/events/(pages)/_layout.tsx";
 import * as $13 from "./routes/events/(pages)/attending/_layout.tsx";
 import * as $14 from "./routes/events/(pages)/attending/index.tsx";
@@ -46,7 +46,7 @@ const manifest = {
     "./routes/api/auth/login.ts": $8,
     "./routes/api/auth/signout.ts": $9,
     "./routes/api/events/create.ts": $10,
-    "./routes/api/events/images/image.ts": $11,
+    "./routes/api/events/image.ts": $11,
     "./routes/events/(pages)/_layout.tsx": $12,
     "./routes/events/(pages)/attending/_layout.tsx": $13,
     "./routes/events/(pages)/attending/index.tsx": $14,

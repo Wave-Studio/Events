@@ -43,8 +43,7 @@ export default function CalenderPicker({
     setCal(({ month, year }) => {
       year += Math.floor((month + months) / 12);
       month = (months + month) % 12;
-
-      console.log(month, year);
+      
       return { month, year };
     });
   };
@@ -57,7 +56,6 @@ export default function CalenderPicker({
       }
       month = ((newMonth % 12) + 12) % 12;
 
-      console.log(month, year);
       return { month, year };
     });
   };

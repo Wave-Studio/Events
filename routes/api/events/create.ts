@@ -84,8 +84,8 @@ export const handler: Handlers = {
       });
     }
 
-    // Will prob be modified if we do support purchasing more event slots
-    if (user.events.length >= PlanMaxEvents[user.plan]) {
+    // Will prob be modified if we do support purchasing more event slots - Bloxs
+    if (user.events.length >= PlanMaxEvents[user.plan] && Deno.env.get("DENO_DEPLOYMENT_ID") != undefined) {
       return new Response(
         JSON.stringify({
           error: "You have reached the maximum number of events",
@@ -108,23 +108,47 @@ export const handler: Handlers = {
     }
 
     // I feel like this may not be the best way to do this
-    const response = await kv
-      .atomic()
-      .set(["event", eventID], {
+    // for some reason when using atoimic transatcions, it sets the user object to version 2, idk why
+    // const response = await kv
+    //   .atomic()
+    //   .set(["event", eventID], {
+    //     ...event,
+    //     members: [{ email: user.email, role: Roles.OWNER }],
+    //   } as Event)
+    //   .set(["user", user.email], {
+    //     ...user,
+    //     events: [...user.events, eventID],
+    //   } as User)
+    //   .commit();
+
+    // if (response.ok) {
+    //   return new Response(JSON.stringify({ success: true, eventID }), {
+    //     status: 200,
+    //   });
+    // }
+
+    const response = await Promise.all([
+      await kv.set(["event", eventID], {
         ...event,
         members: [{ email: user.email, role: Roles.OWNER }],
-      } as Event)
-      .set(["user", user.email], {
+      } as Event),
+
+      await kv.set(["user", btoa(user.email)], {
         ...user,
         events: [...user.events, eventID],
-      } as User)
-      .commit();
+      } as User),
+    ]);
 
-    if (response.ok) {
-      return new Response(JSON.stringify({ success: true, eventID }), {
-        status: 200,
-      });
-    }
+
+
+		if (response.every(res => res.ok)) {
+			return new Response(
+				JSON.stringify({ success: true, eventID }),
+				{
+					status: 200,
+				}
+			);
+		}
 
     return new Response(JSON.stringify({ error: "Unknown error occured" }), {
       status: 400,

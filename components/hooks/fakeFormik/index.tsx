@@ -107,15 +107,15 @@ function useForm<T>({
     (props: HTMLInputProps) => JSX.Element,
     (props: HTMLTextAreaProps) => JSX.Element,
   ],
-  T,
+  () => T,
 ] {
-  const [formState, setFormState] = useState<T>(initialState);
+  const formState = signal<T>(initialState);
 
   const onSubmitHandler: JSX.GenericEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
 
     try {
-      validationSchema.validateSync(formState);
+      validationSchema.validateSync(formState.value);
     } catch (error) {
       onSubmit({
         success: false,
@@ -126,7 +126,7 @@ function useForm<T>({
 
     onSubmit({
       success: true,
-      formState,
+      formState: formState.value,
     });
   };
 
@@ -144,12 +144,9 @@ function useForm<T>({
           <input
             {...(props as HTMLInputProps)}
             type={props.type ?? "text"}
-            value={formState[props.name as keyof T] as string}
+            value={formState.value[props.name as keyof T] as string}
             onInput={(e) => {
-              setFormState({
-                ...formState,
-                [props.name]: e.currentTarget.value,
-              });
+              formState.value[props.name as keyof T] = e.currentTarget.value as T[keyof T];
             }}
           />
         );
@@ -158,18 +155,15 @@ function useForm<T>({
         return (
           <textarea
             {...(props as HTMLTextAreaProps)}
-            value={formState[props.name as keyof T] as string}
+            value={formState.value[props.name as keyof T] as string}
             onInput={(e) => {
-              setFormState({
-                ...formState,
-                [props.name]: e.currentTarget.value,
-              });
+              formState.value[props.name as keyof T] = e.currentTarget.value as T[keyof T];
             }}
           />
         );
       },
     ],
-    formState,
+    () => formState.value,
   ];
 }
 

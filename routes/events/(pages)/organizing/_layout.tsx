@@ -25,7 +25,7 @@ export default defineLayout((req: Request, ctx) => {
           ))}
         </div>
       )}
-      <div className="grow flex flex-col my-4">
+      <div className="grow flex flex-col mb-4 mt-8">
         <ctx.Component />
       </div>
     </>

@@ -12,26 +12,26 @@ export default function StageThree({
   setPage: StateUpdater<number>;
   setError: StateUpdater<string | undefined>;
 }) {
-  const [eventID, setEventID] = useState();
+  const [eventID, setEventID] = useState<string>();
   const [error, setError] = useState();
   const [fileLink, setFileLink] = useState<string>();
   const [fill, setFill] = useState(false);
 
   useEffect(() => {
-    (async () => {
-      const data = await (
-        await fetch("/api/events/create", {
-          body: JSON.stringify(eventState.value),
-          method: "POST",
-        })
-      ).json();
-      if (data.errors) {
-        setError(data.errors[0]);
-      } else {
-        setEventID(data.eventID);
-      }
-      console.log(data);
-    })();
+    setEventID("test")
+    // (async () => {
+    //   const data = await (
+    //     await fetch("/api/events/create", {
+    //       body: JSON.stringify(eventState.value),
+    //       method: "POST",
+    //     })
+    //   ).json();
+    //   if (data.errors) {
+    //     setError(data.errors[0]);
+    //   } else {
+    //     setEventID(data.eventID);
+    //   }
+    // })();
   }, []);
 
   if (!eventID) {

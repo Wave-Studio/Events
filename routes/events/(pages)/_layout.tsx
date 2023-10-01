@@ -12,7 +12,7 @@ export default defineLayout((req, ctx) => {
         {isCreation ? "Event Creation" : "Events"}
       </h1>
 
-      <div className="px-4 max-w-screen-lg w-full mx-auto mb-20 flex flex-col grow">
+      <div className="px-4 max-w-screen-md w-full mx-auto mb-20 flex flex-col grow">
         <ctx.Component />
       </div>
       <div className="gap-4 mt-4 mb-6 mx-auto flex ">
