@@ -3,12 +3,7 @@ import { Handlers } from "$fresh/server.ts";
 import ImageKit, { UploadResponse } from "imagekit";
 import { Event, getUser, kv } from "@/utils/db/kv.ts";
 import { isUUID } from "@/utils/db/misc.ts";
-
-export const imageKit = new ImageKit({
-  publicKey: Deno.env.get("IMAGEKIT_PUBLIC_KEY")!,
-  privateKey: Deno.env.get("IMAGEKIT_PRIVATE_KEY")!,
-  urlEndpoint: Deno.env.get("IMAGEKIT_URL_ENDPOINT")!,
-});
+import imageKit from "@/utils/imagekit.ts";
 
 export const handler: Handlers = {
   async POST(req, _ctx) {
@@ -55,7 +50,7 @@ export const handler: Handlers = {
     const promises: [UploadResponse, void?] = [
       await imageKit.upload({
         file,
-        fileName: crypto.randomUUID(),
+        fileName: eventID,
       }),
     ];
 
@@ -85,6 +80,7 @@ export const handler: Handlers = {
         ...event.value.banner,
         id: res.fileId,
         path: res.filePath,
+        uploading: false
       },
     } as Event);
 

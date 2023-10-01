@@ -47,7 +47,7 @@ const manifest = {
     "./routes/api/auth/login.ts": $8,
     "./routes/api/auth/signout.ts": $9,
     "./routes/api/events/create.ts": $10,
-    "./routes/api/events/image/fill.ts": $11,
+    "./routes/api/events/image/stretch.ts": $11,
     "./routes/api/events/image/upload.ts": $12,
     "./routes/events/(pages)/_layout.tsx": $13,
     "./routes/events/(pages)/attending/_layout.tsx": $14,

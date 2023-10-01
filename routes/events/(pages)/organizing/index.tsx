@@ -2,7 +2,7 @@ import { Event, getUser, kv } from "@/utils/db/kv.ts";
 import { AppContext } from "$fresh/server.ts";
 import { renderToString } from "preact-render-to-string";
 import CTA from "@/components/buttons/cta.tsx";
-import { imageKit } from "@/routes/api/events/image/upload.ts";
+import imageKit from "@/utils/imagekit.ts";
 
 export default async function Homepage(req: Request, ctx: AppContext) {
   const user = await getUser(req);
