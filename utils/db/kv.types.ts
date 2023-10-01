@@ -13,8 +13,8 @@ export interface Event {
   banner: {
     path?: string;
     id?: string;
-    fill: boolean,
-    uploading: boolean
+    fill: boolean;
+    uploading: boolean;
   };
   venue?: string;
 
@@ -37,7 +37,7 @@ export interface Event {
   published: boolean;
 }
 
-export const defaultEvent : Event= {
+export const defaultEvent: Event = {
   name: "",
   supportEmail: "",
   description: "",

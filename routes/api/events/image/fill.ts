@@ -2,7 +2,6 @@ import { Handlers } from "$fresh/server.ts";
 import { Event, getUser, kv } from "@/utils/db/kv.ts";
 import { isUUID } from "@/utils/db/misc.ts";
 
-
 export const handler: Handlers = {
   async POST(req, _ctx) {
     const user = await getUser(req);
@@ -21,9 +20,9 @@ export const handler: Handlers = {
       });
     }
 
-		// this is likley all posible in one request using atomic transactions
-		// but my pretty basic knowlegde of how they work has convinced me it's 
-		// not worth figuring out -LS
+    // this is likley all posible in one request using atomic transactions
+    // but my pretty basic knowlegde of how they work has convinced me it's
+    // not worth figuring out -LS
 
     const event = await kv.get<Event>(["event", eventID]);
 
@@ -40,10 +39,13 @@ export const handler: Handlers = {
       });
     }
 
-		const res = await kv.set(["event", eventID], {...event.value, banner: {
-      ...event.value.banner,
-			fill
-    }} as Event)
+    const res = await kv.set(["event", eventID], {
+      ...event.value,
+      banner: {
+        ...event.value.banner,
+        fill,
+      },
+    } as Event);
 
     return new Response(JSON.stringify({ success: res.ok }), {
       status: 200,

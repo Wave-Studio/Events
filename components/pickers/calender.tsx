@@ -43,7 +43,7 @@ export default function CalenderPicker({
     setCal(({ month, year }) => {
       year += Math.floor((month + months) / 12);
       month = (months + month) % 12;
-      
+
       return { month, year };
     });
   };

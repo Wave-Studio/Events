@@ -146,7 +146,8 @@ function useForm<T>({
             type={props.type ?? "text"}
             value={formState.value[props.name as keyof T] as string}
             onInput={(e) => {
-              formState.value[props.name as keyof T] = e.currentTarget.value as T[keyof T];
+              formState.value[props.name as keyof T] = e.currentTarget
+                .value as T[keyof T];
             }}
           />
         );
@@ -157,7 +158,8 @@ function useForm<T>({
             {...(props as HTMLTextAreaProps)}
             value={formState.value[props.name as keyof T] as string}
             onInput={(e) => {
-              formState.value[props.name as keyof T] = e.currentTarget.value as T[keyof T];
+              formState.value[props.name as keyof T] = e.currentTarget
+                .value as T[keyof T];
             }}
           />
         );

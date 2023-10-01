@@ -44,42 +44,52 @@ export const handler: Handlers = {
     }
 
     // prevent people from uploading multiple things at the same time, may waste db write/egress but idk, probably good to have -LS
-    await kv.set(["event", eventID], {...event.value, banner: {
-      ...event.value.banner,
-      uploading: true
-    }} as Event)
+    await kv.set(["event", eventID], {
+      ...event.value,
+      banner: {
+        ...event.value.banner,
+        uploading: true,
+      },
+    } as Event);
 
-    const promises: [UploadResponse, void?] = [await imageKit.upload({
-      file,
-      fileName: crypto.randomUUID(),
-    })]
+    const promises: [UploadResponse, void?] = [
+      await imageKit.upload({
+        file,
+        fileName: crypto.randomUUID(),
+      }),
+    ];
 
     if (event.value.banner.id) {
-     promises.push(await imageKit.deleteFile(event.value.banner.id))
+      promises.push(await imageKit.deleteFile(event.value.banner.id));
     }
 
-    let res: UploadResponse | undefined = undefined
+    let res: UploadResponse | undefined = undefined;
 
     try {
-    const response = await Promise.all(promises)
-    res = response[0]
+      const response = await Promise.all(promises);
+      res = response[0];
     } catch {
-      return new Response(JSON.stringify({ error: "An error was returned while uploading your image" }), {
-        status: 400,
-      });
+      return new Response(
+        JSON.stringify({
+          error: "An error was returned while uploading your image",
+        }),
+        {
+          status: 400,
+        },
+      );
     }
 
-    await kv.set(["event", eventID], {...event.value, banner: {
-      ...event.value.banner,
-      id: res.fileId,
-      path: res.filePath
-    }} as Event)
-
-    return new Response(
-      JSON.stringify({ success: true }),
-      {
-        status: 200,
+    await kv.set(["event", eventID], {
+      ...event.value,
+      banner: {
+        ...event.value.banner,
+        id: res.fileId,
+        path: res.filePath,
       },
-    );
+    } as Event);
+
+    return new Response(JSON.stringify({ success: true }), {
+      status: 200,
+    });
   },
 };

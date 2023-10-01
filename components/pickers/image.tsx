@@ -52,7 +52,7 @@ export default function ImagePicker({
   const setStretch = async (fill: boolean) => {
     setUploading(true);
     // optimistically update UI
-    setFill(fill)
+    setFill(fill);
     const data = await fetch("/api/events/image/fill", {
       body: JSON.stringify({
         fill,
@@ -63,10 +63,10 @@ export default function ImagePicker({
     const res = await data.json();
     if (res.error || res.success == false) {
       setError(res.error ?? "An unknown error occurred, please try again");
-      setFill(false)
+      setFill(false);
     }
     setUploading(false);
-  }
+  };
 
   const handleDrag = (e: Event) => {
     e.preventDefault();
@@ -148,10 +148,10 @@ export default function ImagePicker({
             )}
           </div>
           <Toggle
-          disabled={uploading}
+            disabled={uploading}
             name="Stretch to Fit"
             description="Stretch your image to fit the width of banner box. The way an image stretchs will vary based on device screen size. "
-            setEnabled={setStretch}
+            setEnabled={setStretch as StateUpdater<boolean>}
             enabled={fill}
           />
         </>

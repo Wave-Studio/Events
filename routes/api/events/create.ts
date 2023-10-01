@@ -85,7 +85,10 @@ export const handler: Handlers = {
     }
 
     // Will prob be modified if we do support purchasing more event slots - Bloxs
-    if (user.events.length >= PlanMaxEvents[user.plan] && Deno.env.get("DENO_DEPLOYMENT_ID") != undefined) {
+    if (
+      user.events.length >= PlanMaxEvents[user.plan] &&
+      Deno.env.get("DENO_DEPLOYMENT_ID") != undefined
+    ) {
       return new Response(
         JSON.stringify({
           error: "You have reached the maximum number of events",
@@ -139,16 +142,11 @@ export const handler: Handlers = {
       } as User),
     ]);
 
-
-
-		if (response.every(res => res.ok)) {
-			return new Response(
-				JSON.stringify({ success: true, eventID }),
-				{
-					status: 200,
-				}
-			);
-		}
+    if (response.every((res) => res.ok)) {
+      return new Response(JSON.stringify({ success: true, eventID }), {
+        status: 200,
+      });
+    }
 
     return new Response(JSON.stringify({ error: "Unknown error occured" }), {
       status: 400,

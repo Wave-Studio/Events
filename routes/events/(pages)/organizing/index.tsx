@@ -42,7 +42,9 @@ export default async function Homepage(req: Request, ctx: AppContext) {
               class="w-full h-52 object-cover"
             />
             <div className="flex flex-col grow px-2">
-              <h3 className="font-semibold text-2xl -translate-y-4 bg-white">{event.value?.name}</h3>
+              <h3 className="font-semibold text-2xl -translate-y-4 bg-white">
+                {event.value?.name}
+              </h3>
             </div>
           </div>
         ))}
