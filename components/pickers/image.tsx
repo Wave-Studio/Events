@@ -53,6 +53,7 @@ export default function ImagePicker({
     setUploading(true);
     // optimistically update UI
     setFill(fill);
+    console.log(fill)
     const data = await fetch("/api/events/image/fill", {
       body: JSON.stringify({
         fill,

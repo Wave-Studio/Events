@@ -4,7 +4,7 @@ import ImageKit, { UploadResponse } from "imagekit";
 import { Event, getUser, kv } from "@/utils/db/kv.ts";
 import { isUUID } from "@/utils/db/misc.ts";
 
-const imageKit = new ImageKit({
+export const imageKit = new ImageKit({
   publicKey: Deno.env.get("IMAGEKIT_PUBLIC_KEY")!,
   privateKey: Deno.env.get("IMAGEKIT_PRIVATE_KEY")!,
   urlEndpoint: Deno.env.get("IMAGEKIT_URL_ENDPOINT")!,

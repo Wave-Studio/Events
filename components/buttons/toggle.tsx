@@ -14,10 +14,10 @@ export const Switch = ({
     <button
       disabled={disabled}
       class="rounded-full w-12 min-w-[3rem] border border-gray-300 flex items-center cursor-pointer disabled:brightness-90"
-      onClick={() => setEnabled((e) => !e)}
+      onClick={() => setEnabled(!enabled)}
       tabIndex={0}
       onKeyDown={(e) => {
-        if (e.key == "Enter") setEnabled((e) => !e);
+        if (e.key == "Enter") setEnabled(!enabled);
       }}
     >
       <div

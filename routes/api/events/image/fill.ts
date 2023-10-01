@@ -47,6 +47,7 @@ export const handler: Handlers = {
       },
     } as Event);
 
+
     return new Response(JSON.stringify({ success: res.ok }), {
       status: 200,
     });
