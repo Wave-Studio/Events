@@ -1,5 +1,6 @@
 import { FAQ, faqs } from "@/components/faq/questions.ts";
 import { pricingfaqs } from "@/components/faq/pricing.tsx";
+import { artDesignFQAs } from "@/components/faq/artDesign.tsx";
 
 const FAQS = () => {
   return (
@@ -12,6 +13,10 @@ const FAQS = () => {
       ))}
       <Heading name="Pricing" />
       {pricingfaqs.map(({ a, q }) => (
+        <QA q={q} a={a} />
+      ))}
+      <Heading name="Art & Design" />
+      {artDesignFQAs.map(({ a, q }) => (
         <QA q={q} a={a} />
       ))}
     </div>

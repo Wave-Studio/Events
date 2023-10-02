@@ -45,6 +45,7 @@ textarea {
 
 .scrollbar-fancy::-webkit-scrollbar {
   width: 10px;
+  height: 10px;
 }
 
 .scrollbar-fancy:not(.scrollbar-fancy-glass)::-webkit-scrollbar-thumb {

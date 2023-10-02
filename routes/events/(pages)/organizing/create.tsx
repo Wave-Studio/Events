@@ -1,5 +1,5 @@
 import { getUser } from "@/utils/db/kv.ts";
-import CreateEvent from "@/islands/events/createForm.tsx";
+import CreateEvent from "../../../../islands/events/creation/createForm.tsx";
 
 export default async function Create(req: Request) {
   const user = await getUser(req);

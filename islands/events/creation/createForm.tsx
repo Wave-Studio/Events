@@ -1,10 +1,10 @@
 import { useState } from "preact/hooks";
 import { defaultEvent, User } from "@/utils/db/kv.types.ts";
 import StageZero from "./zero.tsx";
-import StageOne from "@/islands/events/one.tsx";
+import StageOne from "./one.tsx";
 import { useSignal } from "@preact/signals";
-import StageTwo from "@/islands/events/two.tsx";
-import StageThree from "@/islands/events/three.tsx";
+import StageTwo from "./two.tsx";
+import StageThree from "./three.tsx";
 
 export default function CreateEvent({ user }: { user: User }) {
   const eventData = useSignal(defaultEvent);
