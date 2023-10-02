@@ -5,7 +5,7 @@ export interface Field {
   type: "text" | "email" | "number" | "toggle";
 }
 
-// ["event", eventId]
+/** ["event", eventId] */
 export interface Event {
   name: string;
   supportEmail: string;
@@ -73,7 +73,7 @@ export interface FieldEntry
   value: string;
 }
 
-// ["ticket", eventId, ticketId]
+/** ["ticket", eventId, ticketId] */
 export interface Ticket {
   hasBeenUsed: boolean;
   userEmail: string;
@@ -82,7 +82,7 @@ export interface Ticket {
   fieldData: FieldEntry[];
 }
 
-// ["user", email]
+/** ["user", email] */
 export type User = OnboardedUser | UnonboardedUser;
 
 export interface OnboardedUser extends UserPartial {
@@ -124,7 +124,7 @@ export const PlanMaxEvents = {
   [Plan.ENTERPRISE]: Infinity,
 };
 
-// ["authcode", email, code]
+/** ["authcode", email, code] */
 export interface AuthCode {
   existsSince: string; // as date
 }

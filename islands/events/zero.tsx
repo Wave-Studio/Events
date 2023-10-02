@@ -1,7 +1,7 @@
 import { Signal } from "@preact/signals";
 import { Event } from "@/utils/db/kv.ts";
 import useForm from "@/components/hooks/fakeFormik/index.tsx";
-import * as Yup from "yup";
+import { FirstPageEventValidation } from "@/utils/types/events.ts";
 import CTA from "@/components/buttons/cta.tsx";
 import PhotoPlus from "$tabler/photo-plus.tsx";
 import { StateUpdater, useMemo, useState } from "preact/hooks";
@@ -38,17 +38,7 @@ export default function StageZero({
         setPage(1);
       }
     },
-    validationSchema: Yup.object({
-      name: Yup.string()
-        .min(3, "The name of your event must be at least 3 characters")
-        .max(75, "The name of your event must be at least 3 characters")
-        .required("Please add a name for your event"),
-      supportEmail: Yup.string()
-        .email("Enter a valid support email")
-        .required("We require a support email for all events"),
-      description: Yup.string().max(1500),
-      venue: Yup.string().max(150),
-    }),
+    validationSchema: FirstPageEventValidation,
   });
 
   return (
