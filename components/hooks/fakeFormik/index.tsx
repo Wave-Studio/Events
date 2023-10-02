@@ -13,66 +13,6 @@ type Json =
       [prop: string]: Json;
     };
 
-// const useOldForm = <
-//   Key extends PropertyKey,
-//   Value extends Json,
-//   T extends Record<Key, Value>
-// >({
-//   initialState,
-//   onSubmit,
-// }: {
-//   initialState: T;
-//   onSubmit: (values: typeof initialState) => void;
-// }) => {
-// 	const formState = signal(initialState)
-
-// 	interface FieldProps extends JSX.HTMLAttributes<HTMLInputElement> {
-// 		name: string
-// 	}
-
-// 	const Field = (props: FieldProps) =>  (<input {...props} onInput={(e) => formState.value[props.name] = e.currentTarget.value} />)
-
-// 	const submitForm = () => onSubmit(formState.value)
-
-// 	return [Field, formState, submitForm]
-// };
-
-// const ueForm = <T extends Record<string, unknown>>({
-//   initialState,
-//   onSubmit,
-// }: {
-//   initialState: T;
-//   onSubmit: (values: T) => void;
-//   validationSchema: Yup.ObjectSchema<T>;
-// }): [
-//   ({ name, type }: { name: string; type?: string }) => ComponentChild,
-//   T,
-//   () => void
-// ] => {
-//   const [formState, setFormState] = useState(initialState);
-
-//   interface FieldProps extends JSX.HTMLAttributes<HTMLInputElement> {
-//     name: keyof T;
-//   }
-
-//   return [
-//     ({ name, type }: { name: string; type?: string }) => (
-//       <input
-//         type={type ?? "text"}
-//         value={formState[name as keyof T] as string}
-//         onChange={(e) =>
-//           setFormState({
-//             ...formState,
-//             [name]: e.currentTarget.value,
-//           })
-//         }
-//       />
-//     ),
-//     formState,
-//     () => onSubmit(formState),
-//   ];
-// };
-
 interface FormProps extends JSX.HTMLAttributes<HTMLFormElement> {
   children: ComponentChild;
 }
