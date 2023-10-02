@@ -25,7 +25,7 @@ const YupShowtimeValidation = Yup.array()
     }),
   );
 
-const YupFirstPageEventValidation = {
+export const YupFirstPageEventValidation = {
   name: Yup.string()
     .min(3, "The name of your event must be at least 3 characters")
     .max(75, "The name of your event must be at least 3 characters")

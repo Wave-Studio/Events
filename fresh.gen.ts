@@ -13,20 +13,22 @@ import * as $7 from "./routes/_layout.tsx";
 import * as $8 from "./routes/api/auth/login.ts";
 import * as $9 from "./routes/api/auth/signout.ts";
 import * as $10 from "./routes/api/events/create.ts";
-import * as $11 from "./routes/api/events/image/fill.ts";
-import * as $12 from "./routes/api/events/image/upload.ts";
-import * as $13 from "./routes/events/(pages)/_layout.tsx";
-import * as $14 from "./routes/events/(pages)/attending/_layout.tsx";
-import * as $15 from "./routes/events/(pages)/attending/index.tsx";
-import * as $16 from "./routes/events/(pages)/organizing/_layout.tsx";
-import * as $17 from "./routes/events/(pages)/organizing/accounting.tsx";
-import * as $18 from "./routes/events/(pages)/organizing/collections.tsx";
-import * as $19 from "./routes/events/(pages)/organizing/create.tsx";
-import * as $20 from "./routes/events/(pages)/organizing/discounts.tsx";
-import * as $21 from "./routes/events/(pages)/organizing/index.tsx";
-import * as $22 from "./routes/events/[id].tsx";
-import * as $23 from "./routes/index.tsx";
-import * as $24 from "./routes/login.tsx";
+import * as $11 from "./routes/api/events/edit.ts";
+import * as $12 from "./routes/api/events/image/fill.ts";
+import * as $13 from "./routes/api/events/image/upload.ts";
+import * as $14 from "./routes/events/(pages)/_layout.tsx";
+import * as $15 from "./routes/events/(pages)/attending/_layout.tsx";
+import * as $16 from "./routes/events/(pages)/attending/index.tsx";
+import * as $17 from "./routes/events/(pages)/organizing/_layout.tsx";
+import * as $18 from "./routes/events/(pages)/organizing/accounting.tsx";
+import * as $19 from "./routes/events/(pages)/organizing/collections.tsx";
+import * as $20 from "./routes/events/(pages)/organizing/create.tsx";
+import * as $21 from "./routes/events/(pages)/organizing/discounts.tsx";
+import * as $22 from "./routes/events/(pages)/organizing/index.tsx";
+import * as $23 from "./routes/events/[id].tsx";
+import * as $24 from "./routes/index.tsx";
+import * as $25 from "./routes/login.tsx";
+import * as $26 from "./routes/test.tsx";
 import * as $$0 from "./islands/events/components/card.tsx";
 import * as $$1 from "./islands/events/creation/createForm.tsx";
 import * as $$2 from "./islands/events/creation/one.tsx";
@@ -34,7 +36,9 @@ import * as $$3 from "./islands/events/creation/three.tsx";
 import * as $$4 from "./islands/events/creation/two.tsx";
 import * as $$5 from "./islands/events/creation/zero.tsx";
 import * as $$6 from "./islands/events/editing/images.tsx";
-import * as $$7 from "./islands/loginForm.tsx";
+import * as $$7 from "./islands/events/editing/settings.tsx";
+import * as $$8 from "./islands/loginForm.tsx";
+import * as $$9 from "./islands/testisland.tsx";
 
 const manifest = {
   routes: {
@@ -49,20 +53,22 @@ const manifest = {
     "./routes/api/auth/login.ts": $8,
     "./routes/api/auth/signout.ts": $9,
     "./routes/api/events/create.ts": $10,
-    "./routes/api/events/image/fill.ts": $11,
-    "./routes/api/events/image/upload.ts": $12,
-    "./routes/events/(pages)/_layout.tsx": $13,
-    "./routes/events/(pages)/attending/_layout.tsx": $14,
-    "./routes/events/(pages)/attending/index.tsx": $15,
-    "./routes/events/(pages)/organizing/_layout.tsx": $16,
-    "./routes/events/(pages)/organizing/accounting.tsx": $17,
-    "./routes/events/(pages)/organizing/collections.tsx": $18,
-    "./routes/events/(pages)/organizing/create.tsx": $19,
-    "./routes/events/(pages)/organizing/discounts.tsx": $20,
-    "./routes/events/(pages)/organizing/index.tsx": $21,
-    "./routes/events/[id].tsx": $22,
-    "./routes/index.tsx": $23,
-    "./routes/login.tsx": $24,
+    "./routes/api/events/edit.ts": $11,
+    "./routes/api/events/image/fill.ts": $12,
+    "./routes/api/events/image/upload.ts": $13,
+    "./routes/events/(pages)/_layout.tsx": $14,
+    "./routes/events/(pages)/attending/_layout.tsx": $15,
+    "./routes/events/(pages)/attending/index.tsx": $16,
+    "./routes/events/(pages)/organizing/_layout.tsx": $17,
+    "./routes/events/(pages)/organizing/accounting.tsx": $18,
+    "./routes/events/(pages)/organizing/collections.tsx": $19,
+    "./routes/events/(pages)/organizing/create.tsx": $20,
+    "./routes/events/(pages)/organizing/discounts.tsx": $21,
+    "./routes/events/(pages)/organizing/index.tsx": $22,
+    "./routes/events/[id].tsx": $23,
+    "./routes/index.tsx": $24,
+    "./routes/login.tsx": $25,
+    "./routes/test.tsx": $26,
   },
   islands: {
     "./islands/events/components/card.tsx": $$0,
@@ -72,7 +78,9 @@ const manifest = {
     "./islands/events/creation/two.tsx": $$4,
     "./islands/events/creation/zero.tsx": $$5,
     "./islands/events/editing/images.tsx": $$6,
-    "./islands/loginForm.tsx": $$7,
+    "./islands/events/editing/settings.tsx": $$7,
+    "./islands/loginForm.tsx": $$8,
+    "./islands/testisland.tsx": $$9,
   },
   baseUrl: import.meta.url,
 };
