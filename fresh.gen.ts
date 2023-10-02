@@ -28,7 +28,6 @@ import * as $22 from "./routes/events/(pages)/organizing/index.tsx";
 import * as $23 from "./routes/events/[id].tsx";
 import * as $24 from "./routes/index.tsx";
 import * as $25 from "./routes/login.tsx";
-import * as $26 from "./routes/test.tsx";
 import * as $$0 from "./islands/events/components/card.tsx";
 import * as $$1 from "./islands/events/creation/createForm.tsx";
 import * as $$2 from "./islands/events/creation/one.tsx";
@@ -38,7 +37,6 @@ import * as $$5 from "./islands/events/creation/zero.tsx";
 import * as $$6 from "./islands/events/editing/images.tsx";
 import * as $$7 from "./islands/events/editing/settings.tsx";
 import * as $$8 from "./islands/loginForm.tsx";
-import * as $$9 from "./islands/testisland.tsx";
 
 const manifest = {
   routes: {
@@ -68,7 +66,6 @@ const manifest = {
     "./routes/events/[id].tsx": $23,
     "./routes/index.tsx": $24,
     "./routes/login.tsx": $25,
-    "./routes/test.tsx": $26,
   },
   islands: {
     "./islands/events/components/card.tsx": $$0,
@@ -80,7 +77,6 @@ const manifest = {
     "./islands/events/editing/images.tsx": $$6,
     "./islands/events/editing/settings.tsx": $$7,
     "./islands/loginForm.tsx": $$8,
-    "./islands/testisland.tsx": $$9,
   },
   baseUrl: import.meta.url,
 };
