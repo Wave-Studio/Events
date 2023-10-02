@@ -3,9 +3,10 @@ import CTA from "@/components/buttons/cta.tsx";
 import useForm from "@/components/hooks/fakeFormik/index.tsx";
 import { Event } from "@/utils/db/kv.types.ts";
 import { useState } from "preact/hooks";
-import { FirstPageEventValidation, YupFirstPageEventValidation } from "@/utils/types/events.ts";
+import { FirstPageEventValidation } from "@/utils/types/events.ts";
 import { removeKeysWithSameValues } from "@/utils/misc.ts";
-import * as Yup from "yup"
+import * as Yup from "yup";
+import { JSX } from "preact";
 
 export default function EventSettings(props: {
   name: string;
@@ -15,101 +16,144 @@ export default function EventSettings(props: {
   maxTickets?: number;
   eventID: string;
 }) {
-  const test = useSignal(1);
   const [error, setError] = useState<string>();
   const [loading, setLoading] = useState<Loading>(Loading.LOADED);
 
-  const { eventID, ...initialState } = props;
+  const { eventID, ...inital } = props;
+  const [initialState, setInitialState] = useState(inital);
+  const [formState, setFormState] = useState(inital);
 
-  const [Form, [Field, TextArea], formState] = useForm({
-    initialState,
-    onSubmit: async (form) => {
-      if (form.error) {
-        setError(form.error.message);
-      } else {
-				console.log(form.formState)
-        setLoading(Loading.LOADING);
-        setError(undefined);
-        const toSend = removeKeysWithSameValues(initialState, form.formState!);
-        const res = await fetch("/api/events/edit", {
-          body: JSON.stringify({
-            eventID,
-            newEventData: toSend,
-          }),
-          method: "POST",
-        });
-        const { error } = await res.json();
-        if (error) {
-          setError(error);
-          setLoading(Loading.LOADED);
-        } else {
-          setLoading(Loading.SAVED);
-          setTimeout(() => {
-            setLoading((l) => (l == Loading.SAVED ? Loading.LOADED : l));
-          }, 750);
-        }
-      }
-    },
-    validationSchema: Yup.object(YupFirstPageEventValidation),
-  });
+  const submitForm = async (e: JSX.TargetedEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
+    try {
+      FirstPageEventValidation.validateSync(formState);
+    } catch (e) {
+      setError(e.message);
+      return;
+    }
+
+    console.log(formState);
+    setLoading(Loading.LOADING);
+    setError(undefined);
+    const toSend = removeKeysWithSameValues(initialState, formState);
+    const res = await fetch("/api/events/edit", {
+      body: JSON.stringify({
+        eventID,
+        newEventData: toSend,
+      }),
+      method: "POST",
+    });
+    const { error } = await res.json();
+    if (error) {
+      setError(error);
+      setLoading(Loading.LOADED);
+    } else {
+      setLoading(Loading.SAVED);
+			setInitialState(formState)
+      setTimeout(() => {
+        setLoading((l) => (l == Loading.SAVED ? Loading.LOADED : l));
+      }, 1500);
+    }
+  };
   return (
-    <div>
-      {/* Form */}
-      <div class="flex flex-col gap-4">
-        <div className="flex gap-4 flex-col md:flex-row">
-          <label class="flex flex-col grow">
-            <p class="label-text label-required">Event Name</p>
-            <Field name="name" autoComplete="off" />
-          </label>
-          <label class="flex flex-col ">
-            <p class="label-text label-required">Event Support Email</p>
-            <Field name="supportEmail" class="" type="email" />
-          </label>
-        </div>
-        <div className="flex gap-4 flex-col md:flex-row">
-          <label class="flex flex-col grow">
-            <p class="label-text">Venue</p>
-            <Field name="venue" autoComplete="off" />
-          </label>
-          <label class="flex flex-col">
-            <p class="label-text">Maximum Attendees</p>
-            <Field
-              name="maxTickets"
-              autoComplete="off"
-              type="number"
-              className="p-2 border rounded-md border-gray-300"
-              pattern="\d*"
-            />
-          </label>
-        </div>
-        <label class="flex flex-col">
-          <p class="label-text">Short Description</p>
-          <TextArea
-            name="description"
-            class="h-56 md:h-48 min-h-[6rem] max-h-[20rem] md:max-h-[16rem]"
+    <form class="flex flex-col gap-4" onSubmit={submitForm} noValidate>
+      <div className="flex gap-4 flex-col md:flex-row">
+        <label class="flex flex-col grow">
+          <p class="label-text label-required">Event Name</p>
+          <input
+            name="name"
+            autoComplete="off"
+            type="text"
+            value={formState.name}
+            onInput={(e) =>
+              setFormState((state) => ({
+                ...state,
+                name: e.currentTarget.value,
+              }))
+            }
           />
         </label>
-
-        <CTA
-          btnType="cta"
-          className="!w-full mx-auto sm:!w-72"
-          type="submit"
-          disabled={
-            JSON.stringify(formState) === JSON.stringify(initialState) //||
-           // loading == Loading.LOADING
-          }
-        >
-          {loading == Loading.LOADING && "Saving..."}
-          {loading == Loading.LOADED && "Save"}
-          {loading == Loading.SAVED && "Saved"}
-        </CTA>
-				{error && (
-					<p className="text-red-500 text-center">Error: {error}</p>
-				)}
-				{JSON.stringify(formState)}
+        <label class="flex flex-col ">
+          <p class="label-text label-required">Event Support Email</p>
+          <input
+            name="supportEmail"
+            class=""
+            type="email"
+            value={formState.supportEmail}
+            onInput={(e) =>
+              setFormState((state) => ({
+                ...state,
+                supportEmail: e.currentTarget.value,
+              }))
+            }
+          />
+        </label>
       </div>
-    </div>
+      <div className="flex gap-4 flex-col md:flex-row">
+        <label class="flex flex-col grow">
+          <p class="label-text">Venue</p>
+          <input
+            name="venue"
+            autoComplete="off"
+            type="text"
+            value={formState.venue}
+            onInput={(e) =>
+              setFormState((state) => ({
+                ...state,
+                venue: e.currentTarget.value,
+              }))
+            }
+          />
+        </label>
+        <label class="flex flex-col">
+          <p class="label-text">Maximum Attendees</p>
+          <input
+            name="maxTickets"
+            autoComplete="off"
+            type="number"
+            className="p-2 border rounded-md border-gray-300"
+            pattern="\d*"
+            value={formState.maxTickets}
+            onInput={(e) =>
+              setFormState((state) => ({
+                ...state,
+                maxTickets: parseInt(e.currentTarget.value),
+              }))
+            }
+          />
+        </label>
+      </div>
+      <label class="flex flex-col">
+        <p class="label-text">Short Description</p>
+        <textarea
+          name="description"
+          class="h-56 md:h-48 min-h-[6rem] max-h-[20rem] md:max-h-[16rem]"
+          value={formState.description}
+          onInput={(e) =>
+            setFormState((state) => ({
+              ...state,
+              description: e.currentTarget.value,
+            }))
+          }
+        />
+      </label>
+
+      <CTA
+        btnType="cta"
+        className="!w-full mx-auto sm:!w-72"
+        type="submit"
+        disabled={
+          JSON.stringify(formState) === JSON.stringify(initialState) //||
+          // loading == Loading.LOADING
+        }
+      >
+        {loading == Loading.LOADING && "Saving..."}
+        {loading == Loading.LOADED && "Save"}
+        {loading == Loading.SAVED && "Saved"}
+      </CTA>
+      {error && <p className="text-red-500 text-center">Error: {error}</p>}
+    </form>
   );
 }
 

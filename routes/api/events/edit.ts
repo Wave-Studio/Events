@@ -12,8 +12,10 @@ export const handler: Handlers = {
       });
     }
 
-    const { newEventData, eventID }: { newEventData: Partial<Event>; eventID: string } =
-      await req.json();
+    const {
+      newEventData,
+      eventID,
+    }: { newEventData: Partial<Event>; eventID: string } = await req.json();
 
     if (!isUUID(eventID)) {
       return new Response(JSON.stringify({ error: "Invalid UUID" }), {
@@ -31,7 +33,7 @@ export const handler: Handlers = {
       !event ||
       !event.value ||
       // checks owner, probably unnessesary
-      !event.value.members.some((e) => e.email == user.email && e.role <= 2 ) ||
+      !event.value.members.some((e) => e.email == user.email && e.role <= 2) ||
       // prevent people from uploading multiple things at the same time -LS
       event.value.banner.uploading == true
     ) {
@@ -40,12 +42,12 @@ export const handler: Handlers = {
       });
     }
 
-const combinedEvent = {
-	...event.value,
-	...newEventData
-} as Event
+    const combinedEvent = {
+      ...event.value,
+      ...newEventData,
+    } as Event;
 
-		try {
+    try {
       FullEventValidation.validateSync(combinedEvent, { strict: false });
     } catch (e) {
       return new Response(JSON.stringify(e), {

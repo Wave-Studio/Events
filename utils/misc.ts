@@ -3,7 +3,7 @@ export const removeKeysWithSameValues = (obj1: Record<string, string | undefined
 
   for (const key in obj1) {
     if (key in obj1 && key in obj2 && obj1[key] !== obj2[key]) {
-      result[key] = obj1[key];
+      result[key] = obj2[key];
     }
   }
 
