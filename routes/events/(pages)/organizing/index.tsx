@@ -142,11 +142,14 @@ export default async function Homepage(req: Request, ctx: AppContext) {
           return <Event e={event.value} id={event.key[1] as string} />;
         })}
       </div>
-      <a href="/events/organizing/create" className="mt-10 mx-auto">
-        <CTA btnType="cta" btnSize="sm">
-          Create Event
-        </CTA>
-      </a>
+      <div className="mt-36 mx-auto flex flex-col items-center">
+        <p className="text-center font-bold mb-8">Create another event or ask an organizer to invite you to one.</p>
+        <a href="/events/organizing/create">
+          <CTA btnType="cta" btnSize="sm">
+            Create Event
+          </CTA>
+        </a>
+      </div>
     </>
   );
 }

@@ -33,7 +33,8 @@ import * as $$2 from "./islands/events/creation/one.tsx";
 import * as $$3 from "./islands/events/creation/three.tsx";
 import * as $$4 from "./islands/events/creation/two.tsx";
 import * as $$5 from "./islands/events/creation/zero.tsx";
-import * as $$6 from "./islands/loginForm.tsx";
+import * as $$6 from "./islands/events/editing/images.tsx";
+import * as $$7 from "./islands/loginForm.tsx";
 
 const manifest = {
   routes: {
@@ -70,7 +71,8 @@ const manifest = {
     "./islands/events/creation/three.tsx": $$3,
     "./islands/events/creation/two.tsx": $$4,
     "./islands/events/creation/zero.tsx": $$5,
-    "./islands/loginForm.tsx": $$6,
+    "./islands/events/editing/images.tsx": $$6,
+    "./islands/loginForm.tsx": $$7,
   },
   baseUrl: import.meta.url,
 };
