@@ -105,7 +105,7 @@ export default async function Homepage(req: Request, ctx: AppContext) {
             ))}
           </div>
           <h3 className="font-bold text-xl bg-white line-clamp-1">{e.name}</h3>
-          {e.venue && <h4 class="mb-2 -mt-1 font-medium">{e.venue}</h4>}
+          {e.venue && <h4 class="-mt-0.5 mb-0.5 text-sm font-semibold truncate">{e.venue}</h4>}
           {e.description && (
             <div class="text-sm relative">
               <p className="line-clamp-6">{e.description}</p>
