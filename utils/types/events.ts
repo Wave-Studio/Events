@@ -13,7 +13,7 @@ const dateTransformer = (_: undefined, originalValue: string) => {
 // temp set to 1 max showtime, will increase with pro plan and future updates
 const YupShowtimeValidation = Yup.array()
   .min(1)
-  .max(1)
+  .max(2)
   .required()
   .of(
     Yup.object({
