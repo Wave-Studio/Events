@@ -1,3 +1,8 @@
+import { RouteContext, defineRoute } from "$fresh/server.ts";
+import {
+  EventContext,
+  badEventRequest,
+} from "@/routes/events/[id]/_layout.tsx";
 import { Event, Roles, User } from "@/utils/db/kv.types.ts";
 import Footer from "@/components/layout/footer.tsx";
 import Navbar from "@/components/layout/navbar.tsx";
@@ -13,18 +18,15 @@ import imageKit from "@/utils/imagekit.ts";
 import { ComponentChildren } from "preact";
 import EventSettings from "@/islands/events/editing/settings.tsx";
 import { Heading } from "@/routes/(public)/faq.tsx";
+import Button from "@/components/buttons/button.tsx";
 
-export default function EventEditing({
-  event,
-  eventID,
-  user,
-  role,
-}: {
-  event: Event;
-  user: User;
-  eventID: string;
-  role: Roles;
-}) {
+export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
+  const { event, eventID, user } = ctx.state.data;
+
+  if (!user || user.role == undefined || user.role > 2) {
+    return badEventRequest;
+  }
+
   const imageURL =
     event.banner.path &&
     imageKit.url({
@@ -38,24 +40,30 @@ export default function EventEditing({
     });
 
   const Header = () => {
-    const buttons: { label: string; icon: ComponentChildren }[] = [
-      {
-        label: "Scan Tickets",
-        icon: <Scan class="w-6 h-6" />,
-      },
-      {
-        label: "All Tickets",
-        icon: <Tickets class="w-6 h-6" />,
-      },
-      {
-        label: "Team Members",
-        icon: <Users class="w-6 h-6" />,
-      },
-      {
-        label: "Public Page",
-        icon: <World class="w-6 h-6" />,
-      },
-    ];
+    const buttons: { label: string; icon: ComponentChildren; href: string }[] =
+      [
+        {
+          label: "Scan Tickets",
+          icon: <Scan class="w-6 h-6" />,
+          href: "./scanning",
+        },
+        // all tickets and team members are potentially going to be popups
+        {
+          label: "All Tickets",
+          icon: <Tickets class="w-6 h-6" />,
+          href: "./",
+        },
+        {
+          label: "Team Members",
+          icon: <Users class="w-6 h-6" />,
+          href: "./",
+        },
+        {
+          label: "Public Page",
+          icon: <World class="w-6 h-6" />,
+          href: "./",
+        },
+      ];
 
     return (
       <div className="flex justfy-between">
@@ -70,19 +78,8 @@ export default function EventEditing({
           </CTA>
         </a>
         <div className="flex gap-2 md:gap-4 ml-auto">
-          {buttons.map(({ label, icon }) => (
-            <div className="relative flex flex-col items-end md:items-center">
-              <CTA
-                btnType="secondary"
-                btnSize="sm"
-                className="!w-10 grid place-items-center peer"
-              >
-                {icon}
-              </CTA>
-              <div className="absolute w-32 bg-white border border-gray-300 rounded-md text-center shadow-xl top-12 select-none scale-95 opacity-0 peer-hover:scale-100 peer-hover:opacity-100 transition">
-                {label}
-              </div>
-            </div>
+          {buttons.map((btn) => (
+            <Button {...btn} />
           ))}
         </div>
       </div>
@@ -90,8 +87,7 @@ export default function EventEditing({
   };
 
   return (
-    <main class="flex flex-col min-h-screen">
-      <Navbar />
+    <main class="flex flex-col grow">
       <div className="grow ">
         <div className="px-4 max-w-screen-md w-full mx-auto flex flex-col gap-8">
           <Header />
@@ -117,7 +113,6 @@ export default function EventEditing({
           event editing coming soon:tm:
         </div>
       </div>
-      <Footer />
     </main>
   );
-}
+});

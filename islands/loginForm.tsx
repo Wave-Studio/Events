@@ -3,6 +3,7 @@ import { useMemo, useRef, useState } from "preact/hooks";
 import { JSX } from "preact/jsx-runtime";
 import { checkCode, genCode } from "@/utils/db/auth.ts";
 
+// This page is a mess but it works so it's not worth fixing rn
 const LoginForm = ({ attending }: { attending: boolean }) => {
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");

@@ -4,7 +4,9 @@ import { renderToString } from "preact-render-to-string";
 import CTA from "@/components/buttons/cta.tsx";
 import imageKit from "@/utils/imagekit.ts";
 import World from "$tabler/world.tsx";
-import ChevronDown from "$tabler/chevron-down.tsx";
+import Scan from "$tabler/text-scan-2.tsx";
+import { ComponentChildren } from "preact";
+import Button from "@/components/buttons/button.tsx";
 
 export default async function Homepage(req: Request, ctx: AppContext) {
   const user = await getUser(req);
@@ -46,8 +48,22 @@ export default async function Homepage(req: Request, ctx: AppContext) {
       currency: "USD",
     });
 
+    const buttons: { label: string; icon: ComponentChildren; href: string }[] =
+      [
+        {
+          label: "Public Page",
+          icon: <World class="w-6 h-6" />,
+          href: `/events/${id}`,
+        },
+        {
+          label: "Scan Tickets",
+          icon: <Scan class="w-6 h-6" />,
+          href: `/events/${id}/scanning`,
+        },
+      ];
+
     return (
-      <div className="rounded-md overflow-hidden border border-gray-300">
+      <div className="rounded-md border border-gray-300">
         <div className="relative h-48">
           {e.banner.path ? (
             (() => {
@@ -64,7 +80,7 @@ export default async function Homepage(req: Request, ctx: AppContext) {
                 <img
                   src={url}
                   alt=""
-                  class={`w-full h-48 ${
+                  class={`w-full h-48 rounded-t-md ${
                     e.banner.fill ? "object-fill" : "object-cover"
                   }`}
                 />
@@ -75,7 +91,7 @@ export default async function Homepage(req: Request, ctx: AppContext) {
               <img
                 src="/placeholder-small.jpg"
                 alt=""
-                class="h-48 w-full object-cover"
+                class="h-48 w-full object-cover rounded-t-md"
               />
               <div className="absolute inset-0 flex justify-center">
                 <p className="text-sm mt-1 font-bold text-white/75 mb-6 z-10">
@@ -105,24 +121,25 @@ export default async function Homepage(req: Request, ctx: AppContext) {
             ))}
           </div>
           <h3 className="font-bold text-xl bg-white line-clamp-1">{e.name}</h3>
-          {e.venue && <h4 class="-mt-0.5 mb-0.5 text-sm font-semibold truncate">{e.venue}</h4>}
+          {e.venue && (
+            <h4 class="-mt-0.5 mb-0.5 text-sm font-semibold truncate">
+              {e.venue}
+            </h4>
+          )}
           {e.description && (
             <div class="text-sm relative">
               <p className="line-clamp-6">{e.description}</p>
               <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0)_0%,rgba(255,255,255,0)_20%,rgba(255,255,255,1)_100%)]" />
             </div>
           )}
-          <div className="justify-between mt-auto flex">
-            <a href={`/events/${id}`}>
-              <CTA
-                btnType="secondary"
-                btnSize="sm"
-                className="!w-10 grid place-items-center"
-              >
-                <World class="w-6 h-6" />
-              </CTA>
-            </a>
-            <a href={`/events/${id}?editing=true`}>
+          <div className=" mt-auto flex">
+            <div className="flex gap-2">
+              {buttons.map((btn) => (
+                <Button {...btn} />
+              ))}
+            </div>
+
+            <a href={`/events/${id}/editing`} class="ml-auto">
               <CTA btnType="cta" btnSize="sm">
                 Edit Event
               </CTA>
@@ -143,7 +160,9 @@ export default async function Homepage(req: Request, ctx: AppContext) {
         })}
       </div>
       <div className="mt-36 mx-auto flex flex-col items-center">
-        <p className="text-center font-bold mb-8">Create another event or ask an organizer to invite you to one.</p>
+        <p className="text-center font-bold mb-8">
+          Create another event or ask an organizer to invite you to one.
+        </p>
         <a href="/events/organizing/create">
           <CTA btnType="cta" btnSize="sm">
             Create Event
