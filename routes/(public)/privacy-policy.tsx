@@ -97,13 +97,13 @@ export default function PrivacyPolicy() {
           </li>
           <li>
             <p>
-              <strong>Website</strong> refers to Reservations, accessible from{" "}
+              <strong>Website</strong> refers to Events, accessible from{" "}
               <a
-                href="https://reservations.deno.dev/"
+                href="https://events.deno.dev/"
                 rel="external nofollow noopener"
                 target="_blank"
               >
-                https://reservations.deno.dev/
+                https://events.deno.dev/
               </a>
             </p>
           </li>

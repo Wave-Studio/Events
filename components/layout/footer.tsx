@@ -15,7 +15,7 @@ const Footer = () => {
     },
     {
       name: "GitHub",
-      link: "https://github.com/Wave-Studio/reservations",
+      link: "https://github.com/Wave-Studio/Events",
       diffSite: true,
     },
   ];

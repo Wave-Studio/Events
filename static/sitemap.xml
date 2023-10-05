@@ -6,42 +6,42 @@
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 
 <url>
-  <loc>https://reservations.deno.dev/</loc>
+  <loc>https://events.deno.dev/</loc>
   <lastmod>2023-09-28T03:07:49+00:00</lastmod>
   <priority>1.00</priority>
 </url>
 <url>
-  <loc>https://reservations.deno.dev/login</loc>
+  <loc>https://events.deno.dev/login</loc>
   <lastmod>2023-09-28T03:07:49+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://reservations.deno.dev/login?attending=true</loc>
+  <loc>https://events.deno.dev/login?attending=true</loc>
   <lastmod>2023-09-28T03:07:49+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://reservations.deno.dev/features</loc>
+  <loc>https://events.deno.dev/features</loc>
   <lastmod>2023-09-28T03:07:49+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://reservations.deno.dev/faq</loc>
+  <loc>https://events.deno.dev/faq</loc>
   <lastmod>2023-09-28T03:07:49+00:00</lastmod>
   <priority>0.70</priority>
 </url>
 <url>
-  <loc>https://reservations.deno.dev/pricing</loc>
+  <loc>https://events.deno.dev/pricing</loc>
   <lastmod>2023-09-28T03:07:49+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://reservations.deno.dev/privacy-policy</loc>
+  <loc>https://events.deno.dev/privacy-policy</loc>
   <lastmod>2023-09-28T03:07:49+00:00</lastmod>
   <priority>0.40</priority>
 </url>
 <url>
-  <loc>https://reservations.deno.dev/terms-of-service</loc>
+  <loc>https://events.deno.dev/terms-of-service</loc>
   <lastmod>2023-09-28T03:07:49+00:00</lastmod>
   <priority>0.40</priority>
 </url>
