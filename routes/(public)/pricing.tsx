@@ -11,7 +11,7 @@ const Pricing = async (req: Request) => {
     <div class="px-4 max-w-screen-lg w-full mx-auto mb-20">
       <h1 class="text-center text-4xl font-bold">(proposed) Pricing</h1>
       <p class="max-w-xl w-full text-center mx-auto mt-4">
-        To keep pricing simple, we've created 3 simple subscription plans. For
+        To keep pricing simple, we've created 3 simple plans. For
         enterprise use-cases, please contact us. Events is currently free
         for beta testers. If you have any questions they might be in our{" "}
         <a href="/faq#pricing" class="font-medium underline">
