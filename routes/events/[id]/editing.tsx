@@ -116,3 +116,9 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
     </main>
   );
 });
+
+export enum Loading {
+  LOADED = 0,
+  LOADING = 1,
+  SAVED = 2,
+}
