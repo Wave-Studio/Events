@@ -6,11 +6,11 @@ export const faqs: FAQ[] = [
     a: "DM quick007 on Discord for beta access",
   },
   {
-    q: "Is reservations open source?",
+    q: "Is Events open source?",
     a: "Yes! We are open source with an Apache 2.0 licence.",
   },
   {
-    q: "Is reservations free?",
+    q: "Is Events free?",
     a: "We have a generous free teir that allows for a good amount of usage.",
   },
   {

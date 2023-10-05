@@ -6,7 +6,7 @@ import StarFilled from "$tabler/star-filled.tsx";
 import { Head } from "$fresh/runtime.ts";
 
 const metaDescription =
-  "Event booking/reservation systems are often complex, monolithic platforms that are hard to use and harder to manage. Our mission is to create a simple, open source, and easy-to-use event ticketing system for events that don't require seating arrangements.";
+  "Event booking/ticketing systems are often complex, monolithic platforms that are hard to use and harder to manage. Our mission is to create a simple, open source, and easy-to-use event ticketing system for events that don't require seating arrangements.";
 
 export default defineRoute(async (req, ctx) => {
   const user = await getUser(req);
@@ -19,13 +19,13 @@ export default defineRoute(async (req, ctx) => {
       <Head>
         <meta
           property="og:title"
-          content="Reservations - Open Source Ticketing tool"
+          content="Events - Open Source Ticketing tool"
         />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="http://reservations.deno.dev" />
+        <meta property="og:url" content="http://events.deno.dev" />
         <meta
           property="og:image"
-          content="http://reservations.deno.dev/favicon.ico"
+          content="http://events.deno.dev/favicon.ico"
         />
         <meta property="og:description" content={metaDescription} />
         <meta name="description" content={metaDescription} />
@@ -34,10 +34,10 @@ export default defineRoute(async (req, ctx) => {
 
       <div className="flex flex-col h-[calc(100vh-4.5rem)] items-center">
         <div class="flex flex-col px-4 items-center">
-          <h1 class="text-center text-4xl font-bold">Event Ticketing</h1>
-          <div class="w-44 flex items-center mt-2">
+          <h1 class="text-center text-4xl font-bold">Events</h1>
+          <div class="w-60 flex items-center mt-2">
             <div class="grow bg-gray-200 h-0.5 rounded-full" />
-            <p class="w-max mx-1.5 leading-3">Made Simple</p>
+            <p class="w-max mx-1.5 leading-3">Ticketing Made Simple</p>
             <div class="grow bg-gray-200 h-0.5 rounded-full" />
           </div>
         </div>
@@ -55,7 +55,7 @@ export default defineRoute(async (req, ctx) => {
             <CTA btnType="secondary">I'm attending</CTA>
           </a>
           <a
-            href="https://github.com/Wave-Studio/reservations"
+            href="https://github.com/Wave-Studio/events"
             referrerpolicy="no-referrer"
             target="_blank"
             class="mx-auto text-sm font-medium flex rounded hover:bg-gray-200 text-gray-500 hover:text-gray-800 py-0.5 px-2 transition group"
@@ -72,23 +72,23 @@ export default defineRoute(async (req, ctx) => {
       <div className="py-24 text-center px-4 max-w-xl w-full mx-auto">
         <h2 className="text-2xl font-bold">Our Mission</h2>
         <p className="mt-4">
-          Event booking/reservation systems are often complex, monolithic
+          Event booking/ticketing systems are often complex, monolithic
           platforms that are hard to use and harder to manage. Our mission is to
           create a simple, open source, and easy-to-use event ticketing system
           for events that don't require seating arrangements. We strive to
           create a frictionless experience for your attendees, boosting signup
           numbers and making sure your attendees arrive the day of.
         </p>
-        <h2 className="text-2xl font-bold mt-16">Why Reservations?</h2>
+        <h2 className="text-2xl font-bold mt-16">Why Events?</h2>
         <p className="my-4">
-          When it comes to managing or creating reservation systems for a
+          When it comes to managing or creating event ticketing systems for a
           ticketed event, traditional solutions can be cumbersome and
-          challenging to use. Our platform, reservations, offers a simple, OSS,
+          challenging to use. Our platform, Events, offers a simple, open-source,
           easy-to-use ticketing system for events that allows users to reserve
-          their seats ahead of time. Our registration process lets users sign up
+          their seats ahead of time. We make events simple and craft simeple event ticketing systems! Our registration process lets users sign up
           online using their email and receive a QR code that serves as their
           ticket, which an event organizer can scan to confirm their
-          reservation. Simplify your reservation management and provide your
+          tickets. Simplify your ticketing management and provide your
           customers with a seamless booking experience today! Contact quick007
           on discord to join the closed beta.
         </p>
@@ -106,8 +106,8 @@ export default defineRoute(async (req, ctx) => {
         </div>
         <h2 className="text-2xl font-bold mt-16">Pricing</h2>
         <p className="my-4">
-          As we're still in a closed beta, reservations is currently free for to
-          use. In the future, reservations will be free to use for small free
+          As we're still in a closed beta, Events is currently free for to
+          use. In the future, Events will be free to use for small free
           events. Larger events or paid events will have a small fee. See our
           expected future pricing:
         </p>
