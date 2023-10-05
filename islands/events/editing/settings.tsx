@@ -7,6 +7,7 @@ import { FirstPageEventValidation } from "@/utils/types/events.ts";
 import { removeKeysWithSameValues } from "@/utils/misc.ts";
 import * as Yup from "yup";
 import { JSX } from "preact";
+import { Loading } from "@/utils/loading.ts";
 
 export default function EventSettings(props: {
   name: string;
@@ -144,8 +145,8 @@ export default function EventSettings(props: {
         className="!w-full mx-auto sm:!w-72"
         type="submit"
         disabled={
-          JSON.stringify(formState) === JSON.stringify(initialState) //||
-          // loading == Loading.LOADING
+          JSON.stringify(formState) === JSON.stringify(initialState) ||
+          loading == Loading.LOADING
         }
       >
         {loading == Loading.LOADING && "Saving..."}
@@ -155,10 +156,4 @@ export default function EventSettings(props: {
       {error && <p className="text-red-500 text-center">Error: {error}</p>}
     </form>
   );
-}
-
-enum Loading {
-  LOADED = 0,
-  LOADING = 1,
-  SAVED = 2,
 }

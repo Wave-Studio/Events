@@ -18,13 +18,7 @@ export interface Event {
   };
   venue?: string;
 
-  showTimes: {
-    startDate: string;
-    startTime?: string;
-    endTime?: string;
-    lastPurchaseDate?: string;
-    id: string;
-  }[];
+  showTimes: ShowTime[];
 
   multiEntry: boolean;
   multiPurchase: boolean;
@@ -36,6 +30,15 @@ export interface Event {
   members: { email: string; role: Roles }[];
   published: boolean;
 }
+
+export interface ShowTime {
+  startDate: string;
+  startTime?: string;
+  endTime?: string;
+  lastPurchaseDate?: string;
+  id: string;
+}
+
 
 export const defaultEvent: Event = {
   name: "",

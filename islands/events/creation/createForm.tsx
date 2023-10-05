@@ -8,7 +8,7 @@ import StageThree from "./three.tsx";
 
 export default function CreateEvent({ user }: { user: User }) {
   const eventData = useSignal(defaultEvent);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
   const [error, setError] = useState<string>();
 
   const pageNames = [
