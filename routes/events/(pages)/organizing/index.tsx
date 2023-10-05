@@ -1,4 +1,4 @@
-import { Event, getUser, kv } from "@/utils/db/kv.ts";
+import { Event, Roles, getUser, kv } from "@/utils/db/kv.ts";
 import { AppContext } from "$fresh/server.ts";
 import { renderToString } from "preact-render-to-string";
 import CTA from "@/components/buttons/cta.tsx";
@@ -48,6 +48,8 @@ export default async function Homepage(req: Request, ctx: AppContext) {
       currency: "USD",
     });
 
+    const role: Roles = e.members.find((m) => m.email == user.email)!.role;
+
     const buttons: { label: string; icon: ComponentChildren; href: string }[] =
       [
         {
@@ -55,12 +57,14 @@ export default async function Homepage(req: Request, ctx: AppContext) {
           icon: <World class="w-6 h-6" />,
           href: `/events/${id}`,
         },
-        {
-          label: "Scan Tickets",
-          icon: <Scan class="w-6 h-6" />,
-          href: `/events/${id}/scanning`,
-        },
       ];
+
+    if (role <= 2)
+      buttons.push({
+        label: "Scan Tickets",
+        icon: <Scan class="w-6 h-6" />,
+        href: `/events/${id}/scanning`,
+      });
 
     return (
       <div className="rounded-md border border-gray-300">
@@ -138,12 +142,18 @@ export default async function Homepage(req: Request, ctx: AppContext) {
                 <Button {...btn} />
               ))}
             </div>
-
+            {role <= 2 ? 
             <a href={`/events/${id}/editing`} class="ml-auto">
               <CTA btnType="cta" btnSize="sm">
                 Edit Event
               </CTA>
+            </a> : (
+              <a href={`/events/${id}/scanning`} class="ml-auto">
+              <CTA btnType="cta" btnSize="sm">
+                Open Scanner
+              </CTA>
             </a>
+            )}
           </div>
         </div>
       </div>

@@ -110,7 +110,7 @@ export const enum Roles {
   ADMIN = 1, // all perms
   MANAGER = 2, // all perms besides deletion and billing
   SCANNER = 3, // can scan people in and add people
-  ACCOUNTING = 4 // can manage billing only
+  //ACCOUNTING = 4 // can manage billing only
 }
 
 export const enum Plan {
