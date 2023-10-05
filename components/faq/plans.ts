@@ -24,7 +24,7 @@ export const plans: {
     cost: 11.99,
     features: [
       "5 concurrent events",
-      "Purchase additional concurrent event slots for $9 each",
+      "Purchase additional concurrent event slots for $5.99 each",
       "12 team slots",
       "25 day post-event persistance",
       "Up to 250 attendees per event",
