@@ -19,6 +19,9 @@ import { ComponentChildren } from "preact";
 import EventSettings from "@/islands/events/editing/settings.tsx";
 import { Heading } from "@/routes/(public)/faq.tsx";
 import Button from "@/components/buttons/button.tsx";
+// @ts-ignore Something brokey - Some Blocke
+import ShowTimeSettings from "@/islands/events/editing/showtimesettings.tsx";
+import EventDeletion from "@/islands/events/editing/delete.tsx";
 
 export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
   const { event, eventID, user } = ctx.state.data;
@@ -89,7 +92,7 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
   return (
     <main class="flex flex-col grow">
       <div className="grow ">
-        <div className="px-4 max-w-screen-md w-full mx-auto flex flex-col gap-8">
+        <div className="px-4 max-w-screen-md w-full mx-auto flex flex-col gap-4">
           <Header />
           <Heading name="Banner" />
           <EditingImagePicker
@@ -107,10 +110,15 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
             venue={event.venue}
           />
           <Heading name="Showtimes" />
+          <ShowTimeSettings eventID={eventID} showTimes={event.showTimes} />
           <Heading name="Tickets" />
           <Heading name="Other Settings" />
-          <Heading name="Danger Zone" />
-          event editing coming soon:tm:
+          {user.role <= 1 && (
+            <>
+              <Heading name="Danger Zone" />
+              <EventDeletion eventID={eventID} />
+            </>
+          )}
         </div>
       </div>
     </main>

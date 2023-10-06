@@ -131,7 +131,7 @@ export default async function Homepage(req: Request, ctx: AppContext) {
             </h4>
           )}
           {e.description && (
-            <div class="text-sm relative">
+            <div class="text-sm relative grow">
               <p className="line-clamp-6">{e.description}</p>
               <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0)_0%,rgba(255,255,255,0)_20%,rgba(255,255,255,1)_100%)]" />
             </div>

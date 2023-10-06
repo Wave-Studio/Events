@@ -77,7 +77,7 @@ export default function StageOne({
   );
 }
 
-const ShowTimeUI = ({
+export const ShowTimeUI = ({
   showTime,
   isOpen = true,
   removeShowTime,
@@ -87,7 +87,7 @@ const ShowTimeUI = ({
   removeShowTime: (id: string) => void;
 }) => {
   const [open, setOpen] = useState(isOpen);
-
+ 
   return (
     <>
       <div className="flex flex-col">

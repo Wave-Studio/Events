@@ -92,7 +92,7 @@ export default function StageTwo({
 
       return (
         <div
-          className="absolute  z-20 top-7 bg-white font-medium border border-gray-300 rounded-md px-2 py-2 shadow-xl cursor-default select-none flex flex-col items-start gap-2"
+          className="absolute z-20 top-7 bg-white font-medium border border-gray-300 rounded-md px-2 py-2 shadow-xl cursor-default select-none flex flex-col items-start gap-2"
           ref={pickerRef}
         >
           {types.map((type) => (

@@ -19,6 +19,7 @@ import { ComponentChildren } from "preact";
 import EventSettings from "@/islands/events/editing/settings.tsx";
 import { Heading } from "@/routes/(public)/faq.tsx";
 import Button from "@/components/buttons/button.tsx";
+import Scanner from "@/islands/events/scanning.tsx";
 
 export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
   const { event, eventID, user } = ctx.state.data;
@@ -95,7 +96,7 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
   return (
     <main className="px-4 max-w-screen-md w-full mx-auto flex flex-col gap-8 grow mb-10">
       <Header />
-      <div className="rounded-md border border-gray-300 grow" />
+      <Scanner className="rounded-md border border-gray-300 grow" />
     </main>
   );
 });
