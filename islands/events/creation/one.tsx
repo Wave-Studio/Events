@@ -86,7 +86,6 @@ export const ShowTimeUI = ({
   isOpen?: boolean;
   removeShowTime: (id: string) => void;
 }) => {
-  const [open, setOpen] = useState(isOpen);
  
   return (
     <>

@@ -1,9 +1,6 @@
 import CTA from "@/components/buttons/cta.tsx";
 import { ShowTime } from "@/utils/db/kv.types.ts";
 import { useState } from "preact/hooks";
-import { FirstPageEventValidation } from "@/utils/types/events.ts";
-import { removeKeysWithSameValues } from "@/utils/misc.ts";
-import { JSX } from "preact";
 import { Loading } from "@/utils/loading.ts";
 import { ShowTimeUI } from "@/islands/events/creation/one.tsx";
 import Plus from "$tabler/plus.tsx";
@@ -19,6 +16,8 @@ export default function ShowTimeSettings({
   const [loading, setLoading] = useState<Loading>(Loading.LOADED);
 
   const [initialState, setInitialState] = useState(showTimes);
+  // using a signal here breaks things bc initial state updates with showtime
+  // 0 clue why that happends
   const [currentState, setCurrentState] = useState(showTimes);
 
   const removeShowTime = (id: string) =>

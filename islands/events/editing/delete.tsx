@@ -33,7 +33,7 @@ export default function EventDeletion({ eventID }: { eventID: string }) {
 
   const DeleteUI = () => {
 		if (!open) return null;
-		
+
     return (
       <div class="fixed inset-0 bg-black/20 z-50 grid place-items-center">
         <div
@@ -50,7 +50,7 @@ export default function EventDeletion({ eventID }: { eventID: string }) {
           >
             {loading ? "Deleting..." : "Yes, delete"}
           </CTA>
-          <button className="absolute right-2 top-2 p-0.5 rounded-md hover:bg-gray-200 transition">
+          <button className="absolute right-2 top-2 p-0.5 rounded-md hover:bg-gray-200 transition" onClick={close}>
             <X class="w-5 h-5" />
           </button>
           {typeof loading == "string" && (

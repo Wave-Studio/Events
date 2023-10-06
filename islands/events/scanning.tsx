@@ -11,9 +11,9 @@ export default function Scanner({ className }: { className?: string }) {
       if (initialized) return;
       setInitialized(true);
       const canvas = document.getElementById("scanui") as HTMLCanvasElement;
-      if (!canvas) return;
+      if (canvas == null) return;
       const ctx = canvas.getContext("2d");
-      if (!ctx) {
+      if (ctx == null) {
         return setError(
           "2D HTML Canvas is required but not supported on your device! Please try another browser.",
         );
@@ -30,27 +30,28 @@ export default function Scanner({ className }: { className?: string }) {
         video.srcObject = devices;
         video.onloadedmetadata = () => {
           video.play();
+            const loop = () => {
+              // TODO: This fucking sucks - Bloxs
 
-          const loop = () => {
-            const width = canvas.width;
-            const height = canvas.height;
+              const minDimension = Math.min(video.videoWidth, video.videoHeight);
+              const xOffset = (video.videoWidth - minDimension) / 2;
+              const yOffset = (video.videoHeight - minDimension) / 2;
 
-			// TODO: This fucking sucks - Bloxs
-            ctx.drawImage(
-              video,
-              Math.min(Math.max(0, (video.videoWidth - width) / 2), canvas.width),
-              Math.min(Math.max(0, (video.videoHeight - height) / 2), canvas.height),
-              video.videoWidth,
-              video.videoHeight,
-              0,
-              0,
-              width,
-              height,
-            );
+              ctx.drawImage(
+                video,
+                xOffset,
+                yOffset,
+                minDimension,
+                minDimension,
+                0,
+                0,
+                canvas.width,
+                canvas.height,
+              );
+              requestAnimationFrame(loop);
+            };
+
             requestAnimationFrame(loop);
-          };
-
-          requestAnimationFrame(loop);
         };
       } catch (e) {
         setError(e.message);

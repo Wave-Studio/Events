@@ -1,7 +1,6 @@
 import { Handlers } from "$fresh/server.ts";
 import { Event, getUser, kv } from "@/utils/db/kv.ts";
 import { isUUID } from "@/utils/db/misc.ts";
-import { FullEventValidation } from "@/utils/types/events.ts";
 
 export const handler: Handlers = {
   async POST(req, _ctx) {
