@@ -41,7 +41,7 @@ export default function ShowTimeSettings({
     const res = await fetch("/api/events/edit", {
       body: JSON.stringify({
         eventID,
-        newEventData: {showTimes: currentState} as Partial<Event>,
+        newEventData: { showTimes: currentState } as Partial<Event>,
       }),
       method: "POST",
     });

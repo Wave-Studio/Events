@@ -9,16 +9,13 @@ export const config: LayoutConfig = {
   skipInheritedLayouts: true, // Skip already inherited layouts
 };
 
-export default defineRoute(async (req, ctx: RouteContext<void, EventContext>) => {
-  // layout are disabled on this route, but I don't wanna disable every one. no clue how to do that
-  const { event, eventID, user } = ctx.state.data;
+export default defineRoute(
+  async (req, ctx: RouteContext<void, EventContext>) => {
+    // layout are disabled on this route, but I don't wanna disable every one. no clue how to do that
+    const { event, eventID, user } = ctx.state.data;
 
-	await kv.delete(["event", eventID]);
+    await kv.delete(["event", eventID]);
 
-  return (
-    <div>
-      dun
-    </div>
-  )
-});
-
+    return <div>dun</div>;
+  },
+);

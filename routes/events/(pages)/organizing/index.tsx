@@ -142,17 +142,18 @@ export default async function Homepage(req: Request, ctx: AppContext) {
                 <Button {...btn} />
               ))}
             </div>
-            {role <= 2 ? 
-            <a href={`/events/${id}/editing`} class="ml-auto">
-              <CTA btnType="cta" btnSize="sm">
-                Edit Event
-              </CTA>
-            </a> : (
+            {role <= 2 ? (
+              <a href={`/events/${id}/editing`} class="ml-auto">
+                <CTA btnType="cta" btnSize="sm">
+                  Edit Event
+                </CTA>
+              </a>
+            ) : (
               <a href={`/events/${id}/scanning`} class="ml-auto">
-              <CTA btnType="cta" btnSize="sm">
-                Open Scanner
-              </CTA>
-            </a>
+                <CTA btnType="cta" btnSize="sm">
+                  Open Scanner
+                </CTA>
+              </a>
             )}
           </div>
         </div>

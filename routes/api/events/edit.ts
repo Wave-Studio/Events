@@ -42,7 +42,7 @@ export const handler: Handlers = {
       });
     }
 
-    console.log(newEventData)
+    console.log(newEventData);
 
     const combinedEvent = {
       ...event.value,

@@ -6,13 +6,12 @@ export default function TOS() {
       <h2>1. Terms</h2>
 
       <p>
-        By accessing this Website, accessible from
-        https://events.deno.dev, you are agreeing to be bound by these
-        Website Terms and Conditions of Use and agree that you are responsible
-        for the agreement with any applicable local laws. If you disagree with
-        any of these terms, you are prohibited from accessing this site. The
-        materials contained in this Website are protected by copyright and trade
-        mark law.
+        By accessing this Website, accessible from https://events.deno.dev, you
+        are agreeing to be bound by these Website Terms and Conditions of Use
+        and agree that you are responsible for the agreement with any applicable
+        local laws. If you disagree with any of these terms, you are prohibited
+        from accessing this site. The materials contained in this Website are
+        protected by copyright and trade mark law.
       </p>
 
       <h2>2. Use License</h2>
@@ -27,8 +26,8 @@ export default function TOS() {
       <ul>
         <li>modify or copy the materials;</li>
         <li>
-          use the materials for any commercial purpose or for any public
-          display without express written consent;
+          use the materials for any commercial purpose or for any public display
+          without express written consent;
         </li>
         <li>
           attempt to reverse engineer any software contained on Wave Studio's
@@ -45,10 +44,10 @@ export default function TOS() {
       </ul>
 
       <p>
-        This will let Wave Studio to terminate your relationship with us upon violations of any of these
-        restrictions. Upon termination, your viewing right will also be
-        terminated and you should destroy any downloaded materials in your
-        possession whether it is printed or electronic format.
+        This will let Wave Studio to terminate your relationship with us upon
+        violations of any of these restrictions. Upon termination, your viewing
+        right will also be terminated and you should destroy any downloaded
+        materials in your possession whether it is printed or electronic format.
       </p>
 
       <h2>3. Disclaimer</h2>

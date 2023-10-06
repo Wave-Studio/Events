@@ -39,7 +39,6 @@ export interface ShowTime {
   id: string;
 }
 
-
 export const defaultEvent: Event = {
   name: "",
   supportEmail: "",

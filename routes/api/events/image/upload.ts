@@ -80,7 +80,7 @@ export const handler: Handlers = {
         ...event.value.banner,
         id: res.fileId,
         path: res.filePath,
-        uploading: false
+        uploading: false,
       },
     } as Event);
 

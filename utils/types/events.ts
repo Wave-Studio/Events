@@ -44,11 +44,13 @@ const YupSecondPageEventValidation = {
 
 const YupThirdPageEventValidation = {
   ...YupSecondPageEventValidation,
-}
+};
 
 export const FirstPageEventValidation = Yup.object(YupFirstPageEventValidation);
 
-export const SecondPageEventValidation = Yup.object(YupSecondPageEventValidation)
+export const SecondPageEventValidation = Yup.object(
+  YupSecondPageEventValidation,
+);
 
 export const ThirdPageEventValidation = Yup.object(YupThirdPageEventValidation);
 

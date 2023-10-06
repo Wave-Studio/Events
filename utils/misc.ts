@@ -1,4 +1,7 @@
-export const removeKeysWithSameValues = (obj1: Record<string, string | undefined | number>, obj2: Record<string, string | undefined | number>): Record<string, string | undefined | number> => {
+export const removeKeysWithSameValues = (
+  obj1: Record<string, string | undefined | number>,
+  obj2: Record<string, string | undefined | number>,
+): Record<string, string | undefined | number> => {
   const result: Record<string, string | undefined | number> = {};
 
   for (const key in obj1) {
@@ -8,4 +11,4 @@ export const removeKeysWithSameValues = (obj1: Record<string, string | undefined
   }
 
   return result;
-}
+};

@@ -11,10 +11,7 @@ export const handler: Handlers = {
       });
     }
 
-    const {
-      eventID,
-    }: {  eventID: string } = await req.json();
-
+    const { eventID }: { eventID: string } = await req.json();
 
     if (!isUUID(eventID)) {
       return new Response(JSON.stringify({ error: "Invalid UUID" }), {
@@ -40,7 +37,6 @@ export const handler: Handlers = {
         status: 400,
       });
     }
-
 
     await kv.delete(["event", eventID]);
 

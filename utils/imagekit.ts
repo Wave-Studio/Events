@@ -7,4 +7,4 @@ const imageKit = new ImageKit({
   urlEndpoint: Deno.env.get("IMAGEKIT_URL_ENDPOINT")!,
 });
 
-export default imageKit
+export default imageKit;

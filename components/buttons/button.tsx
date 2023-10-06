@@ -1,7 +1,15 @@
 import { ComponentChildren } from "preact";
 import CTA from "@/components/buttons/cta.tsx";
 
-const Button = ({ label, icon, href }: { label: string; icon: ComponentChildren; href: string }) => {
+const Button = ({
+  label,
+  icon,
+  href,
+}: {
+  label: string;
+  icon: ComponentChildren;
+  href: string;
+}) => {
   return (
     <>
       <div className="relative flex flex-col items-end md:items-center">

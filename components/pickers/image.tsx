@@ -11,13 +11,13 @@ export default function ImagePicker({
   uploading,
   setUploading,
   eventID,
-  defaultImage
+  defaultImage,
 }: {
   defaultFill?: boolean;
   uploading: boolean;
   setUploading: StateUpdater<boolean>;
   eventID: string;
-  defaultImage?: string
+  defaultImage?: string;
 }) {
   const [file, setFile] = useState<string | undefined>(defaultImage);
   const [dragging, setDragging] = useState(false);
@@ -139,7 +139,11 @@ export default function ImagePicker({
         <>
           <div className="relative flex flex-col items-center">
             <img
-              src={file.startsWith("https://") ? file : "data:image/png;base64, " + file}
+              src={
+                file.startsWith("https://")
+                  ? file
+                  : "data:image/png;base64, " + file
+              }
               class={`rounded-md mt-4 ${
                 fill ? "object-fill" : "object-cover"
               } object-center h-36 w-full mb-2`}

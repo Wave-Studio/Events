@@ -13,11 +13,17 @@ export const artDesignFQAs: FAQ[] = [
         <ul class="list-inside list-disc text-sm">
           <li>
             Grand Canyon, Arizona Photo by{" "}
-            <a href="https://unsplash.com/@svenson?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText" class="underline">
+            <a
+              href="https://unsplash.com/@svenson?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+              class="underline"
+            >
               Sven van der Pluijm
             </a>{" "}
             on{" "}
-            <a href="https://unsplash.com/photos/W7EgqYJdQOE?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText" class="underline">
+            <a
+              href="https://unsplash.com/photos/W7EgqYJdQOE?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+              class="underline"
+            >
               Unsplash
             </a>
           </li>

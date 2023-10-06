@@ -26,7 +26,6 @@ export default defineLayout(async (req, ctx) => {
 
   const user = await getUser(req);
 
-
   if (!user) {
     (ctx.state as EventContext).data = { event: event.value, eventID };
   } else {
@@ -34,7 +33,11 @@ export default defineLayout(async (req, ctx) => {
       (m) => m.email === user!.email,
     )?.role;
     if (role == undefined) {
-      (ctx.state as EventContext).data = { event: event.value, eventID, user: {data: user} };
+      (ctx.state as EventContext).data = {
+        event: event.value,
+        eventID,
+        user: { data: user },
+      };
     } else {
       (ctx.state as EventContext).data = {
         event: event.value,

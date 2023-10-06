@@ -51,7 +51,7 @@ export default function EventSettings(props: {
       setLoading(Loading.LOADED);
     } else {
       setLoading(Loading.SAVED);
-			setInitialState(formState)
+      setInitialState(formState);
       setTimeout(() => {
         setLoading((l) => (l == Loading.SAVED ? Loading.LOADED : l));
       }, 1500);

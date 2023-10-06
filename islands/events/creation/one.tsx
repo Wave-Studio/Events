@@ -86,7 +86,6 @@ export const ShowTimeUI = ({
   isOpen?: boolean;
   removeShowTime: (id: string) => void;
 }) => {
- 
   return (
     <>
       <div className="flex flex-col">

@@ -83,14 +83,15 @@ export default defineRoute(async (req, ctx) => {
         <p className="my-4">
           When it comes to managing or creating event ticketing systems for a
           ticketed event, traditional solutions can be cumbersome and
-          challenging to use. Our platform, Events, offers a simple, open-source,
-          easy-to-use ticketing system for events that allows users to reserve
-          their seats ahead of time. We make events simple and craft simeple event ticketing systems! Our registration process lets users sign up
-          online using their email and receive a QR code that serves as their
-          ticket, which an event organizer can scan to confirm their
-          tickets. Simplify your ticketing management and provide your
-          customers with a seamless booking experience today! Contact quick007
-          on discord to join the closed beta.
+          challenging to use. Our platform, Events, offers a simple,
+          open-source, easy-to-use ticketing system for events that allows users
+          to reserve their seats ahead of time. We make events simple and craft
+          simeple event ticketing systems! Our registration process lets users
+          sign up online using their email and receive a QR code that serves as
+          their ticket, which an event organizer can scan to confirm their
+          tickets. Simplify your ticketing management and provide your customers
+          with a seamless booking experience today! Contact quick007 on discord
+          to join the closed beta.
         </p>
         <div class="flex flex-col sm:flex-row justify-center gap-4">
           <a href="/features">
@@ -106,10 +107,10 @@ export default defineRoute(async (req, ctx) => {
         </div>
         <h2 className="text-2xl font-bold mt-16">Pricing</h2>
         <p className="my-4">
-          As we're still in a closed beta, Events is currently free for to
-          use. In the future, Events will be free to use for small free
-          events. Larger events or paid events will have a small fee. See our
-          expected future pricing:
+          As we're still in a closed beta, Events is currently free for to use.
+          In the future, Events will be free to use for small free events.
+          Larger events or paid events will have a small fee. See our expected
+          future pricing:
         </p>
         <a href="/pricing">
           <CTA btnType="secondary" btnSize="sm">
