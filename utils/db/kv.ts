@@ -66,7 +66,7 @@ export const getUserEmailCode = async (
   req: Request,
 ) => {
   const [authCodeData, user] = await kv.getMany<[AuthCode, User]>([
-    ["authCode", authCode, email],
+    ["authCode", btoa(authCode), email],
     ["user", btoa(email)],
   ]);
 
@@ -89,15 +89,15 @@ export const validateOTP = async (
   deleteOTP = true,
 ): Promise<User | false | undefined> => {
   const [authCodeData, user] = await kv.getMany<[AuthCode, User]>([
-    ["authCode", email, otp],
-    ["user", email],
+    ["authCode", btoa(email), otp.toString()],
+    ["user", btoa(email)],
   ]);
 
-  if (authCodeData.value == undefined) return undefined;
-  if (user.value == undefined) return false;
+  if (authCodeData.value == null) return undefined;
+  if (user.value == null) return false;
 
   if (deleteOTP) {
-    await kv.delete(["authCode", email, otp]);
+    await kv.delete(["authCode", btoa(email), otp.toString()]);
   }
 
   return user.value;
@@ -126,7 +126,7 @@ export const generateOTP = async (email: string) => {
   const otp = otpArray[0].toString().substring(0, 6);
 
   await kv.set(
-    ["authCode", email, otp],
+    ["authCode", btoa(email), otp],
     {
       existsSince: Date.now(),
     },
