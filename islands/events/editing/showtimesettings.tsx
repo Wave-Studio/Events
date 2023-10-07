@@ -5,6 +5,7 @@ import { Loading } from "@/utils/loading.ts";
 import { ShowTimeUI } from "@/islands/events/creation/one.tsx";
 import Plus from "$tabler/plus.tsx";
 import { useSignal } from "@preact/signals";
+import { Event } from "@/utils/db/kv.ts";
 
 export default function ShowTimeSettings({
   showTimes,
@@ -15,15 +16,14 @@ export default function ShowTimeSettings({
 }) {
   const [error, setError] = useState<string>();
   const [loading, setLoading] = useState<Loading>(Loading.LOADED);
-  const times = JSON.stringify(showTimes)
-  const [initialState, setInitialState] = useState(times);
-  const currentState = useSignal(times);
+  const [initialState, setInitialState] = useState(showTimes);
+  const currentState = useSignal(showTimes);
 
   const removeShowTime = (id: string) => {
-      if (currentState.value.length != 1) {
-        currentState.value = JSON.stringify(JSON.parse(currentState.value).filter((s) => s.id != id))
-      }
+    if (currentState.value.length != 1) {
+      currentState.value = currentState.value.filter((s) => s.id != id);
     }
+  };
 
   const updateShowTimes = async () => {
     setLoading(Loading.LOADING);
@@ -31,7 +31,7 @@ export default function ShowTimeSettings({
     const res = await fetch("/api/events/edit", {
       body: JSON.stringify({
         eventID,
-        newEventData: {showTimes: JSON.parse(currentState.value)} as Partial<Event>,
+        newEventData: { showTimes: currentState.value } as Partial<Event>,
       }),
       method: "POST",
     });
@@ -51,22 +51,22 @@ export default function ShowTimeSettings({
   return (
     <>
       <div class="flex flex-col gap-6">
-        {JSON.parse(currentState.value).map((showTime) => (
+        {currentState.value.map((showTime) => (
           <ShowTimeUI showTime={showTime} removeShowTime={removeShowTime} />
         ))}
       </div>
       <button
         className="flex font-medium text-gray-500 hover:text-gray-600 transition  items-center cursor-pointer py-1 group w-full"
-        onClick={() => currentState.value = JSON.stringify(JSON.parse(currentState.value).concat([
-              {
-                startDate: new Date().toString(),
-                startTime: undefined,
-                endTime: undefined,
-                lastPurchaseDate: undefined,
-                id: crypto.randomUUID(),
-              },]
-            ))
-          
+        onClick={() =>
+          (currentState.value = currentState.value.concat([
+            {
+              startDate: new Date().toString(),
+              startTime: undefined,
+              endTime: undefined,
+              lastPurchaseDate: undefined,
+              id: crypto.randomUUID(),
+            },
+          ]))
         }
       >
         <div className="grow h-0.5 bg-gray-300" />
