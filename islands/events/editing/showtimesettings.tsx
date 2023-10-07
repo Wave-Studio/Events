@@ -52,7 +52,9 @@ export default function ShowTimeSettings({
     <>
       <div class="flex flex-col gap-6">
         {currentState.value.map((showTime) => (
-          <ShowTimeUI showTime={showTime} removeShowTime={removeShowTime} />
+          <ShowTimeUI showTime={showTime} removeShowTime={removeShowTime} key={showTime.id} 
+          setShowTime={(state) => currentState.value = currentState.value.map((s => s.id != state.id ? s : state))}
+          />
         ))}
       </div>
       <button

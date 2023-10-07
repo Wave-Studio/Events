@@ -34,7 +34,6 @@ export default function EventSettings(props: {
       return;
     }
 
-    console.log(formState);
     setLoading(Loading.LOADING);
     setError(undefined);
     const toSend = removeKeysWithSameValues(initialState, formState);

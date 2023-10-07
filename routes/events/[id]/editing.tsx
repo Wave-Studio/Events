@@ -99,7 +99,7 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
   }) => {
     return (
       <div className="flex flex-col">
-        <div className="flex items-center mb-6 pb-2 bg-white sticky top-14 z-10">
+        <div className="flex items-center mb-6 pb-2 bg-white sticky top-14 z-20">
           <h2 className="font-bold">{name}</h2>
           <div class="grow ml-6 h-0.5 bg-gray-300 rounded-full" />
         </div>

@@ -1,5 +1,5 @@
 import { Signal } from "@preact/signals";
-import { Event } from "@/utils/db/kv.ts";
+import { Event, ShowTime } from "@/utils/db/kv.ts";
 import CTA from "@/components/buttons/cta.tsx";
 import { StateUpdater, useMemo, useState } from "preact/hooks";
 import CalenderPicker from "@/components/pickers/calender.tsx";
@@ -24,6 +24,7 @@ export default function StageOne({
           <ShowTimeUI
             showTime={showTime}
             key={showTime.id}
+            setShowTime={(state) => eventState.value.showTimes = showTimes.map((s => s.id != state.id ? s : state))}
             removeShowTime={(id) => {
               if (showTimes.length != 1) {
                 eventState.value.showTimes = showTimes.filter(
@@ -79,13 +80,15 @@ export default function StageOne({
 
 export const ShowTimeUI = ({
   showTime,
-  isOpen = true,
+  setShowTime,
   removeShowTime,
 }: {
-  showTime: Event["showTimes"][0];
-  isOpen?: boolean;
+  showTime: ShowTime;
+  setShowTime: (state: ShowTime) => void;
   removeShowTime: (id: string) => void;
 }) => {
+  // this is a horrible solution to a problem created out of poor planning and misunderstanding of signals
+  const [_, forceRerender] = useState(1);
   return (
     <>
       <div className="flex flex-col">
@@ -95,7 +98,10 @@ export const ShowTimeUI = ({
             <CalenderPicker
               initialDate={new Date(showTime.startDate)}
               updateDate={(date) =>
-                (showTime.startDate = (date ?? new Date()).toString())
+                setShowTime({
+                  ...showTime,
+                  startDate: (date ?? new Date()).toString(),
+                })
               }
             />
           </label>
@@ -108,7 +114,10 @@ export const ShowTimeUI = ({
                   : undefined
               }
               updateDate={(date) =>
-                (showTime.lastPurchaseDate = date ? date.toString() : undefined)
+                setShowTime({
+                  ...showTime,
+                  lastPurchaseDate: date ? date.toString() : undefined,
+                })
               }
             />
           </label>
@@ -119,7 +128,10 @@ export const ShowTimeUI = ({
                 showTime.startTime ? new Date(showTime.startTime) : undefined
               }
               updateTime={(time) =>
-                (showTime.startTime = time ? time.toString() : undefined)
+                setShowTime({
+                  ...showTime,
+                  startTime: time ? time.toString() : undefined,
+                })
               }
             />
           </label>
@@ -130,7 +142,10 @@ export const ShowTimeUI = ({
                 showTime.endTime ? new Date(showTime.endTime) : undefined
               }
               updateTime={(time) =>
-                (showTime.endTime = time ? time.toString() : undefined)
+                setShowTime({
+                  ...showTime,
+                  endTime: time ? time.toString() : undefined,
+                })
               }
             />
           </label>

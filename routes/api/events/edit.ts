@@ -42,14 +42,10 @@ export const handler: Handlers = {
       });
     }
 
-    console.log(newEventData);
-
     const combinedEvent = {
       ...event.value,
       ...newEventData,
     } as Event;
-
-    console.log(combinedEvent)
 
     try {
       FullEventValidation.validateSync(combinedEvent, { strict: false });
