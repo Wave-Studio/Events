@@ -28,17 +28,7 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
     return badEventRequest;
   }
 
-  const imageURL =
-    event.banner.path &&
-    imageKit.url({
-      path: event.banner.path,
-      transformation: [
-        {
-          width: "750",
-          quality: "90",
-        },
-      ],
-    });
+
 
   const Header = () => {
     const buttons: {
@@ -96,7 +86,7 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
   return (
     <main className="px-4 max-w-screen-md w-full mx-auto flex flex-col gap-8 grow mb-10">
       <Header />
-      <Scanner className="rounded-md border border-gray-300 grow" />
+      <Scanner className="rounded-md border border-gray-300 grow bg-gray-200" />
     </main>
   );
 });

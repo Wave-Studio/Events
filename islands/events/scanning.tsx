@@ -1,5 +1,6 @@
 import { useEffect, useState } from "preact/hooks";
 import { IS_BROWSER } from "$fresh/runtime.ts";
+import { BarcodeDetector } from "barcode-polyfill";
 
 export default function Scanner({ className }: { className?: string }) {
   const [error, setError] = useState<string | null>(null);
@@ -11,8 +12,14 @@ export default function Scanner({ className }: { className?: string }) {
       if (initialized) return;
       setInitialized(true);
       const canvas = document.getElementById("scanui") as HTMLCanvasElement;
+      const barcodeReaderAPI = window["BarcodeDetector"] ?? BarcodeDetector;
+      const reader = new barcodeReaderAPI({
+        formats: ["qr_code"],
+      });
       if (canvas == null) return;
-      const ctx = canvas.getContext("2d");
+      const ctx = canvas.getContext("2d", {
+        willReadFrequently: true,
+      });
       if (ctx == null) {
         return setError(
           "2D HTML Canvas is required but not supported on your device! Please try another browser.",
@@ -30,60 +37,40 @@ export default function Scanner({ className }: { className?: string }) {
         video.srcObject = devices;
         video.onloadedmetadata = () => {
           video.play();
-          const loop = () => {
-            // TODO: This fucking sucks - Bloxs
 
-            const widthDifference = video.videoWidth - canvas.width;
-            const heightDifference = video.videoHeight - canvas.height;
+          const checkedCodes: string[] = [];
 
-            let scaleFactor = 1;
-
-            if (widthDifference > 0 && heightDifference > 0) {
-              const minimumResize = Math.min(widthDifference, heightDifference);
-              if (widthDifference == minimumResize) {
-                scaleFactor = canvas.width / video.videoWidth;
-              } else {
-                scaleFactor = canvas.height / video.videoHeight;
-              }
-            } else {
-              const minimumResize = Math.max(widthDifference, heightDifference);
-              if (widthDifference == minimumResize) {
-                scaleFactor = canvas.width / video.videoWidth;
-              } else {
-                scaleFactor = canvas.height / video.videoHeight;
+          const lookForBarcodes = async () => {
+            const codes = await reader.detect(video);
+            if (codes.length > 0) {
+              for (const code of codes) {
+                if (checkedCodes.includes(code.rawValue)) continue;
+                checkedCodes.push(code.rawValue);
+                console.log(code);
               }
             }
+          };
 
+          const loop = () => {
+            
+          
             ctx.drawImage(
               video,
               0,
               0,
-              0,
-              0,
-              // Canvas size
+              video.videoWidth,
+              video.videoHeight,
               0,
               0,
               canvas.width,
-              canvas.height,
+              canvas.height
             );
-
-            // const minDimension = Math.min(video.videoWidth, video.videoHeight);
-            // const xOffset = (video.videoWidth - minDimension) / 2;
-            // const yOffset = (video.videoHeight - minDimension) / 2;
-
-            // ctx.drawImage(
-            //   video,
-            //   xOffset,
-            //   yOffset,
-            //   minDimension,
-            //   minDimension,
-            //   0,
-            //   0,
-            //   canvas.width,
-            //   canvas.height,
-            // );
+          
+            lookForBarcodes();
+          
             requestAnimationFrame(loop);
           };
+          
 
           requestAnimationFrame(loop);
         };
@@ -102,6 +89,7 @@ export default function Scanner({ className }: { className?: string }) {
         autoPlay={true}
         playsInline={true}
         muted={true}
+        className="border-none"
       />
       {error}
       <canvas id="scanui" className={className}></canvas>

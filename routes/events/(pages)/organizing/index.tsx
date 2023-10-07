@@ -71,7 +71,7 @@ export default async function Homepage(req: Request, ctx: AppContext) {
         <div className="relative h-48">
           {e.banner.path ? (
             (() => {
-              const url = imageKit.url({
+              const url = imageKit!.url({
                 path: e.banner.path,
                 transformation: [
                   {

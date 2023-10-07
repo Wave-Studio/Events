@@ -2,7 +2,7 @@
 import ImageKit from "imagekit";
 
 const isImagekitEnabled =
-  Deno.env.get("IMAGEKIT_PUBLIC_KEY")?.toLowerCase() == "true";
+  Deno.env.get("IMAGEKIT_PUBLIC_KEY") != undefined;
 
 export default isImagekitEnabled
   ? new ImageKit({
