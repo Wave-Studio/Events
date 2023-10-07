@@ -7,7 +7,7 @@ export const Switch = ({
   disabled,
 }: {
   enabled: boolean;
-  setEnabled: StateUpdater<boolean>;
+  setEnabled: (state: boolean) => void;
   disabled: boolean;
 }) => {
   return (
@@ -39,7 +39,7 @@ export const Toggle = ({
 }: {
   disabled?: boolean;
   enabled: boolean;
-  setEnabled: StateUpdater<boolean>;
+  setEnabled: (state: boolean) => void;
   name: string;
   description?: string;
 }) => {

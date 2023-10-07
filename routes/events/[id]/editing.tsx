@@ -22,6 +22,7 @@ import Button from "@/components/buttons/button.tsx";
 // @ts-ignore Something brokey - Some Blocke
 import ShowTimeSettings from "@/islands/events/editing/showtimesettings.tsx";
 import EventDeletion from "@/islands/events/editing/delete.tsx";
+import EventTicketSettings from "@/islands/events/editing/ticketSettings.tsx";
 
 export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
   const { event, eventID, user } = ctx.state.data;
@@ -32,7 +33,7 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
 
   const imageURL =
     event.banner.path &&
-    imageKit.url({
+    imageKit!.url({
       path: event.banner.path,
       transformation: [
         {
@@ -89,34 +90,62 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
     );
   };
 
+  const Section = ({
+    children,
+    name,
+  }: {
+    children: ComponentChildren;
+    name: string;
+  }) => {
+    return (
+      <div className="flex flex-col">
+        <div className="flex items-center mb-6 pb-2 bg-white sticky top-14 z-10">
+          <h2 className="font-bold">{name}</h2>
+          <div class="grow ml-6 h-0.5 bg-gray-300 rounded-full" />
+        </div>
+        <div className="flex flex-col gap-8">{children}</div>
+      </div>
+    );
+  };
+
   return (
     <main class="flex flex-col grow">
       <div className="grow ">
-        <div className="px-4 max-w-screen-md w-full mx-auto flex flex-col gap-4">
+        <div className="px-4 max-w-screen-md w-full mx-auto flex flex-col space-y-28 mb-20">
           <Header />
-          <Heading name="Banner" />
-          <EditingImagePicker
-            event={event}
-            eventID={eventID}
-            imgURL={imageURL}
-          />
-          <Heading name="Event Basics" />
-          <EventSettings
-            eventID={eventID}
-            name={event.name}
-            description={event.description}
-            maxTickets={event.maxTickets}
-            supportEmail={event.supportEmail}
-            venue={event.venue}
-          />
-          <Heading name="Showtimes" />
-          <ShowTimeSettings eventID={eventID} showTimes={event.showTimes} />
-          <Heading name="Tickets" />
-          <Heading name="Other Settings" />
+          <Section name="Banner">
+            <EditingImagePicker
+              event={event}
+              eventID={eventID}
+              imgURL={imageURL}
+            />
+          </Section>
+          <Section name="Event Basics">
+            <EventSettings
+              eventID={eventID}
+              name={event.name}
+              description={event.description}
+              maxTickets={event.maxTickets}
+              supportEmail={event.supportEmail}
+              venue={event.venue}
+            />
+          </Section>
+          <Section name="Showtimes">
+            <ShowTimeSettings eventID={eventID} showTimes={event.showTimes} />
+          </Section>
+          <Section name="Ticketing Settings">
+            <EventTicketSettings
+              additionalFields={event.additionalFields}
+              eventID={eventID}
+              multiEntry={event.multiEntry}
+              multiPurchase={event.multiPurchase}
+            />
+          </Section>
           {user.role <= 1 && (
             <>
-              <Heading name="Danger Zone" />
-              <EventDeletion eventID={eventID} />
+              <Section name="Danger Zone">
+                <EventDeletion eventID={eventID} />
+              </Section>
             </>
           )}
         </div>
