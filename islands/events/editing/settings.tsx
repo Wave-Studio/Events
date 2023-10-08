@@ -13,6 +13,7 @@ export default function EventSettings(props: {
   name: string;
   description?: string;
   supportEmail: string;
+  summary?: string;
   venue?: string;
   maxTickets?: number;
   eventID: string;
@@ -124,6 +125,22 @@ export default function EventSettings(props: {
           />
         </label>
       </div>
+      <label class="flex flex-col">
+        <p class="label-text">Brief Summary</p>
+        <input
+          name="summary"
+          autoComplete="off"
+          type="text"
+          className="p-2 border rounded-md border-gray-300"
+          value={formState.summary}
+          onInput={(e) =>
+            setFormState((state) => ({
+              ...state,
+              summary: e.currentTarget.value,
+            }))
+          }
+        />
+      </label>
       <label class="flex flex-col">
         <p class="label-text">Short Description</p>
         <textarea

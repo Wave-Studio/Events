@@ -15,17 +15,19 @@ export default function StageZero({
   setPage: StateUpdater<number>;
   setError: StateUpdater<string | undefined>;
 }) {
-  const { name, supportEmail, description, venue } = eventState.value;
+  const { name, supportEmail, description, venue, summary } = eventState.value;
 
   const [Form, [Field, TextArea], formState] = useForm<{
     name: string;
     supportEmail: string;
+    summary: string
     description: string;
     venue: string;
   }>({
     initialState: {
       name,
       supportEmail,
+      summary: summary ?? "",
       description: description ?? "",
       venue: venue ?? "",
     },
@@ -53,6 +55,10 @@ export default function StageZero({
           <Field name="supportEmail" class="grow md:w-56" type="email" />
         </label>
       </div>
+      <label class="flex flex-col ">
+          <p class="label-text">Brief Summary</p>
+          <Field name="summary" class="grow" type="email" />
+        </label>
       <label class="flex flex-col">
         <p class="label-text">Short Description</p>
         <TextArea

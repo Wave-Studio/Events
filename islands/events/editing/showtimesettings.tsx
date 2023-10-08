@@ -91,8 +91,6 @@ export default function ShowTimeSettings({
         {loading == Loading.SAVED && "Saved"}
       </CTA>
       {error && <p class="text-red-500 text-center">Error: {error}</p>}
-      {JSON.stringify(currentState.value)}
-      {JSON.stringify(initialState)}
     </>
   );
 }

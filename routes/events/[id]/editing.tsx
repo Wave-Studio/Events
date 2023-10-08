@@ -122,6 +122,7 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
           </Section>
           <Section name="Event Basics">
             <EventSettings
+              summary={event.summary}
               eventID={eventID}
               name={event.name}
               description={event.description}

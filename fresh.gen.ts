@@ -48,7 +48,8 @@ import * as $$9 from "./islands/events/editing/showtimesettings.tsx";
 import * as $$10 from "./islands/events/editing/ticketSettings.tsx";
 import * as $$11 from "./islands/events/list/filters.tsx";
 import * as $$12 from "./islands/events/scanning.tsx";
-import * as $$13 from "./islands/loginForm.tsx";
+import * as $$13 from "./islands/events/viewing/register.tsx";
+import * as $$14 from "./islands/loginForm.tsx";
 
 const manifest = {
   routes: {
@@ -100,7 +101,8 @@ const manifest = {
     "./islands/events/editing/ticketSettings.tsx": $$10,
     "./islands/events/list/filters.tsx": $$11,
     "./islands/events/scanning.tsx": $$12,
-    "./islands/loginForm.tsx": $$13,
+    "./islands/events/viewing/register.tsx": $$13,
+    "./islands/loginForm.tsx": $$14,
   },
   baseUrl: import.meta.url,
 };

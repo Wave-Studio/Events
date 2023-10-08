@@ -16,7 +16,6 @@ import ChevronLeft from "$tabler/chevron-left.tsx";
 import EditingImagePicker from "@/islands/events/editing/images.tsx";
 import imageKit from "@/utils/imagekit.ts";
 import { ComponentChildren } from "preact";
-import EventSettings from "@/islands/events/editing/settings.tsx";
 import { Heading } from "@/routes/(public)/faq.tsx";
 import Button from "@/components/buttons/button.tsx";
 import Scanner from "@/islands/events/scanning.tsx";

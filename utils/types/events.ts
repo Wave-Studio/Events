@@ -33,7 +33,8 @@ export const YupFirstPageEventValidation = {
   supportEmail: Yup.string()
     .email("Enter a valid support email")
     .required("We require a support email for all events"),
-  description: Yup.string().max(1500),
+  summary: Yup.string().max(200),
+  description: Yup.string().max(2500),
   venue: Yup.string().max(150),
 };
 

@@ -9,6 +9,7 @@ export interface Field {
 export interface Event {
   name: string;
   supportEmail: string;
+  summary?: string;
   description?: string;
   banner: {
     path?: string;
@@ -42,6 +43,7 @@ export interface ShowTime {
 export const defaultEvent: Event = {
   name: "",
   supportEmail: "",
+  summary: "",
   description: "",
   banner: {
     fill: false,
