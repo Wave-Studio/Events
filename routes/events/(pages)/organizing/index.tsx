@@ -5,6 +5,7 @@ import CTA from "@/components/buttons/cta.tsx";
 import imageKit from "@/utils/imagekit.ts";
 import World from "$tabler/world.tsx";
 import Scan from "$tabler/text-scan-2.tsx";
+import Edit from "$tabler/edit.tsx";
 import { ComponentChildren } from "preact";
 import Button from "@/components/buttons/button.tsx";
 
@@ -144,8 +145,8 @@ export default async function Homepage(req: Request, ctx: AppContext) {
             </div>
             {role <= 2 ? (
               <a href={`/events/${id}/editing`} class="ml-auto">
-                <CTA btnType="cta" btnSize="sm">
-                  Edit Event
+                <CTA btnType="cta" btnSize="sm" className="!w-10 [@media(min-width:320px)]:!w-40 ">
+                  <Edit class="w-6 h-6 [@media(min-width:320px)]:hidden mx-auto" /> <p class="hidden [@media(min-width:320px)]:block">Edit Event</p> 
                 </CTA>
               </a>
             ) : (

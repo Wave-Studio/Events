@@ -123,7 +123,7 @@ export default function StageTwo({
               setPage(3);
             }}
           >
-            Create Event
+            <span className="sm:hidden">Create</span><span className="hidden sm:block">Create Event</span>
           </CTA>
         </div>
       </div>
@@ -215,12 +215,12 @@ export const FieldInput = ({
   };
 
   return (
-    <div className="flex justify-between items-center mb-4" key={field.id}>
+    <div className="flex flex-col sm:flex-row justify-between items-center mb-4" key={field.id}>
       <div class="flex flex-col">
         <input
           placeholder="Input Name"
           type="text"
-          class="nostyle border-b-2 border-dashed w-64"
+          class="nostyle border-b-2 border-dashed sm:w-64"
           value={fields.find((f) => f.id == field.id)?.name}
           onChange={(e) =>
             updateField({ id: field.id, name: e.currentTarget.value })
@@ -229,14 +229,14 @@ export const FieldInput = ({
         <input
           placeholder="Optional description"
           type="text"
-          class="nostyle border-b-2 border-dashed text-sm mt-2 w-80"
+          class="nostyle border-b-2 border-dashed text-sm mt-2 sm:w-80"
           value={fields.find((f) => f.id == field.id)?.description}
           onChange={(e) =>
             updateField({ id: field.id, description: e.currentTarget.value })
           }
         />
       </div>
-      <div className="flex gap-2">
+      <div className="flex gap-2 mt-2 sm:mt-0">
         <div class="relative flex flex-col">
           <button
             className="rounded-md border border-gray-300 font-medium text-gray-500 pl-2 h-6 bg-gray-100 flex items-center"

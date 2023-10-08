@@ -37,7 +37,7 @@ export default function EventDeletion({ eventID }: { eventID: string }) {
     return (
       <div class="fixed inset-0 bg-black/20 z-50 grid place-items-center">
         <div
-          className="rounded-md bg-white shadow-lg border border-gray-300 p-4 flex flex-col relative"
+          className="rounded-md bg-white shadow-lg border border-gray-300 p-4 flex flex-col relative mx-4"
           ref={dialog}
         >
           <h5 className="font-bold text-xl">Delete Event</h5>
@@ -71,7 +71,7 @@ export default function EventDeletion({ eventID }: { eventID: string }) {
         <CTA
           btnType="secondary"
           btnSize="sm"
-          className="bg-red-100 hover:bg-red-200 border border-red-300 text-red-500 mt-4 ml-auto"
+          className="bg-red-100 hover:bg-red-200 border border-red-300 text-red-500 ml-auto"
           onClick={() => setOpen(true)}
         >
           Delete Event

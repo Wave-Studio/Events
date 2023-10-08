@@ -80,7 +80,8 @@ export default function StageThree({
             className="!w-20 md:!w-40"
             disabled={loading}
           >
-            All Events
+            <span className="sm:hidden">Events</span>
+            <span className="hidden sm:block">All Events</span>
           </CTA>
         </a>
         <CTA
@@ -90,7 +91,9 @@ export default function StageThree({
           onClick={() => setPage(3)}
           disabled={loading}
         >
-          View Event
+          {" "}
+          <span className="sm:hidden">View</span>
+          <span className="hidden sm:block">View Event</span>
         </CTA>
       </div>
     </div>
