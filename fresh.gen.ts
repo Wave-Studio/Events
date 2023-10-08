@@ -26,12 +26,12 @@ import * as $20 from "./routes/events/(pages)/organizing/collections.tsx";
 import * as $21 from "./routes/events/(pages)/organizing/create.tsx";
 import * as $22 from "./routes/events/(pages)/organizing/discounts.tsx";
 import * as $23 from "./routes/events/(pages)/organizing/index.tsx";
-import * as $24 from "./routes/events/[id]/_layout.tsx";
-import * as $25 from "./routes/events/[id]/delete.tsx";
-import * as $26 from "./routes/events/[id]/editing.tsx";
-import * as $27 from "./routes/events/[id]/index.tsx";
-import * as $28 from "./routes/events/[id]/scanning.tsx";
-import * as $29 from "./routes/events/[id]/test.tsx";
+import * as $24 from "./routes/events/[id]/(no-layout)/_layout.tsx";
+import * as $25 from "./routes/events/[id]/(no-layout)/index.tsx";
+import * as $26 from "./routes/events/[id]/_layout.tsx";
+import * as $27 from "./routes/events/[id]/delete.tsx";
+import * as $28 from "./routes/events/[id]/editing.tsx";
+import * as $29 from "./routes/events/[id]/scanning.tsx";
 import * as $30 from "./routes/events/notfound.tsx";
 import * as $31 from "./routes/index.tsx";
 import * as $32 from "./routes/login.tsx";
@@ -46,8 +46,9 @@ import * as $$7 from "./islands/events/editing/images.tsx";
 import * as $$8 from "./islands/events/editing/settings.tsx";
 import * as $$9 from "./islands/events/editing/showtimesettings.tsx";
 import * as $$10 from "./islands/events/editing/ticketSettings.tsx";
-import * as $$11 from "./islands/events/scanning.tsx";
-import * as $$12 from "./islands/loginForm.tsx";
+import * as $$11 from "./islands/events/list/filters.tsx";
+import * as $$12 from "./islands/events/scanning.tsx";
+import * as $$13 from "./islands/loginForm.tsx";
 
 const manifest = {
   routes: {
@@ -75,12 +76,12 @@ const manifest = {
     "./routes/events/(pages)/organizing/create.tsx": $21,
     "./routes/events/(pages)/organizing/discounts.tsx": $22,
     "./routes/events/(pages)/organizing/index.tsx": $23,
-    "./routes/events/[id]/_layout.tsx": $24,
-    "./routes/events/[id]/delete.tsx": $25,
-    "./routes/events/[id]/editing.tsx": $26,
-    "./routes/events/[id]/index.tsx": $27,
-    "./routes/events/[id]/scanning.tsx": $28,
-    "./routes/events/[id]/test.tsx": $29,
+    "./routes/events/[id]/(no-layout)/_layout.tsx": $24,
+    "./routes/events/[id]/(no-layout)/index.tsx": $25,
+    "./routes/events/[id]/_layout.tsx": $26,
+    "./routes/events/[id]/delete.tsx": $27,
+    "./routes/events/[id]/editing.tsx": $28,
+    "./routes/events/[id]/scanning.tsx": $29,
     "./routes/events/notfound.tsx": $30,
     "./routes/index.tsx": $31,
     "./routes/login.tsx": $32,
@@ -97,8 +98,9 @@ const manifest = {
     "./islands/events/editing/settings.tsx": $$8,
     "./islands/events/editing/showtimesettings.tsx": $$9,
     "./islands/events/editing/ticketSettings.tsx": $$10,
-    "./islands/events/scanning.tsx": $$11,
-    "./islands/loginForm.tsx": $$12,
+    "./islands/events/list/filters.tsx": $$11,
+    "./islands/events/scanning.tsx": $$12,
+    "./islands/loginForm.tsx": $$13,
   },
   baseUrl: import.meta.url,
 };

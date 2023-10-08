@@ -84,17 +84,18 @@ export default function StageThree({
             <span className="hidden sm:block">All Events</span>
           </CTA>
         </a>
-        <CTA
-          btnType="cta"
-          btnSize="sm"
-          className="!w-20 md:!w-40"
-          onClick={() => setPage(3)}
-          disabled={loading}
-        >
-          {" "}
-          <span className="sm:hidden">View</span>
-          <span className="hidden sm:block">View Event</span>
-        </CTA>
+        <a href={`/events/${eventID}`}>
+          <CTA
+            btnType="cta"
+            btnSize="sm"
+            className="!w-20 md:!w-40"
+            onClick={() => setPage(3)}
+            disabled={loading}
+          >
+            <span className="sm:hidden">View</span>
+            <span className="hidden sm:block">View Event</span>
+          </CTA>
+        </a>
       </div>
     </div>
   );

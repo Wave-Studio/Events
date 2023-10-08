@@ -48,14 +48,14 @@ export const handler: Handlers = {
     } as Event);
 
     const promises: [UploadResponse, void?] = [
-      await imageKit.upload({
+      await imageKit!.upload({
         file,
         fileName: eventID,
       }),
     ];
 
     if (event.value.banner.id) {
-      promises.push(await imageKit.deleteFile(event.value.banner.id));
+      promises.push(await imageKit!.deleteFile(event.value.banner.id));
     }
 
     let res: UploadResponse | undefined = undefined;

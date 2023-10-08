@@ -8,6 +8,9 @@ module.exports = {
           normal: "#DC6843",
         },
       },
+      borderColor: {
+        DEFAULT: "#d1d5db",
+      }
     },
   },
   plugins: [],

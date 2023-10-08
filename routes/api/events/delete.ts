@@ -1,6 +1,7 @@
 import { Handlers } from "$fresh/server.ts";
 import { Event, getUser, kv } from "@/utils/db/kv.ts";
 import { isUUID } from "@/utils/db/misc.ts";
+import imageKit from "@/utils/imagekit.ts";
 
 export const handler: Handlers = {
   async POST(req, _ctx) {
@@ -36,6 +37,10 @@ export const handler: Handlers = {
       return new Response(JSON.stringify({ error: "Invalid event ID" }), {
         status: 400,
       });
+    }
+
+    if (event.value.banner.id) {
+      imageKit!.deleteFile(event.value.banner.id);
     }
 
     await kv.delete(["event", eventID]);
