@@ -82,7 +82,7 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
         )}
       </div>
 
-      <div className="border p-4 flex flex-col rounded-md bg-white/75 backdrop-blur-xl">
+      <div className="border p-4 flex flex-col rounded-md bg-white/80 backdrop-blur-xl">
         <h1 className="font-bold text-2xl text-center md:text-left">{event.name}</h1>
         <EventRegisterSmall />
         <h2 className="font-semibold mt-2 mb-1 text-sm">Event in Breif</h2>
@@ -95,7 +95,7 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
 
   return (
     <div className="flex flex-col">
-      <div class="flex flex-col relative">
+      <div class="flex flex-col">
         {banner() ? (
           <picture>
             {Object.entries(banner()!).map(([width, [png, webp]]) => (
@@ -146,7 +146,7 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
           </a>
         )}
       </div>
-      <div className="max-w-2xl mx-auto w-full mb-36 md:mb-16 mt-4 md:mt-0 md:-translate-y-28 flex flex-col px-4">
+      <div className="max-w-2xl mx-auto w-full mb-36 md:mb-16 mt-4 md:-mt-28 flex flex-col px-4 static">
         <Header />
         <EventRegister />
       </div>
