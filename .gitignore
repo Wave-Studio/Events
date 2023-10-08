@@ -5,6 +5,9 @@
 .env.production.local
 .env.local
 
+# Npm support
+/node_modules
+
 # Fresh build directory
-_fresh/
+/_fresh
 /db
