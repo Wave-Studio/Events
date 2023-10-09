@@ -1,14 +1,15 @@
 import { useState } from "preact/hooks";
 import CTA from "@/components/buttons/cta.tsx";
 import Popup from "@/components/popup.tsx";
+import { ShowTime } from "@/utils/db/kv.types.ts";
 
-export default function EventRegister() {
-  const [open, setOpen] = useState(false);
+export default function EventRegister({eventID, showTimes, email}: {eventID: string, showTimes: ShowTime[], email?: string}) {
+  const [open, setOpen] = useState(true);
 
   const Popover = () => {
     return (
       <Popup close={() => setOpen(false)} isOpen={open}>
-        <h2>Get Tickets</h2>
+        <h2 class="font-bold text-lg">Get Tickets</h2>
       </Popup>
     );
   };
