@@ -44,6 +44,8 @@ export default function StageOne({
               endTime: undefined,
               lastPurchaseDate: undefined,
               id: crypto.randomUUID(),
+              soldTickets: 0,
+              maxTickets: 75
             });
             forceRerender((s) => s + 1);
           }}
@@ -136,7 +138,7 @@ export const ShowTimeUI = ({
             />
           </label>
           <label class="flex flex-col">
-            <p class="label-text">end time</p>
+            <p class="label-text">End Time</p>
             <TimePicker
               initialTime={
                 showTime.endTime ? new Date(showTime.endTime) : undefined
@@ -145,6 +147,21 @@ export const ShowTimeUI = ({
                 setShowTime({
                   ...showTime,
                   endTime: time ? time.toString() : undefined,
+                })
+              }
+            />
+          </label>
+          <label class="md:col-span-2 flex flex-col">
+            <p class="label-text">Max Attendees</p>
+            <input
+              type="number"
+              class="p-2 border rounded-md border-gray-300"
+              pattern="\d*"
+              value={showTime.maxTickets}
+              onInput={(e) =>
+                setShowTime({
+                  ...showTime,
+                  maxTickets: parseInt(e.currentTarget.value),
                 })
               }
             />

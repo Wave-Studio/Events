@@ -82,7 +82,8 @@ export interface FieldEntry
 export interface Ticket {
   hasBeenUsed: boolean;
   userEmail: string;
-  userName: string;
+  firstName: string;
+  lastName: string;
   fieldData: FieldEntry[];
 }
 

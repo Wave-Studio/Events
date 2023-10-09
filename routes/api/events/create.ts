@@ -25,7 +25,7 @@ export const handler: Handlers = {
   async POST(req) {
     const user = await getUser(req);
 
-    if (!user || user.onboarded == false) {
+    if (user == undefined) {
       return new Response(JSON.stringify({ error: "Not logged in" }), {
         status: 401,
       });
@@ -65,7 +65,7 @@ export const handler: Handlers = {
         members: [{ email: user.email, role: Roles.OWNER }],
       } as Event)
       // ascii to base64
-      .set(["user", user.email], {
+      .set(["user", btoa(user.email)], {
         ...user,
         events: [...user.events, eventID],
       } as User)

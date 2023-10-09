@@ -75,7 +75,7 @@ export const FullEventValidation = Yup.object({
     ),
   price: Yup.number().required(),
 
-  soldTickets: Yup.number().required(),
+  soldTickets: Yup.number().required().min(0),
   owner: Yup.string().max(200),
   published: Yup.boolean().required(),
 });

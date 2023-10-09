@@ -1,4 +1,4 @@
-import { AuthCode, Plan, User } from "./kv.types.ts";
+import { AuthCode, Plan, User, UserPartial } from "./kv.types.ts";
 import { getCookies, setCookie } from "$std/http/cookie.ts";
 
 export * from "./kv.types.ts";
@@ -27,7 +27,7 @@ export const getUser = async (req: Request) => {
     return undefined;
   }
 
-  const user = await kv.get<User>(["user", email]);
+  const user = await kv.get<UserPartial>(["user", email]);
 
   if (user.value == undefined) {
     return undefined;
@@ -45,17 +45,17 @@ export const getUser = async (req: Request) => {
 export const createUser = async (email: string) => {
   const userAuthToken = (await generateAuthToken(email, false))!;
 
-  const userInfo: User = {
+  const userInfo: UserPartial = {
     email,
     authToken: userAuthToken,
     events: [],
     tickets: [],
-    onboarded: false,
+    onboarded: true,
     plan: Plan.BASIC,
     joinedAt: Date.now().toString(),
   };
 
-  await kv.set(["user", email], userInfo);
+  await kv.set(["user", btoa(email)], userInfo);
 
   return userAuthToken;
 };
@@ -65,9 +65,9 @@ export const getUserEmailCode = async (
   authCode: string,
   req: Request,
 ) => {
-  const [authCodeData, user] = await kv.getMany<[AuthCode, User]>([
-    ["authCode", authCode, email],
-    ["user", email],
+  const [authCodeData, user] = await kv.getMany<[AuthCode, UserPartial]>([
+    ["authCode", btoa(authCode), email],
+    ["user", btoa(email)],
   ]);
 
   if (authCodeData.value == undefined) return undefined;
@@ -89,25 +89,25 @@ export const validateOTP = async (
   deleteOTP = true,
 ): Promise<User | false | undefined> => {
   const [authCodeData, user] = await kv.getMany<[AuthCode, User]>([
-    ["authCode", email, otp.toString()],
-    ["user", email],
+    ["authCode", btoa(email), otp.toString()],
+    ["user", btoa(email)],
   ]);
 
   if (authCodeData.value == null) return undefined;
   if (user.value == null) return false;
 
   if (deleteOTP) {
-    await kv.delete(["authCode", email, otp.toString()]);
+    await kv.delete(["authCode", btoa(email), otp.toString()]);
   }
 
   return user.value;
 };
 
 export const generateAuthToken = async (email: string, save = true) => {
-  const token = `${email}_${crypto.randomUUID().replace(/-/g, "")}`;
+  const token = `${btoa(email)}_${btoa(crypto.randomUUID().replace(/-/g, ""))}`;
 
   if (save) {
-    const user = await kv.get<User>(["user", email]);
+    const user = await kv.get<User>(["user", btoa(email)]);
 
     if (user.value != undefined) {
       await kv.set(["user", email], {
@@ -126,7 +126,7 @@ export const generateOTP = async (email: string) => {
   const otp = otpArray[0].toString().substring(0, 6);
 
   await kv.set(
-    ["authCode", email, otp],
+    ["authCode", btoa(email), otp],
     {
       existsSince: Date.now(),
     },

@@ -17,9 +17,7 @@ export default function StageTwo({
   eventState: Signal<Event>;
   setPage: StateUpdater<number>;
 }) {
-  const { multiEntry, multiPurchase, maxTickets, additionalFields } =
-    eventState.value;
-  
+  const { multiEntry, multiPurchase, additionalFields } = eventState.value;
 
   const [fields, setFields] = useState<Field[]>(
     additionalFields.length == 0
@@ -43,13 +41,8 @@ export default function StageTwo({
   };
 
   const addField = () => {
-    setFields((f) => [
-      ...f,
-      defaultField()
-    ]);
+    setFields((f) => [...f, defaultField()]);
   };
-
-  
 
   return (
     <>
@@ -67,28 +60,12 @@ export default function StageTwo({
             setEnabled={setMPurchase}
             enabled={mPurchase}
           />
-          <label htmlFor="" class="flex flex-col md:w-44s">
-            <p className="label-text">Maximum Attendees</p>
-            <input
-              type="number"
-              class="p-2 border rounded-md border-gray-300"
-              pattern="\d*"
-              value={maxTickets?.toString() ?? ""}
-              onChange={(e) =>
-                (eventState.value.maxTickets = parseInt(e.currentTarget.value))
-              }
-            />
-          </label>
         </section>
         <AdditionalInputs />
         <section>
           <h4 class="text-sm font-medium mb-2">Additional Inputs</h4>
           {fields.map((field) => (
-            <FieldInput
-              field={field}
-              fields={fields}
-              setFields={setFields}
-            />
+            <FieldInput field={field} fields={fields} setFields={setFields} />
           ))}
           <button
             className="flex font-medium text-gray-500 hover:text-gray-600 transition  items-center cursor-pointer py-1 group w-full"
@@ -123,7 +100,8 @@ export default function StageTwo({
               setPage(3);
             }}
           >
-            <span className="sm:hidden">Create</span><span className="hidden sm:block">Create Event</span>
+            <span className="sm:hidden">Create</span>
+            <span className="hidden sm:block">Create Event</span>
           </CTA>
         </div>
       </div>
@@ -131,39 +109,53 @@ export default function StageTwo({
   );
 }
 
-export const AdditionalInputs = () => (
-  <>
-    <h3 class="font-medium text-center -mb-4 mt-4">Additional Inputs</h3>
-    <p class="text-center text-sm">
-      These are the fields that users must input when they register for an
-      event. We require a name and email by default.{" "}
-    </p>
-    <section>
-      <h4 class="text-sm font-medium">Required Inputs</h4>
-      <div className="flex justify-between items-center">
-        <p>name</p>
-        <p className="rounded-md border border-gray-300 font-medium text-gray-500 px-2 bg-gray-100">
-          text
-        </p>
-      </div>
-      <div className="flex justify-between items-center mt-2">
-        <p>email</p>
-        <p className="rounded-md border border-gray-300 font-medium text-gray-500 px-2 bg-gray-100">
-          email
-        </p>
-      </div>
-    </section>
-  </>
-);
+export const AdditionalInputs = () => {
+  const reqs: { name: string; type: Field["type"] }[] = [
+    {
+      name: "First Name",
+      type: "text",
+    },
+    {
+      name: "Last Name",
+      type: "text",
+    },
+    {
+      name: "Email",
+      type: "email",
+    },
+  ];
+  return (
+    <>
+      <h3 class="font-medium text-center -mb-4 mt-4">Additional Inputs</h3>
+      <p class="text-center text-sm">
+        These are the fields that users must input when they register for an
+        event. We require a name and email by default.{" "}
+      </p>
+      <section>
+        <h4 class="text-sm font-medium">Required Inputs</h4>
+        <div className="flex flex-col gap-2 mt-2">
+          {reqs.map(req => (
+          <div className="flex justify-between items-center">
+            <p class="text-sm font-medium">{req.name}</p>
+            <p className="rounded-md border border-gray-300 font-semibold text-gray-500 px-2 bg-gray-100">
+              {req.type}
+            </p>
+          </div>
+          ))}
+        </div>
+      </section>
+    </>
+  );
+};
 
 export const FieldInput = ({
   field,
   fields,
-  setFields
+  setFields,
 }: {
   field: Field;
   fields: Field[];
-  setFields: StateUpdater<Field[]>
+  setFields: StateUpdater<Field[]>;
 }) => {
   const [typeOpen, setTypeOpen] = useState(false);
   const typeRef = useRef<HTMLButtonElement>(null);
@@ -215,7 +207,10 @@ export const FieldInput = ({
   };
 
   return (
-    <div className="flex flex-col sm:flex-row justify-between items-center mb-4" key={field.id}>
+    <div
+      className="flex flex-col sm:flex-row justify-between items-center mb-4"
+      key={field.id}
+    >
       <div class="flex flex-col">
         <input
           placeholder="Input Name"
@@ -263,4 +258,4 @@ export const defaultField: () => Field = () => ({
   description: "",
   id: crypto.randomUUID(),
   type: "text",
-})
+});

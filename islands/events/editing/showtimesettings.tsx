@@ -67,6 +67,8 @@ export default function ShowTimeSettings({
               endTime: undefined,
               lastPurchaseDate: undefined,
               id: crypto.randomUUID(),
+              soldTickets: 0,
+              maxTickets: 75
             },
           ]))
         }

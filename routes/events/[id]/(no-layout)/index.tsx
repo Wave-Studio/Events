@@ -14,10 +14,6 @@ import EventRegister, {
 } from "@/islands/events/viewing/register.tsx";
 import Footer from "@/components/layout/footer.tsx";
 
-// export const config: LayoutConfig = {
-//   skipInheritedLayouts: true, // Skip already inherited layouts
-// };
-
 export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
   // layout are disabled on this route, but I don't wanna disable every one. no clue how to do that
   const { event, eventID, user } = ctx.state.data;
@@ -65,9 +61,9 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
   const Header = () => (
     <>
       <div className="flex gap-2 md:gap-4 mb-2 justify-between md:justify-start flex-wrap">
-        <div className="flex items-center rounded-md bg-white/75 backdrop-blur-xl border px-1.5 py-0.5">
+        <div className="flex items-center rounded-md bg-white/75 backdrop-blur-xl border px-1.5 py-0.5 ">
           <Clock class="h-4 w-4 mr-1.5 text-gray-700" />
-          <p>
+          <p class="break-keep">
             {event.showTimes.length > 1 && "Showtimes start"}{" "}
             <span className="font-medium">
               {fmtDate(new Date(event.showTimes[0].startDate))}
@@ -75,9 +71,9 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
           </p>
         </div>
         {event.venue && (
-          <div className="flex items-center rounded-md bg-white/75 backdrop-blur-xl border px-1.5 py-0.5">
+          <div className="flex items-center rounded-md bg-white/75 backdrop-blur-xl border px-1.5 py-0.5 ">
             <Location class="w-4 h-4 mr-1.5 text-gray-700" />
-            <h2 class="font-medium">{event.venue}</h2>
+           <p className="truncate max-w-[12rem]">{event.venue}ssssssssssssssssssss</p> 
           </div>
         )}
       </div>
@@ -146,7 +142,7 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
           </a>
         )}
       </div>
-      <div className="max-w-2xl mx-auto w-full mb-36 md:mb-16 mt-4 md:-mt-32 flex flex-col px-4 static">
+      <div className="max-w-2xl mx-auto w-full mb-36 md:mb-16 mt-4 md:-mt-28 flex flex-col px-4 static">
         <Header />
         <EventRegister eventID={eventID} showTimes={event.showTimes} email={user?.data.email} />
       </div>

@@ -57,7 +57,7 @@ export default function StageZero({
       </div>
       <label class="flex flex-col ">
           <p class="label-text">Brief Summary</p>
-          <Field name="summary" class="grow" type="email" />
+          <Field name="summary" class="grow" type="text" />
         </label>
       <label class="flex flex-col">
         <p class="label-text">Short Description</p>
