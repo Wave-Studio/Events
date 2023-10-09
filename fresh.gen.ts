@@ -17,24 +17,25 @@ import * as $11 from "./routes/api/events/delete.ts";
 import * as $12 from "./routes/api/events/edit.ts";
 import * as $13 from "./routes/api/events/image/fill.ts";
 import * as $14 from "./routes/api/events/image/upload.ts";
-import * as $15 from "./routes/events/(pages)/_layout.tsx";
-import * as $16 from "./routes/events/(pages)/attending/_layout.tsx";
-import * as $17 from "./routes/events/(pages)/attending/index.tsx";
-import * as $18 from "./routes/events/(pages)/organizing/_layout.tsx";
-import * as $19 from "./routes/events/(pages)/organizing/accounting.tsx";
-import * as $20 from "./routes/events/(pages)/organizing/collections.tsx";
-import * as $21 from "./routes/events/(pages)/organizing/create.tsx";
-import * as $22 from "./routes/events/(pages)/organizing/discounts.tsx";
-import * as $23 from "./routes/events/(pages)/organizing/index.tsx";
-import * as $24 from "./routes/events/[id]/(no-layout)/_layout.tsx";
-import * as $25 from "./routes/events/[id]/(no-layout)/index.tsx";
-import * as $26 from "./routes/events/[id]/_layout.tsx";
-import * as $27 from "./routes/events/[id]/delete.tsx";
-import * as $28 from "./routes/events/[id]/editing.tsx";
-import * as $29 from "./routes/events/[id]/scanning.tsx";
-import * as $30 from "./routes/events/notfound.tsx";
-import * as $31 from "./routes/index.tsx";
-import * as $32 from "./routes/login.tsx";
+import * as $15 from "./routes/api/events/ticket.ts";
+import * as $16 from "./routes/events/(pages)/_layout.tsx";
+import * as $17 from "./routes/events/(pages)/attending/_layout.tsx";
+import * as $18 from "./routes/events/(pages)/attending/index.tsx";
+import * as $19 from "./routes/events/(pages)/organizing/_layout.tsx";
+import * as $20 from "./routes/events/(pages)/organizing/accounting.tsx";
+import * as $21 from "./routes/events/(pages)/organizing/collections.tsx";
+import * as $22 from "./routes/events/(pages)/organizing/create.tsx";
+import * as $23 from "./routes/events/(pages)/organizing/discounts.tsx";
+import * as $24 from "./routes/events/(pages)/organizing/index.tsx";
+import * as $25 from "./routes/events/[id]/(no-layout)/_layout.tsx";
+import * as $26 from "./routes/events/[id]/(no-layout)/index.tsx";
+import * as $27 from "./routes/events/[id]/_layout.tsx";
+import * as $28 from "./routes/events/[id]/delete.tsx";
+import * as $29 from "./routes/events/[id]/editing.tsx";
+import * as $30 from "./routes/events/[id]/scanning.tsx";
+import * as $31 from "./routes/events/notfound.tsx";
+import * as $32 from "./routes/index.tsx";
+import * as $33 from "./routes/login.tsx";
 import * as $$0 from "./islands/events/components/card.tsx";
 import * as $$1 from "./islands/events/creation/createForm.tsx";
 import * as $$2 from "./islands/events/creation/one.tsx";
@@ -68,24 +69,25 @@ const manifest = {
     "./routes/api/events/edit.ts": $12,
     "./routes/api/events/image/fill.ts": $13,
     "./routes/api/events/image/upload.ts": $14,
-    "./routes/events/(pages)/_layout.tsx": $15,
-    "./routes/events/(pages)/attending/_layout.tsx": $16,
-    "./routes/events/(pages)/attending/index.tsx": $17,
-    "./routes/events/(pages)/organizing/_layout.tsx": $18,
-    "./routes/events/(pages)/organizing/accounting.tsx": $19,
-    "./routes/events/(pages)/organizing/collections.tsx": $20,
-    "./routes/events/(pages)/organizing/create.tsx": $21,
-    "./routes/events/(pages)/organizing/discounts.tsx": $22,
-    "./routes/events/(pages)/organizing/index.tsx": $23,
-    "./routes/events/[id]/(no-layout)/_layout.tsx": $24,
-    "./routes/events/[id]/(no-layout)/index.tsx": $25,
-    "./routes/events/[id]/_layout.tsx": $26,
-    "./routes/events/[id]/delete.tsx": $27,
-    "./routes/events/[id]/editing.tsx": $28,
-    "./routes/events/[id]/scanning.tsx": $29,
-    "./routes/events/notfound.tsx": $30,
-    "./routes/index.tsx": $31,
-    "./routes/login.tsx": $32,
+    "./routes/api/events/ticket.ts": $15,
+    "./routes/events/(pages)/_layout.tsx": $16,
+    "./routes/events/(pages)/attending/_layout.tsx": $17,
+    "./routes/events/(pages)/attending/index.tsx": $18,
+    "./routes/events/(pages)/organizing/_layout.tsx": $19,
+    "./routes/events/(pages)/organizing/accounting.tsx": $20,
+    "./routes/events/(pages)/organizing/collections.tsx": $21,
+    "./routes/events/(pages)/organizing/create.tsx": $22,
+    "./routes/events/(pages)/organizing/discounts.tsx": $23,
+    "./routes/events/(pages)/organizing/index.tsx": $24,
+    "./routes/events/[id]/(no-layout)/_layout.tsx": $25,
+    "./routes/events/[id]/(no-layout)/index.tsx": $26,
+    "./routes/events/[id]/_layout.tsx": $27,
+    "./routes/events/[id]/delete.tsx": $28,
+    "./routes/events/[id]/editing.tsx": $29,
+    "./routes/events/[id]/scanning.tsx": $30,
+    "./routes/events/notfound.tsx": $31,
+    "./routes/index.tsx": $32,
+    "./routes/login.tsx": $33,
   },
   islands: {
     "./islands/events/components/card.tsx": $$0,

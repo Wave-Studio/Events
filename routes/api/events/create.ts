@@ -65,7 +65,7 @@ export const handler: Handlers = {
         members: [{ email: user.email, role: Roles.OWNER }],
       } as Event)
       // ascii to base64
-      .set(["user", btoa(user.email)], {
+      .set(["user", user.email], {
         ...user,
         events: [...user.events, eventID],
       } as User)

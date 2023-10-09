@@ -23,11 +23,10 @@ export interface Event {
 
   multiEntry: boolean;
   multiPurchase: boolean;
-  maxTickets?: number;
   additionalFields: Field[];
   price: number;
 
-  soldTickets: number;
+  
   members: { email: string; role: Roles }[];
   published: boolean;
 }
@@ -38,6 +37,8 @@ export interface ShowTime {
   endTime?: string;
   lastPurchaseDate?: string;
   id: string;
+  soldTickets: number;
+  maxTickets?: number;
 }
 
 export const defaultEvent: Event = {
@@ -52,7 +53,6 @@ export const defaultEvent: Event = {
   published: false,
   multiEntry: true,
 
-  maxTickets: 75,
   showTimes: [
     {
       startDate: new Date().toString(),
@@ -60,12 +60,13 @@ export const defaultEvent: Event = {
       endTime: undefined,
       lastPurchaseDate: undefined,
       id: crypto.randomUUID(),
+      soldTickets: 0,
+      maxTickets: 75,
     },
   ],
 
   multiPurchase: true,
   venue: undefined,
-  soldTickets: 0,
   price: 0,
 
   additionalFields: [],
@@ -77,12 +78,11 @@ export interface FieldEntry
   value: string;
 }
 
-/** ["ticket", eventId, ticketId] */
+/** ["ticket", eventId, showtimeId, ticketId] */
 export interface Ticket {
   hasBeenUsed: boolean;
   userEmail: string;
   userName: string;
-
   fieldData: FieldEntry[];
 }
 
@@ -90,14 +90,15 @@ export interface Ticket {
 export type User = UserPartial | UnonboardedUser;
 
 export interface UnonboardedUser {
-  /** Stored as eventId_ticketId */
+  /** Stored as eventId_showtimeId_ticketId */
   tickets: string[];
   onboarded: false;
+  email: string;
 }
 
 export interface UserPartial {
   email: string;
-  /** Stored as eventId-ticketId */
+  /** Stored as eventId_showtimeId_ticketId */
   tickets: string[];
   events: string[];
   authToken: string;

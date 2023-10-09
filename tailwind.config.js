@@ -1,4 +1,3 @@
-/** @type {import('npm:tailwindcss').Config} */
 module.exports = {
   content: ["./{routes,islands,components}/**/*.{tsx,ts}"],
   theme: {
@@ -9,7 +8,7 @@ module.exports = {
         },
       },
       borderColor: {
-        DEFAULT: "#d1d5db",
+        DEFAULT: "#D1D5DB",
       }
     },
   },
