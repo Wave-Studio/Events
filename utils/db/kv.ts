@@ -55,7 +55,7 @@ export const createUser = async (email: string) => {
     joinedAt: Date.now().toString(),
   };
 
-  await kv.set(["user", btoa(email)], userInfo);
+  await kv.set(["user", email], userInfo);
 
   return userAuthToken;
 };
@@ -66,8 +66,8 @@ export const getUserEmailCode = async (
   req: Request,
 ) => {
   const [authCodeData, user] = await kv.getMany<[AuthCode, UserPartial]>([
-    ["authCode", btoa(authCode), email],
-    ["user", btoa(email)],
+    ["authCode", authCode, email],
+    ["user", email],
   ]);
 
   if (authCodeData.value == undefined) return undefined;
@@ -89,25 +89,25 @@ export const validateOTP = async (
   deleteOTP = true,
 ): Promise<User | false | undefined> => {
   const [authCodeData, user] = await kv.getMany<[AuthCode, User]>([
-    ["authCode", btoa(email), otp.toString()],
-    ["user", btoa(email)],
+    ["authCode", email, otp.toString()],
+    ["user", email],
   ]);
 
   if (authCodeData.value == null) return undefined;
   if (user.value == null) return false;
 
   if (deleteOTP) {
-    await kv.delete(["authCode", btoa(email), otp.toString()]);
+    await kv.delete(["authCode", email, otp.toString()]);
   }
 
   return user.value;
 };
 
 export const generateAuthToken = async (email: string, save = true) => {
-  const token = `${btoa(email)}_${btoa(crypto.randomUUID().replace(/-/g, ""))}`;
+  const token = `${email}_${crypto.randomUUID().replace(/-/g, "")}`;
 
   if (save) {
-    const user = await kv.get<User>(["user", btoa(email)]);
+    const user = await kv.get<User>(["user", email]);
 
     if (user.value != undefined) {
       await kv.set(["user", email], {
@@ -126,7 +126,7 @@ export const generateOTP = async (email: string) => {
   const otp = otpArray[0].toString().substring(0, 6);
 
   await kv.set(
-    ["authCode", btoa(email), otp],
+    ["authCode", email, otp],
     {
       existsSince: Date.now(),
     },

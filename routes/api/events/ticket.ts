@@ -71,7 +71,7 @@ export const handler: Handlers = {
       });
     }
 
-    const eventUser = await kv.get<User>(["user", btoa(email)]);
+    const eventUser = await kv.get<User>(["user", email]);
 
     const user = eventUser.value ?? {
       onboarded: false,
@@ -92,7 +92,7 @@ export const handler: Handlers = {
     const ticket = `${eventID}_${showtimeID}_${crypto.randomUUID()}`;
 
     await kv.atomic()
-      .set(["user", btoa(email)], {
+      .set(["user", email], {
         ...user,
         tickets: [...user.tickets, ticket],
       })
