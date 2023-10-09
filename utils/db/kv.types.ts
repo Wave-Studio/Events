@@ -87,15 +87,11 @@ export interface Ticket {
 }
 
 /** ["user", email] */
-export type User = OnboardedUser | UnonboardedUser;
+export type User = UserPartial | UnonboardedUser;
 
-export interface OnboardedUser extends UserPartial {
-  name: string;
-  onboarded: true;
-}
-
-export interface UnonboardedUser extends UserPartial {
-  name?: string;
+export interface UnonboardedUser {
+  /** Stored as eventId_ticketId */
+  tickets: string[];
   onboarded: false;
 }
 
@@ -107,6 +103,7 @@ export interface UserPartial {
   authToken: string;
   plan: Plan;
   joinedAt: string;
+  onboarded: true;
 }
 
 export const enum Roles {

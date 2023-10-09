@@ -25,7 +25,7 @@ export const handler: Handlers = {
   async POST(req) {
     const user = await getUser(req);
 
-    if (!user) {
+    if (!user || user.onboarded == false) {
       return new Response(JSON.stringify({ error: "Not logged in" }), {
         status: 401,
       });
