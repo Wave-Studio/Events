@@ -58,6 +58,7 @@ export default function EventRegister({
         ),
     },
     onSubmit: (form) => createTicket(form.formState!),
+    // TODO: add validation
     validationSchema: Yup.object({}),
   });
 
