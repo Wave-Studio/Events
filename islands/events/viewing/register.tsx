@@ -1,15 +1,51 @@
 import { useState } from "preact/hooks";
 import CTA from "@/components/buttons/cta.tsx";
 import Popup from "@/components/popup.tsx";
-import { ShowTime } from "@/utils/db/kv.types.ts";
+import { Field, ShowTime } from "@/utils/db/kv.types.ts";
+import useForm from "@/components/hooks/fakeFormik/index.tsx";
+import * as Yup from "yup"
+import { useSignal } from "@preact/signals";
 
-export default function EventRegister({eventID, showTimes, email}: {eventID: string, showTimes: ShowTime[], email?: string}) {
+type FieldValue = string | number;
+
+export default function EventRegister({eventID, showTimes, email, additionalFields}: {eventID: string, showTimes: ShowTime[], email?: string, additionalFields: Field[]}) {
   const [open, setOpen] = useState(true);
+const fields = useSignal({tickets: 1, ...additionalFields.filter(field => field.type != "toggle").reduce((acc, field) => {
+  acc[field.id] = field.type === "number" ? 0 : "";
+  return acc;
+}, {} as { [key: string]: FieldValue }),})
+
+  const [Form, [Field, TextArea], formState] = useForm<{
+    firstName: string;
+    lastName: string;
+    email: string;
+    [key: string]: FieldValue;
+  }>(
+    {
+      initialState: {
+        firstName: "",
+        lastName: "",
+        email: "",
+        ...additionalFields.filter(field => field.type != "toggle").reduce((acc, field) => {
+          acc[field.id] = field.type === "number" ? 0 : "";
+          return acc;
+        }, {} as { [key: string]: FieldValue }),
+      },
+      onSubmit: (form) => console.log(form.formState),
+      validationSchema: Yup.object({
+
+      })
+    }
+  )
 
   const Popover = () => {
     return (
       <Popup close={() => setOpen(false)} isOpen={open}>
         <h2 class="font-bold text-lg">Get Tickets</h2>
+        <Form>
+          <Field  />
+
+        </Form>
       </Popup>
     );
   };

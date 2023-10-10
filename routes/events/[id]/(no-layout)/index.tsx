@@ -144,10 +144,10 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
       </div>
       <div className="max-w-2xl mx-auto w-full mb-36 md:mb-16 mt-4 md:-mt-28 flex flex-col px-4 static">
         <Header />
-        <EventRegister eventID={eventID} showTimes={event.showTimes} email={user?.data.email} />
+        <EventRegister eventID={eventID} showTimes={event.showTimes} email={user?.data.email} additionalFields={event.additionalFields} />
       </div>
       <p class="text-center max-w-sm mx-auto mb-4 text-sm">
-        This event was made with <span className="font-medium">Events</span>, an
+        This event was made with <a className="font-medium underline" href="/">Events</a>, an
         simple and easy to use event booking platform.
       </p>
       <Footer includeWave={false} />

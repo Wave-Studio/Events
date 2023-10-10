@@ -1,7 +1,5 @@
 import { Signal } from "@preact/signals";
 import { Event, Field } from "@/utils/db/kv.ts";
-import useForm from "@/components/hooks/fakeFormik/index.tsx";
-import * as Yup from "yup";
 import CTA from "@/components/buttons/cta.tsx";
 import Plus from "$tabler/plus.tsx";
 import Trash from "$tabler/trash.tsx";
