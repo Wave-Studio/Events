@@ -24,7 +24,7 @@
 
 /* forms */
 
-input:where([type="email"], [type="text"]):not(.nostyle),
+input:where([type="email"], [type="text"], [type="number"]):not(.nostyle),
 textarea {
   @apply p-2 border rounded-md border-gray-300;
 }

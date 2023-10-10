@@ -52,8 +52,15 @@ export default function ShowTimeSettings({
     <>
       <div class="flex flex-col gap-6">
         {currentState.value.map((showTime) => (
-          <ShowTimeUI showTime={showTime} removeShowTime={removeShowTime} key={showTime.id} 
-          setShowTime={(state) => currentState.value = currentState.value.map((s => s.id != state.id ? s : state))}
+          <ShowTimeUI
+            showTime={showTime}
+            removeShowTime={removeShowTime}
+            key={showTime.id}
+            setShowTime={(state) =>
+              (currentState.value = currentState.value.map((s) =>
+                s.id != state.id ? s : state,
+              ))
+            }
           />
         ))}
       </div>
@@ -68,7 +75,7 @@ export default function ShowTimeSettings({
               lastPurchaseDate: undefined,
               id: crypto.randomUUID(),
               soldTickets: 0,
-              maxTickets: 75
+              maxTickets: 75,
             },
           ]))
         }

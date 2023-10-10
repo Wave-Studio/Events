@@ -27,8 +27,6 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
     return badEventRequest;
   }
 
-
-
   const Header = () => {
     const buttons: {
       label: string;

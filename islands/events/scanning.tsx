@@ -52,8 +52,6 @@ export default function Scanner({ className }: { className?: string }) {
           };
 
           const loop = () => {
-            
-          
             ctx.drawImage(
               video,
               0,
@@ -63,14 +61,13 @@ export default function Scanner({ className }: { className?: string }) {
               0,
               0,
               canvas.width,
-              canvas.height
+              canvas.height,
             );
-          
+
             lookForBarcodes();
-          
+
             requestAnimationFrame(loop);
           };
-          
 
           requestAnimationFrame(loop);
         };

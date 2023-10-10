@@ -41,18 +41,16 @@ export const handler: Handlers = {
         status: 400,
       });
     }
-console.log(newEventData)
+
     const combinedEvent = {
       ...event.value,
       ...newEventData,
     } as Event;
 
-    console.log(combinedEvent)
-
     try {
       FullEventValidation.validateSync(combinedEvent, { strict: false });
     } catch (e) {
-      return new Response(JSON.stringify({ error: e.message}), {
+      return new Response(JSON.stringify({ error: e.message }), {
         status: 400,
       });
     }

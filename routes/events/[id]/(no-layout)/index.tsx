@@ -73,13 +73,17 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
         {event.venue && (
           <div className="flex items-center rounded-md bg-white/75 backdrop-blur-xl border px-1.5 py-0.5 ">
             <Location class="w-4 h-4 mr-1.5 text-gray-700" />
-           <p className="truncate max-w-[12rem]">{event.venue}ssssssssssssssssssss</p> 
+            <p className="truncate max-w-[12rem]">
+              {event.venue}ssssssssssssssssssss
+            </p>
           </div>
         )}
       </div>
 
       <div className="border p-4 flex flex-col rounded-md bg-white/80 backdrop-blur-xl">
-        <h1 className="font-bold text-2xl text-center md:text-left">{event.name}</h1>
+        <h1 className="font-bold text-2xl text-center md:text-left">
+          {event.name}
+        </h1>
         <EventRegisterSmall />
         <h2 className="font-semibold mt-2 mb-1 text-sm">Event in Breif</h2>
         <p class="mb-4">{event.summary}</p>
@@ -144,11 +148,20 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
       </div>
       <div className="max-w-2xl mx-auto w-full mb-36 md:mb-16 mt-4 md:-mt-28 flex flex-col px-4 static">
         <Header />
-        <EventRegister eventID={eventID} showTimes={event.showTimes} email={user?.data.email} additionalFields={event.additionalFields} />
+        <EventRegister
+          eventID={eventID}
+          showTimes={event.showTimes}
+          email={user?.data.email}
+          additionalFields={event.additionalFields}
+          multiPurchase={event.multiPurchase}
+        />
       </div>
       <p class="text-center max-w-sm mx-auto mb-4 text-sm">
-        This event was made with <a className="font-medium underline" href="/">Events</a>, an
-        simple and easy to use event booking platform.
+        This event was made with{" "}
+        <a className="font-medium underline" href="/">
+          Events
+        </a>
+        , an simple and easy to use event booking platform.
       </p>
       <Footer includeWave={false} />
     </div>

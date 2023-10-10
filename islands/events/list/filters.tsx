@@ -4,9 +4,13 @@ import { Signal } from "@preact/signals";
 import SortAscending from "$tabler/sort-ascending.tsx";
 import SortDescending from "$tabler/sort-descending.tsx";
 
-export default function HomeFilters(
-  { query, url }: { query: Signal<string>; url: string },
-) {
+export default function HomeFilters({
+  query,
+  url,
+}: {
+  query: Signal<string>;
+  url: string;
+}) {
   const urlObject = new URL(url);
   const searchParams = urlObject.searchParams;
 
@@ -23,22 +27,24 @@ export default function HomeFilters(
             searchParams.set("q", query.value.trim());
           }
 
-          location.search = searchParams.toString().trim() == ""
-            ? ""
-            : `?${searchParams.toString()}`;
+          location.search =
+            searchParams.toString().trim() == ""
+              ? ""
+              : `?${searchParams.toString()}`;
         }}
       >
         <input
           type="text"
           className="w-[32rem] mr-2"
           value={query}
-          onInput={(e) => query.value = e.currentTarget.value}
+          onInput={(e) => (query.value = e.currentTarget.value)}
         />
-        <Button label={"test"} icon={true ? <SortAscending /> : <SortDescending />} href={`?a`} /> 
-        <CTA
-          btnType="cta"
-          type="submit"
-        >
+        <Button
+          label={"test"}
+          icon={true ? <SortAscending /> : <SortDescending />}
+          href={`?a`}
+        />
+        <CTA btnType="cta" type="submit">
           Download virus
         </CTA>
       </form>

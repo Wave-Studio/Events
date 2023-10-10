@@ -29,7 +29,9 @@ export const handler: Handlers = {
     }
 
     if (
-      firstName == undefined || firstName.length < 1 || lastName == undefined ||
+      firstName == undefined ||
+      firstName.length < 1 ||
+      lastName == undefined ||
       lastName.length < 1
     ) {
       return new Response(JSON.stringify({ error: "Invalid name" }), {
@@ -79,9 +81,9 @@ export const handler: Handlers = {
     };
 
     if (
-      user.tickets.map((t) => t.substring(0, t.lastIndexOf("_"))).includes(
-        `${eventID}_${showtimeID}`,
-      ) &&
+      user.tickets
+        .map((t) => t.substring(0, t.lastIndexOf("_")))
+        .includes(`${eventID}_${showtimeID}`) &&
       !event.value.multiPurchase
     ) {
       return new Response(JSON.stringify({ error: "Already purchased" }), {
@@ -91,7 +93,8 @@ export const handler: Handlers = {
 
     const ticket = `${eventID}_${showtimeID}_${crypto.randomUUID()}`;
 
-    await kv.atomic()
+    await kv
+      .atomic()
       .set(["user", email], {
         ...user,
         tickets: [...user.tickets, ticket],

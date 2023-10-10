@@ -26,21 +26,23 @@ export default async function Homepage(req: Request, ctx: AppContext) {
     });
   }
 
-  const events = (await kv.getMany<Event[]>(
+  const events = await kv.getMany<Event[]>(
     user.events.map((e) => ["event", e]),
-  ))
-  
-  const filteredEvents = events.filter((e) =>
-    e.value != null &&
-    (e.value.name.toLowerCase().includes(query.value.toLowerCase()) ||
-      e.value.description?.toLowerCase().includes(query.value.toLowerCase()) ||
-      e.value.venue?.toLowerCase().includes(query.value.toLowerCase()))
+  );
+
+  const filteredEvents = events.filter(
+    (e) =>
+      e.value != null &&
+      (e.value.name.toLowerCase().includes(query.value.toLowerCase()) ||
+        e.value.description
+          ?.toLowerCase()
+          .includes(query.value.toLowerCase()) ||
+        e.value.venue?.toLowerCase().includes(query.value.toLowerCase())),
   );
 
   if (events.filter((event) => event.value != null).length == 0) {
     return (
       <div class="my-auto py-10 flex flex-col gap-8 items-center font-bold max-w-md mx-auto text-center">
-
         No events found! Create your first event or ask an organizer to invite
         you to one.
         <a href="/events/organizing/create">
@@ -53,7 +55,6 @@ export default async function Homepage(req: Request, ctx: AppContext) {
   if (filteredEvents.filter((event) => event.value != null).length == 0) {
     return (
       <div class="my-auto py-10 flex flex-col gap-8 items-center font-bold max-w-md mx-auto text-center">
-
         No events found! Modify or remove your search query.
         <a href="?">
           <CTA btnType="cta">Reset query</CTA>
@@ -96,43 +97,41 @@ export default async function Homepage(req: Request, ctx: AppContext) {
     return (
       <div className="rounded-md border border-gray-300">
         <div className="relative h-48">
-          {e.banner.path
-            ? (
-              (() => {
-                const url = imageKit!.url({
-                  path: e.banner.path,
-                  transformation: [
-                    {
-                      width: "400",
-                      quality: "85",
-                    },
-                  ],
-                });
-                return (
-                  <img
-                    src={url}
-                    alt=""
-                    class={`w-full h-48 rounded-t-md ${
-                      e.banner.fill ? "object-fill" : "object-cover"
-                    }`}
-                  />
-                );
-              })()
-            )
-            : (
-              <>
+          {e.banner.path ? (
+            (() => {
+              const url = imageKit!.url({
+                path: e.banner.path,
+                transformation: [
+                  {
+                    width: "400",
+                    quality: "85",
+                  },
+                ],
+              });
+              return (
                 <img
-                  src="/placeholder-small.jpg"
+                  src={url}
                   alt=""
-                  class="h-48 w-full object-cover rounded-t-md"
+                  class={`w-full h-48 rounded-t-md ${
+                    e.banner.fill ? "object-fill" : "object-cover"
+                  }`}
                 />
-                <div className="absolute inset-0 flex justify-center">
-                  <p className="text-sm mt-1 font-bold text-white/75 mb-6 z-10">
-                    Placeholder Banner
-                  </p>
-                </div>
-              </>
-            )}
+              );
+            })()
+          ) : (
+            <>
+              <img
+                src="/placeholder-small.jpg"
+                alt=""
+                class="h-48 w-full object-cover rounded-t-md"
+              />
+              <div className="absolute inset-0 flex justify-center">
+                <p className="text-sm mt-1 font-bold text-white/75 mb-6 z-10">
+                  Placeholder Banner
+                </p>
+              </div>
+            </>
+          )}
 
           <div className="absolute top-1.5 right-1.5 flex justify-end gap-2">
             <div className="rounded-md flex items-center gap-2 text-white font-medium text-sm backdrop-blur-sm bg-black/20 px-2 py-0.5">
@@ -167,31 +166,30 @@ export default async function Homepage(req: Request, ctx: AppContext) {
           )}
           <div className=" mt-auto flex">
             <div className="flex gap-2">
-              {buttons.map((btn) => <Button {...btn} />)}
+              {buttons.map((btn) => (
+                <Button {...btn} />
+              ))}
             </div>
-            {role <= 2
-              ? (
-                <a href={`/events/${id}/editing`} class="ml-auto">
-                  <CTA
-                    btnType="cta"
-                    btnSize="sm"
-                    className="!w-10 [@media(min-width:320px)]:!w-40 "
-                  >
-                    <Edit class="w-6 h-6 [@media(min-width:320px)]:hidden mx-auto" />
-                    {" "}
-                    <p class="hidden [@media(min-width:320px)]:block">
-                      Edit Event
-                    </p>
-                  </CTA>
-                </a>
-              )
-              : (
-                <a href={`/events/${id}/scanning`} class="ml-auto">
-                  <CTA btnType="cta" btnSize="sm">
-                    Open Scanner
-                  </CTA>
-                </a>
-              )}
+            {role <= 2 ? (
+              <a href={`/events/${id}/editing`} class="ml-auto">
+                <CTA
+                  btnType="cta"
+                  btnSize="sm"
+                  className="!w-10 [@media(min-width:320px)]:!w-40 "
+                >
+                  <Edit class="w-6 h-6 [@media(min-width:320px)]:hidden mx-auto" />{" "}
+                  <p class="hidden [@media(min-width:320px)]:block">
+                    Edit Event
+                  </p>
+                </CTA>
+              </a>
+            ) : (
+              <a href={`/events/${id}/scanning`} class="ml-auto">
+                <CTA btnType="cta" btnSize="sm">
+                  Open Scanner
+                </CTA>
+              </a>
+            )}
           </div>
         </div>
       </div>

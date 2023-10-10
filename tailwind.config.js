@@ -9,7 +9,7 @@ module.exports = {
       },
       borderColor: {
         DEFAULT: "#D1D5DB",
-      }
+      },
     },
   },
   plugins: [],

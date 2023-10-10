@@ -37,9 +37,12 @@ export default function EventTicketSettings(props: {
   };
 
   const submitForm = async () => {
-		const form = {...formState, additionalFields: formState.additionalFields.filter((f) => f.name)}
+    const form = {
+      ...formState,
+      additionalFields: formState.additionalFields.filter((f) => f.name),
+    };
 
-		setFormState(form);
+    setFormState(form);
 
     setLoading(Loading.LOADING);
     setError(undefined);

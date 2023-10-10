@@ -132,13 +132,13 @@ export const AdditionalInputs = () => {
       <section>
         <h4 class="text-sm font-medium">Required Inputs</h4>
         <div className="flex flex-col gap-2 mt-2">
-          {reqs.map(req => (
-          <div className="flex justify-between items-center">
-            <p class="text-sm font-medium">{req.name}</p>
-            <p className="rounded-md border border-gray-300 font-semibold text-gray-500 px-2 bg-gray-100">
-              {req.type}
-            </p>
-          </div>
+          {reqs.map((req) => (
+            <div className="flex justify-between items-center">
+              <p class="text-sm font-medium">{req.name}</p>
+              <p className="rounded-md border border-gray-300 font-semibold text-gray-500 px-2 bg-gray-100">
+                {req.type}
+              </p>
+            </div>
           ))}
         </div>
       </section>

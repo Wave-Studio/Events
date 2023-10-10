@@ -21,6 +21,8 @@ const YupShowtimeValidation = Yup.array()
       startTime: Yup.date().transform(dateTransformer),
       endTime: Yup.date().transform(dateTransformer),
       lastPurchaseDate: Yup.date().transform(dateTransformer),
+      soldTickets: Yup.number().min(0).required(),
+      maxTickets: Yup.number(),
       id: Yup.string().uuid().required(),
     }),
   );
@@ -55,15 +57,15 @@ export const SecondPageEventValidation = Yup.object(
 
 export const ThirdPageEventValidation = Yup.object(YupThirdPageEventValidation);
 
+// TODO: we should really generate types from this instead of having to maintain botha  yup schema and interface
 export const FullEventValidation = Yup.object({
   ...YupThirdPageEventValidation,
 
   multiEntry: Yup.boolean().required(),
   multiPurchase: Yup.boolean().required(),
-  maxTickets: Yup.number(),
   additionalFields: Yup.array()
     .min(0)
-    .max(12)
+    .max(4)
     .required()
     .of(
       Yup.object({
@@ -75,7 +77,6 @@ export const FullEventValidation = Yup.object({
     ),
   price: Yup.number().required(),
 
-  soldTickets: Yup.number().required().min(0),
   owner: Yup.string().max(200),
   published: Yup.boolean().required(),
 });

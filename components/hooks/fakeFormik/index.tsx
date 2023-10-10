@@ -73,7 +73,7 @@ function useForm<T>({
   return [
     (props: FormProps) => {
       return (
-        <form {...props} onSubmit={onSubmitHandler}>
+        <form {...props} onSubmit={onSubmitHandler} noValidate>
           {props.children}
         </form>
       );

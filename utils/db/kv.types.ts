@@ -26,7 +26,6 @@ export interface Event {
   additionalFields: Field[];
   price: number;
 
-  
   members: { email: string; role: Roles }[];
   published: boolean;
 }

@@ -41,7 +41,10 @@ export default function EventDeletion({ eventID }: { eventID: string }) {
           ref={dialog}
         >
           <h5 className="font-bold text-xl">Delete Event</h5>
-          <p>Are you sure you want to delete this event?</p>
+          <p>
+            Are you sure you want to delete this event? This action is
+            permanent!
+          </p>
           <CTA
             btnType="secondary"
             btnSize="sm"

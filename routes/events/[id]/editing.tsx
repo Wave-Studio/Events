@@ -3,11 +3,7 @@ import {
   EventContext,
   badEventRequest,
 } from "@/routes/events/[id]/_layout.tsx";
-import { Event, Roles, User } from "@/utils/db/kv.types.ts";
-import Footer from "@/components/layout/footer.tsx";
-import Navbar from "@/components/layout/navbar.tsx";
 import CTA from "@/components/buttons/cta.tsx";
-import Trash from "$tabler/trash.tsx";
 import Users from "$tabler/users-group.tsx";
 import Tickets from "$tabler/ticket.tsx";
 import World from "$tabler/world.tsx";
@@ -17,9 +13,7 @@ import EditingImagePicker from "@/islands/events/editing/images.tsx";
 import imageKit from "@/utils/imagekit.ts";
 import { ComponentChildren } from "preact";
 import EventSettings from "@/islands/events/editing/settings.tsx";
-import { Heading } from "@/routes/(public)/faq.tsx";
 import Button from "@/components/buttons/button.tsx";
-// @ts-ignore Something brokey - Some Blocke
 import ShowTimeSettings from "@/islands/events/editing/showtimesettings.tsx";
 import EventDeletion from "@/islands/events/editing/delete.tsx";
 import EventTicketSettings from "@/islands/events/editing/ticketSettings.tsx";
@@ -99,7 +93,7 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
   }) => {
     return (
       <div className="flex flex-col">
-        <div className="flex items-center mb-6 pb-2 bg-white sticky top-14 z-20">
+        <div className="flex items-center mb-6 pb-2 pt-1 bg-white sticky top-12 z-20">
           <h2 className="font-bold">{name}</h2>
           <div class="grow ml-6 h-0.5 bg-gray-300 rounded-full" />
         </div>
@@ -126,7 +120,6 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
               eventID={eventID}
               name={event.name}
               description={event.description}
-              maxTickets={event.maxTickets}
               supportEmail={event.supportEmail}
               venue={event.venue}
             />

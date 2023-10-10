@@ -24,7 +24,11 @@ export default function StageOne({
           <ShowTimeUI
             showTime={showTime}
             key={showTime.id}
-            setShowTime={(state) => eventState.value.showTimes = showTimes.map((s => s.id != state.id ? s : state))}
+            setShowTime={(state) =>
+              (eventState.value.showTimes = showTimes.map((s) =>
+                s.id != state.id ? s : state,
+              ))
+            }
             removeShowTime={(id) => {
               if (showTimes.length != 1) {
                 eventState.value.showTimes = showTimes.filter(
@@ -45,7 +49,7 @@ export default function StageOne({
               lastPurchaseDate: undefined,
               id: crypto.randomUUID(),
               soldTickets: 0,
-              maxTickets: 75
+              maxTickets: 75,
             });
             forceRerender((s) => s + 1);
           }}

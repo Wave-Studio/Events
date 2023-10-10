@@ -15,7 +15,6 @@ export default function EventSettings(props: {
   supportEmail: string;
   summary?: string;
   venue?: string;
-  maxTickets?: number;
   eventID: string;
 }) {
   const [error, setError] = useState<string>();
@@ -91,40 +90,21 @@ export default function EventSettings(props: {
           />
         </label>
       </div>
-      <div className="flex gap-4 flex-col md:flex-row">
-        <label class="flex flex-col grow">
-          <p class="label-text">Venue</p>
-          <input
-            name="venue"
-            autoComplete="off"
-            type="text"
-            value={formState.venue}
-            onInput={(e) =>
-              setFormState((state) => ({
-                ...state,
-                venue: e.currentTarget.value,
-              }))
-            }
-          />
-        </label>
-        <label class="flex flex-col">
-          <p class="label-text">Maximum Attendees</p>
-          <input
-            name="maxTickets"
-            autoComplete="off"
-            type="number"
-            className="p-2 border rounded-md border-gray-300"
-            pattern="\d*"
-            value={formState.maxTickets}
-            onInput={(e) =>
-              setFormState((state) => ({
-                ...state,
-                maxTickets: parseInt(e.currentTarget.value),
-              }))
-            }
-          />
-        </label>
-      </div>
+      <label class="flex flex-col grow">
+        <p class="label-text">Venue</p>
+        <input
+          name="venue"
+          autoComplete="off"
+          type="text"
+          value={formState.venue}
+          onInput={(e) =>
+            setFormState((state) => ({
+              ...state,
+              venue: e.currentTarget.value,
+            }))
+          }
+        />
+      </label>
       <label class="flex flex-col">
         <p class="label-text">Brief Summary</p>
         <input

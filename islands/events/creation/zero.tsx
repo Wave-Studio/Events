@@ -20,7 +20,7 @@ export default function StageZero({
   const [Form, [Field, TextArea], formState] = useForm<{
     name: string;
     supportEmail: string;
-    summary: string
+    summary: string;
     description: string;
     venue: string;
   }>({
@@ -56,9 +56,9 @@ export default function StageZero({
         </label>
       </div>
       <label class="flex flex-col ">
-          <p class="label-text">Brief Summary</p>
-          <Field name="summary" class="grow" type="text" />
-        </label>
+        <p class="label-text">Brief Summary</p>
+        <Field name="summary" class="grow" type="text" />
+      </label>
       <label class="flex flex-col">
         <p class="label-text">Short Description</p>
         <TextArea

@@ -7,10 +7,12 @@ export default function Popup({
   children,
   close,
   isOpen,
+  className,
 }: {
   isOpen: boolean;
   close: () => void;
   children: ComponentChildren;
+  className?: string;
 }) {
   if (!isOpen) return null;
 
@@ -20,7 +22,7 @@ export default function Popup({
   return (
     <div class="fixed inset-0 bg-black/20 z-50 grid place-items-center">
       <div
-        className="rounded-md bg-white shadow-lg border border-gray-300 p-4 flex flex-col relative mx-4"
+        className={`rounded-md bg-white shadow-lg border border-gray-300 p-4 flex flex-col relative max-w-[95vw] w-full md:max-w-xl ${className}`}
         ref={dialog}
       >
         {children}
