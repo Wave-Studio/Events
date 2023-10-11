@@ -2,6 +2,7 @@
   "deno.enable": true,
   "deno.lint": true,
   "deno.unstable": true,
+  "deno.cacheOnSave": true,
   "emmet.includeLanguages": {
     "javascriptreact": "html",
     "typescriptreact": "html"
