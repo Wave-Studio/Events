@@ -14,11 +14,11 @@ export default function Scanner({ className }: { className?: string }) {
       setInitialized(true);
       const canvas = document.getElementById("scanui") as HTMLCanvasElement;
       const barcodeReaderAPI = window["BarcodeDetector"] ?? BarcodeDetector;
-	  if (barcodeReaderAPI == null) {
-		return setError(
-		  "BarcodeDetector API is required but not supported on your device! Please try another browser.",
-		);
-	  }
+      if (barcodeReaderAPI == null) {
+        return setError(
+          "BarcodeDetector API is required but not supported on your device! Please try another browser.",
+        );
+      }
       const reader = new barcodeReaderAPI({
         formats: ["qr_code"],
       });
