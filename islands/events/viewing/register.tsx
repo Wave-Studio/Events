@@ -22,7 +22,7 @@ export default function EventRegister({
   additionalFields: Field[];
   multiPurchase: boolean;
 }) {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const page = useSignal(0);
   const tickets = useSignal(1);
   const toggles = useSignal<Record<string, boolean>>({
