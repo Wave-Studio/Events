@@ -112,12 +112,12 @@ export const generateAuthToken = async (email: string, save = true) => {
     if (user.value != undefined) {
       await kv.set(["user", email], {
         ...user.value,
-        authToken: token,
+        authToken: btoa(token),
       });
     }
   }
 
-  return token;
+  return btoa(token);
 };
 
 export const generateOTP = async (email: string) => {
