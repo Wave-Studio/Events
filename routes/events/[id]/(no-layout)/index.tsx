@@ -8,11 +8,12 @@ import imagekit from "@/utils/imagekit.ts";
 import { Fragment } from "preact";
 import Left from "$tabler/chevron-left.tsx";
 import Location from "$tabler/map-pin.tsx";
-import Clock from "$tabler/clock-hour-5.tsx";
+import Calender from "$tabler/calendar.tsx";
 import EventRegister, {
   EventRegisterSmall,
 } from "@/islands/events/viewing/register.tsx";
 import Footer from "@/components/layout/footer.tsx";
+import { fmtDate, fmtTime } from "@/utils/dates.ts";
 
 export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
   // layout are disabled on this route, but I don't wanna disable every one. no clue how to do that
@@ -48,47 +49,88 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
     }
   };
 
-  const dateFmt = new Intl.DateTimeFormat("en-US", {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-    hour12: true,
-    hour: "numeric",
-  });
+  const ShowTimes = () => {
+    if (event.showTimes.length == 1) return null;
 
-  const fmtDate = (date: Date) => dateFmt.format(date);
+    return (
+      <>
+        <h2 class="font-bold text-xl mt-6 mb-2">Showtimes</h2>
+        <div class="flex overflow-x-auto snap-x gap-4 scrollbar-fancy">
+          {event.showTimes.map((time) => (
+            <div class="rounded-md border p-4 snap-start w-72">
+              <p class="font-medium">
+                {fmtDate(new Date(time.startDate))}{" "}
+                <span class="lowercase">
+                  {time.startTime &&
+                    `(${fmtTime(new Date(time.startTime))}${
+                      time.endTime
+                        ? ` - ${fmtTime(new Date(time.endTime))}`
+                        : ""
+                    })`}
+                </span>
+              </p>
+              <div class="flex flex-col gap-2 text-sm">
+                {time.lastPurchaseDate && (
+                  <p>
+                    <span class="text-gray-600">Sales end</span>{" "}
+                    {fmtDate(new Date(time.lastPurchaseDate))}
+                  </p>
+                )}
+                <p>
+                  <span class="text-green-600">High ticket avalibility</span>
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </>
+    );
+  };
 
   const Header = () => (
     <>
       <div className="flex gap-2 md:gap-4 mb-2 justify-between md:justify-start flex-wrap">
-        <div className="flex items-center rounded-md bg-white/75 backdrop-blur-xl border px-1.5 py-0.5 ">
-          <Clock class="h-4 w-4 mr-1.5 text-gray-700" />
+        <div className="flex items-center rounded-md bg-white/[0.85] backdrop-blur-xl border px-1.5 py-0.5 ">
+          <Calender class="h-4 w-4 mr-1.5 text-gray-700" />
           <p class="break-keep">
             {event.showTimes.length > 1 && "Showtimes start"}{" "}
             <span className="font-medium">
-              {fmtDate(new Date(event.showTimes[0].startDate))}
+              {fmtDate(new Date(event.showTimes[0].startDate))}{" "}
+              <span class="lowercase">
+                {event.showTimes.length == 1 &&
+                  event.showTimes[0].startTime &&
+                  `(${fmtTime(new Date(event.showTimes[0].startTime))}${
+                    event.showTimes[0].endTime
+                      ? ` - ${fmtTime(new Date(event.showTimes[0].endTime))}`
+                      : ""
+                  })`}
+              </span>
             </span>
           </p>
         </div>
         {event.venue && (
-          <div className="flex items-center rounded-md bg-white/75 backdrop-blur-xl border px-1.5 py-0.5 ">
+          <div className="flex items-center rounded-md bg-white/[0.85] backdrop-blur-xl border px-1.5 py-0.5 ">
             <Location class="w-4 h-4 mr-1.5 text-gray-700" />
-            <p className="truncate max-w-[12rem]">
-              {event.venue}ssssssssssssssssssss
-            </p>
+            <p className="truncate max-w-[12rem]">{event.venue}</p>
           </div>
         )}
       </div>
 
-      <div className="border p-4 flex flex-col rounded-md bg-white/80 backdrop-blur-xl">
+      <div className="border p-4 flex flex-col rounded-md bg-white/[0.85] backdrop-blur-xl">
         <h1 className="font-bold text-2xl text-center md:text-left">
           {event.name}
         </h1>
         <EventRegisterSmall />
-        <h2 className="font-semibold mt-2 mb-1 text-sm">Event in Breif</h2>
+        <h2 className="font-semibold mt-4 mb-1 text-sm">Event in Breif</h2>
         <p class="mb-4">{event.summary}</p>
         <h2 className="font-semibold mb-1 text-sm">Event Description</h2>
         <p class=" whitespace-pre-line">{event.description}</p>
+        {event.showTimes.length == 1 && event.showTimes[0].lastPurchaseDate && (
+          <p class="text-xs text-gray-600 text-center mt-2">
+            The last day to get tickets is{" "}
+            {fmtDate(new Date(event.showTimes[0].lastPurchaseDate))}
+          </p>
+        )}
       </div>
     </>
   );
@@ -148,6 +190,7 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
       </div>
       <div className="max-w-2xl mx-auto w-full mb-36 md:mb-16 mt-4 md:-mt-28 flex flex-col px-4 static">
         <Header />
+        <ShowTimes />
         <EventRegister
           eventID={eventID}
           showTimes={event.showTimes}

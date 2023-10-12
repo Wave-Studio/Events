@@ -8,6 +8,7 @@ import { useSignal } from "@preact/signals";
 import { Toggle } from "@/components/buttons/toggle.tsx";
 import Minus from "$tabler/minus.tsx";
 import Plus from "$tabler/plus.tsx";
+import { fmtDate, fmtTime } from "@/utils/dates.ts";
 
 export default function EventRegister({
   eventID,
@@ -22,19 +23,17 @@ export default function EventRegister({
   additionalFields: Field[];
   multiPurchase: boolean;
 }) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const page = useSignal(0);
   const tickets = useSignal(1);
+  const showTime = useSignal(showTimes[0].id);
   const toggles = useSignal<Record<string, boolean>>({
     ...additionalFields
       .filter((field) => field.type == "toggle")
-      .reduce(
-        (acc, field) => {
-          acc[field.id] = false;
-          return acc;
-        },
-        {} as Record<string, boolean>,
-      ),
+      .reduce((acc, field) => {
+        acc[field.id] = false;
+        return acc;
+      }, {} as Record<string, boolean>),
   });
 
   const [Form, [Field, TextArea], formState] = useForm<{
@@ -49,13 +48,10 @@ export default function EventRegister({
       email: email || "",
       ...additionalFields
         .filter((field) => field.type != "toggle")
-        .reduce(
-          (acc, field) => {
-            acc[field.id] = field.type === "number" ? 0 : "";
-            return acc;
-          },
-          {} as Record<string, string | number>,
-        ),
+        .reduce((acc, field) => {
+          acc[field.id] = field.type === "number" ? 0 : "";
+          return acc;
+        }, {} as Record<string, string | number>),
     },
     onSubmit: (form) => createTicket(form.formState!),
     // TODO: add validation
@@ -74,6 +70,7 @@ export default function EventRegister({
             <button
               class="group hover:bg-gray-200 w-6 h-6 grid place-items-center rounded-md transition"
               onClick={() => tickets.value > 1 && tickets.value--}
+              type="button"
             >
               <Minus class="h-4 w-4 text-gray-500 group-hover:text-gray-700" />
             </button>
@@ -82,6 +79,7 @@ export default function EventRegister({
             </p>
             <button
               class="group hover:bg-gray-200 w-6 h-6 grid place-items-center rounded-md transition"
+              type="button"
               onClick={() => tickets.value++}
             >
               <Plus class="h-4 w-4 text-gray-500 group-hover:text-gray-700" />
@@ -110,6 +108,8 @@ export default function EventRegister({
       ...formState,
       ...toggles.value,
       tickets: tickets.value,
+      showTime,
+      eventID
     };
     console.log(fullTicket);
   };
@@ -118,9 +118,27 @@ export default function EventRegister({
     return (
       <Popup close={() => setOpen(false)} isOpen={open} className="">
         <h2 class="font-bold text-lg">Get Tickets</h2>
-        <Form class="gap-4 mt-6 flex flex-col">
+        <Form class="gap-4 mt-4 flex flex-col">
           {page.value == 0 ? (
             <>
+              <div class="flex gap-2 scrollbar-fancy snap-x">
+                {showTimes.map((time) => (
+                  <button
+                    onClick={() => (showTime.value = time.id)}
+                    class={`border transition select-none px-2 rounded-md font-medium ${
+                      time.id == showTime.value &&
+                      "border-theme-normal bg-theme-normal/5"
+                    }`}
+                  >
+                    {fmtDate(new Date(time.startDate))}{" "}
+                    <span class="lowercase">
+                      {" "}
+                      {time.startTime &&
+                        ` at ${fmtTime(new Date(time.startDate))}`}
+                    </span>
+                  </button>
+                ))}
+              </div>
               <div class="flex flex-col md:flex-row gap-4 [&>label]:grow">
                 <label class="flex flex-col">
                   <span class="label-text label-required">First Name</span>
@@ -213,7 +231,7 @@ export default function EventRegister({
 export const EventRegisterSmall = () => {
   return (
     <button
-      className="flex items-center select-none font-medium hover:bg-gray-200/75 hover:text-gray-900 transition text-sm mx-auto mb-2 mt-1 rounded-md bg-white/25 backdrop-blur-xl border px-1.5 py-0.5"
+      className="flex items-center select-none font-medium hover:bg-gray-200/75 hover:text-gray-900 transition text-sm mx-auto mt-1 rounded-md bg-white/25 backdrop-blur-xl border px-1.5 py-0.5"
       onClick={() =>
         window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" })
       }
