@@ -27,7 +27,7 @@ export const getUser = async (req: Request) => {
     return undefined;
   }
 
-  const user = await kv.get<UserPartial>(["user", email]);
+  const user = await kv.get<UserPartial>(["user", atob(email)]);
 
   if (user.value == undefined) {
     return undefined;
@@ -104,7 +104,7 @@ export const validateOTP = async (
 };
 
 export const generateAuthToken = async (email: string, save = true) => {
-  const token = `${email}_${crypto.randomUUID().replace(/-/g, "")}`;
+  const token = `${btoa(email)}_${crypto.randomUUID().replace(/-/g, "")}`;
 
   if (save) {
     const user = await kv.get<User>(["user", email]);
@@ -112,12 +112,12 @@ export const generateAuthToken = async (email: string, save = true) => {
     if (user.value != undefined) {
       await kv.set(["user", email], {
         ...user.value,
-        authToken: btoa(token),
+        authToken: token,
       });
     }
   }
 
-  return btoa(token);
+  return token;
 };
 
 export const generateOTP = async (email: string) => {

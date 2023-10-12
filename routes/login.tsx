@@ -1,11 +1,17 @@
 import { defineRoute, Handlers } from "$fresh/server.ts";
 import { getUser } from "@/utils/db/kv.ts";
 import LoginForm from "@/islands/loginForm.tsx";
-import { deleteCookie } from "$std/http/cookie.ts";
+import { deleteCookie, getCookies } from "$std/http/cookie.ts";
 import { User } from "@/utils/db/kv.ts";
 
 export const handler: Handlers = {
   async GET(req, ctx) {
+    const cookies = getCookies(req.headers);
+
+    if (cookies.authToken == undefined) {
+      return ctx.render({ user: undefined });
+    }
+
     const user = await getUser(req);
 
     const response = await ctx.render({ user });

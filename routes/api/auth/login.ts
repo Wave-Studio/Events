@@ -78,7 +78,7 @@ export const handler: Handlers<{ email: string; otp: string }> = {
     }
 
     const user = await validateOTP(email, otp);
-    let userAuthToken = typeof user == "object" ? user.authToken : undefined;
+    let userAuthToken = typeof user == "object" ? user.onboarded ? user.authToken : undefined : undefined;
 
     if (user == undefined) {
       const response = new Response(JSON.stringify({ error: "Invalid OTP" }), {
