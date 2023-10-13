@@ -37,7 +37,7 @@ export interface ShowTime {
   lastPurchaseDate?: string;
   id: string;
   soldTickets: number;
-  maxTickets?: number;
+  maxTickets: number;
 }
 
 export const defaultEvent: Event = {

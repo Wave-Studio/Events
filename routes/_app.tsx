@@ -14,10 +14,10 @@ export default function App({ Component }: AppProps) {
         <link rel="icon" href={logo} />
         <link rel="stylesheet" href={asset("/output.css")} />
       </head>
-      <body class="text-gray-900 [scrollbar-gutter:stable]" f-client-nav>
-        <Partial name="body">
+      <body class="text-gray-900 [scrollbar-gutter:stable]" /*f-client-nav*/>
+        {/* <Partial name="body"> */}
           <Component />
-        </Partial>
+        {/* </Partial> */}
       </body>
     </html>
   );

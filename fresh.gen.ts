@@ -33,9 +33,10 @@ import * as $27 from "./routes/events/[id]/_layout.tsx";
 import * as $28 from "./routes/events/[id]/delete.tsx";
 import * as $29 from "./routes/events/[id]/editing.tsx";
 import * as $30 from "./routes/events/[id]/scanning.tsx";
-import * as $31 from "./routes/events/notfound.tsx";
-import * as $32 from "./routes/index.tsx";
-import * as $33 from "./routes/login.tsx";
+import * as $31 from "./routes/events/[id]/tickets.tsx";
+import * as $32 from "./routes/events/notfound.tsx";
+import * as $33 from "./routes/index.tsx";
+import * as $34 from "./routes/login.tsx";
 import * as $$0 from "./islands/events/components/card.tsx";
 import * as $$1 from "./islands/events/creation/createForm.tsx";
 import * as $$2 from "./islands/events/creation/one.tsx";
@@ -85,9 +86,10 @@ const manifest = {
     "./routes/events/[id]/delete.tsx": $28,
     "./routes/events/[id]/editing.tsx": $29,
     "./routes/events/[id]/scanning.tsx": $30,
-    "./routes/events/notfound.tsx": $31,
-    "./routes/index.tsx": $32,
-    "./routes/login.tsx": $33,
+    "./routes/events/[id]/tickets.tsx": $31,
+    "./routes/events/notfound.tsx": $32,
+    "./routes/index.tsx": $33,
+    "./routes/login.tsx": $34,
   },
   islands: {
     "./islands/events/components/card.tsx": $$0,

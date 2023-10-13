@@ -18,12 +18,12 @@ export default function EventRegister({
   multiPurchase,
 }: {
   eventID: string;
-  showTimes: ShowTime[];
+  showTimes: Partial<ShowTime>[];
   email?: string;
   additionalFields: Field[];
   multiPurchase: boolean;
 }) {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const page = useSignal(0);
   const tickets = useSignal(1);
   const showTime = useSignal(showTimes[0].id);
@@ -116,25 +116,24 @@ export default function EventRegister({
 
   const Popover = () => {
     return (
-      <Popup close={() => setOpen(false)} isOpen={open} className="">
+      <Popup close={() => {setOpen(false); page.value = 0}} isOpen={open} className="">
         <h2 class="font-bold text-lg">Get Tickets</h2>
         <Form class="gap-4 mt-4 flex flex-col">
           {page.value == 0 ? (
             <>
-              <div class="flex gap-2 scrollbar-fancy snap-x">
+              <div class="flex gap-2 scrollbar-fancy snap-x overflow-x-auto">
                 {showTimes.map((time) => (
                   <button
                     onClick={() => (showTime.value = time.id)}
-                    class={`border transition select-none px-2 rounded-md font-medium ${
+                    class={`border transition select-none px-2 rounded-md font-medium whitespace-pre ${
                       time.id == showTime.value &&
                       "border-theme-normal bg-theme-normal/5"
                     }`}
                   >
-                    {fmtDate(new Date(time.startDate))}{" "}
+                    {fmtDate(new Date(time.startDate!))}
                     <span class="lowercase">
-                      {" "}
                       {time.startTime &&
-                        ` at ${fmtTime(new Date(time.startDate))}`}
+                        ` at ${fmtTime(new Date(time.startTime))}`}
                     </span>
                   </button>
                 ))}

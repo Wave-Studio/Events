@@ -6,12 +6,12 @@ import { Partial } from "$fresh/runtime.ts";
 export default defineLayout((req, { Component }) => {
   return (
     <div className="min-h-screen flex flex-col">
-      <Navbar f-client-nav />
-      <Partial name="navbar">
+      <Navbar /*f-client-nav*/ />
+      {/* <Partial name="navbar"> */}
         <div className="flex flex-col grow">
           <Component />
         </div>
-      </Partial>
+      {/* </Partial> */}
       <Footer />
     </div>
   );

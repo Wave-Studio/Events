@@ -13,7 +13,7 @@ const dateTransformer = (_: undefined, originalValue: string) => {
 // temp set to 1 max showtime, will increase with pro plan and future updates
 const YupShowtimeValidation = Yup.array()
   .min(1)
-  .max(2)
+  .max(3)
   .required()
   .of(
     Yup.object({
@@ -22,7 +22,7 @@ const YupShowtimeValidation = Yup.array()
       endTime: Yup.date().transform(dateTransformer),
       lastPurchaseDate: Yup.date().transform(dateTransformer),
       soldTickets: Yup.number().min(0).required(),
-      maxTickets: Yup.number(),
+      maxTickets: Yup.number().required(),
       id: Yup.string().uuid().required(),
     }),
   );

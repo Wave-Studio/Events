@@ -5,10 +5,14 @@ import { Roles } from "@/utils/db/kv.types.ts";
 import CTA from "@/components/buttons/cta.tsx";
 import { EventContext } from "@/routes/events/[id]/_layout.tsx";
 import imagekit from "@/utils/imagekit.ts";
-import { Fragment } from "preact";
+import { Component, ComponentChildren, Fragment, JSX } from "preact";
 import Left from "$tabler/chevron-left.tsx";
 import Location from "$tabler/map-pin.tsx";
 import Calender from "$tabler/calendar.tsx";
+import Check from "$tabler/circle-check.tsx";
+import Warn from "$tabler/alert-circle.tsx";
+import Urgent from "$tabler/urgent.tsx";
+
 import EventRegister, {
   EventRegisterSmall,
 } from "@/islands/events/viewing/register.tsx";
@@ -49,6 +53,39 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
     }
   };
 
+  const Avalibility = ({
+    maxTickets,
+    tickets,
+  }: {
+    tickets: number;
+    maxTickets: number;
+  }): JSX.Element => {
+    // semi-jank solution
+    const className = "flex items-center [&>svg]:w-5 [&>svg]:mr-2";
+    const messages: JSX.Element[] = [
+      <p class={`text-green-500 ${className}`}>
+        <Check /> Tickets Avalible
+      </p>,
+      <p class={`text-amber-500 flex ${className}`}>
+        <Warn /> Some Tickets Avalible
+      </p>,
+      <p class={`text-orange-600 flex ${className}`}>
+        <Warn /> Few Tickets Left
+      </p>,
+      <p class={`text-red-500 flex ${className}`}>
+        <Urgent /> {maxTickets - tickets} Tickets Left
+      </p>,
+    ];
+
+    if (maxTickets - tickets < 10) return messages[3];
+
+    const diviser = tickets / maxTickets;
+
+    if (diviser < 0.6) return messages[0];
+    if (diviser < 0.7) return messages[1];
+    return messages[2];
+  };
+
   const ShowTimes = () => {
     if (event.showTimes.length == 1) return null;
 
@@ -57,7 +94,7 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
         <h2 class="font-bold text-xl mt-6 mb-2">Showtimes</h2>
         <div class="flex overflow-x-auto snap-x gap-4 scrollbar-fancy">
           {event.showTimes.map((time) => (
-            <div class="rounded-md border p-4 snap-start w-72">
+            <div class="rounded-md border p-4 snap-start w-72 min-w-[18rem] select-none">
               <p class="font-medium">
                 {fmtDate(new Date(time.startDate))}{" "}
                 <span class="lowercase">
@@ -76,9 +113,12 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
                     {fmtDate(new Date(time.lastPurchaseDate))}
                   </p>
                 )}
-                <p>
-                  <span class="text-green-600">High ticket avalibility</span>
-                </p>
+                {
+                  <Avalibility
+                    maxTickets={time.maxTickets}
+                    tickets={time.soldTickets}
+                  />
+                }
               </div>
             </div>
           ))}
@@ -135,8 +175,13 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
     </>
   );
 
+  const clientShowTimes = event.showTimes.map((time) => {
+    const { maxTickets: _, soldTickets: __, ...st } = time;
+    return st;
+  });
+
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col min-h-screen">
       <div class="flex flex-col">
         {banner() ? (
           <picture>
@@ -188,16 +233,25 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
           </a>
         )}
       </div>
-      <div className="max-w-2xl mx-auto w-full mb-36 md:mb-16 mt-4 md:-mt-28 flex flex-col px-4 static">
+      <div className="max-w-2xl mx-auto w-full mb-36 md:mb-16 mt-4 md:-mt-28 flex flex-col px-4 static grow">
         <Header />
         <ShowTimes />
         <EventRegister
           eventID={eventID}
-          showTimes={event.showTimes}
+          showTimes={clientShowTimes}
           email={user?.data.email}
           additionalFields={event.additionalFields}
           multiPurchase={event.multiPurchase}
         />
+
+        {event.showTimes.length === 1 && (
+          <div class="mx-auto mt-2 text-sm">
+            <Avalibility
+              tickets={event.showTimes[0].soldTickets}
+              maxTickets={event.showTimes[0].maxTickets}
+            />
+          </div>
+        )}
       </div>
       <p class="text-center max-w-sm mx-auto mb-4 text-sm">
         This event was made with{" "}

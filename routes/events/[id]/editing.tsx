@@ -49,7 +49,7 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
         {
           label: "All Tickets",
           icon: <Tickets class="w-6 h-6" />,
-          href: "./",
+          href: "./tickets",
         },
         {
           label: "Team Members",
