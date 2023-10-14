@@ -7,8 +7,10 @@ import SortDescending from "$tabler/sort-descending.tsx";
 export default function HomeFilters({
   query,
   url,
+  ascending,
 }: {
   query: Signal<string>;
+  ascending: Signal<boolean>;
   url: string;
 }) {
   const urlObject = new URL(url);
@@ -21,11 +23,18 @@ export default function HomeFilters({
         onSubmit={(e) => {
           e.preventDefault();
 
+		  searchParams.set("o", ascending.value ? "a" : "d");
+		  searchParams.set("q", query.value.trim());
+
           if (query.value.trim() == "") {
             searchParams.delete("q");
-          } else {
-            searchParams.set("q", query.value.trim());
-          }
+          } 
+
+		  if (ascending.value) {
+			searchParams.delete("o");
+		  }
+
+		  console.log(searchParams.toString());
 
           location.search =
             searchParams.toString().trim() == ""
@@ -40,12 +49,14 @@ export default function HomeFilters({
           onInput={(e) => (query.value = e.currentTarget.value)}
         />
         <Button
-          label={"test"}
-          icon={true ? <SortAscending /> : <SortDescending />}
-          href={`?a`}
+          label={`Sort ${ascending.value ? "ascending" : "descending"}`}
+          icon={ascending.value ? <SortAscending /> : <SortDescending />}
+          onClick={() => {
+			ascending.value = !ascending.value;
+		  }}
         />
         <CTA btnType="cta" type="submit">
-          Download virus
+          Apply
         </CTA>
       </form>
     </>

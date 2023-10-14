@@ -15,6 +15,7 @@ export default async function Homepage(req: Request, ctx: AppContext) {
   const url = new URL(req.url);
   const searchParams = url.searchParams;
   const query = signal<string>(searchParams.get("q") ?? "");
+  const ascending = signal<boolean>((searchParams.get("o") ?? "a") == "a");
   const user = await getUser(req);
 
   if (user == undefined) {
@@ -26,9 +27,30 @@ export default async function Homepage(req: Request, ctx: AppContext) {
     });
   }
 
-  const events = await kv.getMany<Event[]>(
-    user.events.map((e) => ["event", e]),
-  );
+  const events = (
+    await kv.getMany<Event[]>(user.events.map((e) => ["event", e]))
+  ).sort((a, b) => {
+    if (a.value == null || b.value == null) return 0;
+
+    if (ascending.value) {
+      return (
+        new Date(
+          a.value.showTimes.sort(
+            (a, b) =>
+              new Date(a.startDate).valueOf() - new Date(b.startDate).valueOf(),
+          )[0].startDate,
+        ).valueOf() -
+        new Date(
+          b.value.showTimes.sort(
+            (a, b) =>
+              new Date(a.startDate).valueOf() - new Date(b.startDate).valueOf(),
+          )[0].startDate,
+        ).valueOf()
+      );
+    } else {
+      return b.value.name.localeCompare(a.value.name);
+    }
+  });
 
   const filteredEvents = events.filter(
     (e) =>
@@ -135,7 +157,12 @@ export default async function Homepage(req: Request, ctx: AppContext) {
 
           <div className="absolute top-1.5 right-1.5 flex justify-end gap-2">
             <div className="rounded-md flex items-center gap-2 text-white font-medium text-sm backdrop-blur-sm bg-black/20 px-2 py-0.5">
-              {e.maxTickets}
+              {/* Probably should be done a different way */}
+              {
+                e.showTimes
+                  .map(({ maxTickets }) => maxTickets)
+                  .sort((a, b) => a - b)[0]
+              }
             </div>
             {e.price !== 0 && (
               <div className="rounded-md flex items-center gap-2 text-white font-medium text-sm backdrop-blur-sm bg-black/20 px-2 py-0.5">
@@ -198,7 +225,7 @@ export default async function Homepage(req: Request, ctx: AppContext) {
 
   return (
     <>
-      <HomeFilters query={query} url={req.url} />
+      <HomeFilters query={query} url={req.url} ascending={ascending} />
       <div className="grid md:grid-cols-2 gap-8">
         {filteredEvents.map((event) => {
           if (!event || !event.value) return null;

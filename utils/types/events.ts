@@ -24,6 +24,7 @@ const YupShowtimeValidation = Yup.array()
       soldTickets: Yup.number().min(0).required(),
       maxTickets: Yup.number().required(),
       id: Yup.string().uuid().required(),
+      multiPurchase: Yup.boolean().required(),
     }),
   );
 
@@ -47,22 +48,9 @@ const YupSecondPageEventValidation = {
 
 const YupThirdPageEventValidation = {
   ...YupSecondPageEventValidation,
-};
-
-export const FirstPageEventValidation = Yup.object(YupFirstPageEventValidation);
-
-export const SecondPageEventValidation = Yup.object(
-  YupSecondPageEventValidation,
-);
-
-export const ThirdPageEventValidation = Yup.object(YupThirdPageEventValidation);
-
-// TODO: we should really generate types from this instead of having to maintain botha  yup schema and interface
-export const FullEventValidation = Yup.object({
-  ...YupThirdPageEventValidation,
 
   multiEntry: Yup.boolean().required(),
-  multiPurchase: Yup.boolean().required(),
+
   additionalFields: Yup.array()
     .min(0)
     .max(4)
@@ -75,6 +63,20 @@ export const FullEventValidation = Yup.object({
         type: Yup.string().matches(/^(text|email|number|toggle)$/g),
       }),
     ),
+};
+
+export const FirstPageEventValidation = Yup.object(YupFirstPageEventValidation);
+
+export const SecondPageEventValidation = Yup.object(
+  YupSecondPageEventValidation,
+);
+
+export const ThirdPageEventValidation = Yup.object(YupThirdPageEventValidation);
+
+// TODO: we should really generate types from this instead of having to maintain botha yup schema and interface
+export const FullEventValidation = Yup.object({
+  ...YupThirdPageEventValidation,
+
   price: Yup.number().required(),
 
   owner: Yup.string().max(200),

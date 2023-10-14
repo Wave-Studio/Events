@@ -28,6 +28,12 @@ export default function ImagePicker({
   const inputRef = useRef<HTMLLabelElement>(null);
 
   const uploadFile = async (file: File) => {
+	const permittedTypes: string[] = ["image/png", "image/gif", "image/jpeg"];
+
+	if (!permittedTypes.includes(file.type)) {
+		setError("Invalid file type");
+		return;
+	}
     // seperate loading to show b64 conversion vs actual uploading
     setLoading(true);
     const b64 = encode(await file.arrayBuffer());

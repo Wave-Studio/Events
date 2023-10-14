@@ -127,14 +127,6 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
           <Section name="Showtimes">
             <ShowTimeSettings eventID={eventID} showTimes={event.showTimes} />
           </Section>
-          <Section name="Ticketing Settings">
-            <EventTicketSettings
-              additionalFields={event.additionalFields}
-              eventID={eventID}
-              multiEntry={event.multiEntry}
-              multiPurchase={event.multiPurchase}
-            />
-          </Section>
           {user.role <= 1 && (
             <>
               <Section name="Danger Zone">

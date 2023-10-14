@@ -14,7 +14,7 @@ export default function CreateEvent({ user }: { user: User }) {
   const pageNames = [
     "Lets start with some basic details.",
     "When do you plan to host your event?",
-    "Create the your tickets!",
+    "Finish it off with some final touches.",
   ];
 
   return (
