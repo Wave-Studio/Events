@@ -129,6 +129,7 @@ export default function EventRegister({
                       time.id == showTime.value &&
                       "border-theme-normal bg-theme-normal/5"
                     }`}
+                    type="button"
                   >
                     {fmtDate(new Date(time.startDate!))}
                     <span class="lowercase">

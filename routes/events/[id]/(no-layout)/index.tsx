@@ -9,15 +9,14 @@ import { Component, ComponentChildren, Fragment, JSX } from "preact";
 import Left from "$tabler/chevron-left.tsx";
 import Location from "$tabler/map-pin.tsx";
 import Calender from "$tabler/calendar.tsx";
-import Check from "$tabler/circle-check.tsx";
-import Warn from "$tabler/alert-circle.tsx";
-import Urgent from "$tabler/urgent.tsx";
 
 import EventRegister, {
   EventRegisterSmall,
 } from "@/islands/events/viewing/register.tsx";
 import Footer from "@/components/layout/footer.tsx";
-import { fmtDate, fmtTime } from "@/utils/dates.ts";
+import { fmtDate, fmtTime, happened } from "@/utils/dates.ts";
+import { Avalibility } from "@/islands/events/viewing/availability.tsx";
+import { ShowTimes } from "@/islands/events/viewing/showtimes.tsx";
 
 export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
   // layout are disabled on this route, but I don't wanna disable every one. no clue how to do that
@@ -53,79 +52,15 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
     }
   };
 
-  const Avalibility = ({
-    maxTickets,
-    tickets,
-  }: {
-    tickets: number;
-    maxTickets: number;
-  }): JSX.Element => {
-    // semi-jank solution
-    const className = "flex items-center [&>svg]:w-5 [&>svg]:mr-2";
-    const messages: JSX.Element[] = [
-      <p class={`text-green-500 ${className}`}>
-        <Check /> Tickets Avalible
-      </p>,
-      <p class={`text-amber-500 flex ${className}`}>
-        <Warn /> Some Tickets Avalible
-      </p>,
-      <p class={`text-orange-600 flex ${className}`}>
-        <Warn /> Few Tickets Left
-      </p>,
-      <p class={`text-red-500 flex ${className}`}>
-        <Urgent /> {maxTickets - tickets} Tickets Left
-      </p>,
-    ];
-
-    if (maxTickets - tickets < 10) return messages[3];
-
-    const diviser = tickets / maxTickets;
-
-    if (diviser < 0.6) return messages[0];
-    if (diviser < 0.7) return messages[1];
-    return messages[2];
-  };
-
-  const ShowTimes = () => {
-    if (event.showTimes.length == 1) return null;
-
-    return (
-      <>
-        <h2 class="font-bold text-xl mt-6 mb-2">Showtimes</h2>
-        <div class="flex overflow-x-auto snap-x gap-4 scrollbar-fancy">
-          {event.showTimes.map((time) => (
-            <div class="rounded-md border p-4 snap-start w-72 min-w-[18rem] select-none">
-              <p class="font-medium">
-                {fmtDate(new Date(time.startDate))}{" "}
-                <span class="lowercase">
-                  {time.startTime &&
-                    `(${fmtTime(new Date(time.startTime))}${
-                      time.endTime
-                        ? ` - ${fmtTime(new Date(time.endTime))}`
-                        : ""
-                    })`}
-                </span>
-              </p>
-              <div class="flex flex-col gap-2 text-sm">
-                {time.lastPurchaseDate && (
-                  <p>
-                    <span class="text-gray-600">Sales end</span>{" "}
-                    {fmtDate(new Date(time.lastPurchaseDate))}
-                  </p>
-                )}
-                {
-                  <Avalibility
-                    maxTickets={time.maxTickets}
-                    tickets={time.soldTickets}
-                  />
-                }
-              </div>
-            </div>
-          ))}
-        </div>
-      </>
-    );
-  };
+  // should probably redirect a logged in user to their ticket
+  // will have a button to log in as organizer or attendee
+  // tries to get user to check email for ticket mainly
+  if (
+    event.showTimes.every((time) => happened(time.startDate, time.startTime)) &&
+    user?.role != undefined
+  ) {
+    return <div>This event already occurred!</div>;
+  }
 
   const Header = () => (
     <>
@@ -175,10 +110,14 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
     </>
   );
 
-  const clientShowTimes = event.showTimes.map((time) => {
-    const { maxTickets: _, soldTickets: __, ...st } = time;
-    return st;
-  });
+  const clientShowTimes = event.showTimes
+    .filter((time) => {
+      return !happened(time.startDate, time.startTime);
+    })
+    .map((time) => {
+      const { maxTickets: _, soldTickets: __, ...st } = time;
+      return st;
+    });
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -215,27 +154,37 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
             alt="Placeholder Image"
           />
         )}
-        {user && (
+
+        {user && user.role != undefined ? (
+          user.role <= 2 && (
+            <>
+              <a
+                href="/events/organizing"
+                class="group pl-0.5 rounded-md bg-black/20 border border-gray-300/20 backdrop-blur font-medium text-white pr-1.5 absolute top-3 left-3 text-sm flex items-center"
+              >
+                <Left class="w-4 h-4 mr-1 group transition group-hover:-translate-x-0.5" />{" "}
+                All Events
+              </a>
+              <a
+                href={`/events/${eventID}/editing`}
+                class="rounded-md bg-black/20 border border-gray-300/20 backdrop-blur font-medium text-white px-1.5 absolute top-3 right-3 text-sm flex items-center"
+              >
+                Edit Event
+              </a>
+            </>
+          )
+        ) : (
           <a
-            href="/events/organizing"
-            class="group pl-0.5 rounded-md bg-black/20 border border-gray-300/20 backdrop-blur font-medium text-white pr-1.5 absolute top-3 left-3 text-sm flex items-center"
-          >
-            <Left class="w-4 h-4 mr-1 group transition group-hover:-translate-x-0.5" />{" "}
-            All Events
-          </a>
-        )}
-        {user && user.role != undefined && user.role <= 2 && (
-          <a
-            href={`/events/${eventID}/editing`}
+            href={`/events/attending`}
             class="rounded-md bg-black/20 border border-gray-300/20 backdrop-blur font-medium text-white px-1.5 absolute top-3 right-3 text-sm flex items-center"
           >
-            Edit Event
+            Your tickets
           </a>
         )}
       </div>
       <div className="max-w-2xl mx-auto w-full mb-36 md:mb-16 mt-4 md:-mt-28 flex flex-col px-4 static grow">
         <Header />
-        <ShowTimes />
+        <ShowTimes event={event} user={user} />
         <EventRegister
           eventID={eventID}
           showTimes={clientShowTimes}
@@ -245,10 +194,14 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
         />
 
         {event.showTimes.length === 1 && (
-          <div class="mx-auto mt-2 text-sm">
+          <div class="mx-auto mt-2 text-sm text-center">
             <Avalibility
               tickets={event.showTimes[0].soldTickets}
               maxTickets={event.showTimes[0].maxTickets}
+              happened={happened(
+                event.showTimes[0].startDate,
+                event.showTimes[0].startTime,
+              )}
             />
           </div>
         )}
