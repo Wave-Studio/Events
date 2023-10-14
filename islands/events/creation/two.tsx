@@ -15,7 +15,7 @@ export default function StageTwo({
   eventState: Signal<Event>;
   setPage: StateUpdater<number>;
 }) {
-  const { multiEntry, multiPurchase, additionalFields } = eventState.value;
+  const { multiEntry, additionalFields } = eventState.value;
 
   const [fields, setFields] = useState<Field[]>(
     additionalFields.length == 0
@@ -30,12 +30,10 @@ export default function StageTwo({
       : additionalFields,
   );
   const [mEntry, setMEntry] = useState(multiEntry);
-  const [mPurchase, setMPurchase] = useState(multiPurchase);
 
   const save = () => {
     eventState.value.multiEntry = mEntry;
-    eventState.value.multiPurchase = mPurchase;
-    eventState.value.additionalFields = fields.filter((f) => Boolean(f.name));
+	eventState.value.additionalFields = fields.filter((f) => Boolean(f.name));
   };
 
   const addField = () => {
@@ -51,12 +49,6 @@ export default function StageTwo({
             description="Allow attendees to enter multiple times on the same ticket"
             setEnabled={setMEntry}
             enabled={mEntry}
-          />
-          <Toggle
-            name="Allow Multiple Ticket Sales"
-            description="Allow attendees to buy multiple tickets across one or multiple transactions (tracked using their email)"
-            setEnabled={setMPurchase}
-            enabled={mPurchase}
           />
         </section>
         <AdditionalInputs />

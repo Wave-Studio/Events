@@ -9,15 +9,19 @@ export const kv = await Deno.openKv(
     : undefined,
 );
 
+export const getUserAuthToken = (req: Request) => {
+	const cookies = getCookies(req.headers);
+	const authToken = cookies.authToken;
+
+	return authToken;
+}
+
 export const getUser = async (req: Request) => {
   // const [cachedUser, setCachedUser] = useState<User | undefined>(undefined);
 
   // if (cachedUser != undefined) return cachedUser;
 
-  const cookies = getCookies(req.headers);
-  const authToken = cookies.authToken;
-
-  if (authToken == undefined) return undefined;
+  const authToken = getUserAuthToken(req);
 
   const [email] = authToken.split("_");
 

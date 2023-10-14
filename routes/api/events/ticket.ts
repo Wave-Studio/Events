@@ -1,6 +1,5 @@
 import { Handlers } from "$fresh/server.ts";
-import { Event, kv, User } from "@/utils/db/kv.ts";
-import { isUUID } from "@/utils/db/misc.ts";
+import { Event, kv, User, getUserAuthToken } from "@/utils/db/kv.ts";
 import * as Yup from "yup";
 
 export const handler: Handlers = {
@@ -8,10 +7,24 @@ export const handler: Handlers = {
     const { eventID, email, showtimeID, fieldData, firstName, lastName } =
       await req.json();
 
+    const basicParamValidation = Yup.object({
+      eventID: Yup.string().uuid().required(),
+      email: Yup.string().email().required(),
+      showtimeID: Yup.string().uuid().required(),
+      firstName: Yup.string().required().min(1),
+      lastName: Yup.string().required().min(1),
+    });
+
     try {
-      Yup.string().email().validateSync(email);
+      basicParamValidation.validateSync({
+        eventID,
+        email,
+        showtimeID,
+        firstName,
+        lastName,
+      });
     } catch {
-      return new Response(JSON.stringify({ error: "Invalid email" }), {
+      return new Response(JSON.stringify({ error: "Invalid parameters" }), {
         status: 400,
       });
     }
@@ -24,29 +37,6 @@ export const handler: Handlers = {
       }
     } catch {
       return new Response(JSON.stringify({ error: "Invalid field data" }), {
-        status: 400,
-      });
-    }
-
-    if (
-      firstName == undefined ||
-      firstName.length < 1 ||
-      lastName == undefined ||
-      lastName.length < 1
-    ) {
-      return new Response(JSON.stringify({ error: "Invalid name" }), {
-        status: 400,
-      });
-    }
-
-    if (!isUUID(eventID)) {
-      return new Response(JSON.stringify({ error: "Invalid event" }), {
-        status: 400,
-      });
-    }
-
-    if (!isUUID(showtimeID)) {
-      return new Response(JSON.stringify({ error: "Invalid showtime" }), {
         status: 400,
       });
     }
@@ -80,11 +70,38 @@ export const handler: Handlers = {
       tickets: [],
     };
 
+    if (user.onboarded) {
+      const authToken = getUserAuthToken(req);
+
+      if (authToken != user.authToken) {
+        if (authToken == undefined) {
+          return new Response(
+            JSON.stringify({
+              error: "You must log in to register for this event!",
+            }),
+            {
+              status: 400,
+            },
+          );
+        } else {
+          return new Response(
+            JSON.stringify({
+              error:
+                "You are not logged in as the user you are trying to register for!",
+            }),
+            {
+              status: 400,
+            },
+          );
+        }
+      }
+    }
+
     if (
       user.tickets
         .map((t) => t.substring(0, t.lastIndexOf("_")))
         .includes(`${eventID}_${showtimeID}`) &&
-      !event.value.multiPurchase
+      !showtime.multiPurchase
     ) {
       return new Response(JSON.stringify({ error: "Already purchased" }), {
         status: 400,

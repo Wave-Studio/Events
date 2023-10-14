@@ -6,6 +6,7 @@ import CalenderPicker from "@/components/pickers/calender.tsx";
 import TimePicker from "@/components/pickers/time.tsx";
 import Plus from "$tabler/plus.tsx";
 import Trash from "$tabler/trash.tsx";
+import { Toggle } from "@/components/buttons/toggle.tsx";
 
 export default function StageOne({
   eventState,
@@ -50,6 +51,7 @@ export default function StageOne({
               id: crypto.randomUUID(),
               soldTickets: 0,
               maxTickets: 75,
+              multiPurchase: true,
             });
             forceRerender((s) => s + 1);
           }}
@@ -93,8 +95,6 @@ export const ShowTimeUI = ({
   setShowTime: (state: ShowTime) => void;
   removeShowTime: (id: string) => void;
 }) => {
-  // this is a horrible solution to a problem created out of poor planning and misunderstanding of signals
-  const [_, forceRerender] = useState(1);
   return (
     <>
       <div className="flex flex-col">
@@ -155,21 +155,35 @@ export const ShowTimeUI = ({
               }
             />
           </label>
-          <label class="md:col-span-2 flex flex-col">
-            <p class="label-text">Max Attendees</p>
-            <input
-              type="number"
-              class="p-2 border rounded-md border-gray-300"
-              pattern="\d*"
-              value={showTime.maxTickets}
-              onInput={(e) =>
+          <div class="flex gap-4 md:flex-row">
+            <label class="md:col-span-2 flex flex-col">
+              <p class="label-text">Max Attendees</p>
+              <input
+                type="number"
+                class="p-2 border rounded-md border-gray-300"
+                pattern="\d*"
+                value={showTime.maxTickets}
+                onInput={(e) =>
+                  setShowTime({
+                    ...showTime,
+                    maxTickets: parseInt(e.currentTarget.value),
+                  })
+                }
+              />
+            </label>
+			{/* TODO: Style this properly @quick007 - Bloxs */}
+            <Toggle
+              name="Allow Multiple Ticket Sales"
+              description="Allow attendees to buy multiple tickets across one or multiple transactions (tracked using their email)"
+              setEnabled={(state) =>
                 setShowTime({
                   ...showTime,
-                  maxTickets: parseInt(e.currentTarget.value),
+                  multiPurchase: state,
                 })
               }
+              enabled={showTime.multiPurchase}
             />
-          </label>
+          </div>
         </div>
         <button
           className="rounded-md border border-red-300 font-medium text-red-500 grid place-items-center w-6 h-6 bg-red-100 mt-2 ml-auto"
