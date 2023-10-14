@@ -52,16 +52,6 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
     }
   };
 
-  // should probably redirect a logged in user to their ticket
-  // will have a button to log in as organizer or attendee
-  // tries to get user to check email for ticket mainly
-  if (
-    event.showTimes.every((time) => happened(time.startDate, time.startTime)) &&
-    user?.role != undefined
-  ) {
-    return <div>This event already occurred!</div>;
-  }
-
   const Header = () => (
     <>
       <div className="flex gap-2 md:gap-4 mb-2 justify-between md:justify-start flex-wrap">
@@ -185,25 +175,36 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
       <div className="max-w-2xl mx-auto w-full mb-36 md:mb-16 mt-4 md:-mt-28 flex flex-col px-4 static grow">
         <Header />
         <ShowTimes event={event} user={user} />
-        <EventRegister
-          eventID={eventID}
-          showTimes={clientShowTimes}
-          email={user?.data.email}
-          additionalFields={event.additionalFields}
-          multiPurchase={event.multiPurchase}
-        />
-
-        {event.showTimes.length === 1 && (
-          <div class="mx-auto mt-2 text-sm text-center">
-            <Avalibility
-              tickets={event.showTimes[0].soldTickets}
-              maxTickets={event.showTimes[0].maxTickets}
-              happened={happened(
-                event.showTimes[0].startDate,
-                event.showTimes[0].startTime,
-              )}
-            />
+        {event.showTimes.every((time) =>
+          happened(time.startDate, time.startTime),
+        ) ||
+        event.showTimes.every((time) => time.soldTickets == time.maxTickets) ? (
+          <div class="text-center mt-10 mb-4 mx-auto">
+            <p>This event is either fully booked or prefermances have ended.</p>
+            <p>Contact the organizer if you belive this is incorrect.</p>
           </div>
+        ) : (
+          <>
+            <EventRegister
+              eventID={eventID}
+              showTimes={clientShowTimes}
+              email={user?.data.email}
+              additionalFields={event.additionalFields}
+              multiPurchase={event.multiPurchase}
+            />
+            {event.showTimes.length === 1 && (
+              <div class="mx-auto mt-2 text-sm text-center">
+                <Avalibility
+                  tickets={event.showTimes[0].soldTickets}
+                  maxTickets={event.showTimes[0].maxTickets}
+                  happened={happened(
+                    event.showTimes[0].startDate,
+                    event.showTimes[0].startTime,
+                  )}
+                />
+              </div>
+            )}
+          </>
         )}
       </div>
       <p class="text-center max-w-sm mx-auto mb-4 text-sm">
