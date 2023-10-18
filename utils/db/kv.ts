@@ -23,6 +23,8 @@ export const getUser = async (req: Request) => {
 
   const authToken = getUserAuthToken(req);
 
+  if (authToken == undefined) return undefined;
+
   const [email] = authToken.split("_");
 
   try {
