@@ -1,6 +1,8 @@
 import { useEffect, useState } from "preact/hooks";
 import { IS_BROWSER } from "$fresh/runtime.ts";
 // Currently causes issues, hopefully it's fixed soon
+// import { BarcodeDetector } from "npm:barcode-detector";
+// Using ESM version instead
 import { BarcodeDetector } from "barcode-polyfill";
 
 export default function Scanner({ className }: { className?: string }) {
