@@ -1,9 +1,7 @@
 import { useEffect, useState } from "preact/hooks";
 import { IS_BROWSER } from "$fresh/runtime.ts";
 // Currently causes issues, hopefully it's fixed soon
-// import { BarcodeDetector } from "npm:barcode-detector";
-// Using ESM version instead
-import { BarcodeDetector } from "barcode-polyfill";
+import { BarcodeDetector } from "npm:barcode-detector";
 
 export default function Scanner({ className }: { className?: string }) {
   const [error, setError] = useState<string | null>(null);
@@ -15,15 +13,15 @@ export default function Scanner({ className }: { className?: string }) {
       if (initialized) return;
       setInitialized(true);
       const canvas = document.getElementById("scanui") as HTMLCanvasElement;
-      //   const barcodeReaderAPI = window["BarcodeDetector"] ?? BarcodeDetector;
-      //   if (barcodeReaderAPI == null) {
-      //     return setError(
-      //       "BarcodeDetector API is required but not supported on your device! Please try another browser.",
-      //     );
-      //   }
-      //   const reader = new barcodeReaderAPI({
-      //     formats: ["qr_code"],
-      //   });
+        const barcodeReaderAPI = window["BarcodeDetector"] ?? BarcodeDetector;
+        if (barcodeReaderAPI == null) {
+          return setError(
+            "BarcodeDetector API is required but not supported on your device! Please try another browser.",
+          );
+        }
+        const reader = new barcodeReaderAPI({
+          formats: ["qr_code"],
+        });
       if (canvas == null) return;
       const ctx = canvas.getContext("2d", {
         willReadFrequently: true,
