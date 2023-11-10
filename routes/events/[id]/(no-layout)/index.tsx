@@ -207,7 +207,7 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
           </>
         )}
       </div>
-      <p class="text-center max-w-sm mx-auto mb-4 text-sm">
+      <p class="text-center max-w-sm mx-auto mb-4 text-sm px-4">
         This event was made with{" "}
         <a className="font-medium underline" href="/">
           Events
