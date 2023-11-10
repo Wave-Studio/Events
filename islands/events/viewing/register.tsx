@@ -9,31 +9,41 @@ import { Toggle } from "@/components/buttons/toggle.tsx";
 import Minus from "$tabler/minus.tsx";
 import Plus from "$tabler/plus.tsx";
 import { fmtDate, fmtTime } from "@/utils/dates.ts";
+import Button from "@/components/buttons/button.tsx";
+import ChevronLeft from "$tabler/chevron-left.tsx";
+import { createPortal } from "preact/compat";
+import Loading from "$tabler/loader-2.tsx";
+import { qrcode } from "https://deno.land/x/qrcode@v2.0.0/mod.ts";
 
 export default function EventRegister({
   eventID,
   showTimes,
   email,
   additionalFields,
-  multiPurchase,
+  ticket,
 }: {
   eventID: string;
   showTimes: Partial<ShowTime>[];
   email?: string;
   additionalFields: Field[];
-  multiPurchase: boolean;
+  ticket?: string;
 }) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const page = useSignal(0);
   const tickets = useSignal(1);
+  const error = useSignal<string | undefined>(undefined);
   const showTime = useSignal(showTimes[0].id);
+  const ticketID = useSignal(ticket);
   const toggles = useSignal<Record<string, boolean>>({
     ...additionalFields
       .filter((field) => field.type == "toggle")
-      .reduce((acc, field) => {
-        acc[field.id] = false;
-        return acc;
-      }, {} as Record<string, boolean>),
+      .reduce(
+        (acc, field) => {
+          acc[field.id] = false;
+          return acc;
+        },
+        {} as Record<string, boolean>,
+      ),
   });
 
   const [Form, [Field, TextArea], formState] = useForm<{
@@ -48,10 +58,13 @@ export default function EventRegister({
       email: email || "",
       ...additionalFields
         .filter((field) => field.type != "toggle")
-        .reduce((acc, field) => {
-          acc[field.id] = field.type === "number" ? 0 : "";
-          return acc;
-        }, {} as Record<string, string | number>),
+        .reduce(
+          (acc, field) => {
+            acc[field.id] = field.type === "number" ? 0 : "";
+            return acc;
+          },
+          {} as Record<string, string | number>,
+        ),
     },
     onSubmit: (form) => createTicket(form.formState!),
     // TODO: add validation
@@ -63,9 +76,11 @@ export default function EventRegister({
       <div class="flex flex-col items-center">
         {/* We could not show this UI at all when there's only 1 ticket, but I think this may be better UX since it makes it a bit more obvious the user can't get more */}
         <span class="text-xs font-medium">
-          Tickets{!multiPurchase && ": 1 (max)"}
+          Tickets
+          {showTimes.find((s) => s.id == showTime.value)!.multiPurchase &&
+            ": 1 (max)"}
         </span>
-        {multiPurchase && (
+        {!showTimes.find((s) => s.id == showTime.value)!.multiPurchase && (
           <div class="flex gap-2 items-center">
             <button
               class="group hover:bg-gray-200 w-6 h-6 grid place-items-center rounded-md transition"
@@ -87,18 +102,31 @@ export default function EventRegister({
           </div>
         )}
       </div>
-      <CTA
-        btnType="cta"
-        type="submit"
-        btnSize="sm"
-        onClick={() => page.value++}
-      >
-        Register
-      </CTA>
+      <div class="flex">
+        {page.value != 0 && (
+          <Button
+            icon={<ChevronLeft class="w-6 h-6" />}
+            label="Previous Page"
+            onClick={() => page.value--}
+          />
+        )}
+        <CTA
+          btnType="cta"
+          type="submit"
+          btnSize="sm"
+          className="ml-2 flex items-center justify-center"
+          disabled={ticketID.value == "loading"}
+        >
+          Register
+          {ticketID.value == "loading" && (
+            <Loading class="w-5 h-5 animate-spin ml-2" />
+          )}
+        </CTA>
+      </div>
     </div>
   );
 
-  const createTicket = (formState: {
+  const createTicket = async (formState: {
     [key: string]: string | number;
     firstName: string;
     lastName: string;
@@ -108,15 +136,39 @@ export default function EventRegister({
       ...formState,
       ...toggles.value,
       tickets: tickets.value,
-      showTime,
-      eventID
+      showtimeID: showTime.value,
+      eventID,
+      fieldData: [],
     };
-    console.log(fullTicket);
+
+    ticketID.value = "loading";
+
+    const ticket: { ticket?: string; error?: string; hint?: string } = await (
+      await fetch("/api/events/ticket", {
+        method: "POST",
+        body: JSON.stringify(fullTicket),
+      })
+    ).json();
+
+    if (ticket.error || ticket.hint || !ticket.ticket) {
+      error.value =
+        ticket.hint || ticket.error || "An unknown error has occured";
+    } else {
+      ticketID.value = ticket.ticket;
+      page.value = 2;
+    }
   };
 
   const Popover = () => {
     return (
-      <Popup close={() => {setOpen(false); page.value = 0}} isOpen={open} className="">
+      <Popup
+        close={() => {
+          setOpen(false);
+          page.value = 0;
+        }}
+        isOpen={open}
+        className=""
+      >
         <h2 class="font-bold text-lg">Get Tickets</h2>
         <Form class="gap-4 mt-4 flex flex-col">
           {page.value == 0 ? (
@@ -168,7 +220,7 @@ export default function EventRegister({
                 <Submit />
               )}
             </>
-          ) : (
+          ) : page.value == 1 ? (
             <>
               {additionalFields
                 .filter((field) => field.type != "toggle")
@@ -177,7 +229,7 @@ export default function EventRegister({
                     <span class="label-text label-required">
                       {field.name}
                       {field.type == "email" && (
-                        <span class="lowercase"> (email)</span>
+                        <span class="lowercase">(email)</span>
                       )}
                     </span>
                     {field.description && (
@@ -209,6 +261,8 @@ export default function EventRegister({
                 ))}
               <Submit />
             </>
+          ) : (
+            <>your tickety</>
           )}
         </Form>
       </Popup>
@@ -228,15 +282,23 @@ export default function EventRegister({
   );
 }
 
-export const EventRegisterSmall = () => {
+export const Contact = () => {
+  const [open, setOpen] = useState(false);
   return (
-    <button
-      className="flex items-center select-none font-medium hover:bg-gray-200/75 hover:text-gray-900 transition text-sm mx-auto mt-1 rounded-md bg-white/25 backdrop-blur-xl border px-1.5 py-0.5"
-      onClick={() =>
-        window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" })
-      }
-    >
-      Get Tickets
-    </button>
+    <>
+      <button
+        className="flex items-center select-none font-medium hover:bg-gray-200/75 hover:text-gray-900 transition text-sm mx-auto mt-4 rounded-md bg-white/25 backdrop-blur-xl border px-1.5 py-0.5"
+        onClick={() => setOpen(true)}
+      >
+        Contact Organizer
+      </button>
+      {globalThis.document != undefined &&
+        createPortal(
+          <Popup isOpen={open} close={() => setOpen(false)}>
+            test
+          </Popup>,
+          document.body,
+        )}
+    </>
   );
 };

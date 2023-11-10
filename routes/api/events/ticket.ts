@@ -1,5 +1,12 @@
 import { Handlers } from "$fresh/server.ts";
-import { Event, kv, User, getUserAuthToken } from "@/utils/db/kv.ts";
+import {
+  Event,
+  getUser,
+  getUserAuthToken,
+  kv,
+  Roles,
+  User,
+} from "@/utils/db/kv.ts";
 import * as Yup from "yup";
 
 export const handler: Handlers = {
@@ -13,6 +20,7 @@ export const handler: Handlers = {
       showtimeID: Yup.string().uuid().required(),
       firstName: Yup.string().required().min(1),
       lastName: Yup.string().required().min(1),
+      fieldData: Yup.array().required(),
     });
 
     try {
@@ -22,21 +30,12 @@ export const handler: Handlers = {
         showtimeID,
         firstName,
         lastName,
+        fieldData,
+      }, {
+        strict: true,
       });
-    } catch {
-      return new Response(JSON.stringify({ error: "Invalid parameters" }), {
-        status: 400,
-      });
-    }
-
-    try {
-      JSON.parse(fieldData);
-
-      if (!Array.isArray(JSON.parse(fieldData))) {
-        throw new Error();
-      }
-    } catch {
-      return new Response(JSON.stringify({ error: "Invalid field data" }), {
+    } catch (e) {
+      return new Response(JSON.stringify({ error: "Invalid parameters", hint: e.message }), {
         status: 400,
       });
     }
@@ -84,15 +83,28 @@ export const handler: Handlers = {
             },
           );
         } else {
-          return new Response(
-            JSON.stringify({
-              error:
-                "You are not logged in as the user you are trying to register for!",
-            }),
-            {
-              status: 400,
-            },
+          const loggedInUser = await getUser(req);
+
+          const organizer = event.value.members.find((m) =>
+            m.email == loggedInUser?.email
           );
+
+          if (
+            organizer == undefined ||
+            ![Roles.OWNER, Roles.ADMIN, Roles.MANAGER, Roles.SCANNER].includes(
+              organizer.role,
+            ) || loggedInUser == undefined
+          ) {
+            return new Response(
+              JSON.stringify({
+                error:
+                  "You are not logged in as the user you are trying to register for!",
+              }),
+              {
+                status: 400,
+              },
+            );
+          }
         }
       }
     }
@@ -134,7 +146,7 @@ export const handler: Handlers = {
         userEmail: email,
         firstName,
         lastName,
-        fieldData: JSON.parse(fieldData),
+        fieldData: fieldData,
       })
       .commit();
 

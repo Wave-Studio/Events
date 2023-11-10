@@ -10,16 +10,13 @@ import Left from "$tabler/chevron-left.tsx";
 import Location from "$tabler/map-pin.tsx";
 import Calender from "$tabler/calendar.tsx";
 
-import EventRegister, {
-  EventRegisterSmall,
-} from "@/islands/events/viewing/register.tsx";
+import EventRegister, { Contact } from "@/islands/events/viewing/register.tsx";
 import Footer from "@/components/layout/footer.tsx";
 import { fmtDate, fmtTime, happened } from "@/utils/dates.ts";
 import { Avalibility } from "@/islands/events/viewing/availability.tsx";
 import { ShowTimes } from "@/islands/events/viewing/showtimes.tsx";
 
 export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
-  // layout are disabled on this route, but I don't wanna disable every one. no clue how to do that
   const { event, eventID, user } = ctx.state.data;
 
   const banner = () => {
@@ -58,7 +55,7 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
         <div className="flex items-center rounded-md bg-white/[0.85] backdrop-blur-xl border px-1.5 py-0.5 ">
           <Calender class="h-4 w-4 mr-1.5 text-gray-700" />
           <p class="break-keep">
-            {event.showTimes.length > 1 && "Showtimes start"}{" "}
+            {event.showTimes.length > 1 && "Begins"}{" "}
             <span className="font-medium">
               {fmtDate(new Date(event.showTimes[0].startDate))}{" "}
               <span class="lowercase">
@@ -85,7 +82,7 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
         <h1 className="font-bold text-2xl text-center md:text-left">
           {event.name}
         </h1>
-        <EventRegisterSmall />
+
         <h2 className="font-semibold mt-4 mb-1 text-sm">Event in Breif</h2>
         <p class="mb-4">{event.summary}</p>
         <h2 className="font-semibold mb-1 text-sm">Event Description</h2>
@@ -97,6 +94,7 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
           </p>
         )}
       </div>
+      <Contact />
     </>
   );
 
@@ -190,7 +188,6 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
               showTimes={clientShowTimes}
               email={user?.data.email}
               additionalFields={event.additionalFields}
-              multiPurchase={event.multiPurchase}
             />
             {event.showTimes.length === 1 && (
               <div class="mx-auto mt-2 text-sm text-center">

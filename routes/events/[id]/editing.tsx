@@ -16,7 +16,6 @@ import EventSettings from "@/islands/events/editing/settings.tsx";
 import Button from "@/components/buttons/button.tsx";
 import ShowTimeSettings from "@/islands/events/editing/showtimesettings.tsx";
 import EventDeletion from "@/islands/events/editing/delete.tsx";
-import EventTicketSettings from "@/islands/events/editing/ticketSettings.tsx";
 
 export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
   const { event, eventID, user } = ctx.state.data;
@@ -124,7 +123,7 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
               venue={event.venue}
             />
           </Section>
-          <Section name="Showtimes">
+          <Section name="Event Times">
             <ShowTimeSettings eventID={eventID} showTimes={event.showTimes} />
           </Section>
           {user.role <= 1 && (

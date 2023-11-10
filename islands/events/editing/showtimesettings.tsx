@@ -76,13 +76,14 @@ export default function ShowTimeSettings({
               id: crypto.randomUUID(),
               soldTickets: 0,
               maxTickets: 75,
+              multiPurchase: false
             },
           ]))
         }
       >
         <div className="grow h-0.5 bg-gray-300" />
         <div class="mx-2 flex items-center">
-          Add Showtime <Plus class="h-4 w-4 ml-2 group-hover:scale-110" />
+          Add Event Time <Plus class="h-4 w-4 ml-2 group-hover:scale-110" />
         </div>
         <div className="grow h-0.5 bg-gray-300" />
       </button>

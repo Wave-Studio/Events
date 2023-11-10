@@ -58,7 +58,7 @@ export default function StageOne({
         >
           <div className="grow h-0.5 bg-gray-300" />
           <div class="mx-2 flex items-center">
-            Add Showtime <Plus class="h-4 w-4 ml-2 group-hover:scale-110" />
+            Add Event Time <Plus class="h-4 w-4 ml-2 group-hover:scale-110" />
           </div>
           <div className="grow h-0.5 bg-gray-300" />
         </button>
@@ -155,8 +155,8 @@ export const ShowTimeUI = ({
               }
             />
           </label>
-          <div class="flex gap-4 md:flex-row">
-            <label class="md:col-span-2 flex flex-col">
+          <div class="flex gap-4 flex-col md:flex-row md:col-span-2">
+            <label class=" flex flex-col">
               <p class="label-text">Max Attendees</p>
               <input
                 type="number"
@@ -171,7 +171,6 @@ export const ShowTimeUI = ({
                 }
               />
             </label>
-			{/* TODO: Style this properly @quick007 - Bloxs */}
             <Toggle
               name="Allow Multiple Ticket Sales"
               description="Allow attendees to buy multiple tickets across one or multiple transactions (tracked using their email)"

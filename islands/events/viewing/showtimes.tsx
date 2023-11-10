@@ -8,7 +8,7 @@ export const ShowTimes = ({event, user}: {event: Event, user: EventContext["data
 
 	return (
 		<>
-			<h2 class="font-bold text-xl mt-6 mb-2">Showtimes</h2>
+			<h2 class="font-bold text-xl mt-6 mb-2">Event Times</h2>
 			<div class="flex overflow-x-auto snap-x gap-4 scrollbar-fancy">
 				{event.showTimes
 					.filter((time) => {
@@ -48,7 +48,7 @@ export const ShowTimes = ({event, user}: {event: Event, user: EventContext["data
 			</div>
 			{user?.role != undefined && (
 				<p class="text-center mt-2 italic text-sm">
-					Showtimes that already occured aren't shown to users
+					Event times that already occured aren't shown to users
 				</p>
 			)}
 		</>
