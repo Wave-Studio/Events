@@ -14,6 +14,7 @@ import ChevronLeft from "$tabler/chevron-left.tsx";
 import { createPortal } from "preact/compat";
 import Loading from "$tabler/loader-2.tsx";
 import { qrcode } from "https://deno.land/x/qrcode@v2.0.0/mod.ts";
+import Ticket from "@/components/peices/ticket.tsx";
 
 export default function EventRegister({
   eventID,
@@ -67,63 +68,68 @@ export default function EventRegister({
         ),
     },
     onSubmit: (form) => createTicket(form.formState!),
-    // TODO: add validation
+    // TODO: add client side validation
     validationSchema: Yup.object({}),
   });
 
   const Submit = () => (
-    <div class="flex justify-between mt-4 items-center">
-      <div class="flex flex-col items-center">
-        {/* We could not show this UI at all when there's only 1 ticket, but I think this may be better UX since it makes it a bit more obvious the user can't get more */}
-        <span class="text-xs font-medium">
-          Tickets
-          {showTimes.find((s) => s.id == showTime.value)!.multiPurchase &&
-            ": 1 (max)"}
-        </span>
-        {!showTimes.find((s) => s.id == showTime.value)!.multiPurchase && (
-          <div class="flex gap-2 items-center">
-            <button
-              class="group hover:bg-gray-200 w-6 h-6 grid place-items-center rounded-md transition"
-              onClick={() => tickets.value > 1 && tickets.value--}
-              type="button"
-            >
-              <Minus class="h-4 w-4 text-gray-500 group-hover:text-gray-700" />
-            </button>
-            <p class="px-1.5 bg-gray-100 border-2 font-medium rounded-md text-gray-600">
-              {tickets.value}
-            </p>
-            <button
-              class="group hover:bg-gray-200 w-6 h-6 grid place-items-center rounded-md transition"
-              type="button"
-              onClick={() => tickets.value++}
-            >
-              <Plus class="h-4 w-4 text-gray-500 group-hover:text-gray-700" />
-            </button>
-          </div>
-        )}
-      </div>
-      <div class="flex">
-        {page.value != 0 && (
-          <Button
-            icon={<ChevronLeft class="w-6 h-6" />}
-            label="Previous Page"
-            onClick={() => page.value--}
-          />
-        )}
-        <CTA
-          btnType="cta"
-          type="submit"
-          btnSize="sm"
-          className="ml-2 flex items-center justify-center"
-          disabled={ticketID.value == "loading"}
-        >
-          Register
-          {ticketID.value == "loading" && (
-            <Loading class="w-5 h-5 animate-spin ml-2" />
+    <>
+      <div class="flex justify-between mt-4 items-center">
+        <div class="flex flex-col items-center">
+          {/* We could not show this UI at all when there's only 1 ticket, but I think this may be better UX since it makes it a bit more obvious the user can't get more */}
+          <span class="text-xs font-medium">
+            Tickets
+            {showTimes.find((s) => s.id == showTime.value)!.multiPurchase &&
+              ": 1 (max)"}
+          </span>
+          {!showTimes.find((s) => s.id == showTime.value)!.multiPurchase && (
+            <div class="flex gap-2 items-center">
+              <button
+                class="group hover:bg-gray-200 w-6 h-6 grid place-items-center rounded-md transition"
+                onClick={() => tickets.value > 1 && (tickets.value = 0)}
+                type="button"
+              >
+                <Minus class="h-4 w-4 text-gray-500 group-hover:text-gray-700" />
+              </button>
+              <p class="px-1.5 bg-gray-100 border-2 font-medium rounded-md text-gray-600">
+                {tickets.value}
+              </p>
+              <button
+                class="group hover:bg-gray-200 w-6 h-6 grid place-items-center rounded-md transition"
+                type="button"
+                onClick={() => (tickets.value = 1)}
+              >
+                <Plus class="h-4 w-4 text-gray-500 group-hover:text-gray-700" />
+              </button>
+            </div>
           )}
-        </CTA>
+        </div>
+        <div class="flex">
+          {page.value != 0 && (
+            <Button
+              icon={<ChevronLeft class="w-6 h-6" />}
+              label="Previous Page"
+              onClick={() => page.value--}
+            />
+          )}
+          <CTA
+            btnType="cta"
+            type="submit"
+            btnSize="sm"
+            className="ml-2 flex items-center justify-center"
+            disabled={ticketID.value == "loading"}
+          >
+            Register
+            {ticketID.value == "loading" && (
+              <Loading class="w-5 h-5 animate-spin ml-2" />
+            )}
+          </CTA>
+        </div>
       </div>
-    </div>
+      {error.value && (
+        <p class="text-center text-red-500 text-sm">Error: {error.value}</p>
+      )}
+    </>
   );
 
   const createTicket = async (formState: {
@@ -140,7 +146,7 @@ export default function EventRegister({
       eventID,
       fieldData: [],
     };
-
+    error.value = undefined;
     ticketID.value = "loading";
 
     const ticket: { ticket?: string; error?: string; hint?: string } = await (
@@ -153,6 +159,7 @@ export default function EventRegister({
     if (ticket.error || ticket.hint || !ticket.ticket) {
       error.value =
         ticket.hint || ticket.error || "An unknown error has occured";
+      ticketID.value = undefined;
     } else {
       ticketID.value = ticket.ticket;
       page.value = 2;
@@ -169,7 +176,9 @@ export default function EventRegister({
         isOpen={open}
         className=""
       >
-        <h2 class="font-bold text-lg">Get Tickets</h2>
+        <h2 class="font-bold text-lg">
+          {page.value == 2 ? "Your Ticket" : "Get Tickets"}
+        </h2>
         <Form class="gap-4 mt-4 flex flex-col">
           {page.value == 0 ? (
             <>
@@ -212,7 +221,7 @@ export default function EventRegister({
                   type="button"
                   btnSize="sm"
                   className="ml-auto mt-4"
-                  onClick={() => page.value++}
+                  onClick={() => (page.value = 1)}
                 >
                   Next
                 </CTA>
@@ -262,7 +271,23 @@ export default function EventRegister({
               <Submit />
             </>
           ) : (
-            <>your tickety</>
+            <>
+              <div class="flex flex-col items-center pb-6">
+                <h3 class="font-bold text-lg text-center">
+                  Event Reservation Confirmed!
+                </h3>
+                <p class="text-center max-w-lg text-sm">
+                  Your ticket has been emailed to you. You'll get another
+                  reminder email with your ticket on the day of the event. It's
+                  also below for brevity.
+                </p>
+              </div>
+              <Ticket
+                id={ticketID.value!}
+                showTime={showTimes.find((s) => s.id == showTime.value)! as ShowTime}
+                tickets={tickets.value}
+              />
+            </>
           )}
         </Form>
       </Popup>
