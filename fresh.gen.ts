@@ -30,13 +30,14 @@ import * as $24 from "./routes/events/(pages)/organizing/index.tsx";
 import * as $25 from "./routes/events/[id]/(no-layout)/_layout.tsx";
 import * as $26 from "./routes/events/[id]/(no-layout)/index.tsx";
 import * as $27 from "./routes/events/[id]/_layout.tsx";
-import * as $28 from "./routes/events/[id]/delete.tsx";
-import * as $29 from "./routes/events/[id]/editing.tsx";
-import * as $30 from "./routes/events/[id]/scanning.tsx";
+import * as $28 from "./routes/events/[id]/editing.tsx";
+import * as $29 from "./routes/events/[id]/scanning.tsx";
+import * as $30 from "./routes/events/[id]/team.tsx";
 import * as $31 from "./routes/events/[id]/tickets.tsx";
 import * as $32 from "./routes/events/notfound.tsx";
 import * as $33 from "./routes/index.tsx";
 import * as $34 from "./routes/login.tsx";
+import * as $35 from "./routes/ticket.tsx";
 import * as $$0 from "./islands/events/components/card.tsx";
 import * as $$1 from "./islands/events/creation/createForm.tsx";
 import * as $$2 from "./islands/events/creation/one.tsx";
@@ -54,6 +55,7 @@ import * as $$13 from "./islands/events/viewing/availability.tsx";
 import * as $$14 from "./islands/events/viewing/register.tsx";
 import * as $$15 from "./islands/events/viewing/showtimes.tsx";
 import * as $$16 from "./islands/loginForm.tsx";
+import * as $$17 from "./islands/peices/ticket.tsx";
 
 const manifest = {
   routes: {
@@ -85,13 +87,14 @@ const manifest = {
     "./routes/events/[id]/(no-layout)/_layout.tsx": $25,
     "./routes/events/[id]/(no-layout)/index.tsx": $26,
     "./routes/events/[id]/_layout.tsx": $27,
-    "./routes/events/[id]/delete.tsx": $28,
-    "./routes/events/[id]/editing.tsx": $29,
-    "./routes/events/[id]/scanning.tsx": $30,
+    "./routes/events/[id]/editing.tsx": $28,
+    "./routes/events/[id]/scanning.tsx": $29,
+    "./routes/events/[id]/team.tsx": $30,
     "./routes/events/[id]/tickets.tsx": $31,
     "./routes/events/notfound.tsx": $32,
     "./routes/index.tsx": $33,
     "./routes/login.tsx": $34,
+    "./routes/ticket.tsx": $35,
   },
   islands: {
     "./islands/events/components/card.tsx": $$0,
@@ -111,6 +114,7 @@ const manifest = {
     "./islands/events/viewing/register.tsx": $$14,
     "./islands/events/viewing/showtimes.tsx": $$15,
     "./islands/loginForm.tsx": $$16,
+    "./islands/peices/ticket.tsx": $$17,
   },
   baseUrl: import.meta.url,
 };

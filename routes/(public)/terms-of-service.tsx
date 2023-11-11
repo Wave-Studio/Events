@@ -1,7 +1,7 @@
 export default function TOS() {
   return (
     <div class="px-4 max-w-xl w-full mx-auto prose">
-      <h1>Website Terms and Conditions of Use</h1>
+      <h1>Website Terms and Conditions</h1>
 
       <h2>1. Terms</h2>
 
@@ -110,6 +110,60 @@ export default function TOS() {
       <p>
         Any claim related to Wave Studio's Website shall be governed by the laws
         of us without regards to its conflict of law provisions.
+      </p>
+
+      <h2>10. User Generated Content of Event Organizers</h2>
+
+      <h3>10.1 Content Submission</h3>
+      <p>
+        Event organizers may submit content, including but not limited to event
+        details, descriptions, and images, to be displayed on the Website. By
+        submitting such content, organizers grant Wave Studio a non-exclusive,
+        worldwide, royalty-free license to use, reproduce, modify, adapt,
+        publish, translate, create derivative works from, distribute, and
+        display the content throughout the Website.
+      </p>
+
+      <h3>10.2 Responsibility</h3>
+      <p>
+        Organizers are solely responsible for the accuracy, legality, and
+        appropriateness of the content they submit. Wave Studio reserves the
+        right to review, edit, or remove any content that violates these Terms
+        and Conditions or is deemed inappropriate without prior notice.
+        Organizers may be held liable for any damages resulting from the
+        submission of inaccurate, illegal, or inappropriate content.
+      </p>
+
+      <h2>11. Interaction with Organizer Emails for Attendees/Guests</h2>
+
+      <h3>11.1 Email Communication</h3>
+      <p>
+        By purchasing tickets through the Website, attendees/guests consent to
+        receive email communication from the us and/or event organizers
+        regarding event details, updates, and related information.
+        Attendees/guests may opt-out of non-essential email communications by
+        using the unsubscribe link provided in the emails.
+      </p>
+
+      <h3>11.2 Information Use</h3>
+      <p>
+        Event organizers agree not to misuse attendee/guest contact information
+        obtained through the Website. Attendees/guests' personal information
+        should be treated with confidentiality and used solely for communication
+        related to the specific event for which the tickets were purchased. Any
+        unauthorized use or sharing of attendee/guest information may result in
+        termination of the organizer's account and legal action.
+      </p>
+
+      <h3>11.3 Behavior with Organizer Emails</h3>
+      <p>
+        Users contacting event organizers via the "Contact Organizers" button on
+        the Website agree to use this communication channel responsibly and
+        professionally. Any communication should be relevant to the event,
+        respectful, and in compliance with applicable laws. Users are prohibited
+        from engaging in spam, harassment, or any malicious activities. Wave
+        Studio reserves the right to take appropriate action, including account
+        suspension, for users found violating these guidelines.
       </p>
     </div>
   );

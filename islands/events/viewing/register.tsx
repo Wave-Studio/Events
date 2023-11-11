@@ -13,15 +13,14 @@ import Button from "@/components/buttons/button.tsx";
 import ChevronLeft from "$tabler/chevron-left.tsx";
 import { createPortal } from "preact/compat";
 import Loading from "$tabler/loader-2.tsx";
-import { qrcode } from "https://deno.land/x/qrcode@v2.0.0/mod.ts";
-import Ticket from "@/components/peices/ticket.tsx";
+import Ticket from "@/islands/peices/ticket.tsx";
 
 export default function EventRegister({
   eventID,
   showTimes,
   email,
   additionalFields,
-  ticket,
+  ticket
 }: {
   eventID: string;
   showTimes: Partial<ShowTime>[];
@@ -30,7 +29,7 @@ export default function EventRegister({
   ticket?: string;
 }) {
   const [open, setOpen] = useState(true);
-  const page = useSignal(0);
+  const page = useSignal(2);
   const tickets = useSignal(1);
   const error = useSignal<string | undefined>(undefined);
   const showTime = useSignal(showTimes[0].id);
@@ -284,7 +283,9 @@ export default function EventRegister({
               </div>
               <Ticket
                 id={ticketID.value!}
-                showTime={showTimes.find((s) => s.id == showTime.value)! as ShowTime}
+                showTime={
+                  showTimes.find((s) => s.id == showTime.value)! as ShowTime
+                }
                 tickets={tickets.value}
               />
             </>
@@ -307,8 +308,9 @@ export default function EventRegister({
   );
 }
 
-export const Contact = () => {
+export const Contact = ({email}: {email: string}) => {
   const [open, setOpen] = useState(false);
+  const checked = useSignal(false)
   return (
     <>
       <button
@@ -319,8 +321,16 @@ export const Contact = () => {
       </button>
       {globalThis.document != undefined &&
         createPortal(
-          <Popup isOpen={open} close={() => setOpen(false)}>
-            test
+          <Popup isOpen={open} close={() => {setOpen(false); checked.value = false}}>
+            <h2 class="font-bold text-lg">Contact Organizer</h2>
+            <label class="flex mt-4 items-start cursor-pointer">
+              <input type="checkbox" name="agreed" class="mr-4 mt-1.5" onClick={(e) => checked.value = e.currentTarget.checked} />
+              <p>
+              I agree to interacting with this email in a professional way and following our guildlines as outlined in our <a href="/terms-of-service" class="font-medium underline">terms and conditions</a>
+            </p></label>
+            {checked.value && (
+              <p class="mt-6">Organizer contact email: <a href={`mailto:${email}`} class="font-medium underline">{email}</a></p>
+            )}
           </Popup>,
           document.body,
         )}

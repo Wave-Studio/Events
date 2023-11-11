@@ -94,7 +94,7 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
           </p>
         )}
       </div>
-      <Contact />
+      <Contact email={event.supportEmail} />
     </>
   );
 
@@ -209,7 +209,7 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
         <a className="font-medium underline" href="/">
           Events
         </a>
-        , an simple and easy to use event booking platform.
+        , a simple and easy to use event booking platform.
       </p>
       <Footer includeWave={false} />
     </div>
