@@ -40,8 +40,8 @@ import * as $34 from "./routes/login.tsx";
 import * as $35 from "./routes/ticket.tsx";
 import * as $$0 from "./islands/components/peices/ticket.tsx";
 import * as $$1 from "./islands/components/pickers/calender.tsx";
-import * as $$2 from "./islands/components/pickers/dropdown.tsx";
-import * as $$3 from "./islands/components/pickers/image.tsx";
+import * as $$2 from "./islands/components/pickers/image.tsx";
+import * as $$3 from "./islands/components/pickers/select.tsx";
 import * as $$4 from "./islands/components/pickers/time.tsx";
 import * as $$5 from "./islands/events/components/card.tsx";
 import * as $$6 from "./islands/events/creation/createForm.tsx";
@@ -103,8 +103,8 @@ const manifest = {
   islands: {
     "./islands/components/peices/ticket.tsx": $$0,
     "./islands/components/pickers/calender.tsx": $$1,
-    "./islands/components/pickers/dropdown.tsx": $$2,
-    "./islands/components/pickers/image.tsx": $$3,
+    "./islands/components/pickers/image.tsx": $$2,
+    "./islands/components/pickers/select.tsx": $$3,
     "./islands/components/pickers/time.tsx": $$4,
     "./islands/events/components/card.tsx": $$5,
     "./islands/events/creation/createForm.tsx": $$6,
