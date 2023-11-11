@@ -1,7 +1,7 @@
 import { Signal } from "@preact/signals";
 import { StateUpdater, useState, useEffect } from "preact/hooks";
 import { Event } from "@/utils/db/kv.types.ts";
-import ImagePicker from "@/components/pickers/image.tsx";
+import ImagePicker from "../../components/pickers/image.tsx";
 import CTA from "@/components/buttons/cta.tsx";
 
 export default function StageThree({

@@ -1,4 +1,4 @@
-import Ticket from "@/islands/peices/ticket.tsx";
+import Ticket from "@/islands/components/peices/ticket.tsx";
 
 export default function ViewTicket() {
   const ticket = `${crypto.randomUUID()}_${crypto.randomUUID()}_${crypto.randomUUID()}`;

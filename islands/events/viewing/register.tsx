@@ -13,7 +13,7 @@ import Button from "@/components/buttons/button.tsx";
 import ChevronLeft from "$tabler/chevron-left.tsx";
 import { createPortal } from "preact/compat";
 import Loading from "$tabler/loader-2.tsx";
-import Ticket from "@/islands/peices/ticket.tsx";
+import Ticket from "@/islands/components/peices/ticket.tsx";
 
 export default function EventRegister({
   eventID,
@@ -78,14 +78,14 @@ export default function EventRegister({
           {/* We could not show this UI at all when there's only 1 ticket, but I think this may be better UX since it makes it a bit more obvious the user can't get more */}
           <span class="text-xs font-medium">
             Tickets
-            {showTimes.find((s) => s.id == showTime.value)!.multiPurchase &&
+            {!showTimes.find((s) => s.id == showTime.value)!.multiPurchase &&
               ": 1 (max)"}
           </span>
-          {!showTimes.find((s) => s.id == showTime.value)!.multiPurchase && (
+          {showTimes.find((s) => s.id == showTime.value)!.multiPurchase && (
             <div class="flex gap-2 items-center">
               <button
                 class="group hover:bg-gray-200 w-6 h-6 grid place-items-center rounded-md transition"
-                onClick={() => tickets.value > 1 && (tickets.value = 0)}
+                onClick={() => tickets.value > 1 && (tickets.value--)}
                 type="button"
               >
                 <Minus class="h-4 w-4 text-gray-500 group-hover:text-gray-700" />
@@ -96,7 +96,7 @@ export default function EventRegister({
               <button
                 class="group hover:bg-gray-200 w-6 h-6 grid place-items-center rounded-md transition"
                 type="button"
-                onClick={() => (tickets.value = 1)}
+                onClick={() => (tickets.value++)}
               >
                 <Plus class="h-4 w-4 text-gray-500 group-hover:text-gray-700" />
               </button>

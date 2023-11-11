@@ -1,5 +1,5 @@
 import { useState } from "preact/hooks";
-import ImagePicker from "@/components/pickers/image.tsx";
+import ImagePicker from "../../components/pickers/image.tsx";
 import { Event } from "@/utils/db/kv.types.ts";
 
 export default function EditingImagePicker({
