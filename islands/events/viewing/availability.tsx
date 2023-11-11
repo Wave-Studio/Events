@@ -8,10 +8,12 @@ export const Avalibility = ({
 	maxTickets,
 	tickets,
 	happened,
+	windowClosed
 }: {
 	tickets: number;
 	maxTickets: number;
 	happened: boolean;
+	windowClosed: boolean;
 }): JSX.Element => {
 	// semi-jank solution
 	const className = "flex items-center [&>svg]:w-5 [&>svg]:mr-2";
@@ -31,9 +33,14 @@ export const Avalibility = ({
 		<p class={`text-red-500 flex ${className}`}>
 			<CalenderOff /> Already occured
 		</p>,
+		<p class={`text-red-500 flex ${className}`}>
+			<CalenderOff /> Purchase window closed
+		</p>,
 	];
 
 	if (happened) return messages[4];
+
+	if (windowClosed) return messages[5];
 
 	if (maxTickets - tickets < 10) return messages[3];
 

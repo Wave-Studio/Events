@@ -56,6 +56,16 @@ export const handler: Handlers = {
       });
     }
 
+    if (showtime.lastPurchaseDate != undefined) {
+      const lastPurchaseDate = new Date(showtime.lastPurchaseDate).valueOf();
+
+      if (lastPurchaseDate < Date.now()) {
+        return new Response(JSON.stringify({ error: "The purchase window for this event time has ended" }), {
+          status: 400,
+        });
+      }
+    }
+
     if (showtime.soldTickets >= (showtime.maxTickets ?? 75)) {
       return new Response(JSON.stringify({ error: "Sold out" }), {
         status: 400,

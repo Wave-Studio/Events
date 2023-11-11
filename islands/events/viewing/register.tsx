@@ -28,8 +28,8 @@ export default function EventRegister({
   additionalFields: Field[];
   ticket?: string;
 }) {
-  const [open, setOpen] = useState(true);
-  const page = useSignal(2);
+  const [open, setOpen] = useState(false);
+  const page = useSignal(0);
   const tickets = useSignal(1);
   const error = useSignal<string | undefined>(undefined);
   const showTime = useSignal(showTimes[0].id);
@@ -182,7 +182,8 @@ export default function EventRegister({
           {page.value == 0 ? (
             <>
               <div class="flex gap-2 scrollbar-fancy snap-x overflow-x-auto">
-                {showTimes.map((time) => (
+                {showTimes
+                .map((time) => (
                   <button
                     onClick={() => (showTime.value = time.id)}
                     class={`border transition select-none px-2 rounded-md font-medium whitespace-pre ${

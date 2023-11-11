@@ -16,6 +16,7 @@ import EventSettings from "@/islands/events/editing/settings.tsx";
 import Button from "@/components/buttons/button.tsx";
 import ShowTimeSettings from "@/islands/events/editing/showtimesettings.tsx";
 import EventDeletion from "@/islands/events/editing/delete.tsx";
+import EventHeader from "@/components/layout/eventEditNavbar.tsx";
 
 export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
   const { event, eventID, user } = ctx.state.data;
@@ -35,53 +36,6 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
         },
       ],
     });
-
-  const Header = () => {
-    const buttons: { label: string; icon: ComponentChildren; href: string }[] =
-      [
-        {
-          label: "Scan Tickets",
-          icon: <Scan class="w-6 h-6" />,
-          href: "./scanning",
-        },
-        // all tickets and team members are potentially going to be popups
-        {
-          label: "All Tickets",
-          icon: <Tickets class="w-6 h-6" />,
-          href: "./tickets",
-        },
-        {
-          label: "Team Members",
-          icon: <Users class="w-6 h-6" />,
-          href: "./",
-        },
-        {
-          label: "Public Page",
-          icon: <World class="w-6 h-6" />,
-          href: "./",
-        },
-      ];
-
-    return (
-      <div className="flex justfy-between">
-        <a href="/events/organizing">
-          <CTA
-            btnType="cta"
-            btnSize="sm"
-            className="!w-10 sm:!w-40 grid place-items-center"
-          >
-            <p class="hidden sm:block">Back to events</p>
-            <ChevronLeft class="sm:hidden w-6 h-6 mr-0.5" />
-          </CTA>
-        </a>
-        <div className="flex gap-2 md:gap-4 ml-auto">
-          {buttons.map((btn) => (
-            <Button {...btn} />
-          ))}
-        </div>
-      </div>
-    );
-  };
 
   const Section = ({
     children,
@@ -105,7 +59,7 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
     <main class="flex flex-col grow">
       <div className="grow ">
         <div className="px-4 max-w-screen-md w-full mx-auto flex flex-col space-y-28 mb-20">
-          <Header />
+          <EventHeader editPositon={-1} role={user.role} />
           <Section name="Banner">
             <EditingImagePicker
               event={event}

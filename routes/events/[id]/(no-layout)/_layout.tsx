@@ -5,4 +5,6 @@ export const config: LayoutConfig = {
   skipInheritedLayouts: true, // Skip already inherited layouts
 };
 
+// GO TO _layout.tsx IN THE PREVIOUS FOLDER!111!!!! - Bloxs
+
 export default Layout;

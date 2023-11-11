@@ -15,8 +15,9 @@ export const ShowTimes = ({event, user}: {event: Event, user: EventContext["data
 						if (user && user.role != undefined) return true;
 						return !happened(time.startDate, time.startTime);
 					})
+					.sort((a, b) => new Date(a.startDate).valueOf() - new Date(b.startDate).valueOf())
 					.map((time) => (
-						<div class="rounded-md border p-4 snap-start w-72 min-w-[18rem] select-none">
+						<div class="rounded-md border p-4 snap-start w-72 min-w-[18rem] select-none flex flex-col">
 							<p class="font-medium">
 								{fmtDate(new Date(time.startDate))}{" "}
 								<span class="lowercase">
@@ -28,7 +29,7 @@ export const ShowTimes = ({event, user}: {event: Event, user: EventContext["data
 										})`}
 								</span>
 							</p>
-							<div class="flex flex-col gap-2 text-sm">
+							<div class="flex flex-col gap-2 text-sm last:mt-auto">
 								{time.lastPurchaseDate && (
 									<p>
 										<span class="text-gray-600">Sales end</span>{" "}
@@ -40,6 +41,7 @@ export const ShowTimes = ({event, user}: {event: Event, user: EventContext["data
 										maxTickets={time.maxTickets}
 										tickets={time.soldTickets}
 										happened={happened(time.startDate, time.startTime)}
+										windowClosed={time.lastPurchaseDate != undefined ? happened(time.lastPurchaseDate!) : false}
 									/>
 								}
 							</div>

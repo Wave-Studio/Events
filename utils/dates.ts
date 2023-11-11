@@ -15,13 +15,15 @@ const timeFmt = new Intl.DateTimeFormat("en-US", {
 
 export const happened = (startDate: string, startTime?: string) => {
 	const date = new Date(startDate);
+
 	if (startTime) {
 		// 5 min buffer for tickets
 		date.setMinutes(new Date(startTime).getMinutes() + 5);
 	} else {
 		date.setDate(date.getDate() + 1);
 	}
-	return date.getTime() < Date.now();
+
+	return date.valueOf() < Date.now();
 };
 
 export const fmtDate = (date: Date) => dateFmt.format(date);

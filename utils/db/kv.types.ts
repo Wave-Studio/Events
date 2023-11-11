@@ -111,7 +111,7 @@ export const enum Roles {
   OWNER = 0, // all perms
   ADMIN = 1, // all perms
   MANAGER = 2, // all perms besides deletion
-  SCANNER = 3, // can scan people in and add people
+  SCANNER = 3, // can scan people in and add people in terms of tickets
   //ACCOUNTING = 4 // can manage billing only
 }
 

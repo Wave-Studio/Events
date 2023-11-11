@@ -100,6 +100,9 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
 
   const clientShowTimes = event.showTimes
     .filter((time) => {
+      if (time.lastPurchaseDate != undefined && happened(time.lastPurchaseDate))
+        return false;
+
       return !happened(time.startDate, time.startTime);
     })
     .map((time) => {
@@ -198,6 +201,7 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
                     event.showTimes[0].startDate,
                     event.showTimes[0].startTime,
                   )}
+                  windowClosed={event.showTimes[0].lastPurchaseDate != undefined ? happened(event.showTimes[0].lastPurchaseDate) : false}
                 />
               </div>
             )}
