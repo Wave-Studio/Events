@@ -14,6 +14,7 @@ import Search from "$tabler/search.tsx";
 import Invite from "@/islands/events/teams/invite.tsx";
 import ManageUser from "@/islands/events/teams/manage.tsx";
 import Crown from "$tabler/crown.tsx";
+import { Roles } from "@/utils/db/kv.ts";
 
 export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
   const { event, eventID, user } = ctx.state.data;
@@ -46,34 +47,26 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
         <div class="flex flex-col border divide-y rounded-md">
           {event.members.map((m) => (
             <>
-              <div class="p-3 flex group gap-2">
-                <div class="grow my-auto">
-                  <p class="font-medium max-w-sm truncate">{m.email}</p>
+              {m.role == Roles.OWNER ? (
+                <div class="p-3 flex group gap-2">
+                  <div class="grow my-auto">
+                    <p class="font-medium max-w-sm truncate">{m.email}</p>
+                  </div>
+
+                  <p class="my-auto font-medium">Owner</p>
+
+                  {/* I couldn't decide if I prefer it before or after - Bloxs */}
+                  <Crown />
                 </div>
+              ) : (
+                <div class="p-3 flex group gap-2">
+                  <div class="grow my-auto">
+                    <p class="font-medium max-w-sm truncate">{m.email}</p>
+                  </div>
 
-                <ManageUser user={m} eventID={eventID} />
-              </div>
-
-              {/* Owner rank */}
-              <div class="p-3 flex group gap-2">
-                <div class="grow my-auto">
-                  <p class="font-medium max-w-sm truncate">{m.email}</p>
+                  <ManageUser user={m} eventID={eventID} />
                 </div>
-
-                <p class="my-auto font-medium">Owner</p>
-
-                {/* I couldn't decide if I prefer it before or after - Bloxs */}
-                <Crown />
-              </div>
-
-              {/* Probably going to be removed */}
-              <div class="p-3 flex gap-2 items-center">
-                <div class="grow my-auto">
-                  <p class="font-medium max-w-sm truncate">{m.email}</p>
-                </div>
-                <p class="italic text-sm">Invatation Pending</p>
-                <Trashcan />
-              </div>
+              )}
             </>
           ))}
         </div>
