@@ -25,7 +25,7 @@ export default function Dropdown({
         <div
           className={`${
             open.value ? "block" : "hidden"
-          } absolute p-2 bg-white border rounded-md text-center shadow-xl top-10 select-none transition z-50`}
+          } absolute p-2 bg-white border rounded-md shadow-xl top-10 select-none transition z-50 grow`}
         >
           {options.map((option) => {
             return (
@@ -34,7 +34,7 @@ export default function Dropdown({
                   open.value = false;
                   option.onClick && option.onClick();
                 }}
-                class="min-w-max hover:bg-gray-200 px-2 py-1 font-medium rounded-md"
+                class="min-w-max hover:bg-gray-200 px-2 py-1 font-medium rounded-md w-full text-left"
               >
                 {option.content}
               </button>

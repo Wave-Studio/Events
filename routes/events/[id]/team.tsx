@@ -48,7 +48,7 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
         <Select options={["Role Desc", "Role Asc", "Email A-Z", "Email Z-A"]} />
       </div>
       <div>
-        <h2 class="font-medium text-sm mb-0.5">Manage users</h2>
+        <h2 class="font-medium text-sm mb-0.5">All Team Members</h2>
         <div class="flex flex-col border divide-y rounded-md">
           {event.members.map((m) => (
             <>

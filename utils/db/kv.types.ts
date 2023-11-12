@@ -61,7 +61,7 @@ export const defaultEvent: Event = {
       id: crypto.randomUUID(),
       soldTickets: 0,
       maxTickets: 75,
-	  multiPurchase: true,
+	    multiPurchase: true,
     },
   ],
 
