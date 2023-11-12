@@ -21,13 +21,15 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
   return (
     <main className="px-4 max-w-screen-md w-full mx-auto flex flex-col gap-2 grow mb-10">
       <EventHeader editPositon={1} role={user.role} />
-      <div class="flex gap-2 mt-8">
+      <div class="flex gap-2 mt-8 flex-col md:flex-row">
         <input
           class="rounded-md border py-1.5 px-2 grow"
           placeholder="Search..."
         />
-        <Button icon={<Search class="w-5 h-5" />} label="Search Users" />
-        <Select options={["Purchused", "Email A-Z", "Email Z-A"]} />
+        <div class="flex gap-2">
+          <Select options={["Purchused", "Email A-Z", "Email Z-A"]} className="grow " />
+          <Button icon={<Search class="w-5 h-5" />} label="Search Users" />
+        </div>
       </div>
       <div class="flex gap-2 scrollbar-fancy snap-x overflow-x-auto">
         <button
@@ -82,7 +84,7 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
                   </div>
                 </Dropdown>
               </div>
-              <div class="flex gap-2">
+              <div class="flex gap-2 flex-wrap">
                 <div class="rounded-md border text-sm font-semibold px-1 text-gray-700 bg-gray-100">
                   2 tickets
                 </div>

@@ -26,7 +26,7 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
   return (
     <main className="px-4 max-w-screen-md w-full mx-auto flex flex-col gap-8 grow mb-10">
       <EventHeader editPositon={2} role={user.role} />
-      <div class="rounded-md border p-4 mb-6">
+      <div class="rounded-md border p-4 mb-6 mt-2">
         <h2 class="text-lg font-semibold">Add Team Members</h2>
         <p class="text-sm">
           Invite a team member! They'll recive an emil promtly after you invite
@@ -34,13 +34,19 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
         </p>
         <Invite eventID={eventID} />
       </div>
-      <div class="flex gap-2">
+      <div class="flex gap-2 flex-col md:flex-row ">
         <input
           class="rounded-md border py-1.5 px-2 grow"
           placeholder="Search..."
         />
-        <Button icon={<Search class="w-5 h-5" />} label="Search Users" />
-        <Select options={["Role Desc", "Role Asc", "Email A-Z", "Email Z-A"]} />
+        <div class="flex gap-2">
+          <Select
+            options={["Role Desc", "Role Asc", "Email A-Z", "Email Z-A"]}
+            selectClassName="py-2"
+            className="grow"
+          />
+          <Button icon={<Search class="w-5 h-5" />} label="Search Users" />
+        </div>
       </div>
       <div>
         <h2 class="font-medium text-sm mb-0.5">All Team Members</h2>

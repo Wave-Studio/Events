@@ -1,12 +1,13 @@
 import Button from "@/components/buttons/button.tsx";
 import Select from "@/islands/components/pickers/select.tsx";
 import Plus from "$tabler/plus.tsx";
-import { signal } from "@preact/signals";
+import { signal, useSignal } from "@preact/signals";
 import { Roles } from "@/utils/db/kv.types.ts";
 
 export default function Invite({ eventID }: { eventID: string }) {
   const inviteEmail = signal<string>("");
   const role = signal<Roles>(Roles.ADMIN);
+  const error = useSignal<undefined | string>(undefined);
 
   const invite = async () => {
     if (inviteEmail.value == "") return;
@@ -20,17 +21,18 @@ export default function Invite({ eventID }: { eventID: string }) {
     const json = await res.json();
 
     if (json.success) {
+      error.value = undefined;
       inviteEmail.value = "";
       role.value = Roles.ADMIN;
       // Maybe eventually updated client side to not refresh - Bloxs
       location.reload();
+    } else if (json.error || !json.success) {
+      error.value = json.error || "An unknown error occured";
     }
-
-    // TODO: @lukas Add ui rendering for if there's an error - Bloxs
   };
 
   return (
-    <div class="flex mt-4 gap-2">
+    <div class="flex mt-4 gap-2 flex-col md:flex-row">
       <input
         class="rounded-md border py-1.5 px-2 grow"
         placeholder="Team Member Email"
@@ -38,17 +40,21 @@ export default function Invite({ eventID }: { eventID: string }) {
         value={inviteEmail}
         onInput={(e) => (inviteEmail.value = e.currentTarget.value)}
       />
-      <Select
-        options={["Admin", "Manager", "Scanner"]}
-        updateOption={(option) => {
-          role.value = (option + 1) as 1 | 2 | 3;
-        }}
-      />
-      <Button
-        icon={<Plus class="w-6 h-6" />}
-        label="Add Member"
-        onClick={invite}
-      />
+      <div class="flex gap-2">
+        <Select
+          options={["Admin", "Manager", "Scanner"]}
+          updateOption={(option) => {
+            role.value = (option + 1) as 1 | 2 | 3;
+          }}
+          className="grow md:grow-0"
+        />
+        <Button
+          icon={<Plus class="w-6 h-6" />}
+          label="Add Member"
+          onClick={invite}
+        />
+      </div>
+      {error.value && <p class="text-red-500">Error: {error.value}</p>}
     </div>
   );
 }
