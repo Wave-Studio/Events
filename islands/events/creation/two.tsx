@@ -33,7 +33,7 @@ export default function StageTwo({
 
   const save = () => {
     eventState.value.multiEntry = mEntry;
-	eventState.value.additionalFields = fields.filter((f) => Boolean(f.name));
+    eventState.value.additionalFields = fields.filter((f) => Boolean(f.name));
   };
 
   const addField = () => {

@@ -24,20 +24,26 @@ export const handler: Handlers = {
     });
 
     try {
-      basicParamValidation.validateSync({
-        eventID,
-        email,
-        showtimeID,
-        firstName,
-        lastName,
-        fieldData,
-      }, {
-        strict: true,
-      });
+      basicParamValidation.validateSync(
+        {
+          eventID,
+          email,
+          showtimeID,
+          firstName,
+          lastName,
+          fieldData,
+        },
+        {
+          strict: true,
+        },
+      );
     } catch (e) {
-      return new Response(JSON.stringify({ error: "Invalid parameters", hint: e.message }), {
-        status: 400,
-      });
+      return new Response(
+        JSON.stringify({ error: "Invalid parameters", hint: e.message }),
+        {
+          status: 400,
+        },
+      );
     }
 
     const event = await kv.get<Event>(["event", eventID]);
@@ -60,9 +66,14 @@ export const handler: Handlers = {
       const lastPurchaseDate = new Date(showtime.lastPurchaseDate).valueOf();
 
       if (lastPurchaseDate < Date.now()) {
-        return new Response(JSON.stringify({ error: "The purchase window for this event time has ended" }), {
-          status: 400,
-        });
+        return new Response(
+          JSON.stringify({
+            error: "The purchase window for this event time has ended",
+          }),
+          {
+            status: 400,
+          },
+        );
       }
     }
 
@@ -95,15 +106,16 @@ export const handler: Handlers = {
         } else {
           const loggedInUser = await getUser(req);
 
-          const organizer = event.value.members.find((m) =>
-            m.email == loggedInUser?.email
+          const organizer = event.value.members.find(
+            (m) => m.email == loggedInUser?.email,
           );
 
           if (
             organizer == undefined ||
             ![Roles.OWNER, Roles.ADMIN, Roles.MANAGER, Roles.SCANNER].includes(
               organizer.role,
-            ) || loggedInUser == undefined
+            ) ||
+            loggedInUser == undefined
           ) {
             return new Response(
               JSON.stringify({

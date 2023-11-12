@@ -1,7 +1,7 @@
 import { useEffect, useState } from "preact/hooks";
 import { IS_BROWSER } from "$fresh/runtime.ts";
 // Currently causes issues, hopefully it's fixed soon
-import { BarcodeDetector } from "npm:barcode-detector";
+//import { BarcodeDetector } from "npm:barcode-detector";
 
 export default function Scanner({ className }: { className?: string }) {
   const [error, setError] = useState<string | null>(null);
@@ -13,15 +13,15 @@ export default function Scanner({ className }: { className?: string }) {
       if (initialized) return;
       setInitialized(true);
       const canvas = document.getElementById("scanui") as HTMLCanvasElement;
-        const barcodeReaderAPI = window["BarcodeDetector"] ?? BarcodeDetector;
-        if (barcodeReaderAPI == null) {
-          return setError(
-            "BarcodeDetector API is required but not supported on your device! Please try another browser.",
-          );
-        }
-        const reader = new barcodeReaderAPI({
-          formats: ["qr_code"],
-        });
+      const barcodeReaderAPI = window["BarcodeDetector"] ?? BarcodeDetector;
+      if (barcodeReaderAPI == null) {
+        return setError(
+          "BarcodeDetector API is required but not supported on your device! Please try another browser.",
+        );
+      }
+      const reader = new barcodeReaderAPI({
+        formats: ["qr_code"],
+      });
       if (canvas == null) return;
       const ctx = canvas.getContext("2d", {
         willReadFrequently: true,
@@ -60,7 +60,7 @@ export default function Scanner({ className }: { className?: string }) {
             // }
           };
 
-		  // TODO: @quick007 Fix this because our brains are cooking in their own fluids - Bloxs
+          // TODO: @quick007 Fix this because our brains are cooking in their own fluids - Bloxs
           console.log(
             "Video:",
             video.videoWidth,
@@ -79,10 +79,12 @@ export default function Scanner({ className }: { className?: string }) {
             video.videoHeight - (video.videoHeight - canvas.height) / 2,
 
             "Aspects: ",
-			((video.videoWidth - (video.videoWidth - canvas.width) / 2) - ((video.videoWidth - canvas.width) / 2))
-			/
-			((video.videoHeight - (video.videoHeight - canvas.height) / 2) - ((video.videoHeight - canvas.height) / 2)),
-
+            (video.videoWidth -
+              (video.videoWidth - canvas.width) / 2 -
+              (video.videoWidth - canvas.width) / 2) /
+              (video.videoHeight -
+                (video.videoHeight - canvas.height) / 2 -
+                (video.videoHeight - canvas.height) / 2),
 
             canvas.width / canvas.height,
           );

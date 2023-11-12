@@ -16,7 +16,7 @@ export default function App({ Component }: AppProps) {
       </head>
       <body class="text-gray-900 [scrollbar-gutter:stable]" /*f-client-nav*/>
         {/* <Partial name="body"> */}
-          <Component />
+        <Component />
         {/* </Partial> */}
       </body>
     </html>

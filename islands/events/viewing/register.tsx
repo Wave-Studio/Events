@@ -20,7 +20,7 @@ export default function EventRegister({
   showTimes,
   email,
   additionalFields,
-  ticket
+  ticket,
 }: {
   eventID: string;
   showTimes: Partial<ShowTime>[];
@@ -85,7 +85,7 @@ export default function EventRegister({
             <div class="flex gap-2 items-center">
               <button
                 class="group hover:bg-gray-200 w-6 h-6 grid place-items-center rounded-md transition"
-                onClick={() => tickets.value > 1 && (tickets.value--)}
+                onClick={() => tickets.value > 1 && tickets.value--}
                 type="button"
               >
                 <Minus class="h-4 w-4 text-gray-500 group-hover:text-gray-700" />
@@ -96,7 +96,7 @@ export default function EventRegister({
               <button
                 class="group hover:bg-gray-200 w-6 h-6 grid place-items-center rounded-md transition"
                 type="button"
-                onClick={() => (tickets.value++)}
+                onClick={() => tickets.value++}
               >
                 <Plus class="h-4 w-4 text-gray-500 group-hover:text-gray-700" />
               </button>
@@ -182,8 +182,7 @@ export default function EventRegister({
           {page.value == 0 ? (
             <>
               <div class="flex gap-2 scrollbar-fancy snap-x overflow-x-auto">
-                {showTimes
-                .map((time) => (
+                {showTimes.map((time) => (
                   <button
                     onClick={() => (showTime.value = time.id)}
                     class={`border transition select-none px-2 rounded-md font-medium whitespace-pre ${
@@ -309,9 +308,9 @@ export default function EventRegister({
   );
 }
 
-export const Contact = ({email}: {email: string}) => {
+export const Contact = ({ email }: { email: string }) => {
   const [open, setOpen] = useState(false);
-  const checked = useSignal(false)
+  const checked = useSignal(false);
   return (
     <>
       <button
@@ -322,15 +321,36 @@ export const Contact = ({email}: {email: string}) => {
       </button>
       {globalThis.document != undefined &&
         createPortal(
-          <Popup isOpen={open} close={() => {setOpen(false); checked.value = false}}>
+          <Popup
+            isOpen={open}
+            close={() => {
+              setOpen(false);
+              checked.value = false;
+            }}
+          >
             <h2 class="font-bold text-lg">Contact Organizer</h2>
             <label class="flex mt-4 items-start cursor-pointer">
-              <input type="checkbox" name="agreed" class="mr-4 mt-1.5" onClick={(e) => checked.value = e.currentTarget.checked} />
+              <input
+                type="checkbox"
+                name="agreed"
+                class="mr-4 mt-1.5"
+                onClick={(e) => (checked.value = e.currentTarget.checked)}
+              />
               <p>
-              I agree to interacting with this email in a professional way and following our guildlines as outlined in our <a href="/terms-of-service" class="font-medium underline">terms and conditions</a>
-            </p></label>
+                I agree to interacting with this email in a professional way and
+                following our guildlines as outlined in our{" "}
+                <a href="/terms-of-service" class="font-medium underline">
+                  terms and conditions
+                </a>
+              </p>
+            </label>
             {checked.value && (
-              <p class="mt-6">Organizer contact email: <a href={`mailto:${email}`} class="font-medium underline">{email}</a></p>
+              <p class="mt-6">
+                Organizer contact email:{" "}
+                <a href={`mailto:${email}`} class="font-medium underline">
+                  {email}
+                </a>
+              </p>
             )}
           </Popup>,
           document.body,

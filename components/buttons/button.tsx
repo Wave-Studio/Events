@@ -40,7 +40,9 @@ const Button = ({
           <CTA
             btnType="secondary"
             btnSize="sm"
-            className={`${small ? "!w-8 !h-8": "!w-10"} grid place-items-center `}
+            className={`${
+              small ? "!w-8 !h-8" : "!w-10"
+            } grid place-items-center `}
             label={label}
           >
             {icon}

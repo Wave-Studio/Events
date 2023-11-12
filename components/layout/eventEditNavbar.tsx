@@ -48,8 +48,8 @@ export default function EventHeader({
         href: "./editing",
       };
     } else {
-			buttons.splice(editPositon, 1)
-		}
+      buttons.splice(editPositon, 1);
+    }
   }
 
   return (

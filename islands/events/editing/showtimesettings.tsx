@@ -76,7 +76,7 @@ export default function ShowTimeSettings({
               id: crypto.randomUUID(),
               soldTickets: 0,
               maxTickets: 75,
-              multiPurchase: false
+              multiPurchase: false,
             },
           ]))
         }

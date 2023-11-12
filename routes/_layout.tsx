@@ -8,9 +8,9 @@ export default defineLayout((req, { Component }) => {
     <div className="min-h-screen flex flex-col">
       <Navbar /*f-client-nav*/ />
       {/* <Partial name="navbar"> */}
-        <div className="flex flex-col grow">
-          <Component />
-        </div>
+      <div className="flex flex-col grow">
+        <Component />
+      </div>
       {/* </Partial> */}
       <Footer />
     </div>

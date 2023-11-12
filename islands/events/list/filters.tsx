@@ -23,18 +23,18 @@ export default function HomeFilters({
         onSubmit={(e) => {
           e.preventDefault();
 
-		  searchParams.set("o", ascending.value ? "a" : "d");
-		  searchParams.set("q", query.value.trim());
+          searchParams.set("o", ascending.value ? "a" : "d");
+          searchParams.set("q", query.value.trim());
 
           if (query.value.trim() == "") {
             searchParams.delete("q");
-          } 
+          }
 
-		  if (ascending.value) {
-			searchParams.delete("o");
-		  }
+          if (ascending.value) {
+            searchParams.delete("o");
+          }
 
-		  console.log(searchParams.toString());
+          console.log(searchParams.toString());
 
           location.search =
             searchParams.toString().trim() == ""
@@ -52,8 +52,8 @@ export default function HomeFilters({
           label={`Sort ${ascending.value ? "ascending" : "descending"}`}
           icon={ascending.value ? <SortAscending /> : <SortDescending />}
           onClick={() => {
-			ascending.value = !ascending.value;
-		  }}
+            ascending.value = !ascending.value;
+          }}
         />
         <CTA btnType="cta" type="submit">
           Apply

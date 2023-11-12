@@ -19,17 +19,18 @@ export default function Ticket({
 
   useEffect(() => {
     (async () => {
-
-      await new Promise((resolve) => setTimeout(resolve, 400 + (Math.random() * 100 + 1) ));
+      await new Promise((resolve) =>
+        setTimeout(resolve, 400 + (Math.random() * 100 + 1)),
+      );
 
       const qrObj = (await qrcode(id, {
-        size: 200
+        size: 200,
         // No clue why typings are wrong
       })) as unknown as string;
 
       qr.value = qrObj;
     })();
-  }, [])
+  }, []);
 
   return (
     <div class="flex flex-col items-center">
@@ -40,14 +41,11 @@ export default function Ticket({
       <div class="bg-gray-100 border font-semibold text-gray-700 px-1.5 text-sm rounded-md w-max mt-4 mb-2 ">
         {tickets} ticket{tickets > 1 && "s"}
       </div>
-      {
-        qr.value != undefined ?
-        <img
-          src={qr.value}
-          alt="QR Code"
-          width={200}
-          /> : <QR />
-      }
+      {qr.value != undefined ? (
+        <img src={qr.value} alt="QR Code" width={200} />
+      ) : (
+        <QR />
+      )}
       <p class="text-xs text-gray-500">ID: {id}</p>
       <div class="grid gap-2">
         <div>
