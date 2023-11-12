@@ -1,4 +1,5 @@
 import { defineRoute, LayoutConfig, RouteContext } from "$fresh/server.ts";
+import { Head } from "$fresh/runtime.ts";
 import { Event, getUser, kv } from "@/utils/db/kv.ts";
 import { isUUID } from "@/utils/db/misc.ts";
 import { Roles } from "@/utils/db/kv.types.ts";
@@ -32,7 +33,7 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
                 format: fmt,
               },
             ],
-          }),
+          })
         );
 
       return {
@@ -100,8 +101,11 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
 
   const clientShowTimes = event.showTimes
     .filter((time) => {
-      if (time.lastPurchaseDate != undefined && happened(time.lastPurchaseDate))
+      if (
+        time.lastPurchaseDate != undefined && happened(time.lastPurchaseDate)
+      ) {
         return false;
+      }
 
       return !happened(time.startDate, time.startTime);
     })
@@ -110,112 +114,142 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
       return st;
     });
 
-  return (
-    <div className="flex flex-col min-h-screen">
-      <div class="flex flex-col">
-        {banner() ? (
-          <picture>
-            {Object.entries(banner()!).map(([width, [png, webp]]) => (
-              <>
-                <source
-                  srcset={png}
-                  type="image/png"
-                  media={`(max-width: ${width}px)`}
-                />
-                <source
-                  srcset={webp}
-                  type="image/webp"
-                  media={`(max-width: ${width}px)`}
-                />
-              </>
-            ))}
-            <img
-              src={banner()![480]?.[0]}
-              alt="Project icon"
-              class={`${
-                event.banner.fill ? "object-fill" : "object-cover"
-              } h-56 md:h-96 w-full rounded-b-lg md:rounded-b-2xl`}
-            />
-          </picture>
-        ) : (
-          <img
-            class="object-cover h-56 md:h-96 rounded-b-lg md:rounded-b-2xl "
-            src="/placeholder-small.jpg"
-            srcset="/placeholder-small.jpg 640w, /placeholder.jpg 1440w, /placeholder-full.jpg 2100w"
-            alt="Placeholder Image"
-          />
-        )}
+  const truncate = (str: string, len: number) => str.length > len ? str.slice(0, len) + "..." : str;
 
-        {user && user.role != undefined ? (
-          user.role <= 2 && (
-            <>
+  return (
+    <>
+      <Head>
+        <title>{event.name} - Events</title>
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={`http://events.deno.dev/events/${eventID}`} />
+        <meta
+          property="og:image"
+          content="http://events.deno.dev/favicon.ico"
+        />
+        <meta property="og:description" content={event.description ?? "Link to an event hosted on Events - Open Source Ticketing tool"} />
+        <meta name="description" content={event.description ?? "Link to an event hosted on Events - Open Source Ticketing tool"} />
+        <meta name="theme-color" content="#DC6843" />
+      </Head>
+      <div className="flex flex-col min-h-screen">
+        <div class="flex flex-col">
+          {banner()
+            ? (
+              <picture>
+                {Object.entries(banner()!).map(([width, [png, webp]]) => (
+                  <>
+                    <source
+                      srcset={png}
+                      type="image/png"
+                      media={`(max-width: ${width}px)`}
+                    />
+                    <source
+                      srcset={webp}
+                      type="image/webp"
+                      media={`(max-width: ${width}px)`}
+                    />
+                  </>
+                ))}
+                <img
+                  src={banner()![480]?.[0]}
+                  alt="Project icon"
+                  class={`${
+                    event.banner.fill ? "object-fill" : "object-cover"
+                  } h-56 md:h-96 w-full rounded-b-lg md:rounded-b-2xl`}
+                />
+              </picture>
+            )
+            : (
+              <img
+                class="object-cover h-56 md:h-96 rounded-b-lg md:rounded-b-2xl "
+                src="/placeholder-small.jpg"
+                srcset="/placeholder-small.jpg 640w, /placeholder.jpg 1440w, /placeholder-full.jpg 2100w"
+                alt="Placeholder Image"
+              />
+            )}
+
+          {user && user.role != undefined
+            ? (
+              user.role <= 2 && (
+                <>
+                  <a
+                    href="/events/organizing"
+                    class="group pl-0.5 rounded-md bg-black/20 border border-gray-300/20 backdrop-blur font-medium text-white pr-1.5 absolute top-3 left-3 text-sm flex items-center"
+                  >
+                    <Left class="w-4 h-4 mr-1 group transition group-hover:-translate-x-0.5" />
+                    {" "}
+                    All Events
+                  </a>
+                  <a
+                    href={`/events/${eventID}/editing`}
+                    class="rounded-md bg-black/20 border border-gray-300/20 backdrop-blur font-medium text-white px-1.5 absolute top-3 right-3 text-sm flex items-center"
+                  >
+                    Edit Event
+                  </a>
+                </>
+              )
+            )
+            : (
               <a
-                href="/events/organizing"
-                class="group pl-0.5 rounded-md bg-black/20 border border-gray-300/20 backdrop-blur font-medium text-white pr-1.5 absolute top-3 left-3 text-sm flex items-center"
-              >
-                <Left class="w-4 h-4 mr-1 group transition group-hover:-translate-x-0.5" />{" "}
-                All Events
-              </a>
-              <a
-                href={`/events/${eventID}/editing`}
+                href={`/events/attending`}
                 class="rounded-md bg-black/20 border border-gray-300/20 backdrop-blur font-medium text-white px-1.5 absolute top-3 right-3 text-sm flex items-center"
               >
-                Edit Event
+                Your tickets
               </a>
-            </>
-          )
-        ) : (
-          <a
-            href={`/events/attending`}
-            class="rounded-md bg-black/20 border border-gray-300/20 backdrop-blur font-medium text-white px-1.5 absolute top-3 right-3 text-sm flex items-center"
-          >
-            Your tickets
-          </a>
-        )}
-      </div>
-      <div className="max-w-2xl mx-auto w-full mb-36 md:mb-16 mt-4 md:-mt-28 flex flex-col px-4 static grow">
-        <Header />
-        <ShowTimes event={event} user={user} />
-        {event.showTimes.every((time) =>
-          happened(time.startDate, time.startTime),
-        ) ||
-        event.showTimes.every((time) => time.soldTickets == time.maxTickets) ? (
-          <div class="text-center mt-10 mb-4 mx-auto">
-            <p>This event is either fully booked or prefermances have ended.</p>
-            <p>Contact the organizer if you belive this is incorrect.</p>
-          </div>
-        ) : (
-          <>
-            <EventRegister
-              eventID={eventID}
-              showTimes={clientShowTimes}
-              email={user?.data.email}
-              additionalFields={event.additionalFields}
-            />
-            {event.showTimes.length === 1 && (
-              <div class="mx-auto mt-2 text-sm text-center">
-                <Avalibility
-                  tickets={event.showTimes[0].soldTickets}
-                  maxTickets={event.showTimes[0].maxTickets}
-                  happened={happened(
-                    event.showTimes[0].startDate,
-                    event.showTimes[0].startTime,
-                  )}
-                  windowClosed={event.showTimes[0].lastPurchaseDate != undefined ? happened(event.showTimes[0].lastPurchaseDate) : false}
-                />
-              </div>
             )}
-          </>
-        )}
+        </div>
+        <div className="max-w-2xl mx-auto w-full mb-36 md:mb-16 mt-4 md:-mt-28 flex flex-col px-4 static grow">
+          <Header />
+          <ShowTimes event={event} user={user} />
+          {event.showTimes.every((time) =>
+              happened(time.startDate, time.startTime)
+            ) ||
+              event.showTimes.every((time) =>
+                time.soldTickets == time.maxTickets
+              )
+            ? (
+              <div class="text-center mt-10 mb-4 mx-auto">
+                <p>
+                  This event is either fully booked or prefermances have ended.
+                </p>
+                <p>Contact the organizer if you belive this is incorrect.</p>
+              </div>
+            )
+            : (
+              <>
+                <EventRegister
+                  eventID={eventID}
+                  showTimes={clientShowTimes}
+                  email={user?.data.email}
+                  additionalFields={event.additionalFields}
+                />
+                {event.showTimes.length === 1 && (
+                  <div class="mx-auto mt-2 text-sm text-center">
+                    <Avalibility
+                      tickets={event.showTimes[0].soldTickets}
+                      maxTickets={event.showTimes[0].maxTickets}
+                      happened={happened(
+                        event.showTimes[0].startDate,
+                        event.showTimes[0].startTime,
+                      )}
+                      windowClosed={event.showTimes[0].lastPurchaseDate !=
+                          undefined
+                        ? happened(event.showTimes[0].lastPurchaseDate)
+                        : false}
+                    />
+                  </div>
+                )}
+              </>
+            )}
+        </div>
+        <p class="text-center max-w-sm mx-auto mb-4 text-sm px-4">
+          This event was made with{" "}
+          <a className="font-medium underline" href="/">
+            Events
+          </a>
+          , a simple and easy to use event booking platform.
+        </p>
+        <Footer includeWave={false} />
       </div>
-      <p class="text-center max-w-sm mx-auto mb-4 text-sm px-4">
-        This event was made with{" "}
-        <a className="font-medium underline" href="/">
-          Events
-        </a>
-        , a simple and easy to use event booking platform.
-      </p>
-      <Footer includeWave={false} />
-    </div>
+    </>
   );
 });

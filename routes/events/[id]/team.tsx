@@ -8,6 +8,10 @@ import Button from "@/components/buttons/button.tsx";
 import Plus from "$tabler/plus.tsx";
 import Select from "@/islands/components/pickers/select.tsx";
 import UserMinus from "$tabler/user-minus.tsx";
+import Dropdown from "@/islands/components/pickers/dropdown.tsx";
+import DotsVertical from "$tabler/dots-vertical.tsx";
+import { Trashcan } from "@/islands/components/dropinUI/trash.tsx";
+import Search from "$tabler/search.tsx"
 
 export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
   const { event, eventID, user } = ctx.state.data;
@@ -40,6 +44,7 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
           class="rounded-md border py-1.5 px-2 grow"
           placeholder="Search..."
         />
+        <Button icon={<Search class="w-5 h-5" />} label="Search Users" />
         <Select options={["Role Desc", "Role Asc", "Email A-Z", "Email Z-A"]} />
       </div>
       <div>
@@ -51,24 +56,51 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
                 <div class="grow my-auto">
                   <p class="font-medium max-w-sm truncate">{m.email}</p>
                 </div>
-                <div className="relative flex flex-col items-end md:items-center ">
-                  <button className={`w-8 grid place-items-center peer border border-red-200 bg-red-100 text-red-500 h-full rounded-md`}>
-                    <UserMinus class="w-5 h-5" />
-                  </button>
-                  <div className="absolute w-32 bg-white border rounded-md text-center shadow-xl top-10 select-none scale-95 opacity-0 peer-hover:scale-100 peer-hover:opacity-100 transition z-50">
-                    Remove User
-                  </div>
-                </div>
+
                 <Select
                   options={["Admin", "Manager", "Scanner"]}
                   selectClassName="py-1"
                 />
+                <Dropdown
+                  options={[
+                    {
+                      content: "Remove User",
+                    },
+                  ]}
+                >
+                  <div
+                    className={`w-8 grid place-items-center border h-8 rounded-md`}
+                  >
+                    <DotsVertical class="h-5 w-5" />
+                  </div>
+                </Dropdown>
               </div>
-              <div class="px-3 py-4 ">
-                <p class="font-medium">{m.email}</p>
+              <div class="p-3 flex group gap-2">
+                <div class="grow my-auto">
+                  <p class="font-medium max-w-sm truncate">{m.email}</p>
+                </div>
+
+                <p class="my-auto font-medium w-24">Owner</p>
+                <Dropdown
+                  options={[
+                    {
+                      content: "Transfer Ownership",
+                    },
+                  ]}
+                >
+                  <div
+                    className={`w-8 grid place-items-center border h-8 rounded-md`}
+                  >
+                    <DotsVertical class="h-5 w-5" />
+                  </div>
+                </Dropdown>
               </div>
-              <div class="px-3 py-4 ">
-                <p class="font-medium">{m.email}</p>
+              <div class="p-3 flex gap-2 items-center">
+                <div class="grow my-auto">
+                  <p class="font-medium max-w-sm truncate">{m.email}</p>
+                </div>
+                <p class="italic text-sm">Invatation Pending</p>
+                <Trashcan />
               </div>
             </>
           ))}

@@ -3,17 +3,10 @@ import {
   EventContext,
   badEventRequest,
 } from "@/routes/events/[id]/_layout.tsx";
-import CTA from "@/components/buttons/cta.tsx";
-import Users from "$tabler/users-group.tsx";
-import Tickets from "$tabler/ticket.tsx";
-import World from "$tabler/world.tsx";
-import Scan from "$tabler/text-scan-2.tsx";
-import ChevronLeft from "$tabler/chevron-left.tsx";
 import EditingImagePicker from "@/islands/events/editing/images.tsx";
 import imageKit from "@/utils/imagekit.ts";
 import { ComponentChildren } from "preact";
 import EventSettings from "@/islands/events/editing/settings.tsx";
-import Button from "@/components/buttons/button.tsx";
 import ShowTimeSettings from "@/islands/events/editing/showtimesettings.tsx";
 import EventDeletion from "@/islands/events/editing/delete.tsx";
 import EventHeader from "@/components/layout/eventEditNavbar.tsx";
