@@ -3,10 +3,14 @@ import { getCookies, setCookie } from "$std/http/cookie.ts";
 
 export * from "./kv.types.ts";
 
+const isNotOnDeploy = Deno.env.get("DENO_DEPLOYMENT_ID") == undefined;
+
+if (isNotOnDeploy) {
+  await Deno.mkdir("./db", { recursive: true });
+}
+
 export const kv = await Deno.openKv(
-  Deno.env.get("DENO_DEPLOYMENT_ID") == undefined
-    ? "./db/db.sqlite"
-    : undefined,
+  isNotOnDeploy ? "./db/db.sqlite" : undefined,
 );
 
 export const getUserAuthToken = (req: Request) => {
