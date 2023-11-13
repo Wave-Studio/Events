@@ -24,6 +24,12 @@ jobs:
           deno-version: v1.x
 
       - name: Build step
+        env: 
+              ALLOWED_EMAILS: ${{ secrets.ALLOWED_EMAILS }}
+              IMAGEKIT_ENABLED: ${{ secrets.IMAGEKIT_ENABLED }}
+              IMAGEKIT_PRIVATE_KEY: ${{ secrets.IMAGEKIT_PRIVATE_KEY }}
+              IMAGEKIT_PUBLIC_KEY: ${{ secrets.IMAGEKIT_PUBLIC_KEY }}
+              IMAGEKIT_URL_ENDPOINT: ${{ secrets.IMAGEKIT_URL_ENDPOINT }}
         run: "deno task build" # 📝 Update the build command(s) if necessary
 
       - name: Upload to Deno Deploy
