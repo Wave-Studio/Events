@@ -55,7 +55,7 @@ export const handler: Handlers = {
       );
     }
 
-    if (member.role >= victim.role) {
+    if (member.role >= victim.role && member.email != victim.email) {
       return new Response(
         JSON.stringify({
           error: "Cannot remove user with same or higher role",
@@ -66,7 +66,7 @@ export const handler: Handlers = {
       );
     }
 
-    if (![Roles.OWNER, Roles.ADMIN, Roles.MANAGER].includes(member.role)) {
+    if (![Roles.OWNER, Roles.ADMIN, Roles.MANAGER].includes(member.role) && member.email != victim.email) {
       return new Response(JSON.stringify({ error: "Missing permissions!" }), {
         status: 403,
       });

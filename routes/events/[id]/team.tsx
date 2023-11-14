@@ -70,7 +70,7 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
                     <p class="font-medium max-w-sm truncate">{m.email}</p>
                   </div>
 
-                  <ManageUser user={m} eventID={eventID} />
+                  <ManageUser user={m} eventID={eventID} client={user.data} clientRole={user.role!} />
                 </div>
               )}
             </>

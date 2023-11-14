@@ -1,12 +1,7 @@
 import { defineRoute, LayoutConfig, RouteContext } from "$fresh/server.ts";
 import { Head } from "$fresh/runtime.ts";
-import { Event, getUser, kv } from "@/utils/db/kv.ts";
-import { isUUID } from "@/utils/db/misc.ts";
-import { Roles } from "@/utils/db/kv.types.ts";
-import CTA from "@/components/buttons/cta.tsx";
 import { EventContext } from "@/routes/events/[id]/_layout.tsx";
 import imagekit from "@/utils/imagekit.ts";
-import { Component, ComponentChildren, Fragment, JSX } from "preact";
 import Left from "$tabler/chevron-left.tsx";
 import Location from "$tabler/map-pin.tsx";
 import Calender from "$tabler/calendar.tsx";
@@ -16,6 +11,8 @@ import Footer from "@/components/layout/footer.tsx";
 import { fmtDate, fmtTime, happened } from "@/utils/dates.ts";
 import { Avalibility } from "@/islands/events/viewing/availability.tsx";
 import { ShowTimes } from "@/islands/events/viewing/showtimes.tsx";
+import { acquired, getTicketID } from "@/utils/tickets.ts";
+import CTA from "@/components/buttons/cta.tsx";
 
 export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
   const { event, eventID, user } = ctx.state.data;
@@ -93,6 +90,12 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
             The last day to get tickets is{" "}
             {fmtDate(new Date(event.showTimes[0].lastPurchaseDate))}
           </p>
+        )}
+        {event.venue && (
+          <>
+            <h2 className="font-semibold mt-4 mb-1 text-sm">Venue</h2>
+            <p class="mb-4">{event.venue}</p>
+          </>
         )}
       </div>
       <Contact email={event.supportEmail} />
@@ -211,7 +214,7 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
         </div>
         <div className="max-w-2xl mx-auto w-full mb-36 md:mb-16 mt-4 md:-mt-28 flex flex-col px-4 static grow">
           <Header />
-          <ShowTimes event={event} user={user} />
+          <ShowTimes data={ctx.state.data} />
           {event.showTimes.every((time) =>
             happened(time.startDate, time.startTime),
           ) ||
@@ -226,15 +229,39 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
             </div>
           ) : (
             <>
-              <EventRegister
-                eventID={eventID}
-                showTimes={clientShowTimes}
-                email={user?.data.email}
-                additionalFields={event.additionalFields}
-              />
+              {event.showTimes.length === 1 &&
+              acquired(user?.data, eventID, event.showTimes[0].id) ? (
+                <div className="mx-auto flex flex-col items-center mt-14">
+                  <p class="font-semibold mb-4 text-center">
+                    You're already registered for this event! Edit or view
+                    ticket below.
+                  </p>
+                  <a
+                    href={`/events/${eventID}/tickets/${getTicketID(
+                      user?.data,
+                      eventID,
+                      event.showTimes[0].id,
+                    )}`}
+                  >
+                    <CTA btnType="secondary">View Ticket</CTA>
+                  </a>
+                </div>
+              ) : (
+                <EventRegister
+                  eventID={eventID}
+                  showTimes={clientShowTimes}
+                  email={user?.data.email}
+                  additionalFields={event.additionalFields}
+                />
+              )}
               {event.showTimes.length === 1 && (
                 <div class="mx-auto mt-2 text-sm text-center">
                   <Avalibility
+                    acquired={acquired(
+                      user?.data,
+                      eventID,
+                      event.showTimes[0].id,
+                    )}
                     tickets={event.showTimes[0].soldTickets}
                     maxTickets={event.showTimes[0].maxTickets}
                     happened={happened(

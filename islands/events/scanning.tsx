@@ -61,6 +61,7 @@ export default function Scanner({ className }: { className?: string }) {
           };
 
           // TODO: @quick007 Fix this because our brains are cooking in their own fluids - Bloxs
+          // No.
           console.log(
             "Video:",
             video.videoWidth,

@@ -2,14 +2,11 @@ import { Event, Roles, User } from "@/utils/db/kv.ts";
 import { happened, fmtDate, fmtTime } from "@/utils/dates.ts";
 import { Avalibility } from "@/islands/events/viewing/availability.tsx";
 import { EventContext } from "@/routes/events/[id]/_layout.tsx";
+import { acquired } from "@/utils/tickets.ts";
 
-export const ShowTimes = ({
-  event,
-  user,
-}: {
-  event: Event;
-  user: EventContext["data"]["user"];
-}) => {
+export const ShowTimes = ({ data }: { data: EventContext["data"] }) => {
+  const { event, eventID, user } = data;
+
   if (event.showTimes.length == 1) return null;
 
   return (
@@ -66,6 +63,7 @@ export const ShowTimes = ({
               )}
               {
                 <Avalibility
+                  acquired={acquired(user?.data, eventID, time.id)}
                   maxTickets={time.maxTickets}
                   tickets={time.soldTickets}
                   happened={happened(time.startDate, time.startTime)}

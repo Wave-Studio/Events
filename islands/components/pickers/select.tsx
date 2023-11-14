@@ -6,12 +6,14 @@ export default function Select({
   className,
   selectClassName,
   selected,
+  disabled
 }: {
   options: string[];
   updateOption?: (option: number) => void;
   className?: string;
   selectClassName?: string;
   selected?: number;
+  disabled?: boolean;
 }) {
   return (
     <div class={`pl-1.5 pr-1 rounded-md border flex ${className}`}>
@@ -20,6 +22,7 @@ export default function Select({
         onInput={(e) =>
           updateOption && updateOption(e.currentTarget.selectedIndex)
         }
+        disabled={disabled}
       >
         {options.map((option, i) => (
           <option

@@ -1,7 +1,7 @@
 import Select from "@/islands/components/pickers/select.tsx";
 import Dropdown from "@/islands/components/pickers/dropdown.tsx";
 import DotsVertical from "$tabler/dots-vertical.tsx";
-import { Event } from "@/utils/db/kv.ts";
+import { Event, Roles, User } from "@/utils/db/kv.types.ts";
 import Loading from "$tabler/loader-2.tsx";
 import { useSignal } from "@preact/signals";
 import Popup from "@/components/popup.tsx";
@@ -10,16 +10,27 @@ import CTA from "@/components/buttons/cta.tsx";
 export default function ManageUser({
   user,
   eventID,
+  client,
+  clientRole,
 }: {
   user: Event["members"][0];
   eventID: string;
+  client: User;
+  clientRole: Roles;
 }) {
   const loading = useSignal(false);
   const transferOpen = useSignal(false);
 
+  const rolesToShow = ["Admin", "Manager", "Scanner"].filter((r, i) => {
+    if (clientRole == Roles.OWNER) return true;
+    if ((clientRole <= user.role)) {
+      return i + 1 >= user.role;
+    }
+  });
+
   const updateUserRole = async (role: number) => {
     loading.value = true;
-    const realRole = role + 1;
+    const realRole = 3 - rolesToShow.length + role + 1;
     if (realRole == user.role) return;
     const res = await fetch(`/api/events/team/update`, {
       method: "POST",
@@ -90,28 +101,44 @@ export default function ManageUser({
       <div class="flex gap-2 justify-end items-center">
         <Loading class={`h-6 w-6 animate-spin ${!loading.value && "hidden"}`} />
         <Select
-          options={["Admin", "Manager", "Scanner"]}
+          options={["Admin", "Manager", "Scanner"].filter((r, i) => {
+            if (clientRole == Roles.OWNER) return true;
+            if ((clientRole <= user.role)) {
+              return i + 1 >= user.role;
+            }
+          })}
           selectClassName="py-1"
           // Owner comes first and that's not in this dropdown
-          selected={user.role - 1}
+          selected={user.role - 1 - rolesToShow.length - 3}
           updateOption={updateUserRole}
+          disabled={clientRole == Roles.SCANNER || (clientRole > user.role)}
         />
-        <Dropdown
-          options={[
-            {
-              content: "Transfer Ownership",
-              onClick: () => (transferOpen.value = true),
-            },
-            {
-              content: "Remove User",
-              onClick: removeUser,
-            },
-          ]}
-        >
-          <div className={`w-8 grid place-items-center border h-8 rounded-md`}>
-            <DotsVertical class="h-5 w-5" />
-          </div>
-        </Dropdown>
+
+        {(clientRole == Roles.SCANNER ||
+            (clientRole >= user.role && user.email != client.email))
+          ? <></>
+          : (
+            <Dropdown
+              options={[
+                ...(user.role == Roles.OWNER
+                  ? [{
+                    content: "Transfer Ownership",
+                    onClick: () => (transferOpen.value = true),
+                  }]
+                  : []),
+                {
+                  content: "Remove User",
+                  onClick: removeUser,
+                },
+              ]}
+            >
+              <div
+                className={`w-8 grid place-items-center border h-8 rounded-md`}
+              >
+                <DotsVertical class="h-5 w-5" />
+              </div>
+            </Dropdown>
+          )}
       </div>
     </>
   );

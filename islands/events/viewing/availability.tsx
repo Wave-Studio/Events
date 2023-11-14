@@ -9,7 +9,9 @@ export const Avalibility = ({
   tickets,
   happened,
   windowClosed,
+  acquired,
 }: {
+  acquired?: boolean;
   tickets: number;
   maxTickets: number;
   happened: boolean;
@@ -36,7 +38,12 @@ export const Avalibility = ({
     <p class={`text-red-500 flex ${className}`}>
       <CalenderOff /> Purchase window closed
     </p>,
+    <p class={`text-blue-500 ${className}`}>
+      <Check /> Tickets Acquired
+    </p>,
   ];
+
+  if (acquired) return messages[6];
 
   if (happened) return messages[4];
 
