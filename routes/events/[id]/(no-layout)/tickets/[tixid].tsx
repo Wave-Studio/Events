@@ -64,6 +64,7 @@ export default defineRoute(
           </main>
           <Footer includeWave={false} />
         </div>
+        {/* Print buttons and whatnot */}
       </>
     );
   },
