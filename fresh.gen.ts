@@ -32,17 +32,17 @@ import * as $26 from "./routes/events/(pages)/organizing/discounts.tsx";
 import * as $27 from "./routes/events/(pages)/organizing/index.tsx";
 import * as $28 from "./routes/events/[id]/(no-layout)/_layout.tsx";
 import * as $29 from "./routes/events/[id]/(no-layout)/index.tsx";
-import * as $30 from "./routes/events/[id]/_layout.tsx";
-import * as $31 from "./routes/events/[id]/editing.tsx";
-import * as $32 from "./routes/events/[id]/scanning.tsx";
-import * as $33 from "./routes/events/[id]/team.tsx";
-import * as $34 from "./routes/events/[id]/tickets.tsx";
-import * as $35 from "./routes/events/notfound.tsx";
-import * as $36 from "./routes/index.tsx";
-import * as $37 from "./routes/kv-insights/_layout.tsx";
-import * as $38 from "./routes/kv-insights/_middleware.ts";
-import * as $39 from "./routes/login.tsx";
-import * as $40 from "./routes/ticket.tsx";
+import * as $30 from "./routes/events/[id]/(no-layout)/tickets/[tixid].tsx";
+import * as $31 from "./routes/events/[id]/_layout.tsx";
+import * as $32 from "./routes/events/[id]/editing.tsx";
+import * as $33 from "./routes/events/[id]/scanning.tsx";
+import * as $34 from "./routes/events/[id]/team.tsx";
+import * as $35 from "./routes/events/[id]/tickets.tsx";
+import * as $36 from "./routes/events/notfound.tsx";
+import * as $37 from "./routes/index.tsx";
+import * as $38 from "./routes/kv-insights/_layout.tsx";
+import * as $39 from "./routes/kv-insights/_middleware.ts";
+import * as $40 from "./routes/login.tsx";
 import * as $$0 from "./islands/components/dropinUI/trash.tsx";
 import * as $$1 from "./islands/components/peices/ticket.tsx";
 import * as $$2 from "./islands/components/pickers/calender.tsx";
@@ -105,17 +105,17 @@ const manifest = {
     "./routes/events/(pages)/organizing/index.tsx": $27,
     "./routes/events/[id]/(no-layout)/_layout.tsx": $28,
     "./routes/events/[id]/(no-layout)/index.tsx": $29,
-    "./routes/events/[id]/_layout.tsx": $30,
-    "./routes/events/[id]/editing.tsx": $31,
-    "./routes/events/[id]/scanning.tsx": $32,
-    "./routes/events/[id]/team.tsx": $33,
-    "./routes/events/[id]/tickets.tsx": $34,
-    "./routes/events/notfound.tsx": $35,
-    "./routes/index.tsx": $36,
-    "./routes/kv-insights/_layout.tsx": $37,
-    "./routes/kv-insights/_middleware.ts": $38,
-    "./routes/login.tsx": $39,
-    "./routes/ticket.tsx": $40,
+    "./routes/events/[id]/(no-layout)/tickets/[tixid].tsx": $30,
+    "./routes/events/[id]/_layout.tsx": $31,
+    "./routes/events/[id]/editing.tsx": $32,
+    "./routes/events/[id]/scanning.tsx": $33,
+    "./routes/events/[id]/team.tsx": $34,
+    "./routes/events/[id]/tickets.tsx": $35,
+    "./routes/events/notfound.tsx": $36,
+    "./routes/index.tsx": $37,
+    "./routes/kv-insights/_layout.tsx": $38,
+    "./routes/kv-insights/_middleware.ts": $39,
+    "./routes/login.tsx": $40,
   },
   islands: {
     "./islands/components/dropinUI/trash.tsx": $$0,

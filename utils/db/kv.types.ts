@@ -77,7 +77,7 @@ export interface FieldEntry
   value: string;
 }
 
-/** ["ticket", eventId, showtimeId, ticketId] */
+/** ["ticket", eventId, showtimeId, eventId_showtimeId_ticketId] */
 export interface Ticket {
   hasBeenUsed: boolean;
   userEmail: string;

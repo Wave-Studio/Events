@@ -20,11 +20,11 @@ export default function Ticket({
   useEffect(() => {
     (async () => {
       await new Promise((resolve) =>
-        setTimeout(resolve, 400 + (Math.random() * 100 + 1)),
+        setTimeout(resolve, 400 + (Math.random() * 200 + 1)),
       );
 
       const qrObj = (await qrcode(id, {
-        size: 200,
+        size: 232,
         // No clue why typings are wrong
       })) as unknown as string;
 
@@ -33,7 +33,7 @@ export default function Ticket({
   }, []);
 
   return (
-    <div class="flex flex-col items-center">
+    <div class="flex flex-col items-center ">
       <h4 class="font-bold mt-4">Your QR Code</h4>
       <p class="text-gray-700 text-sm max-w-xs">
         You'll scan this when entering your event.{" "}
@@ -42,11 +42,11 @@ export default function Ticket({
         {tickets} ticket{tickets > 1 && "s"}
       </div>
       {qr.value != undefined ? (
-        <img src={qr.value} alt="QR Code" width={200} />
+        <img src={qr.value} alt="QR Code" width={232} />
       ) : (
         <QR />
       )}
-      <p class="text-xs text-gray-500 text-center">ID: {id.split("_")[2]}</p>
+      <p class="text-xs text-gray-500 text-center mt-4">ID: {id.split("_")[2]}</p>
       <div class="grid gap-2">
         <div>
           <h5 class="font-medium mb-0.5 mt-4 text-sm text-center">Event Date & Time</h5>
