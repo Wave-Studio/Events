@@ -1,5 +1,5 @@
 import { Handlers } from "$fresh/server.ts";
-import { Event, getUser, kv, Roles } from "@/utils/db/kv.ts";
+import { Event, getUser, kv, Roles, User } from "@/utils/db/kv.ts";
 import { isUUID } from "@/utils/db/misc.ts";
 
 export const handler: Handlers = {
@@ -11,8 +11,8 @@ export const handler: Handlers = {
       });
     }
 
-    const { eventID, email }: { eventID: string; email: string } =
-      await req.json();
+    const { eventID, email }: { eventID: string; email: string } = await req
+      .json();
 
     if (!email) {
       return new Response(JSON.stringify({ error: "Missing email" }), {
@@ -72,12 +72,19 @@ export const handler: Handlers = {
       });
     }
 
-    await kv.set(["event", eventID], {
+    const victimObject = (await kv.get<User>(["user", email])).value!;
+
+    const atomic = await kv.atomic().set(["event", eventID], {
       ...event.value,
       members: event.value.members.filter((m) => m.email != email),
-    });
+    })
+    .set(["user", email], {
+     ...victimObject,
+      events: victimObject.events.filter((e) => e != eventID), 
+    })
+    .commit();
 
-    return new Response(JSON.stringify({ success: true }), {
+    return new Response(JSON.stringify({ success: atomic.ok }), {
       status: 200,
     });
   },

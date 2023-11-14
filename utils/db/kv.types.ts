@@ -92,8 +92,10 @@ export type User = UserPartial | UnonboardedUser;
 export interface UnonboardedUser {
   /** Stored as eventId_showtimeId_ticketId */
   tickets: string[];
+  events: string[];
   onboarded: false;
   email: string;
+  plan: Plan;
 }
 
 export interface UserPartial {

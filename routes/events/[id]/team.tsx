@@ -37,7 +37,7 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
       <div class="flex gap-2 flex-col md:flex-row ">
         <input
           class="rounded-md border py-1.5 px-2 grow"
-          placeholder="Search..."
+          placeholder="Search members..."
         />
         <div class="flex gap-2">
           <Select
@@ -50,22 +50,22 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
       </div>
       <div>
         <h2 class="font-medium text-sm mb-0.5">All Team Members</h2>
-        <div class="flex flex-col border divide-y rounded-md">
+        <div class="grid [grid-auto-rows:1fr] border divide-y rounded-md">
           {event.members.map((m) => (
             <>
               {m.role == Roles.OWNER ? (
-                <div class="p-3 flex group gap-2">
-                  <div class="grow my-auto">
+                <div class="p-3  flex group gap-2 items-center">
+                  <div class="grow my-auto truncate">
                     <p class="font-medium max-w-sm truncate">{m.email}</p>
                   </div>
 
                   <p class="my-auto font-medium">Owner</p>
 
                   {/* I couldn't decide if I prefer it before or after - Bloxs */}
-                  <Crown />
+                  <Crown class="min-w-[1.5rem] h-6" />
                 </div>
               ) : (
-                <div class="p-3 flex group gap-2">
+                <div class="p-3  flex group gap-2 flex-col md:flex-row">
                   <div class="grow my-auto">
                     <p class="font-medium max-w-sm truncate">{m.email}</p>
                   </div>

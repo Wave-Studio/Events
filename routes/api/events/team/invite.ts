@@ -1,5 +1,12 @@
 import { Handlers } from "$fresh/server.ts";
-import { Event, getUser, kv, Roles } from "@/utils/db/kv.ts";
+import {
+  Event,
+  getUser,
+  kv,
+  PlanMaxEvents,
+  Roles,
+  User,
+} from "@/utils/db/kv.ts";
 import { isUUID } from "@/utils/db/misc.ts";
 
 export const handler: Handlers = {
@@ -27,6 +34,33 @@ export const handler: Handlers = {
       return new Response(JSON.stringify({ error: "Invalid UUID" }), {
         status: 400,
       });
+    }
+
+    const toInviteUser = await kv.get<User>(["user", inviteEmail]);
+
+    if (!toInviteUser.value) {
+      return new Response(
+        JSON.stringify({
+          error:
+            "User you want to invite is not signed up yet! Tell them to join first",
+        }),
+        {
+          status: 404,
+        },
+      );
+    }
+
+    if (
+      PlanMaxEvents[toInviteUser.value.plan] <= toInviteUser.value.events.length
+    ) {
+      return new Response(
+        JSON.stringify({
+          error: "User you want to invite has reached their event limit",
+        }),
+        {
+          status: 403,
+        },
+      );
     }
 
     const event = await kv.get<Event>(["event", eventID]);
@@ -73,18 +107,25 @@ export const handler: Handlers = {
 
     // TODO: Send invite email
 
-    await kv.set(["event", eventID], {
-      ...event.value,
-      members: [
-        ...event.value.members,
-        {
-          email: inviteEmail,
-          role,
-        },
-      ],
-    });
+    const atomic = await kv
+      .atomic()
+      .set(["event", eventID], {
+        ...event.value,
+        members: [
+          ...event.value.members,
+          {
+            email: inviteEmail,
+            role,
+          },
+        ],
+      })
+      .set(["user", inviteEmail], {
+        ...toInviteUser.value,
+        events: [...toInviteUser.value.events, eventID],
+      })
+      .commit();
 
-    return new Response(JSON.stringify({ success: true }), {
+    return new Response(JSON.stringify({ success: atomic.ok }), {
       status: 200,
     });
   },

@@ -1,5 +1,5 @@
 import { Handlers } from "$fresh/server.ts";
-import { Event, getUser, kv } from "@/utils/db/kv.ts";
+import { Event, getUser, kv, User } from "@/utils/db/kv.ts";
 import { isUUID } from "@/utils/db/misc.ts";
 import imageKit from "@/utils/imagekit.ts";
 
@@ -43,9 +43,23 @@ export const handler: Handlers = {
       imageKit!.deleteFile(event.value.banner.id);
     }
 
-    await kv.delete(["event", eventID]);
+    let atomic = kv.atomic()
+      .delete(["event", eventID])
 
-    return new Response(JSON.stringify({ success: true }), {
+    const members = await kv.getMany<User[]>(event.value.members.map(e => ["user", e.email]))
+
+    for (const member of members) {
+      const user = member.value!;
+
+      atomic = atomic.set(["user", user.email], {
+        ...user,
+        events: user.events.filter(e => e != eventID)
+      })
+    }
+
+    const atomicResult = await atomic.commit();
+
+    return new Response(JSON.stringify({ success: atomicResult.ok }), {
       status: 200,
     });
   },

@@ -39,8 +39,10 @@ import * as $33 from "./routes/events/[id]/team.tsx";
 import * as $34 from "./routes/events/[id]/tickets.tsx";
 import * as $35 from "./routes/events/notfound.tsx";
 import * as $36 from "./routes/index.tsx";
-import * as $37 from "./routes/login.tsx";
-import * as $38 from "./routes/ticket.tsx";
+import * as $37 from "./routes/kv-insights/_layout.tsx";
+import * as $38 from "./routes/kv-insights/_middleware.ts";
+import * as $39 from "./routes/login.tsx";
+import * as $40 from "./routes/ticket.tsx";
 import * as $$0 from "./islands/components/dropinUI/trash.tsx";
 import * as $$1 from "./islands/components/peices/ticket.tsx";
 import * as $$2 from "./islands/components/pickers/calender.tsx";
@@ -48,25 +50,28 @@ import * as $$3 from "./islands/components/pickers/dropdown.tsx";
 import * as $$4 from "./islands/components/pickers/image.tsx";
 import * as $$5 from "./islands/components/pickers/select.tsx";
 import * as $$6 from "./islands/components/pickers/time.tsx";
-import * as $$7 from "./islands/events/components/card.tsx";
-import * as $$8 from "./islands/events/creation/createForm.tsx";
-import * as $$9 from "./islands/events/creation/one.tsx";
-import * as $$10 from "./islands/events/creation/three.tsx";
-import * as $$11 from "./islands/events/creation/two.tsx";
-import * as $$12 from "./islands/events/creation/zero.tsx";
-import * as $$13 from "./islands/events/editing/delete.tsx";
-import * as $$14 from "./islands/events/editing/images.tsx";
-import * as $$15 from "./islands/events/editing/settings.tsx";
-import * as $$16 from "./islands/events/editing/showtimesettings.tsx";
-import * as $$17 from "./islands/events/editing/ticketSettings.tsx";
-import * as $$18 from "./islands/events/list/filters.tsx";
-import * as $$19 from "./islands/events/scanning.tsx";
-import * as $$20 from "./islands/events/teams/invite.tsx";
-import * as $$21 from "./islands/events/teams/manage.tsx";
-import * as $$22 from "./islands/events/viewing/availability.tsx";
-import * as $$23 from "./islands/events/viewing/register.tsx";
-import * as $$24 from "./islands/events/viewing/showtimes.tsx";
-import * as $$25 from "./islands/loginForm.tsx";
+import * as $$7 from "./islands/entriesManagement.tsx";
+import * as $$8 from "./islands/entryManagement.tsx";
+import * as $$9 from "./islands/events/components/card.tsx";
+import * as $$10 from "./islands/events/creation/createForm.tsx";
+import * as $$11 from "./islands/events/creation/one.tsx";
+import * as $$12 from "./islands/events/creation/three.tsx";
+import * as $$13 from "./islands/events/creation/two.tsx";
+import * as $$14 from "./islands/events/creation/zero.tsx";
+import * as $$15 from "./islands/events/editing/delete.tsx";
+import * as $$16 from "./islands/events/editing/images.tsx";
+import * as $$17 from "./islands/events/editing/settings.tsx";
+import * as $$18 from "./islands/events/editing/showtimesettings.tsx";
+import * as $$19 from "./islands/events/editing/ticketSettings.tsx";
+import * as $$20 from "./islands/events/list/filters.tsx";
+import * as $$21 from "./islands/events/scanning.tsx";
+import * as $$22 from "./islands/events/teams/invite.tsx";
+import * as $$23 from "./islands/events/teams/manage.tsx";
+import * as $$24 from "./islands/events/viewing/availability.tsx";
+import * as $$25 from "./islands/events/viewing/register.tsx";
+import * as $$26 from "./islands/events/viewing/showtimes.tsx";
+import * as $$27 from "./islands/loginForm.tsx";
+import * as $$28 from "./islands/queueManagement.tsx";
 
 const manifest = {
   routes: {
@@ -107,8 +112,10 @@ const manifest = {
     "./routes/events/[id]/tickets.tsx": $34,
     "./routes/events/notfound.tsx": $35,
     "./routes/index.tsx": $36,
-    "./routes/login.tsx": $37,
-    "./routes/ticket.tsx": $38,
+    "./routes/kv-insights/_layout.tsx": $37,
+    "./routes/kv-insights/_middleware.ts": $38,
+    "./routes/login.tsx": $39,
+    "./routes/ticket.tsx": $40,
   },
   islands: {
     "./islands/components/dropinUI/trash.tsx": $$0,
@@ -118,25 +125,28 @@ const manifest = {
     "./islands/components/pickers/image.tsx": $$4,
     "./islands/components/pickers/select.tsx": $$5,
     "./islands/components/pickers/time.tsx": $$6,
-    "./islands/events/components/card.tsx": $$7,
-    "./islands/events/creation/createForm.tsx": $$8,
-    "./islands/events/creation/one.tsx": $$9,
-    "./islands/events/creation/three.tsx": $$10,
-    "./islands/events/creation/two.tsx": $$11,
-    "./islands/events/creation/zero.tsx": $$12,
-    "./islands/events/editing/delete.tsx": $$13,
-    "./islands/events/editing/images.tsx": $$14,
-    "./islands/events/editing/settings.tsx": $$15,
-    "./islands/events/editing/showtimesettings.tsx": $$16,
-    "./islands/events/editing/ticketSettings.tsx": $$17,
-    "./islands/events/list/filters.tsx": $$18,
-    "./islands/events/scanning.tsx": $$19,
-    "./islands/events/teams/invite.tsx": $$20,
-    "./islands/events/teams/manage.tsx": $$21,
-    "./islands/events/viewing/availability.tsx": $$22,
-    "./islands/events/viewing/register.tsx": $$23,
-    "./islands/events/viewing/showtimes.tsx": $$24,
-    "./islands/loginForm.tsx": $$25,
+    "./islands/entriesManagement.tsx": $$7,
+    "./islands/entryManagement.tsx": $$8,
+    "./islands/events/components/card.tsx": $$9,
+    "./islands/events/creation/createForm.tsx": $$10,
+    "./islands/events/creation/one.tsx": $$11,
+    "./islands/events/creation/three.tsx": $$12,
+    "./islands/events/creation/two.tsx": $$13,
+    "./islands/events/creation/zero.tsx": $$14,
+    "./islands/events/editing/delete.tsx": $$15,
+    "./islands/events/editing/images.tsx": $$16,
+    "./islands/events/editing/settings.tsx": $$17,
+    "./islands/events/editing/showtimesettings.tsx": $$18,
+    "./islands/events/editing/ticketSettings.tsx": $$19,
+    "./islands/events/list/filters.tsx": $$20,
+    "./islands/events/scanning.tsx": $$21,
+    "./islands/events/teams/invite.tsx": $$22,
+    "./islands/events/teams/manage.tsx": $$23,
+    "./islands/events/viewing/availability.tsx": $$24,
+    "./islands/events/viewing/register.tsx": $$25,
+    "./islands/events/viewing/showtimes.tsx": $$26,
+    "./islands/loginForm.tsx": $$27,
+    "./islands/queueManagement.tsx": $$28,
   },
   baseUrl: import.meta.url,
 };

@@ -36,7 +36,7 @@ export default function Invite({ eventID }: { eventID: string }) {
       <input
         class="rounded-md border py-1.5 px-2 grow"
         placeholder="Team Member Email"
-        type="text"
+        type="email"
         value={inviteEmail}
         onInput={(e) => (inviteEmail.value = e.currentTarget.value)}
       />

@@ -3,6 +3,7 @@ import Button from "@/components/buttons/button.tsx";
 import { Signal } from "@preact/signals";
 import SortAscending from "$tabler/sort-ascending.tsx";
 import SortDescending from "$tabler/sort-descending.tsx";
+import IconSearch from "$tabler/search.tsx";
 
 export default function HomeFilters({
   query,
@@ -19,7 +20,7 @@ export default function HomeFilters({
   return (
     <>
       <form
-        className="flex flex-row mb-2"
+        className="flex gap-2 mb-2"
         onSubmit={(e) => {
           e.preventDefault();
 
@@ -44,7 +45,8 @@ export default function HomeFilters({
       >
         <input
           type="text"
-          className="w-[32rem] mr-2"
+          className="grow"
+          placeholder="Search Events..."
           value={query}
           onInput={(e) => (query.value = e.currentTarget.value)}
         />
@@ -55,9 +57,11 @@ export default function HomeFilters({
             ascending.value = !ascending.value;
           }}
         />
-        <CTA btnType="cta" type="submit">
-          Apply
-        </CTA>
+        <Button
+          label={`Search Events`}
+          icon={<IconSearch class="w-5 h-5" />}
+
+        />
       </form>
     </>
   );

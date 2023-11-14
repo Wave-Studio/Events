@@ -6,6 +6,7 @@ import {
   kv,
   Roles,
   User,
+  Plan
 } from "@/utils/db/kv.ts";
 import * as Yup from "yup";
 
@@ -88,7 +89,10 @@ export const handler: Handlers = {
     const user = eventUser.value ?? {
       onboarded: false,
       tickets: [],
-    };
+      events: [],
+      plan: Plan.BASIC,
+      email
+    } satisfies User;
 
     if (user.onboarded) {
       const authToken = getUserAuthToken(req);
