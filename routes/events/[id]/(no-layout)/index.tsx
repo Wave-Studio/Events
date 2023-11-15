@@ -255,6 +255,7 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
                   showTimes={clientShowTimes}
                   email={user?.data.email}
                   additionalFields={event.additionalFields}
+                  user={user?.data}
                 />
               )}
               {tickets < event.showTimes.length &&

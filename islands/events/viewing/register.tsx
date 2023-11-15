@@ -1,7 +1,7 @@
 import { useState } from "preact/hooks";
 import CTA from "@/components/buttons/cta.tsx";
 import Popup from "@/components/popup.tsx";
-import { Field, ShowTime } from "@/utils/db/kv.types.ts";
+import { Field, ShowTime, User } from "@/utils/db/kv.types.ts";
 import useForm from "@/components/hooks/fakeFormik/index.tsx";
 import * as Yup from "yup";
 import { useSignal } from "@preact/signals";
@@ -14,27 +14,28 @@ import ChevronLeft from "$tabler/chevron-left.tsx";
 import { createPortal } from "preact/compat";
 import Loading from "$tabler/loader-2.tsx";
 import Ticket from "@/islands/components/peices/ticket.tsx";
+import { acquired, getTicketID } from "@/utils/tickets.ts";
 
 export default function EventRegister({
   eventID,
   showTimes,
   email,
   additionalFields,
-  ticket,
+  user,
 }: {
   eventID: string;
   showTimes: Partial<ShowTime>[];
   email?: string;
   additionalFields: Field[];
-  ticket?: string;
+  user?: User;
 }) {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const changeOpen = useSignal(false);
   const page = useSignal(0);
   const tickets = useSignal(1);
   const error = useSignal<string | undefined>(undefined);
   const showTime = useSignal(showTimes[0].id);
-  const ticketID = useSignal(ticket);
+  const ticketID = useSignal<string | undefined>(undefined);
   const toggles = useSignal<Record<string, boolean>>({
     ...additionalFields
       .filter((field) => field.type == "toggle")
@@ -172,7 +173,9 @@ export default function EventRegister({
         <button
           class="flex gap-2 focus:outline-none w-max group"
           type="button"
-          onClick={() => (changeOpen.value = true)}
+          onClick={() => {
+            if (showTimes.length > 1) changeOpen.value = true;
+          }}
         >
           {showTimes
             .filter((time) => time.id == showTime.value)!
@@ -181,14 +184,15 @@ export default function EventRegister({
                 class={`border transition select-none px-2 h-8 rounded-md font-medium whitespace-pre border-theme-normal bg-theme-normal/5 grid place-content-center`}
               >
                 {fmtDate(new Date(time.startDate!))}
-
                 {time.startTime &&
                   ` at ${fmtHour(new Date(time.startTime)).toLowerCase()}`}
               </div>
             ))}
-          <div class="rounded-md bg-gray-200 h-8 grid place-content-center px-2 font-medium hover:brightness-95 transition">
-            Change
-          </div>
+          {showTimes.length > 1 && (
+            <div class="rounded-md bg-gray-200 h-8 grid place-content-center px-2 font-medium hover:brightness-95 transition">
+              Change
+            </div>
+          )}
         </button>
         <Popup
           close={() => (changeOpen.value = false)}
@@ -247,34 +251,56 @@ export default function EventRegister({
           {page.value == 0 ? (
             <>
               <SelectShowTime />
-              {}
-              <div class="flex flex-col md:flex-row gap-4 [&>label]:grow">
-                <label class="flex flex-col">
-                  <span class="label-text label-required">First Name</span>
-                  <Field name="firstName" />
-                </label>
-
-                <label class="flex flex-col">
-                  <span class="label-text label-required">Last Name</span>
-                  <Field name="lastName" />
-                </label>
-              </div>
-              <label class="flex flex-col">
-                <span class="label-text label-required">Email</span>
-                <Field name="email" />
-              </label>
-              {additionalFields.length > 0 ? (
-                <CTA
-                  btnType="cta"
-                  type="button"
-                  btnSize="sm"
-                  className="ml-auto mt-4"
-                  onClick={() => (page.value = 1)}
-                >
-                  Next
-                </CTA>
+              {acquired(user, eventID, showTime.value!) ? (
+                <>
+                  <div className="mx-auto flex flex-col items-center">
+                    <p class="font-semibold mb-4 text-center">
+                      You're already registered for this event! Edit or view
+                      ticket below. Tap "Change" to get a ticket for a different event.
+                    </p>
+                    <a
+                      href={`/events/${eventID}/tickets/${getTicketID(
+                        user,
+                        eventID,
+                        showTime.value!,
+                      )}`}
+                      
+                    >
+                      <CTA btnType="secondary" btnSize="sm" type="button">View Ticket</CTA>
+                    </a>
+                  </div>
+                </>
               ) : (
-                <Submit />
+                <>
+                  <div class="flex flex-col md:flex-row gap-4 [&>label]:grow">
+                    <label class="flex flex-col">
+                      <span class="label-text label-required">First Name</span>
+                      <Field name="firstName" />
+                    </label>
+
+                    <label class="flex flex-col">
+                      <span class="label-text label-required">Last Name</span>
+                      <Field name="lastName" />
+                    </label>
+                  </div>
+                  <label class="flex flex-col">
+                    <span class="label-text label-required">Email</span>
+                    <Field name="email" />
+                  </label>
+                  {additionalFields.length > 0 ? (
+                    <CTA
+                      btnType="cta"
+                      type="button"
+                      btnSize="sm"
+                      className="ml-auto mt-4"
+                      onClick={() => (page.value = 1)}
+                    >
+                      Next
+                    </CTA>
+                  ) : (
+                    <Submit />
+                  )}
+                </>
               )}
             </>
           ) : page.value == 1 ? (
