@@ -247,6 +247,7 @@ export default function EventRegister({
           {page.value == 0 ? (
             <>
               <SelectShowTime />
+              {}
               <div class="flex flex-col md:flex-row gap-4 [&>label]:grow">
                 <label class="flex flex-col">
                   <span class="label-text label-required">First Name</span>
