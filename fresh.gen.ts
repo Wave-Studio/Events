@@ -65,13 +65,14 @@ import * as $$18 from "./islands/events/editing/showtimesettings.tsx";
 import * as $$19 from "./islands/events/editing/ticketSettings.tsx";
 import * as $$20 from "./islands/events/list/filters.tsx";
 import * as $$21 from "./islands/events/scanning.tsx";
-import * as $$22 from "./islands/events/teams/invite.tsx";
-import * as $$23 from "./islands/events/teams/manage.tsx";
-import * as $$24 from "./islands/events/viewing/availability.tsx";
-import * as $$25 from "./islands/events/viewing/register.tsx";
-import * as $$26 from "./islands/events/viewing/showtimes.tsx";
-import * as $$27 from "./islands/loginForm.tsx";
-import * as $$28 from "./islands/queueManagement.tsx";
+import * as $$22 from "./islands/events/teams/filters.tsx";
+import * as $$23 from "./islands/events/teams/invite.tsx";
+import * as $$24 from "./islands/events/teams/manage.tsx";
+import * as $$25 from "./islands/events/viewing/availability.tsx";
+import * as $$26 from "./islands/events/viewing/register.tsx";
+import * as $$27 from "./islands/events/viewing/showtimes.tsx";
+import * as $$28 from "./islands/loginForm.tsx";
+import * as $$29 from "./islands/queueManagement.tsx";
 
 const manifest = {
   routes: {
@@ -140,13 +141,14 @@ const manifest = {
     "./islands/events/editing/ticketSettings.tsx": $$19,
     "./islands/events/list/filters.tsx": $$20,
     "./islands/events/scanning.tsx": $$21,
-    "./islands/events/teams/invite.tsx": $$22,
-    "./islands/events/teams/manage.tsx": $$23,
-    "./islands/events/viewing/availability.tsx": $$24,
-    "./islands/events/viewing/register.tsx": $$25,
-    "./islands/events/viewing/showtimes.tsx": $$26,
-    "./islands/loginForm.tsx": $$27,
-    "./islands/queueManagement.tsx": $$28,
+    "./islands/events/teams/filters.tsx": $$22,
+    "./islands/events/teams/invite.tsx": $$23,
+    "./islands/events/teams/manage.tsx": $$24,
+    "./islands/events/viewing/availability.tsx": $$25,
+    "./islands/events/viewing/register.tsx": $$26,
+    "./islands/events/viewing/showtimes.tsx": $$27,
+    "./islands/loginForm.tsx": $$28,
+    "./islands/queueManagement.tsx": $$29,
   },
   baseUrl: import.meta.url,
 };

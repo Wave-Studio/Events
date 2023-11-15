@@ -30,7 +30,7 @@ export default defineRoute(
     return (
       <>
         <Head>
-        <title>Yoour ticket - {event.name} - Events</title>
+        <title>Your ticket - {event.name} - Events</title>
         <meta property="og:type" content="website" />
         <meta
           property="og:url"

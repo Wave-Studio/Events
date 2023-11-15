@@ -16,6 +16,10 @@ import CTA from "@/components/buttons/cta.tsx";
 
 export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
   const { event, eventID, user } = ctx.state.data;
+  // # of tickets that the user has
+  const tickets = event.showTimes.filter((time) =>
+    acquired(user?.data, eventID, time.id),
+  ).length;
 
   const banner = () => {
     if (imagekit && event.banner.path) {
@@ -229,8 +233,7 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
             </div>
           ) : (
             <>
-              {event.showTimes.length === 1 &&
-              acquired(user?.data, eventID, event.showTimes[0].id) ? (
+              {event.showTimes.length === 1 && tickets === 1 ? (
                 <div className="mx-auto flex flex-col items-center mt-14">
                   <p class="font-semibold mb-4 text-center">
                     You're already registered for this event! Edit or view
@@ -254,6 +257,16 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
                   additionalFields={event.additionalFields}
                 />
               )}
+              {tickets < event.showTimes.length &&
+                event.showTimes.length !== 1 &&
+                tickets >= 1 && (
+                  <a
+                    class="text-center mt-1 text-sm font-medium underline"
+                    href="/events/attending"
+                  >
+                    See Acquired Tickets
+                  </a>
+                )}
               {event.showTimes.length === 1 && (
                 <div class="mx-auto mt-2 text-sm text-center">
                   <Avalibility

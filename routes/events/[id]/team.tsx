@@ -10,17 +10,59 @@ import UserMinus from "$tabler/user-minus.tsx";
 import Dropdown from "@/islands/components/pickers/dropdown.tsx";
 import DotsVertical from "$tabler/dots-vertical.tsx";
 import { Trashcan } from "@/islands/components/dropinUI/trash.tsx";
-import Search from "$tabler/search.tsx";
 import Invite from "@/islands/events/teams/invite.tsx";
 import ManageUser from "@/islands/events/teams/manage.tsx";
 import Crown from "$tabler/crown.tsx";
-import { Roles } from "@/utils/db/kv.ts";
+import { Roles, Event } from "@/utils/db/kv.ts";
+import TeamFilters from "@/islands/events/teams/filters.tsx";
+import { signal } from "@preact/signals";
 
 export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
   const { event, eventID, user } = ctx.state.data;
+  const url = new URL(req.url);
+  const queryValue = url.searchParams.get("q");
+  let sortValue = parseInt(url.searchParams.get("s") ?? "0");
+
+  if (isNaN(sortValue) || sortValue > 4 || sortValue < 0) {
+    sortValue = 0;
+  }
+
+  const query = signal<string>(queryValue ?? "");
+  const sort = signal<number>(sortValue);
 
   if (!user || user.role == undefined || user.role > 3) {
     return badEventRequest;
+  }
+
+  const sortMembers = (a: Event["members"][0], b: Event["members"][0]) => {
+    if (sort.value == 0 || sort.value == 1) {
+      // ["Role Desc", "Role Asc", "Email A-Z", "Email Z-A"]
+      if (sort.value == 0) {
+        if (a.role < b.role) {
+          return -1;
+        } else if (a.role > b.role) {
+          return 1;
+        } else {
+          return a.email.localeCompare(b.email);
+        }
+      }
+    } else if (sort.value == 2 || sort.value == 3) {
+      if (sort.value == 2) {
+        if (a.email > b.email) {
+          return 1;
+        } else if (a.email < b.email) {
+          return -1;
+        }
+      } else if (sort.value == 3) {
+        if (a.email < b.email) {
+          return 1;
+        } else if (a.email > b.email) {
+          return -1;
+        }
+      }
+    }
+
+    return 0;
   }
 
   return (
@@ -34,24 +76,11 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
         </p>
         <Invite eventID={eventID} />
       </div>
-      <div class="flex gap-2 flex-col md:flex-row ">
-        <input
-          class="rounded-md border py-1.5 px-2 grow"
-          placeholder="Search members..."
-        />
-        <div class="flex gap-2">
-          <Select
-            options={["Role Desc", "Role Asc", "Email A-Z", "Email Z-A"]}
-            selectClassName="py-2"
-            className="grow"
-          />
-          <Button icon={<Search class="w-5 h-5" />} label="Search Users" />
-        </div>
-      </div>
+      <TeamFilters query={query ?? ""} sort={sort} />
       <div>
         <h2 class="font-medium text-sm mb-0.5">All Team Members</h2>
         <div class="grid [grid-auto-rows:1fr] border divide-y rounded-md">
-          {event.members.map((m) => (
+          {event.members.sort(sortMembers).filter((m) => m.email.toLowerCase().includes((query.value ?? "").toLowerCase())).map((m) => (
             <>
               {m.role == Roles.OWNER ? (
                 <div class="p-3  flex group gap-2 items-center">

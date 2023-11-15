@@ -43,9 +43,9 @@ export const Avalibility = ({
     </p>,
   ];
 
-  if (acquired) return messages[6];
-
   if (happened) return messages[4];
+
+  if (acquired) return messages[6];
 
   if (windowClosed) return messages[5];
 

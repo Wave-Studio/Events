@@ -8,7 +8,7 @@ import { useSignal } from "@preact/signals";
 import { Toggle } from "@/components/buttons/toggle.tsx";
 import Minus from "$tabler/minus.tsx";
 import Plus from "$tabler/plus.tsx";
-import { fmtDate, fmtTime } from "@/utils/dates.ts";
+import { fmtDate, fmtHour, fmtTime } from "@/utils/dates.ts";
 import Button from "@/components/buttons/button.tsx";
 import ChevronLeft from "$tabler/chevron-left.tsx";
 import { createPortal } from "preact/compat";
@@ -28,7 +28,8 @@ export default function EventRegister({
   additionalFields: Field[];
   ticket?: string;
 }) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
+  const changeOpen = useSignal(false);
   const page = useSignal(0);
   const tickets = useSignal(1);
   const error = useSignal<string | undefined>(undefined);
@@ -165,12 +166,76 @@ export default function EventRegister({
     }
   };
 
+  const SelectShowTime = () => {
+    return (
+      <>
+        <button
+          class="flex gap-2 focus:outline-none w-max group"
+          type="button"
+          onClick={() => (changeOpen.value = true)}
+        >
+          {showTimes
+            .filter((time) => time.id == showTime.value)!
+            .map((time) => (
+              <div
+                class={`border transition select-none px-2 h-8 rounded-md font-medium whitespace-pre border-theme-normal bg-theme-normal/5 grid place-content-center`}
+              >
+                {fmtDate(new Date(time.startDate!))}
+
+                {time.startTime &&
+                  ` at ${fmtHour(new Date(time.startTime)).toLowerCase()}`}
+              </div>
+            ))}
+          <div class="rounded-md bg-gray-200 h-8 grid place-content-center px-2 font-medium hover:brightness-95 transition">
+            Change
+          </div>
+        </button>
+        <Popup
+          close={() => (changeOpen.value = false)}
+          isOpen={changeOpen.value}
+          className="md:!max-w-md"
+        >
+          <h3 class="font-bold text-lg mb-2">Change</h3>
+          <div class="grid gap-2">
+            {showTimes.map((time) => (
+              <button
+                onClick={() => (showTime.value = time.id)}
+                class={`border transition select-none px-2 rounded-md font-medium whitespace-pre grid place-items-center h-8 ${
+                  time.id == showTime.value &&
+                  "border-theme-normal bg-theme-normal/5"
+                }`}
+                type="button"
+              >
+                <p class="flex">
+                  {fmtDate(new Date(time.startDate!))}
+                  <span class="lowercase">
+                    {time.startTime &&
+                      ` at ${fmtTime(new Date(time.startTime))}`}
+                  </span>
+                </p>
+              </button>
+            ))}
+          </div>
+          <button
+            type="button"
+            onClick={() => (changeOpen.value = false)}
+            class="rounded-md bg-gray-200 h-8 grid place-content-center px-2 font-medium hover:brightness-95 transition mt-4 mx-auto"
+          >
+            Close
+          </button>
+        </Popup>
+      </>
+    );
+  };
+
   const Popover = () => {
     return (
       <Popup
         close={() => {
-          setOpen(false);
-          page.value = 0;
+          if (!changeOpen.value) {
+            setOpen(false);
+            page.value = 0;
+          }
         }}
         isOpen={open}
         className=""
@@ -181,24 +246,7 @@ export default function EventRegister({
         <Form class="gap-4 mt-4 flex flex-col">
           {page.value == 0 ? (
             <>
-              <div class="flex gap-2 scrollbar-fancy snap-x overflow-x-auto">
-                {showTimes.map((time) => (
-                  <button
-                    onClick={() => (showTime.value = time.id)}
-                    class={`border transition select-none px-2 rounded-md font-medium whitespace-pre ${
-                      time.id == showTime.value &&
-                      "border-theme-normal bg-theme-normal/5"
-                    }`}
-                    type="button"
-                  >
-                    {fmtDate(new Date(time.startDate!))}
-                    <span class="lowercase">
-                      {time.startTime &&
-                        ` at ${fmtTime(new Date(time.startTime))}`}
-                    </span>
-                  </button>
-                ))}
-              </div>
+              <SelectShowTime />
               <div class="flex flex-col md:flex-row gap-4 [&>label]:grow">
                 <label class="flex flex-col">
                   <span class="label-text label-required">First Name</span>

@@ -7,12 +7,14 @@ const Button = ({
   href,
   onClick,
   small = false,
+  type = "button",
 }: {
   label: string;
   icon: ComponentChildren;
   href?: string;
   onClick?: () => void;
   small?: boolean;
+  type?: string
 }) => {
   const Wrapper = (props: {
     children: ComponentChildren;
@@ -27,7 +29,7 @@ const Button = ({
         {children}
       </a>
     ) : (
-      <button {...props} onClick={onClick}>
+      <button {...props} type={type} onClick={onClick}>
         {children}
       </button>
     );
