@@ -31,7 +31,7 @@ export default function EventRegister({
   additionalFields: Field[];
   user?: User;
 }) {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const changeOpen = useSignal(false);
   const page = useSignal(0);
   const tickets = useSignal(1);
@@ -136,7 +136,7 @@ export default function EventRegister({
           <p class="text-center text-red-500 text-sm mb-2">
             {error.value.message}
           </p>
-          <RegisterErrors code={EventRegisterError.PREVIOUSLY_LOGGED_IN} />
+          <RegisterErrors code={error.value.code} />
         </div>
       )}
     </>
