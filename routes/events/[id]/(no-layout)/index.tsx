@@ -8,7 +8,7 @@ import Calender from "$tabler/calendar.tsx";
 
 import EventRegister, { Contact } from "@/islands/events/viewing/register.tsx";
 import Footer from "@/components/layout/footer.tsx";
-import { fmtDate, fmtTime, happened } from "@/utils/dates.ts";
+import { fmtDate, fmtTime, getTimeZone, happened } from "@/utils/dates.ts";
 import { Avalibility } from "@/islands/events/viewing/availability.tsx";
 import { ShowTimes } from "@/islands/events/viewing/showtimes.tsx";
 import { acquired, getTicketID } from "@/utils/tickets.ts";
@@ -20,6 +20,10 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
   const tickets = event.showTimes.filter((time) =>
     acquired(user?.data, eventID, time.id),
   ).length;
+
+  const booked =
+    event.showTimes.every((time) => happened(time.startDate, time.startTime)) ||
+    event.showTimes.every((time) => time.soldTickets == time.maxTickets);
 
   const banner = () => {
     if (imagekit && event.banner.path) {
@@ -89,20 +93,34 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
         <p class="mb-4">{event.summary}</p>
         <h2 className="font-semibold mb-1 text-sm">Event Description</h2>
         <p class=" whitespace-pre-line">{event.description}</p>
-        {event.showTimes.length == 1 && event.showTimes[0].lastPurchaseDate && (
-          <p class="text-xs text-gray-600 text-center mt-2">
-            The last day to get tickets is{" "}
-            {fmtDate(new Date(event.showTimes[0].lastPurchaseDate))}
-          </p>
-        )}
         {event.venue && (
           <>
-            <h2 className="font-semibold mt-4 mb-1 text-sm">Venue</h2>
-            <p class="mb-4">{event.venue}</p>
+            <h2 className="font-semibold mt-4 text-sm">Venue</h2>
+            <p>{event.venue}</p>
           </>
         )}
+        {event.showTimes.length == 1 && event.showTimes[0].lastPurchaseDate && (
+          <p class="text-xs text-gray-600 text-center mt-2">
+            The last day to get tickets is {fmtDate(new Date(event.showTimes[0].lastPurchaseDate))} at Midnight (
+            {getTimeZone(new Date(event.showTimes[0].lastPurchaseDate))})
+            
+          </p>
+        )}
       </div>
-      <Contact email={event.supportEmail} />
+      <div class="flex flex-col-reverse md:flex-row gap-4 justify-center items-center">
+        <Contact email={event.supportEmail} />
+        {(!user ||
+          (tickets < event.showTimes.length &&
+            event.showTimes.length !== 1 &&
+            tickets >= 1)) && (
+          <a
+            class="flex items-center select-none font-medium hover:bg-gray-200/75 hover:text-gray-900 transition text-sm mt-4 rounded-md bg-white/25 backdrop-blur-xl border px-1.5 py-0.5"
+            href={user ? "/events/attending" : "/login?attending=true"}
+          >
+            {user ? "See Acquired Tickets" : "Log in to view acquired tickets"}
+          </a>
+        )}
+      </div>
     </>
   );
 
@@ -219,37 +237,34 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
         <div className="max-w-2xl mx-auto w-full mb-36 md:mb-16 mt-4 md:-mt-28 flex flex-col px-4 static grow">
           <Header />
           <ShowTimes data={ctx.state.data} />
-          {event.showTimes.every((time) =>
-            happened(time.startDate, time.startTime),
-          ) ||
-          event.showTimes.every(
-            (time) => time.soldTickets == time.maxTickets,
-          ) ? (
+          {booked && (
             <div class="text-center mt-10 mb-4 mx-auto">
               <p>
                 This event is either fully booked or prefermances have ended.
               </p>
               <p>Contact the organizer if you belive this is incorrect.</p>
             </div>
-          ) : (
-            <>
-              {event.showTimes.length === 1 && tickets === 1 ? (
-                <div className="mx-auto flex flex-col items-center mt-14">
-                  <p class="font-semibold mb-4 text-center">
-                    You're already registered for this event! Edit or view
-                    ticket below.
-                  </p>
-                  <a
-                    href={`/events/${eventID}/tickets/${getTicketID(
-                      user?.data,
-                      eventID,
-                      event.showTimes[0].id,
-                    )}`}
-                  >
-                    <CTA btnType="secondary">View Ticket</CTA>
-                  </a>
-                </div>
-              ) : (
+          )}
+          <>
+            {event.showTimes.length === 1 && tickets === 1 ? (
+              <div className="mx-auto flex flex-col items-center mt-14">
+                <p class="font-semibold mb-4 text-center">
+                  You're already registered for this event! Edit or view ticket
+                  below.
+                </p>
+                <a
+                  href={`/events/${eventID}/tickets/${getTicketID(
+                    user?.data,
+                    eventID,
+                    event.showTimes[0].id,
+                  )}`}
+                >
+                  <CTA btnType="secondary">View Ticket</CTA>
+                </a>
+              </div>
+            ) : (
+              !booked &&
+              clientShowTimes.length > 0 && (
                 <EventRegister
                   eventID={eventID}
                   showTimes={clientShowTimes}
@@ -257,41 +272,32 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
                   additionalFields={event.additionalFields}
                   user={user?.data}
                 />
-              )}
-              {tickets < event.showTimes.length &&
-                event.showTimes.length !== 1 &&
-                tickets >= 1 && (
-                  <a
-                    class="text-center mt-1 text-sm font-medium underline"
-                    href="/events/attending"
-                  >
-                    See Acquired Tickets
-                  </a>
-                )}
-              {event.showTimes.length === 1 && (
-                <div class="mx-auto mt-2 text-sm text-center">
-                  <Avalibility
-                    acquired={acquired(
-                      user?.data,
-                      eventID,
-                      event.showTimes[0].id,
-                    )}
-                    tickets={event.showTimes[0].soldTickets}
-                    maxTickets={event.showTimes[0].maxTickets}
-                    happened={happened(
-                      event.showTimes[0].startDate,
-                      event.showTimes[0].startTime,
-                    )}
-                    windowClosed={
-                      event.showTimes[0].lastPurchaseDate != undefined
-                        ? happened(event.showTimes[0].lastPurchaseDate)
-                        : false
-                    }
-                  />
-                </div>
-              )}
-            </>
-          )}
+              )
+            )}
+
+            {event.showTimes.length === 1 && (
+              <div class="mx-auto mt-2 text-sm text-center">
+                <Avalibility
+                  acquired={acquired(
+                    user?.data,
+                    eventID,
+                    event.showTimes[0].id,
+                  )}
+                  tickets={event.showTimes[0].soldTickets}
+                  maxTickets={event.showTimes[0].maxTickets}
+                  happened={happened(
+                    event.showTimes[0].startDate,
+                    event.showTimes[0].startTime,
+                  )}
+                  windowClosed={
+                    event.showTimes[0].lastPurchaseDate != undefined
+                      ? happened(event.showTimes[0].lastPurchaseDate)
+                      : false
+                  }
+                />
+              </div>
+            )}
+          </>
         </div>
         <p class="text-center max-w-sm mx-auto mb-4 text-sm px-4">
           This event was made with{" "}

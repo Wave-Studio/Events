@@ -389,7 +389,7 @@ export const Contact = ({ email }: { email: string }) => {
   return (
     <>
       <button
-        className="flex items-center select-none font-medium hover:bg-gray-200/75 hover:text-gray-900 transition text-sm mx-auto mt-4 rounded-md bg-white/25 backdrop-blur-xl border px-1.5 py-0.5"
+        className="flex items-center select-none font-medium hover:bg-gray-200/75 hover:text-gray-900 transition text-sm mt-4 rounded-md bg-white/25 backdrop-blur-xl border px-1.5 py-0.5"
         onClick={() => setOpen(true)}
       >
         Contact Organizer

@@ -12,12 +12,15 @@ const timeFmt = new Intl.DateTimeFormat("en-US", {
   hour: "numeric",
   minute: "2-digit",
 });
+const timezoneFmt = new Intl.DateTimeFormat("en-US", {
+  timeZoneName: "short",
+});
 
 export const happened = (startDate: string, startTime?: string) => {
   const date = new Date(startDate);
 
   if (startTime) {
-    // 5 min buffer for tickets
+    // 5 min buffer for tickets if someone arrives late
     date.setMinutes(new Date(startTime).getMinutes() + 5);
   } else {
     date.setDate(date.getDate() + 1);
@@ -29,3 +32,5 @@ export const happened = (startDate: string, startTime?: string) => {
 export const fmtDate = (date: Date) => dateFmt.format(date);
 export const fmtHour = (date: Date) => hourFmt.format(date);
 export const fmtTime = (date: Date) => timeFmt.format(date);
+// not an ideal solution
+export const getTimeZone = (date: Date) => timezoneFmt.format(date).split(", ")[1];
