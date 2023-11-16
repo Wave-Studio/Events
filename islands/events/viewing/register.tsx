@@ -15,6 +15,8 @@ import { createPortal } from "preact/compat";
 import Loading from "$tabler/loader-2.tsx";
 import Ticket from "@/islands/components/peices/ticket.tsx";
 import { acquired, getTicketID } from "@/utils/tickets.ts";
+import { EventRegisterError } from "@/utils/event/register.ts";
+import { RegisterErrors } from "@/components/events/registerErrors.tsx";
 
 export default function EventRegister({
   eventID,
@@ -29,11 +31,13 @@ export default function EventRegister({
   additionalFields: Field[];
   user?: User;
 }) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const changeOpen = useSignal(false);
   const page = useSignal(0);
   const tickets = useSignal(1);
-  const error = useSignal<string | undefined>(undefined);
+  const error = useSignal<
+    { message: string; code: EventRegisterError } | undefined
+  >(undefined);
   const showTime = useSignal(showTimes[0].id);
   const ticketID = useSignal<string | undefined>(undefined);
   const toggles = useSignal<Record<string, boolean>>({
@@ -128,7 +132,12 @@ export default function EventRegister({
         </div>
       </div>
       {error.value && (
-        <p class="text-center text-red-500 text-sm">Error: {error.value}</p>
+        <div class="flex flex-col items-center">
+          <p class="text-center text-red-500 text-sm mb-2">
+            {error.value.message}
+          </p>
+          <RegisterErrors code={EventRegisterError.PREVIOUSLY_LOGGED_IN} />
+        </div>
       )}
     </>
   );
@@ -150,16 +159,21 @@ export default function EventRegister({
     error.value = undefined;
     ticketID.value = "loading";
 
-    const ticket: { ticket?: string; error?: string; hint?: string } = await (
+    const ticket: {
+      ticket?: string;
+      error?: { message: string; code: EventRegisterError };
+    } = await (
       await fetch("/api/events/ticket", {
         method: "POST",
         body: JSON.stringify(fullTicket),
       })
     ).json();
 
-    if (ticket.error || ticket.hint || !ticket.ticket) {
-      error.value =
-        ticket.hint || ticket.error || "An unknown error has occured";
+    if (ticket.error || !ticket.ticket) {
+      error.value = ticket.error || {
+        message: "An unknown error has occured",
+        code: EventRegisterError.OTHER,
+      };
       ticketID.value = undefined;
     } else {
       ticketID.value = ticket.ticket;
@@ -238,6 +252,7 @@ export default function EventRegister({
         close={() => {
           if (!changeOpen.value) {
             setOpen(false);
+            error.value = undefined;
             page.value = 0;
           }
         }}
@@ -256,7 +271,8 @@ export default function EventRegister({
                   <div className="mx-auto flex flex-col items-center">
                     <p class="font-semibold mb-4 text-center">
                       You're already registered for this event! Edit or view
-                      ticket below. Tap "Change" to get a ticket for a different event.
+                      ticket below. Tap "Change" to get a ticket for a different
+                      event.
                     </p>
                     <a
                       href={`/events/${eventID}/tickets/${getTicketID(
@@ -264,9 +280,10 @@ export default function EventRegister({
                         eventID,
                         showTime.value!,
                       )}`}
-                      
                     >
-                      <CTA btnType="secondary" btnSize="sm" type="button">View Ticket</CTA>
+                      <CTA btnType="secondary" btnSize="sm" type="button">
+                        View Ticket
+                      </CTA>
                     </a>
                   </div>
                 </>

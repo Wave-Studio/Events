@@ -6,9 +6,10 @@ import {
   kv,
   Roles,
   User,
-  Plan
+  Plan,
 } from "@/utils/db/kv.ts";
 import * as Yup from "yup";
+import { EventRegisterError } from "@/utils/event/register.ts";
 
 export const handler: Handlers = {
   async POST(req) {
@@ -40,7 +41,9 @@ export const handler: Handlers = {
       );
     } catch (e) {
       return new Response(
-        JSON.stringify({ error: "Invalid parameters", hint: e.message }),
+        JSON.stringify({
+          error: { message: e.message, code: EventRegisterError.OTHER },
+        }),
         {
           status: 400,
         },
@@ -50,17 +53,33 @@ export const handler: Handlers = {
     const event = await kv.get<Event>(["event", eventID]);
 
     if (event.value == undefined) {
-      return new Response(JSON.stringify({ error: "Unknown event" }), {
-        status: 400,
-      });
+      return new Response(
+        JSON.stringify({
+          error: {
+            message: "Unknown event",
+            code: EventRegisterError.TO_HOMEPAGE,
+          },
+        }),
+        {
+          status: 400,
+        },
+      );
     }
 
     const showtime = event.value.showTimes.find((s) => s.id === showtimeID);
 
     if (showtime == undefined) {
-      return new Response(JSON.stringify({ error: "Unknown showtime" }), {
-        status: 400,
-      });
+      return new Response(
+        JSON.stringify({
+          error: {
+            message: "Unknown showtime",
+            code: EventRegisterError.RELOAD,
+          },
+        }),
+        {
+          status: 400,
+        },
+      );
     }
 
     if (showtime.lastPurchaseDate != undefined) {
@@ -69,7 +88,10 @@ export const handler: Handlers = {
       if (lastPurchaseDate < Date.now()) {
         return new Response(
           JSON.stringify({
-            error: "The purchase window for this event time has ended",
+            error: {
+              message: "The registration window for this event time has ended",
+              code: EventRegisterError.RELOAD,
+            },
           }),
           {
             status: 400,
@@ -79,20 +101,30 @@ export const handler: Handlers = {
     }
 
     if (showtime.soldTickets >= (showtime.maxTickets ?? 75)) {
-      return new Response(JSON.stringify({ error: "Sold out" }), {
-        status: 400,
-      });
+      return new Response(
+        JSON.stringify({
+          error: {
+            message: "This event time is sold out",
+            code: EventRegisterError.OTHER,
+          },
+        }),
+        {
+          status: 400,
+        },
+      );
     }
 
     const eventUser = await kv.get<User>(["user", email]);
 
-    const user = eventUser.value ?? {
-      onboarded: false,
-      tickets: [],
-      events: [],
-      plan: Plan.BASIC,
-      email
-    } satisfies User;
+    const user =
+      eventUser.value ??
+      ({
+        onboarded: false,
+        tickets: [],
+        events: [],
+        plan: Plan.BASIC,
+        email,
+      } satisfies User);
 
     if (user.onboarded) {
       const authToken = getUserAuthToken(req);
@@ -101,7 +133,10 @@ export const handler: Handlers = {
         if (authToken == undefined) {
           return new Response(
             JSON.stringify({
-              error: "You must log in to register for this event!",
+              error: {
+                message: "You must log in to register for this event!",
+                code: EventRegisterError.PREVIOUSLY_LOGGED_IN,
+              },
             }),
             {
               status: 400,
@@ -123,8 +158,11 @@ export const handler: Handlers = {
           ) {
             return new Response(
               JSON.stringify({
-                error:
-                  "You are not logged in as the user you are trying to register for!",
+                error: {
+                  message:
+                    "You are not logged in as the user you are trying to register for",
+                  code: EventRegisterError.PURCHASED_NOT_LOGGED_IN,
+                },
               }),
               {
                 status: 400,
@@ -141,9 +179,17 @@ export const handler: Handlers = {
         .includes(`${eventID}_${showtimeID}`) &&
       !showtime.multiPurchase
     ) {
-      return new Response(JSON.stringify({ error: "Already purchased" }), {
-        status: 400,
-      });
+      return new Response(
+        JSON.stringify({
+          error: {
+            message: "Already purchased",
+            code: EventRegisterError.PURCHASED,
+          },
+        }),
+        {
+          status: 400,
+        },
+      );
     }
 
     const ticket = `${eventID}_${showtimeID}_${crypto.randomUUID()}`;
