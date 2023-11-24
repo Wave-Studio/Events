@@ -54,4 +54,3 @@ export const getShowtimeID = (
 
   return undefined;
 };
-

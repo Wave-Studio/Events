@@ -14,7 +14,7 @@ const Button = ({
   href?: string;
   onClick?: () => void;
   small?: boolean;
-  type?: string
+  type?: string;
 }) => {
   const Wrapper = (props: {
     children: ComponentChildren;

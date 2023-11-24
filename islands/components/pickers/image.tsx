@@ -121,10 +121,10 @@ export default function ImagePicker({
             {loading
               ? "Converting..."
               : uploading
-              ? "Uploading..."
-              : dragging
-              ? "Drop Image to Upload"
-              : "Upload Banner Image"}
+                ? "Uploading..."
+                : dragging
+                  ? "Drop Image to Upload"
+                  : "Upload Banner Image"}
           </p>
         </div>
         <input

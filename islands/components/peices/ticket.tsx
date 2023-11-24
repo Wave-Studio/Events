@@ -46,10 +46,14 @@ export default function Ticket({
       ) : (
         <QR />
       )}
-      <p class="text-xs text-gray-500 text-center mt-4">ID: {id.split("_")[2]}</p>
+      <p class="text-xs text-gray-500 text-center mt-4">
+        ID: {id.split("_")[2]}
+      </p>
       <div class="grid gap-2">
         <div>
-          <h5 class="font-medium mb-0.5 mt-4 text-sm text-center">Event Date & Time</h5>
+          <h5 class="font-medium mb-0.5 mt-4 text-sm text-center">
+            Event Date & Time
+          </h5>
           <div class="bg-gray-100 border font-medium px-1.5 rounded-md text-center">
             {fmtDate(new Date(showTime.startDate!))}
           </div>

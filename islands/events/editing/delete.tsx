@@ -42,7 +42,8 @@ export default function EventDeletion({ eventID }: { eventID: string }) {
         >
           <h5 className="font-bold text-xl">Delete Event</h5>
           <p>
-            Are you sure you want to delete this event? This action is irrevocable and cannot be undone!
+            Are you sure you want to delete this event? This action is
+            irrevocable and cannot be undone!
           </p>
           <CTA
             btnType="secondary"

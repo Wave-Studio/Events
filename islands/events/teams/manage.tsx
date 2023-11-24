@@ -23,7 +23,7 @@ export default function ManageUser({
 
   const rolesToShow = ["Admin", "Manager", "Scanner"].filter((r, i) => {
     if (clientRole == Roles.OWNER) return true;
-    if ((clientRole <= user.role)) {
+    if (clientRole <= user.role) {
       return i + 1 >= user.role;
     }
   });
@@ -103,7 +103,7 @@ export default function ManageUser({
         <Select
           options={["Admin", "Manager", "Scanner"].filter((r, i) => {
             if (clientRole == Roles.OWNER) return true;
-            if ((clientRole <= user.role)) {
+            if (clientRole <= user.role) {
               return i + 1 >= user.role;
             }
           })}
@@ -111,34 +111,36 @@ export default function ManageUser({
           // Owner comes first and that's not in this dropdown
           selected={user.role - 1 - rolesToShow.length - 3}
           updateOption={updateUserRole}
-          disabled={clientRole == Roles.SCANNER || (clientRole > user.role)}
+          disabled={clientRole == Roles.SCANNER || clientRole > user.role}
         />
 
-        {(clientRole == Roles.SCANNER ||
-            (clientRole >= user.role && user.email != client.email))
-          ? <></>
-          : (
-            <Dropdown
-              options={[
-                ...(user.role == Roles.OWNER
-                  ? [{
-                    content: "Transfer Ownership",
-                    onClick: () => (transferOpen.value = true),
-                  }]
-                  : []),
-                {
-                  content: "Remove User",
-                  onClick: removeUser,
-                },
-              ]}
+        {clientRole == Roles.SCANNER ||
+        (clientRole >= user.role && user.email != client.email) ? (
+          <></>
+        ) : (
+          <Dropdown
+            options={[
+              ...(user.role == Roles.OWNER
+                ? [
+                    {
+                      content: "Transfer Ownership",
+                      onClick: () => (transferOpen.value = true),
+                    },
+                  ]
+                : []),
+              {
+                content: "Remove User",
+                onClick: removeUser,
+              },
+            ]}
+          >
+            <div
+              className={`w-8 grid place-items-center border h-8 rounded-md`}
             >
-              <div
-                className={`w-8 grid place-items-center border h-8 rounded-md`}
-              >
-                <DotsVertical class="h-5 w-5" />
-              </div>
-            </Dropdown>
-          )}
+              <DotsVertical class="h-5 w-5" />
+            </div>
+          </Dropdown>
+        )}
       </div>
     </>
   );
