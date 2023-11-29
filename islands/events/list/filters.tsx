@@ -57,11 +57,7 @@ export default function HomeFilters({
             ascending.value = !ascending.value;
           }}
         />
-        <Button
-          label={`Search Events`}
-          icon={<IconSearch class="w-5 h-5" />}
-
-        />
+        <Button label={`Search Events`} icon={<IconSearch class="w-5 h-5" />} />
       </form>
     </>
   );

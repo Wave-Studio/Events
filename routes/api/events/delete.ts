@@ -43,18 +43,19 @@ export const handler: Handlers = {
       imageKit!.deleteFile(event.value.banner.id);
     }
 
-    let atomic = kv.atomic()
-      .delete(["event", eventID])
+    let atomic = kv.atomic().delete(["event", eventID]);
 
-    const members = await kv.getMany<User[]>(event.value.members.map(e => ["user", e.email]))
+    const members = await kv.getMany<User[]>(
+      event.value.members.map((e) => ["user", e.email]),
+    );
 
     for (const member of members) {
       const user = member.value!;
 
       atomic = atomic.set(["user", user.email], {
         ...user,
-        events: user.events.filter(e => e != eventID)
-      })
+        events: user.events.filter((e) => e != eventID),
+      });
     }
 
     const atomicResult = await atomic.commit();

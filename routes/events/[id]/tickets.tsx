@@ -10,9 +10,22 @@ import Search from "$tabler/search.tsx";
 import Dropdown from "@/islands/components/pickers/dropdown.tsx";
 import DotsVertical from "$tabler/dots-vertical.tsx";
 import { fmtDate, fmtHour } from "@/utils/dates.ts";
+import TicketsFilters from "@/islands/tickets/filters.tsx";
+import { signal } from "@preact/signals";
 
 export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
   const { event, eventID, user } = ctx.state.data;
+
+  const url = new URL(req.url);
+  const queryValue = url.searchParams.get("q");
+  let sortValue = parseInt(url.searchParams.get("s") ?? "0");
+
+  if (isNaN(sortValue) || sortValue > 4 || sortValue < 0) {
+    sortValue = 0;
+  }
+
+  const query = signal<string>(queryValue ?? "");
+  const sort = signal<number>(sortValue);
 
   if (!user || user.role == undefined || user.role > 3) {
     return badEventRequest;
@@ -21,16 +34,7 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
   return (
     <main className="px-4 max-w-screen-md w-full mx-auto flex flex-col gap-2 grow mb-10">
       <EventHeader editPositon={1} role={user.role} />
-      <div class="flex gap-2 mt-8 flex-col md:flex-row">
-        <input
-          class="rounded-md border py-1.5 px-2 grow"
-          placeholder="Search..."
-        />
-        <div class="flex gap-2">
-          <Select options={["Purchused", "Email A-Z", "Email Z-A"]} className="grow " />
-          <Button icon={<Search class="w-5 h-5" />} label="Search Users" />
-        </div>
-      </div>
+      <TicketsFilters query={query} sort={sort} />
       <div class="flex gap-2 scrollbar-fancy snap-x overflow-x-auto">
         <button
           //onClick={() => (showTime.value = time.id)}

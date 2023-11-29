@@ -5,5 +5,5 @@ export enum EventRegisterError {
   RELOAD = 3,
   PREVIOUSLY_LOGGED_IN = 4,
   PURCHASED = 5,
-	PURCHASED_NOT_LOGGED_IN = 6
+  PURCHASED_NOT_LOGGED_IN = 6,
 }

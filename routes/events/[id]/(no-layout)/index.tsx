@@ -101,9 +101,9 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
         )}
         {event.showTimes.length == 1 && event.showTimes[0].lastPurchaseDate && (
           <p class="text-xs text-gray-600 text-center mt-2">
-            The last day to get tickets is {fmtDate(new Date(event.showTimes[0].lastPurchaseDate))} at Midnight (
-            {getTimeZone(new Date(event.showTimes[0].lastPurchaseDate))})
-            
+            The last day to get tickets is{" "}
+            {fmtDate(new Date(event.showTimes[0].lastPurchaseDate))} at Midnight
+            ({getTimeZone(new Date(event.showTimes[0].lastPurchaseDate))})
           </p>
         )}
       </div>

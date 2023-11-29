@@ -6,7 +6,7 @@ export default function Select({
   className,
   selectClassName,
   selected,
-  disabled
+  disabled,
 }: {
   options: string[];
   updateOption?: (option: number) => void;

@@ -3,9 +3,13 @@ import Button from "@/components/buttons/button.tsx";
 import Search from "$tabler/search.tsx";
 import { Signal } from "@preact/signals";
 
-export default function TeamFilters(
-  { query, sort }: { query: Signal<string>; sort: Signal<number> },
-) {
+export default function TeamFilters({
+  query,
+  sort,
+}: {
+  query: Signal<string>;
+  sort: Signal<number>;
+}) {
   return (
     <form
       class="flex gap-2 flex-col md:flex-row"
