@@ -16,7 +16,7 @@ import Loading from "$tabler/loader-2.tsx";
 import Ticket from "@/islands/components/peices/ticket.tsx";
 import { acquired, getTicketID } from "@/utils/tickets.ts";
 import { EventRegisterError } from "@/utils/event/register.ts";
-import { RegisterErrors } from "@/components/events/registerErrors.tsx";
+import { RegisterErrors } from "../components/registerErrors.tsx";
 
 export default function EventRegister({
   eventID,
