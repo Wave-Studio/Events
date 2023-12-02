@@ -1,6 +1,6 @@
 import { ResolvedFreshConfig } from "$fresh/server.ts";
 import tailwindCss, { Config } from "tailwindcss";
-import postcss from "npm:postcss@8.4.31";
+import postcss, { Plugin } from "npm:postcss@8.4.31";
 import cssnano from "npm:cssnano@6.0.1";
 import autoprefixer from "npm:autoprefixer@10.3.1";
 import * as path from "https://deno.land/std@0.207.0/path/mod.ts";
@@ -61,11 +61,10 @@ export async function initTailwind(
   });
 
   // PostCSS types cause deep recursion
-  // @ts-expect-error Weird types
   // deno-lint-ignore no-explicit-any
   const plugins: any[] = [
-    tailwindCss(tailwindConfig),
-	autoprefixer()
+    tailwindCss(tailwindConfig) as Plugin,
+	autoprefixer() as Plugin
   ];
 
   if (!config.dev) {
