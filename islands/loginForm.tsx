@@ -118,7 +118,7 @@ const LoginForm = ({ attending }: { attending: boolean }) => {
           <p className={`mb-2 text-sm text-red-500 ${!error && "invisible"} `}>
             Error: {error}
           </p>
-          <CTA btnType="cta">Confirm Email</CTA>
+          <CTA btnType="cta" type="submit">Confirm Email</CTA>
           <p className="mt-2 text-center text-sm cursor-pointer text-gray-500">
             By clicking "Confirm Email", you consent to us sending you a
             one-time authentication code via email.
@@ -178,7 +178,7 @@ const LoginForm = ({ attending }: { attending: boolean }) => {
             >
               Error: {error}
             </p>
-            <CTA btnType="cta" disabled={code.length != 6}>
+            <CTA btnType="cta" disabled={code.length != 6} type="submit">
               Login
             </CTA>
           </form>
