@@ -1,6 +1,10 @@
 # Events
 
-Event Ticketing of the future
+Events is a simple and easy to use event ticketing system. View the production website on https://events.deno.dev/! 
+
+## Contributing
+
+Contribution guide coming soon!
 
 ## Hosting
 
