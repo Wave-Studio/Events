@@ -1,19 +1,19 @@
 {
   "lock": false,
+  "nodeModulesDir": true,
   "tasks": {
     "check": "deno fmt --check && deno lint && deno check **/*.ts && deno check **/*.tsx",
     "fmt": "npx prettier . --write",
     "start": "deno run -A --unstable --watch=static/,routes/ dev.ts",
     "build": "deno run -A --unstable dev.ts build",
-    "preview": "deno run -A main.ts",
-    "update": "deno run --unstable -A -r https://fresh.deno.dev/update .",
-    "css": "npx tailwindcss -i ./static/styles.css -o ./static/output.css --watch --minify"
+    "preview": "deno run --unstable -A main.ts",
+    "update": "deno run --unstable -A -r https://fresh.deno.dev/update ."
   },
   "lint": { "rules": { "tags": ["fresh", "recommended"] } },
   "imports": {
-    "$fresh/": "https://deno.land/x/fresh@1.5.4/",
-    "preact": "https://esm.sh/preact@10.18.1",
-    "preact/": "https://esm.sh/preact@10.18.1/",
+    "$fresh/": "https://deno.land/x/fresh@1.6.0/",
+    "preact": "https://esm.sh/preact@10.19.2",
+    "preact/": "https://esm.sh/preact@10.19.2/",
     "preact-render-to-string": "https://esm.sh/*preact-render-to-string@6.2.2",
     "@preact/signals": "https://esm.sh/*@preact/signals@1.2.1",
     "@preact/signals-core": "https://esm.sh/*@preact/signals-core@1.5.0",
@@ -22,9 +22,11 @@
     "$tabler/": "https://deno.land/x/tabler_icons_tsx@0.0.5/tsx/",
     "yup": "https://esm.sh/yup@1.2.0",
     "imagekit": "npm:imagekit@4.1.3",
-    "barcode-polyfill": "https://esm.sh/barcode-detector@2.0.3"
+    "barcode-polyfill": "https://esm.sh/barcode-detector@2.0.3",
+    "tailwindcss": "npm:tailwindcss@3.3.5",
+    "tailwindcss/": "npm:/tailwindcss@3.3.5/",
+    "tailwindcss/plugin": "npm:/tailwindcss@3.3.5/plugin.js"
   },
   "compilerOptions": { "jsx": "react-jsx", "jsxImportSource": "preact" },
-  "nodeModulesDir": true,
   "exclude": ["**/_fresh/*"]
 }
