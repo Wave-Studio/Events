@@ -30,6 +30,12 @@ export default function TicketsFilters({
         location.href = url.toString();
       }}
     >
+      <input
+        class="rounded-md border py-1.5 px-2 grow"
+        placeholder="Search members..."
+        value={query}
+        onInput={(e) => (query.value = e.currentTarget.value)}
+      />
       <div class="flex gap-2">
         <Select
           options={["Purchused", "Email A-Z", "Email Z-A"]}
