@@ -64,6 +64,7 @@ import * as $events_creation_zero from "./islands/events/creation/zero.tsx";
 import * as $events_editing_delete from "./islands/events/editing/delete.tsx";
 import * as $events_editing_images from "./islands/events/editing/images.tsx";
 import * as $events_editing_settings from "./islands/events/editing/settings.tsx";
+import * as $events_editing_showtimeSelector from "./islands/events/editing/showtimeSelector.tsx";
 import * as $events_editing_showtimesettings from "./islands/events/editing/showtimesettings.tsx";
 import * as $events_editing_ticketSettings from "./islands/events/editing/ticketSettings.tsx";
 import * as $events_list_filters from "./islands/events/list/filters.tsx";
@@ -73,6 +74,7 @@ import * as $events_teams_invite from "./islands/events/teams/invite.tsx";
 import * as $events_teams_manage from "./islands/events/teams/manage.tsx";
 import * as $events_viewing_availability from "./islands/events/viewing/availability.tsx";
 import * as $events_viewing_register from "./islands/events/viewing/register.tsx";
+import * as $events_viewing_selectShowTime from "./islands/events/viewing/selectShowTime.tsx";
 import * as $events_viewing_showtimes from "./islands/events/viewing/showtimes.tsx";
 import * as $loginForm from "./islands/loginForm.tsx";
 import * as $queueManagement from "./islands/queueManagement.tsx";
@@ -155,6 +157,8 @@ const manifest = {
     "./islands/events/editing/delete.tsx": $events_editing_delete,
     "./islands/events/editing/images.tsx": $events_editing_images,
     "./islands/events/editing/settings.tsx": $events_editing_settings,
+    "./islands/events/editing/showtimeSelector.tsx":
+      $events_editing_showtimeSelector,
     "./islands/events/editing/showtimesettings.tsx":
       $events_editing_showtimesettings,
     "./islands/events/editing/ticketSettings.tsx":
@@ -166,6 +170,8 @@ const manifest = {
     "./islands/events/teams/manage.tsx": $events_teams_manage,
     "./islands/events/viewing/availability.tsx": $events_viewing_availability,
     "./islands/events/viewing/register.tsx": $events_viewing_register,
+    "./islands/events/viewing/selectShowTime.tsx":
+      $events_viewing_selectShowTime,
     "./islands/events/viewing/showtimes.tsx": $events_viewing_showtimes,
     "./islands/loginForm.tsx": $loginForm,
     "./islands/queueManagement.tsx": $queueManagement,

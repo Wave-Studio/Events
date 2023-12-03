@@ -23,9 +23,12 @@
     "yup": "https://esm.sh/yup@1.2.0",
     "imagekit": "npm:imagekit@4.1.3",
     "barcode-polyfill": "https://esm.sh/barcode-detector@2.0.3",
+
+    // Tailwind my beloved
     "tailwindcss": "npm:tailwindcss@3.3.5",
     "tailwindcss/": "npm:/tailwindcss@3.3.5/",
-    "tailwindcss/plugin": "npm:/tailwindcss@3.3.5/plugin.js"
+    "tailwindcss/plugin": "npm:/tailwindcss@3.3.5/plugin.js",
+    "@tailwindcss/typography": "npm:@tailwindcss/typography"
   },
   "compilerOptions": { "jsx": "react-jsx", "jsxImportSource": "preact" },
   "exclude": ["**/_fresh/*"]

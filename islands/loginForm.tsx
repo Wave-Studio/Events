@@ -110,8 +110,7 @@ const LoginForm = ({ attending }: { attending: boolean }) => {
               name="email"
               value={email}
               onChange={(e) =>
-                //@ts-expect-error deno moment
-                setEmail(e.target!.value)
+                setEmail(e.currentTarget.value)
               }
             />
           </label>
@@ -163,8 +162,7 @@ const LoginForm = ({ attending }: { attending: boolean }) => {
                   pattern="[0-9]*"
                   value={code}
                   onInput={(e) =>
-                    //@ts-expect-error deno moment (e has incorrect types and idk what the correct types are)
-                    updateCode(e.target!.value)
+                    updateCode(e.currentTarget.value)
                   }
                   ref={codeRef}
                   onBlur={() => setFocused(false)}

@@ -77,9 +77,9 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
           </p>
         </div>
         {event.venue && (
-          <div className="flex items-center rounded-md bg-white/[0.85] backdrop-blur-xl border px-1.5 py-0.5 ">
+          <div className="flex items-center rounded-md bg-white/[0.85] backdrop-blur-xl border px-1.5 py-0.5 w-max max-w-full">
             <Location class="w-4 h-4 mr-1.5 text-gray-700" />
-            <p className="truncate max-w-[12rem]">{event.venue}</p>
+            <p className="truncate md:max-w-[12rem] w-max max-w-full">{event.venue}</p>
           </div>
         )}
       </div>
@@ -139,9 +139,6 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
       const { maxTickets: _, soldTickets: __, ...st } = time;
       return st;
     });
-
-  const truncate = (str: string, len: number) =>
-    str.length > len ? str.slice(0, len) + "..." : str;
 
   return (
     <>

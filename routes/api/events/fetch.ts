@@ -1,5 +1,6 @@
 import { Handlers } from "$fresh/server.ts";
 import { Event, getUser, kv, Ticket } from "@/utils/db/kv.ts";
+import { isUUID } from "@/utils/db/misc.ts";
 
 export const handler: Handlers = {
   async POST(req) {
@@ -24,6 +25,23 @@ export const handler: Handlers = {
       showtimeID,
     }: { eventID: string; ticketID: string; showtimeID?: string } =
       await req.json();
+
+    const ticketSplit = ticketID.split("_");
+
+    for (const segment of ticketSplit) {
+      if (!isUUID(segment)) {
+        return new Response(
+          JSON.stringify({
+            error: {
+              message: "Invalid ticket ID",
+            },
+          }),
+          {
+            status: 400,
+          },
+        );
+      }
+    }
 
     const event = await kv.get<Event>(["event", eventID]);
 

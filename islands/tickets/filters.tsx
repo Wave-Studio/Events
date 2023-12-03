@@ -12,7 +12,7 @@ export default function TicketsFilters({
 }) {
   return (
     <form
-      class="flex gap-2 mt-8 flex-col md:flex-row"
+      class="flex gap-2 flex-col md:flex-row"
       onSubmit={(e) => {
         e.preventDefault();
 

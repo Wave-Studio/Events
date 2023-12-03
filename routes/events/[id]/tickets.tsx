@@ -12,12 +12,14 @@ import DotsVertical from "$tabler/dots-vertical.tsx";
 import { fmtDate, fmtHour } from "@/utils/dates.ts";
 import TicketsFilters from "@/islands/tickets/filters.tsx";
 import { signal } from "@preact/signals";
+import ShowtimeSelector from "@/islands/events/editing/showtimeSelector.tsx";
 
 export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
   const { event, eventID, user } = ctx.state.data;
 
   const url = new URL(req.url);
   const queryValue = url.searchParams.get("q");
+  const showTimeID = url.searchParams.get("id") ?? event.showTimes[0].id;
   let sortValue = parseInt(url.searchParams.get("s") ?? "0");
 
   if (isNaN(sortValue) || sortValue > 4 || sortValue < 0) {
@@ -34,7 +36,13 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
   return (
     <main className="px-4 max-w-screen-md w-full mx-auto flex flex-col gap-2 grow mb-10">
       <EventHeader editPositon={1} role={user.role} />
+    
+      <ShowtimeSelector
+        defaultShowTime={showTimeID}
+        showTimes={event.showTimes}
+      />
       <TicketsFilters query={query} sort={sort} />
+
       <div class="flex gap-2 scrollbar-fancy snap-x overflow-x-auto">
         <button
           //onClick={() => (showTime.value = time.id)}
@@ -47,8 +55,7 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
           <button
             //onClick={() => (showTime.value = time.id)}
             class={`border transition select-none px-2 rounded-md font-medium whitespace-pre ${
-              time.id == event.showTimes[0].id &&
-              "border-theme-normal bg-theme-normal/5"
+              time.id == showTimeID && "border-theme-normal bg-theme-normal/5"
             }`}
             type="button"
           >

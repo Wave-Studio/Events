@@ -1,5 +1,5 @@
 import { type Config } from "tailwindcss";
-import typography from "npm:@tailwindcss/typography";
+import typography from "@tailwindcss/typography";
 
 export default {
   content: [
