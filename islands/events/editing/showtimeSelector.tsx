@@ -23,7 +23,7 @@ const ShowtimeSelector = ({
   return (
     <div class="mt-8 mb-2 ml-auto">
       <SelectShowTime
-				all={true}
+        all={true}
         changeOpen={changeOpen}
         showTime={defaultShowTime}
         showTimes={showTimes}

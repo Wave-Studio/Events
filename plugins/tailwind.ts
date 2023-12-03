@@ -1,12 +1,14 @@
-import { Plugin, PluginMiddleware, ResolvedFreshConfig } from "$fresh/server.ts";
+import {
+  Plugin,
+  PluginMiddleware,
+  ResolvedFreshConfig,
+} from "$fresh/server.ts";
 import type postcss from "npm:postcss@8.4.31";
 import * as path from "https://deno.land/std@0.207.0/path/mod.ts";
 import { walk } from "https://deno.land/std@0.207.0/fs/walk.ts";
 
 async function initTailwind(config: ResolvedFreshConfig) {
-  return await (await import("./tailwind/compiler.ts")).initTailwind(
-    config,
-  );
+  return await (await import("./tailwind/compiler.ts")).initTailwind(config);
 }
 
 export default function tailwind(): Plugin {

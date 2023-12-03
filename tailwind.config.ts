@@ -2,9 +2,7 @@ import { type Config } from "tailwindcss";
 import typography from "@tailwindcss/typography";
 
 export default {
-  content: [
-    "{routes,islands,components}/**/*.{ts,tsx}",
-  ],
+  content: ["{routes,islands,components}/**/*.{ts,tsx}"],
   theme: {
     extend: {
       colors: {
@@ -17,7 +15,5 @@ export default {
       },
     },
   },
-  plugins: [
-    typography(),
-  ]
+  plugins: [typography()],
 } as Config;

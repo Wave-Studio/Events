@@ -36,7 +36,7 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
   return (
     <main className="px-4 max-w-screen-md w-full mx-auto flex flex-col gap-2 grow mb-10">
       <EventHeader editPositon={1} role={user.role} />
-    
+
       <ShowtimeSelector
         defaultShowTime={showTimeID}
         showTimes={event.showTimes}

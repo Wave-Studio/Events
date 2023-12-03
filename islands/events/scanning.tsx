@@ -15,11 +15,13 @@ export default function Scanner({
   const error = useSignal<string | null>(null);
   const isInitialized = useSignal(false);
   const currentTicket = useSignal<
-    { code: string; status: "invalid" | "loading", ticketData:null } | {
-      code: string;
-      status: "used" | "valid";
-      ticketData: Ticket;
-    } | null
+    | { code: string; status: "invalid" | "loading"; ticketData: null }
+    | {
+        code: string;
+        status: "used" | "valid";
+        ticketData: Ticket;
+      }
+    | null
   >(null);
 
   useEffect(() => {
@@ -74,10 +76,10 @@ export default function Scanner({
             string,
             | { status: "loading" | "invalid"; checkedAt: number }
             | {
-              status: "valid" | "used";
-              ticketData: Ticket;
-              checkedAt: number;
-            }
+                status: "valid" | "used";
+                ticketData: Ticket;
+                checkedAt: number;
+              }
           > = new Map();
 
           setInterval(() => {
@@ -132,10 +134,10 @@ export default function Scanner({
               for (const code of codes) {
                 if (
                   code.boundingBox.width * code.boundingBox.height >
-                    largestCode.size
+                  largestCode.size
                 ) {
-                  largestCode.size = code.boundingBox.width *
-                    code.boundingBox.height;
+                  largestCode.size =
+                    code.boundingBox.width * code.boundingBox.height;
                   largestCode.code = code;
                 }
               }
@@ -158,7 +160,9 @@ export default function Scanner({
                   code: code.rawValue,
                   status: codeData.status,
                   // @ts-expect-error types
-                  ticketData: Object.hasOwn(codeData, "ticketData") ? codeData.ticketData : null,
+                  ticketData: Object.hasOwn(codeData, "ticketData")
+                    ? codeData.ticketData
+                    : null,
                 };
 
                 if (currentTicket.value != ticketObj) {

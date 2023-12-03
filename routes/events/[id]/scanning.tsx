@@ -16,12 +16,11 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
   return (
     <main className="px-4 max-w-screen-md w-full mx-auto flex flex-col gap-8 grow mb-10 ">
       <EventHeader editPositon={0} role={user.role} />
-      
-        <Scanner
-          className="rounded-md border border-gray-300 h-max bg-gray-200 max-h-[70vh] w-max max-w-full"
-          eventID={eventID}
-        />
-      
+
+      <Scanner
+        className="rounded-md border border-gray-300 h-max bg-gray-200 max-h-[70vh] w-max max-w-full"
+        eventID={eventID}
+      />
     </main>
   );
 });

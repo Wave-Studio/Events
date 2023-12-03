@@ -17,7 +17,7 @@ import Ticket from "@/islands/components/peices/ticket.tsx";
 import { acquired, getTicketID } from "@/utils/tickets.ts";
 import { EventRegisterError } from "@/utils/event/register.ts";
 import { RegisterErrors } from "../components/registerErrors.tsx";
-import SelectShowTime from "./selectShowTime.tsx"
+import SelectShowTime from "./selectShowTime.tsx";
 
 export default function EventRegister({
   eventID,
@@ -182,8 +182,6 @@ export default function EventRegister({
     }
   };
 
-  
-
   const Popover = () => {
     return (
       <Popup
@@ -203,7 +201,11 @@ export default function EventRegister({
         <Form class="gap-4 mt-4 flex flex-col">
           {page.value == 0 ? (
             <>
-              <SelectShowTime changeOpen={changeOpen} showTime={showTime} showTimes={showTimes} />
+              <SelectShowTime
+                changeOpen={changeOpen}
+                showTime={showTime}
+                showTimes={showTimes}
+              />
               {acquired(user, eventID, showTime.value!) ? (
                 <>
                   <div className="mx-auto flex flex-col items-center">

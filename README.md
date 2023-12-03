@@ -1,6 +1,6 @@
 # Events
 
-Events is a simple and easy to use event ticketing system. View the production website on https://events.deno.dev/! 
+Events is a simple and easy to use event ticketing system. View the production website on https://events.deno.dev/!
 
 ## Contributing
 

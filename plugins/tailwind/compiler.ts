@@ -64,7 +64,7 @@ export async function initTailwind(
   // deno-lint-ignore no-explicit-any
   const plugins: any[] = [
     tailwindCss(tailwindConfig) as Plugin,
-	autoprefixer() as Plugin
+    autoprefixer() as Plugin,
   ];
 
   if (!config.dev) {

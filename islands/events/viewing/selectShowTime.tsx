@@ -16,12 +16,11 @@ const SelectShowTime = ({
   setShowTime?: (showTime: string) => void;
   all?: boolean;
 }) => {
-  const selectedTime = showTimes
-  .find((time) =>
+  const selectedTime = showTimes.find((time) =>
     typeof showTime == "string"
       ? time.id == showTime
       : time.id == showTime.value,
-  )
+  );
   return (
     <>
       <button
@@ -31,18 +30,21 @@ const SelectShowTime = ({
           if (showTimes.length > 1) changeOpen.value = true;
         }}
       >
-        
-            <div
-              class={`border transition select-none px-2 h-8 rounded-md font-medium whitespace-pre border-theme-normal bg-theme-normal/5 grid place-content-center`}
-            >
-              {selectedTime ? 
-              <>
+        <div
+          class={`border transition select-none px-2 h-8 rounded-md font-medium whitespace-pre border-theme-normal bg-theme-normal/5 grid place-content-center`}
+        >
+          {selectedTime ? (
+            <>
               {fmtDate(new Date(selectedTime.startDate!))}
               {selectedTime.startTime &&
-                ` at ${fmtHour(new Date(selectedTime.startTime)).toLowerCase()}`}</> : (
-"All Event Times"
-                )}
-            </div>
+                ` at ${fmtHour(
+                  new Date(selectedTime.startTime),
+                ).toLowerCase()}`}
+            </>
+          ) : (
+            "All Event Times"
+          )}
+        </div>
         {showTimes.length > 1 && (
           <div class="rounded-md bg-gray-200 h-8 grid place-content-center px-2 font-medium hover:brightness-95 transition">
             Change
