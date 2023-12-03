@@ -1,11 +1,11 @@
-import { MiddlewareHandlerContext } from "$fresh/src/server/types.ts";
+import { FreshContext } from "$fresh/src/server/types.ts";
 import { getUser } from "@/utils/db/kv.ts";
 
 export const handler = [handleKVInsightsAuthorization];
 
 async function handleKVInsightsAuthorization(
   request: Request,
-  context: MiddlewareHandlerContext,
+  context: FreshContext,
 ) {
   const user = await getUser(request);
 

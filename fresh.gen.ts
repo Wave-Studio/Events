@@ -46,6 +46,7 @@ import * as $kv_insights_layout from "./routes/kv-insights/_layout.tsx";
 import * as $kv_insights_middleware from "./routes/kv-insights/_middleware.ts";
 import * as $login from "./routes/login.tsx";
 import * as $components_dropinUI_trash from "./islands/components/dropinUI/trash.tsx";
+import * as $components_peices_navDropDown from "./islands/components/peices/navDropDown.tsx";
 import * as $components_peices_ticket from "./islands/components/peices/ticket.tsx";
 import * as $components_pickers_calender from "./islands/components/pickers/calender.tsx";
 import * as $components_pickers_dropdown from "./islands/components/pickers/dropdown.tsx";
@@ -138,6 +139,8 @@ const manifest = {
   },
   islands: {
     "./islands/components/dropinUI/trash.tsx": $components_dropinUI_trash,
+    "./islands/components/peices/navDropDown.tsx":
+      $components_peices_navDropDown,
     "./islands/components/peices/ticket.tsx": $components_peices_ticket,
     "./islands/components/pickers/calender.tsx": $components_pickers_calender,
     "./islands/components/pickers/dropdown.tsx": $components_pickers_dropdown,

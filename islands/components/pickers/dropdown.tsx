@@ -6,12 +6,14 @@ import { useSignal } from "@preact/signals";
 export default function Dropdown({
   options,
   children,
+  className
 }: {
   options: {
     content: ComponentChild;
     onClick?: () => void;
   }[];
   children: ComponentChild;
+  className?: string
 }) {
   const open = useSignal(false);
   const dropdown = useRef<HTMLDivElement>(null);
@@ -20,7 +22,7 @@ export default function Dropdown({
   });
   return (
     <>
-      <div className="relative flex flex-col items-end" ref={dropdown}>
+      <div className={`${className} relative flex flex-col items-end`} ref={dropdown}>
         <button onClick={() => (open.value = !open.value)}>{children}</button>
         <div
           className={`${
@@ -34,7 +36,7 @@ export default function Dropdown({
                   open.value = false;
                   option.onClick && option.onClick();
                 }}
-                class="min-w-max hover:bg-gray-200 px-2 py-1 font-medium rounded-md w-full text-left"
+                class="min-w-max hover:bg-gray-200 px-2 py-1 font-medium rounded-md w-full text-left focus:outline-none"
               >
                 {option.content}
               </button>
