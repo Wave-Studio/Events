@@ -53,7 +53,7 @@ export default function EventHeader({
   }
 
   return (
-    <div className="flex justfy-between">
+    <div className="flex justfy-between mt-2">
       <a href="/events/organizing">
         <CTA
           btnType="cta"

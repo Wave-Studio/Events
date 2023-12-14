@@ -309,8 +309,7 @@ export default function EventRegister({
                 </h3>
                 <p class="text-center max-w-lg text-sm">
                   Your ticket has been emailed to you. You'll get another
-                  reminder email with your ticket on the day of the event. It's
-                  also below for brevity.
+                  reminder email with your ticket on the day of the event.
                 </p>
               </div>
               <Ticket

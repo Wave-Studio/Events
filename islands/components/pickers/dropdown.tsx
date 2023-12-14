@@ -1,21 +1,25 @@
 import { ComponentChild } from "preact";
 import useClickAway from "@/components/hooks/onClickAway.tsx";
 import { useRef } from "preact/hooks";
-import { useSignal } from "@preact/signals";
+import { Signal, useSignal } from "@preact/signals";
 
 export default function Dropdown({
   options,
   children,
-  className
+  className,
+  isOpen
 }: {
   options: {
     content: ComponentChild;
     onClick?: () => void;
   }[];
   children: ComponentChild;
-  className?: string
+  className?: string,
+  isOpen?: Signal<boolean>
 }) {
-  const open = useSignal(false);
+  
+  const open = isOpen || useSignal(false);
+  
   const dropdown = useRef<HTMLDivElement>(null);
   useClickAway([dropdown], () => {
     open.value = false;

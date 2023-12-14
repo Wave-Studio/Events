@@ -11,6 +11,7 @@ import { signal } from "@preact/signals";
 import ShowtimeSelector from "@/islands/events/editing/showtimeSelector.tsx";
 import { kv, Ticket } from "@/utils/db/kv.ts";
 import { fmtDate } from "@/utils/dates.ts";
+import { NotFound } from "@/components/svgs/not-found.tsx";
 
 export default defineRoute(
   async (req, ctx: RouteContext<void, EventContext>) => {
@@ -35,14 +36,14 @@ export default defineRoute(
     const request = ["ticket", eventID];
     if (showTimeID !== "0") request.push(showTimeID);
 
-    const tix = kv.list<Ticket>({ prefix: request, });
+    const tix = kv.list<Ticket>({ prefix: request });
     const tickets: Deno.KvEntry<Ticket>[] = [];
     for await (const ticket of tix) {
       tickets.push(ticket);
     }
 
     return (
-      <main className="px-4 max-w-screen-md w-full mx-auto flex flex-col gap-2 grow mb-10">
+      <main className="px-4 max-w-screen-md w-full mx-auto flex flex-col gap-2 grow mb-10 ">
         <EventHeader editPositon={1} role={user.role} />
 
         <ShowtimeSelector
@@ -50,8 +51,23 @@ export default defineRoute(
           showTimes={event.showTimes}
         />
         <TicketsFilters query={query} sort={sort} />
-        <div>
-          <h2 class="font-medium text-sm mb-0.5 mt-8">Tickets</h2>
+
+        <h2 class="font-medium text-sm mb-0.5 mt-8">Tickets</h2>
+        {tickets.length === 0 ? (
+          <>
+            <div class="flex flex-col items-center justify-center grow py-2 text-center">
+              <div class="hidden md:block absolute -z-10">
+                <NotFound />
+              </div>
+              <h2 class="font-semibold">
+                No one has signed up for this event yet
+              </h2>
+              <p class="mt-1 text-sm text-gray-700">
+                Share your event page to encorage others to sign up
+              </p>
+            </div>
+          </>
+        ) : (
           <div class="grid md:grid-cols-2 gap-4">
             {tickets.map((ticket) => {
               const { value, key } = ticket;
@@ -101,7 +117,7 @@ export default defineRoute(
               );
             })}
           </div>
-        </div>
+        )}
       </main>
     );
   },
