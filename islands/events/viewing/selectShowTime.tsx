@@ -58,6 +58,26 @@ const SelectShowTime = ({
       >
         <h3 class="font-bold text-lg mb-2">Change</h3>
         <div class="grid gap-2">
+           {/* All event times button */}
+           {all && (
+            <button
+              onClick={() =>
+                typeof showTime == "string"
+                  ? setShowTime && setShowTime("0")
+                  : (showTime.value = "0")
+              }
+              class={`border transition select-none px-2 rounded-md font-medium whitespace-pre grid place-items-center h-8 ${
+                (typeof showTime == "string"
+                  ? "0" == showTime
+                  : "0" == showTime.value) &&
+                "border-theme-normal bg-theme-normal/5"
+              }`}
+              type="button"
+            >
+              <p class="flex">All Event Times</p>
+            </button>
+          )}
+          
           {showTimes.map((time) => (
             <button
               onClick={() =>
@@ -81,25 +101,7 @@ const SelectShowTime = ({
               </p>
             </button>
           ))}
-          {/* All event times button */}
-          {all && (
-            <button
-              onClick={() =>
-                typeof showTime == "string"
-                  ? setShowTime && setShowTime("0")
-                  : (showTime.value = "0")
-              }
-              class={`border transition select-none px-2 rounded-md font-medium whitespace-pre grid place-items-center h-8 ${
-                (typeof showTime == "string"
-                  ? "0" == showTime
-                  : "0" == showTime.value) &&
-                "border-theme-normal bg-theme-normal/5"
-              }`}
-              type="button"
-            >
-              <p class="flex">All Event Times</p>
-            </button>
-          )}
+         
         </div>
         <button
           type="button"

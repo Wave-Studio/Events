@@ -13,7 +13,10 @@ export default defineRoute(
   async (req, ctx: RouteContext<void, EventContext>) => {
     const { event, eventID, user } = ctx.state.data;
     const ticketID = ctx.params.tixid;
-    const showTimeID = getShowtimeID(user?.data, eventID, ticketID);
+    const url = new URL(req.url);
+    const queryValue = url.searchParams.get("s");
+    // need to do perms checks here too
+    const showTimeID: string | undefined = queryValue || getShowtimeID(user?.data, eventID, ticketID);
     const id = `${eventID}_${showTimeID}_${ticketID}`;
 
     if (!showTimeID) return badEventRequest;
@@ -25,7 +28,7 @@ export default defineRoute(
     return (
       <>
         <Head>
-          <title>Your ticket - {event.name} - Events</title>
+          <title>{ticket.value.firstName}'s ticket - {event.name} - Events</title>
           <meta property="og:type" content="website" />
           <meta
             property="og:url"

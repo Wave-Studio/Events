@@ -18,7 +18,7 @@ export default function Scanner({
     | { code: string; status: "invalid" | "loading"; ticketData: null }
     | {
         code: string;
-        status: "used" | "valid";
+        status: "used" | "valid" | "inactive";
         ticketData: Ticket;
       }
     | null
@@ -51,8 +51,15 @@ export default function Scanner({
 
       try {
         const devices = await navigator.mediaDevices.getUserMedia({
-          video: true,
+          video: {
+            facingMode: 'environment',
+          },
         });
+
+        const videoDevices = (await navigator.mediaDevices.enumerateDevices()).filter((d) => d.kind == "videoinput");
+
+        console.log(videoDevices);
+
         const video = document.getElementById("camera") as HTMLVideoElement;
         const infoText = document.getElementById("scantext") as HTMLDivElement;
         let lastStr = infoText.innerText;
@@ -76,7 +83,7 @@ export default function Scanner({
             string,
             | { status: "loading" | "invalid"; checkedAt: number }
             | {
-                status: "valid" | "used";
+                status: "valid" | "used" | "inactive";
                 ticketData: Ticket;
                 checkedAt: number;
               }
@@ -152,6 +159,11 @@ export default function Scanner({
                   });
 
                   fetchCodeInfo(code.rawValue);
+                } else {
+                  const codeData = checkedCodes.get(code.rawValue)!;
+
+                  codeData.checkedAt = Date.now();
+                  checkedCodes.set(code.rawValue, codeData);
                 }
 
                 const codeData = checkedCodes.get(code.rawValue)!;
@@ -159,13 +171,13 @@ export default function Scanner({
                 const ticketObj = {
                   code: code.rawValue,
                   status: codeData.status,
-                  // @ts-expect-error types
                   ticketData: Object.hasOwn(codeData, "ticketData")
-                    ? codeData.ticketData
+                    ? (codeData as { ticketData: Ticket }).ticketData
                     : null,
                 };
 
                 if (currentTicket.value != ticketObj) {
+                  // @ts-expect-error Types be like
                   currentTicket.value = ticketObj;
                 }
 
@@ -174,6 +186,7 @@ export default function Scanner({
                   loading: "gray",
                   valid: "green",
                   used: "orange",
+                  inactive: "blue",
                 }[codeData.status];
 
                 ctx.lineWidth = 10;
@@ -212,6 +225,11 @@ export default function Scanner({
 
                   case "used": {
                     updateStringIfChanged("Ticket already used!");
+                    break;
+                  }
+
+                  case "inactive": {
+                    updateStringIfChanged("Unactivated ticket!");
                     break;
                   }
                 }

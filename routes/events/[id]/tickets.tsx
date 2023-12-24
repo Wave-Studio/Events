@@ -47,8 +47,6 @@ export default defineRoute(
       tickets = tickets.filter((ticket) => ticket.value.firstName.includes(queryValue) || ticket.value.lastName.includes(queryValue) || ticket.value.userEmail.includes(queryValue) || ticket.key[3])
     }
 
-    console.log(ticket.key[3])
-
     return (
       <main className="px-4 max-w-screen-md w-full mx-auto flex flex-col gap-2 grow mb-10 ">
         <EventHeader editPositon={1} role={user.role} />
@@ -78,6 +76,7 @@ export default defineRoute(
           <div class="grid md:grid-cols-2 gap-4">
             {tickets.map((ticket) => {
               const { value, key } = ticket;
+              const ticketID = (key[3] as string).split("_")[2]
               const time = event.showTimes.find((time) => time.id === key[2])!;
 
               return (
@@ -95,6 +94,7 @@ export default defineRoute(
                         options={[
                           {
                             content: "See Ticket",
+                            link: `./tickets/${ticketID}?s=${key[2] as string}`
                           },
                           {
                             content: "Delete Ticket",
