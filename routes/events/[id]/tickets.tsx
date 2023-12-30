@@ -25,6 +25,7 @@ export default defineRoute(
     const queryValue = url.searchParams.get("q");
     const showTimeID = url.searchParams.get("id") ?? event.showTimes[0].id;
     const page = url.searchParams.get("p") ?? 0;
+    const cursor = url.searchParams.get("c");
     let sortValue = parseInt(url.searchParams.get("s") ?? "0");
 
     if (isNaN(sortValue) || sortValue > 4 || sortValue < 0) {
@@ -36,15 +37,25 @@ export default defineRoute(
 
     const request = ["ticket", eventID];
     if (showTimeID !== "0") request.push(showTimeID);
-    const pageSize = 1
-    const tix = kv.list<Ticket>({ prefix: request, })
+    const pageSize = 1;
+    const tix = kv.list<Ticket>({ prefix: request, }, { limit: pageSize, cursor: cursor || undefined });
     let tickets: Deno.KvEntry<Ticket>[] = [];
     for await (const ticket of tix) {
       tickets.push(ticket);
     }
 
+    console.log(tix.cursor);
+    console.log(await tix.next())
+
+
     if (queryValue) {
-      tickets = tickets.filter((ticket) => ticket.value.firstName.includes(queryValue) || ticket.value.lastName.includes(queryValue) || ticket.value.userEmail.includes(queryValue) || ticket.key[3])
+      tickets = tickets.filter(
+        (ticket) =>
+          ticket.value.firstName.includes(queryValue) ||
+          ticket.value.lastName.includes(queryValue) ||
+          ticket.value.userEmail.includes(queryValue) ||
+          ticket.key[3],
+      );
     }
 
     return (
@@ -76,7 +87,7 @@ export default defineRoute(
           <div class="grid md:grid-cols-2 gap-4">
             {tickets.map((ticket) => {
               const { value, key } = ticket;
-              const ticketID = (key[3] as string).split("_")[2]
+              const ticketID = (key[3] as string).split("_")[2];
               const time = event.showTimes.find((time) => time.id === key[2])!;
 
               return (
@@ -94,7 +105,7 @@ export default defineRoute(
                         options={[
                           {
                             content: "See Ticket",
-                            link: `./tickets/${ticketID}?s=${key[2] as string}`
+                            link: `./tickets/${ticketID}?s=${key[2] as string}`,
                           },
                           {
                             content: "Delete Ticket",

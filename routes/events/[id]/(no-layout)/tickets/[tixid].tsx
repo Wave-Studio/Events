@@ -15,8 +15,13 @@ export default defineRoute(
     const ticketID = ctx.params.tixid;
     const url = new URL(req.url);
     const queryValue = url.searchParams.get("s");
-    // need to do perms checks here too
-    const showTimeID: string | undefined = queryValue || getShowtimeID(user?.data, eventID, ticketID);
+    
+    if (!user || user.role == undefined || user.role > 2) {
+      return badEventRequest;
+    }
+
+    const sid = getShowtimeID(user?.data, eventID, ticketID)
+    const showTimeID: string | undefined = queryValue || sid;
     const id = `${eventID}_${showTimeID}_${ticketID}`;
 
     if (!showTimeID) return badEventRequest;
@@ -58,11 +63,12 @@ export default defineRoute(
         <div className="flex flex-col min-h-screen">
           <main className="px-4 max-w-screen-md w-full mx-auto flex flex-col gap-8 grow mb-10 items-center mt-10 md:mt-24">
             <h1 class="font-extrabold text-2xl text-center">Your Ticket</h1>
+            <div class="rounded-md px-6 pt-2 pb-4 border-2 border-theme-normal text-center">
             <TicketComponent
               id={id}
               showTime={event.showTimes.find((s) => s.id == showTimeID)!}
               tickets={1}
-            />
+            /></div>
           </main>
           <Footer includeWave={false} />
         </div>

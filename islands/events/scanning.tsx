@@ -4,6 +4,7 @@ import { IS_BROWSER } from "$fresh/runtime.ts";
 import { BarcodeDetector, DetectedBarcode } from "npm:barcode-detector";
 import { Ticket } from "@/utils/db/kv.types.ts";
 import { useSignal } from "@preact/signals";
+import Dropdown from "../components/pickers/dropdown.tsx";
 
 export default function Scanner({
   className,
@@ -17,12 +18,14 @@ export default function Scanner({
   const currentTicket = useSignal<
     | { code: string; status: "invalid" | "loading"; ticketData: null }
     | {
-        code: string;
-        status: "used" | "valid" | "inactive";
-        ticketData: Ticket;
-      }
+      code: string;
+      status: "used" | "valid" | "inactive";
+      ticketData: Ticket;
+    }
     | null
   >(null);
+  const cameraIds = useSignal<MediaDeviceInfo[]>([]);
+  const currentCamera = useSignal<string>("");
 
   useEffect(() => {
     (async () => {
@@ -52,11 +55,18 @@ export default function Scanner({
       try {
         const devices = await navigator.mediaDevices.getUserMedia({
           video: {
-            facingMode: 'environment',
+            facingMode: "environment",
           },
         });
 
-        const videoDevices = (await navigator.mediaDevices.enumerateDevices()).filter((d) => d.kind == "videoinput");
+        let currentCameraBeingRendered = devices.id;
+
+        currentCamera.value = devices.id;
+
+        const videoDevices = (await navigator.mediaDevices.enumerateDevices())
+          .filter((d) => d.kind == "videoinput");
+
+        cameraIds.value = videoDevices;
 
         console.log(videoDevices);
 
@@ -74,6 +84,11 @@ export default function Scanner({
         if (!video) return;
 
         video.srcObject = devices;
+
+        video.onerror = (e) => {
+          console.error(e);
+        }
+
         video.onloadedmetadata = () => {
           video.play();
           canvas.width = video.videoWidth;
@@ -83,10 +98,10 @@ export default function Scanner({
             string,
             | { status: "loading" | "invalid"; checkedAt: number }
             | {
-                status: "valid" | "used" | "inactive";
-                ticketData: Ticket;
-                checkedAt: number;
-              }
+              status: "valid" | "used" | "inactive";
+              ticketData: Ticket;
+              checkedAt: number;
+            }
           > = new Map();
 
           setInterval(() => {
@@ -102,6 +117,23 @@ export default function Scanner({
               }
             }
           }, 5 * 1000);
+
+          const switchCamera = async (deviceId: string) => {
+            const devices = await navigator.mediaDevices.getUserMedia({
+              video: {
+                facingMode: "environment",
+                deviceId: deviceId,
+              },
+            });
+
+            ctx.filter = "blur(30px)";
+
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            currentCameraBeingRendered = deviceId;
+
+            video.srcObject = devices;
+          }
 
           const fetchCodeInfo = async (code: string) => {
             const res = await fetch(`/api/events/fetch`, {
@@ -141,10 +173,10 @@ export default function Scanner({
               for (const code of codes) {
                 if (
                   code.boundingBox.width * code.boundingBox.height >
-                  largestCode.size
+                    largestCode.size
                 ) {
-                  largestCode.size =
-                    code.boundingBox.width * code.boundingBox.height;
+                  largestCode.size = code.boundingBox.width *
+                    code.boundingBox.height;
                   largestCode.code = code;
                 }
               }
@@ -239,8 +271,14 @@ export default function Scanner({
             }
           };
 
-          const loop = () => {
+          const loop = async () => {
+            if (currentCameraBeingRendered != currentCamera.value) {
+              await switchCamera(currentCamera.value);
+              return;
+            }
+
             ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+            ctx.filter = "";
 
             lookForBarcodes();
 
@@ -265,6 +303,8 @@ export default function Scanner({
         playsInline={true}
         muted={true}
         className="border-none"
+        width={1920}
+        height={1080}
       />
       {error.value}
       <div class="flex flex-col items-center max-w-full relative">
@@ -275,6 +315,17 @@ export default function Scanner({
         >
           Bring a ticket code into view
         </div>
+        <Dropdown
+          options={cameraIds.value.map(({ deviceId, label }) => ({
+            content: label,
+            onClick: () => {
+              if (currentCamera.value == deviceId) return;
+              currentCamera.value = deviceId;
+            },
+          }))}
+        >
+          <h1>Market pire</h1>
+        </Dropdown>
       </div>
     </>
   );
