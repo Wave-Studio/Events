@@ -3,7 +3,7 @@ export const genCode = async (email: string) => {
     method: "GET",
   });
 
-  const res = (await req.json()) as { otp?: string; error?: string };
+  const res = (await req.json()) as { success?: true; error?: string };
 
   return res;
 };

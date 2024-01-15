@@ -43,8 +43,6 @@ const LoginForm = ({ attending }: { attending: boolean }) => {
       return;
     }
 
-    alert("yeur logn code: " + code.otp);
-
     setStage(1);
     if (codeRef.current) {
       setTimeout(() => {
@@ -85,7 +83,7 @@ const LoginForm = ({ attending }: { attending: boolean }) => {
 
   return (
     <div className="w-[16.5rem] [@media(min-width:300px)]:w-[18.5rem] overflow-hidden p-1">
-      {/* damn were going jank already */}
+      {/* damn we're going jank already */}
       <div
         className={`flex ${
           stage == 1

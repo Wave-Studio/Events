@@ -6,6 +6,7 @@ import {
   validateOTP,
 } from "@/utils/db/kv.ts";
 import { deleteCookie, setCookie } from "$std/http/cookie.ts";
+import { sendEmail } from "@/utils/email/client.ts";
 
 const emailRegex =
   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -44,9 +45,21 @@ export const handler: Handlers<{ email: string; otp: string }> = {
     }
 
     const otp = await generateOTP(email);
-
-    // Currently used for development as we don't have a way to send emails currently
-    const response = new Response(JSON.stringify({ otp }), {
+    console.log("test")
+    try {
+      await sendEmail([email], "Your Events Authorization Code", {
+        content: `Your one time login code is ${otp}.<br/> <b>Do not share it with anyone</b>`,
+        html: true,
+      });
+    } catch (err) {
+      return new Response(
+        JSON.stringify({ error: "An error occured while sending the confirmation email. Please try again." }),
+        {
+          status: 400,
+        },
+      );
+    }
+    const response = new Response(JSON.stringify({ success: true }), {
       status: 200,
     });
 
@@ -112,6 +125,7 @@ export const handler: Handlers<{ email: string; otp: string }> = {
       expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
       value: userAuthToken!,
       path: "/",
+      sameSite: "Strict"
     });
 
     return resp;
