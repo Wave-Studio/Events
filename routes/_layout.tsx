@@ -5,7 +5,7 @@ import { Partial } from "$fresh/runtime.ts";
 import { getUser } from "@/utils/db/kv.ts";
 
 export default defineLayout(async (req, { Component }) => {
-  const user = await getUser(req)
+  const user = await getUser(req);
 
   return (
     <div className="min-h-screen flex flex-col">

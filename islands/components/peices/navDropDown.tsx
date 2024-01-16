@@ -32,7 +32,11 @@ const NavbarDropDown = ({ user }: { user: UserPartial }) => {
         },
       ]}
     >
-      <button class={`${open.value ? "bg-gray-200" : "hover:bg-gray-200"} flex p-1 md:px-3 md:py-1.5 items-center transition md:rounded-md rounded-full`}>
+      <button
+        class={`${
+          open.value ? "bg-gray-200" : "hover:bg-gray-200"
+        } flex p-1 md:px-3 md:py-1.5 items-center transition md:rounded-md rounded-full`}
+      >
         <p class="font-medium hidden md:block max-w-sm truncate">
           {user.email.split("@")[0]}
         </p>

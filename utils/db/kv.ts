@@ -88,7 +88,7 @@ export const getUserEmailCode = async (
     expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
     value: user.value.authToken,
     path: "/",
-    sameSite: "Strict"
+    sameSite: "Strict",
   });
 
   return user.value;

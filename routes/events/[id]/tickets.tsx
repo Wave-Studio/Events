@@ -38,15 +38,17 @@ export default defineRoute(
     const request = ["ticket", eventID];
     if (showTimeID !== "0") request.push(showTimeID);
     const pageSize = 1;
-    const tix = kv.list<Ticket>({ prefix: request, }, { limit: pageSize, cursor: cursor || undefined });
+    const tix = kv.list<Ticket>(
+      { prefix: request },
+      { limit: pageSize, cursor: cursor || undefined },
+    );
     let tickets: Deno.KvEntry<Ticket>[] = [];
     for await (const ticket of tix) {
       tickets.push(ticket);
     }
 
     console.log(tix.cursor);
-    console.log(await tix.next())
-
+    console.log(await tix.next());
 
     if (queryValue) {
       tickets = tickets.filter(

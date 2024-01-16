@@ -12,26 +12,30 @@ export const sesClient = new SESClient({
   },
 });
 
-export const sendEmail = async (to: string[], subject: string, message: {content: string, html: boolean}) => {
+export const sendEmail = async (
+  to: string[],
+  subject: string,
+  message: { content: string; html: boolean },
+) => {
   const params: SendEmailRequest = {
     Source: `"Events" <events@wavestudios.one>`,
-		Destination: {
-			ToAddresses: to
-		},
-		Message: {
-			/* required */
-			Body: {
-				/* required */
-				[message.html ? "Html" : "Text"]: {
-					Charset: "UTF-8",
-					Data: message.content,
-				},
-			},
-			Subject: {
-				Charset: "UTF-8",
-				Data: subject,
-			},
-		},
+    Destination: {
+      ToAddresses: to,
+    },
+    Message: {
+      /* required */
+      Body: {
+        /* required */
+        [message.html ? "Html" : "Text"]: {
+          Charset: "UTF-8",
+          Data: message.content,
+        },
+      },
+      Subject: {
+        Charset: "UTF-8",
+        Data: subject,
+      },
+    },
   };
   return await sesClient.send(new SendEmailCommand(params as SendEmailRequest));
 };

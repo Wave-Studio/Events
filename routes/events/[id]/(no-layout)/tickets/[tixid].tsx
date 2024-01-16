@@ -15,12 +15,12 @@ export default defineRoute(
     const ticketID = ctx.params.tixid;
     const url = new URL(req.url);
     const queryValue = url.searchParams.get("s");
-    
+
     if (!user || user.role == undefined || user.role > 2) {
       return badEventRequest;
     }
 
-    const sid = getShowtimeID(user?.data, eventID, ticketID)
+    const sid = getShowtimeID(user?.data, eventID, ticketID);
     const showTimeID: string | undefined = queryValue || sid;
     const id = `${eventID}_${showTimeID}_${ticketID}`;
 
@@ -33,7 +33,9 @@ export default defineRoute(
     return (
       <>
         <Head>
-          <title>{ticket.value.firstName}'s ticket - {event.name} - Events</title>
+          <title>
+            {ticket.value.firstName}'s ticket - {event.name} - Events
+          </title>
           <meta property="og:type" content="website" />
           <meta
             property="og:url"
@@ -64,11 +66,12 @@ export default defineRoute(
           <main className="px-4 max-w-screen-md w-full mx-auto flex flex-col gap-8 grow mb-10 items-center mt-10 md:mt-24">
             <h1 class="font-extrabold text-2xl text-center">Your Ticket</h1>
             <div class="rounded-md px-6 pt-2 pb-4 border-2 border-theme-normal text-center">
-            <TicketComponent
-              id={id}
-              showTime={event.showTimes.find((s) => s.id == showTimeID)!}
-              tickets={1}
-            /></div>
+              <TicketComponent
+                id={id}
+                showTime={event.showTimes.find((s) => s.id == showTimeID)!}
+                tickets={1}
+              />
+            </div>
           </main>
           <Footer includeWave={false} />
         </div>

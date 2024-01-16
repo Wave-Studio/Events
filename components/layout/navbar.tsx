@@ -1,13 +1,12 @@
 import { UserPartial } from "@/utils/db/kv.ts";
 import NavbarDropDown from "@/islands/components/peices/navDropDown.tsx";
 
-const Navbar = ({user}: {user: UserPartial | undefined}) => {
+const Navbar = ({ user }: { user: UserPartial | undefined }) => {
   const loggedIn = true;
 
   return (
     <div class="flex sticky top-0 bg-white h-14 z-30">
-      {user && 
-      <NavbarDropDown user={user} /> }
+      {user && <NavbarDropDown user={user} />}
       <div
         className={`fixed left-0 right-0 top-0 flex justify-center items-center h-14`}
       >

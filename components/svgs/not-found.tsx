@@ -5,7 +5,7 @@ export const NotFound = () => (
     viewBox="0 0 1018 753"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-		class="max-h-[50vh] max-w-[80vw]"
+    class="max-h-[50vh] max-w-[80vw]"
   >
     <g clip-path="url(#clip0_1398_2)">
       <path

@@ -58,8 +58,8 @@ const SelectShowTime = ({
       >
         <h3 class="font-bold text-lg mb-2">Change</h3>
         <div class="grid gap-2">
-           {/* All event times button */}
-           {all && (
+          {/* All event times button */}
+          {all && (
             <button
               onClick={() =>
                 typeof showTime == "string"
@@ -77,7 +77,7 @@ const SelectShowTime = ({
               <p class="flex">All Event Times</p>
             </button>
           )}
-          
+
           {showTimes.map((time) => (
             <button
               onClick={() =>
@@ -101,7 +101,6 @@ const SelectShowTime = ({
               </p>
             </button>
           ))}
-         
         </div>
         <button
           type="button"

@@ -5,7 +5,7 @@ export default {
   content: ["{routes,islands,components}/**/*.{ts,tsx}"],
   theme: {
     fontFamily: {
-      "sans": ["Inter", "Comic Sans MS"]
+      sans: ["Inter", "Comic Sans MS"],
     },
     extend: {
       colors: {

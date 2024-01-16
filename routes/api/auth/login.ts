@@ -51,9 +51,12 @@ export const handler: Handlers<{ email: string; otp: string }> = {
         html: true,
       });
     } catch (err) {
-      console.error(err)
+      console.error(err);
       return new Response(
-        JSON.stringify({ error: "An error occured while sending the confirmation email. Please try again." }),
+        JSON.stringify({
+          error:
+            "An error occured while sending the confirmation email. Please try again.",
+        }),
         {
           status: 400,
         },
@@ -125,7 +128,7 @@ export const handler: Handlers<{ email: string; otp: string }> = {
       expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
       value: userAuthToken!,
       path: "/",
-      sameSite: "Strict"
+      sameSite: "Strict",
     });
 
     return resp;

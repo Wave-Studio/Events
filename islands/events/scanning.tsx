@@ -18,10 +18,10 @@ export default function Scanner({
   const currentTicket = useSignal<
     | { code: string; status: "invalid" | "loading"; ticketData: null }
     | {
-      code: string;
-      status: "used" | "valid" | "inactive";
-      ticketData: Ticket;
-    }
+        code: string;
+        status: "used" | "valid" | "inactive";
+        ticketData: Ticket;
+      }
     | null
   >(null);
   const cameraIds = useSignal<MediaDeviceInfo[]>([]);
@@ -63,8 +63,9 @@ export default function Scanner({
 
         currentCamera.value = devices.id;
 
-        const videoDevices = (await navigator.mediaDevices.enumerateDevices())
-          .filter((d) => d.kind == "videoinput");
+        const videoDevices = (
+          await navigator.mediaDevices.enumerateDevices()
+        ).filter((d) => d.kind == "videoinput");
 
         cameraIds.value = videoDevices;
 
@@ -87,7 +88,7 @@ export default function Scanner({
 
         video.onerror = (e) => {
           console.error(e);
-        }
+        };
 
         video.onloadedmetadata = () => {
           video.play();
@@ -98,10 +99,10 @@ export default function Scanner({
             string,
             | { status: "loading" | "invalid"; checkedAt: number }
             | {
-              status: "valid" | "used" | "inactive";
-              ticketData: Ticket;
-              checkedAt: number;
-            }
+                status: "valid" | "used" | "inactive";
+                ticketData: Ticket;
+                checkedAt: number;
+              }
           > = new Map();
 
           setInterval(() => {
@@ -133,7 +134,7 @@ export default function Scanner({
             currentCameraBeingRendered = deviceId;
 
             video.srcObject = devices;
-          }
+          };
 
           const fetchCodeInfo = async (code: string) => {
             const res = await fetch(`/api/events/fetch`, {
@@ -173,10 +174,10 @@ export default function Scanner({
               for (const code of codes) {
                 if (
                   code.boundingBox.width * code.boundingBox.height >
-                    largestCode.size
+                  largestCode.size
                 ) {
-                  largestCode.size = code.boundingBox.width *
-                    code.boundingBox.height;
+                  largestCode.size =
+                    code.boundingBox.width * code.boundingBox.height;
                   largestCode.code = code;
                 }
               }

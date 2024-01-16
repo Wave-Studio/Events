@@ -4,8 +4,7 @@
 
 @font-face {
   font-family: "Inter";
-  src:
-    url("/inter.ttf")
+  src: url("/inter.ttf");
 }
 
 .test {
