@@ -45,13 +45,13 @@ export const handler: Handlers<{ email: string; otp: string }> = {
     }
 
     const otp = await generateOTP(email);
-    console.log("test")
     try {
       await sendEmail([email], "Your Events Authorization Code", {
         content: `Your one time login code is ${otp}.<br/> <b>Do not share it with anyone</b>`,
         html: true,
       });
     } catch (err) {
+      console.error(err)
       return new Response(
         JSON.stringify({ error: "An error occured while sending the confirmation email. Please try again." }),
         {
