@@ -134,3 +134,4 @@ export const handler: Handlers<{ email: string; otp: string }> = {
     return resp;
   },
 };
+
