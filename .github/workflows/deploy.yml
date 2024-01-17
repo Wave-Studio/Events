@@ -23,21 +23,6 @@ jobs:
         with:
           deno-version: v1.x
 
-      - name: Install Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: "18"
-          cache: "yarn"
-      
-      - name: Weird react email bug
-        run: rm yarn.lock
-
-      - name: Install node depends
-        run: yarn install
-
-      - name: Build Emails
-        run: yarn run export
-
       - name: Build Fresh Website
         env:
           ALLOWED_EMAILS: ${{ secrets.ALLOWED_EMAILS }}
