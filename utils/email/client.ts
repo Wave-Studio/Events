@@ -25,7 +25,9 @@ export const sendEmail = async (
   message: { fallback: string; html?: string },
 ) => {
   const params: SendEmailRequest = {
-    Source: Deno.env.get("AWS_EMAIL_SOURCE") || `"Events" <events@wavestudios.one>`,
+	// Due to fresh config stuff
+    Source: // Deno.env.get("AWS_EMAIL_SOURCE") || 
+	`"Events" <events@wavestudios.one>`,
     Destination: {
       ToAddresses: to,
     },
