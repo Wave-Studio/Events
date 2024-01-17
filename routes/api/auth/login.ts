@@ -8,7 +8,7 @@ import {
 import { deleteCookie, setCookie } from "$std/http/cookie.ts";
 import { sendEmail } from "@/utils/email/client.ts";
 
-const emailHTML = await Deno.readTextFile(`${import.meta.url}/out/login.html`);
+const emailHTML = await Deno.readTextFile(`${Deno.cwd()}/out/login.html`);
 
 const emailRegex =
   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
