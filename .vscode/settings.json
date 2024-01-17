@@ -8,8 +8,6 @@
     "javascriptreact": "html",
     "typescriptreact": "html"
   },
-"deno.disablePaths": [
-	"./.react-email"
-],
-"workbench.iconTheme": "vscode-icons"
+  "deno.disablePaths": ["./.react-email"],
+  "workbench.iconTheme": "vscode-icons"
 }
