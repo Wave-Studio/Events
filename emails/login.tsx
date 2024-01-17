@@ -41,10 +41,10 @@ export default function LoginEmail({ otp = "123456" }: { otp: string }) {
           <Preview>Your autorication code to log in to Events</Preview>
           <Container className="my-8">
             <Img
-              src={`https://events.deno.dev/orange-logo.svg`}
+              src={`https://events.deno.dev/orange-logo.png`}
               width="40"
               height="40"
-              alt="Plaid"
+              alt="Events Logo"
               className="mx-auto"
             />
             <Heading className="text mt-2 text-2xl font-bold">Events</Heading>
