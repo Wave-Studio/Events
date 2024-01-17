@@ -11,3 +11,5 @@
 # Fresh build directory
 /_fresh
 /db
+/.react-email
+/out

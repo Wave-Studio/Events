@@ -5,20 +5,27 @@ import {
 } from "npm:@aws-sdk/client-ses";
 
 export const sesClient = new SESClient({
-  region: "us-east-1",
+  region: Deno.env.get("AWS_REGION") || "us-east-1",
   credentials: {
     accessKeyId: Deno.env.get("AWS_ACCESS_KEY_ID")!,
     secretAccessKey: Deno.env.get("AWS_SECRET_ACCESS_KEY")!,
   },
 });
 
+/**
+ * Send an email
+ * @param to 
+ * @param subject 
+ * @param message Specific a fallback text version (required) and the html
+ * @returns 
+ */
 export const sendEmail = async (
   to: string[],
   subject: string,
-  message: { content: string; html: boolean },
+  message: { fallback: string; html?: string },
 ) => {
   const params: SendEmailRequest = {
-    Source: `"Events" <events@wavestudios.one>`,
+    Source: Deno.env.get("AWS_EMAIL_SOURCE") || `"Events" <events@wavestudios.one>`,
     Destination: {
       ToAddresses: to,
     },
@@ -26,9 +33,9 @@ export const sendEmail = async (
       /* required */
       Body: {
         /* required */
-        [message.html ? "Html" : "Text"]: {
+        Text: {
           Charset: "UTF-8",
-          Data: message.content,
+          Data: message.fallback,
         },
       },
       Subject: {
@@ -37,5 +44,13 @@ export const sendEmail = async (
       },
     },
   };
+
+  if (message.html) {
+    params.Message!.Body!.Html = {
+      Charset: "UTF-8",
+      Data: message.html,
+    };
+  }
+
   return await sesClient.send(new SendEmailCommand(params as SendEmailRequest));
 };

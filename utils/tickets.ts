@@ -1,6 +1,7 @@
 import { User } from "@/utils/db/kv.ts";
 
 export const acquired = (
+  /** Test */
   user: User | undefined,
   eventID: string,
   showtimeID: string,

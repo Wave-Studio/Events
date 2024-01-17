@@ -3,8 +3,10 @@
   "deno.lint": true,
   "deno.unstable": true,
   "deno.cacheOnSave": true,
+  "deno.config": "deno.jsonc",
   "emmet.includeLanguages": {
     "javascriptreact": "html",
     "typescriptreact": "html"
-  }
+  },
+  "deno.disablePaths": ["./.react-email"]
 }

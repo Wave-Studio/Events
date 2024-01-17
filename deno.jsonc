@@ -1,6 +1,5 @@
 {
   "lock": false,
-  "nodeModulesDir": true,
   "tasks": {
     "check": "deno fmt --check && deno lint && deno check **/*.ts && deno check **/*.tsx",
     "fmt": "npx prettier . --write",
@@ -11,7 +10,7 @@
   },
   "lint": { "rules": { "tags": ["fresh", "recommended"] } },
   "imports": {
-    "$fresh/": "https://deno.land/x/fresh@1.6.1/",
+    "$fresh/": "https://deno.land/x/fresh@1.6.3/",
     "preact": "https://esm.sh/preact@10.19.2",
     "preact/": "https://esm.sh/preact@10.19.2/",
     "preact-render-to-string": "https://esm.sh/*preact-render-to-string@6.2.2",
@@ -26,7 +25,9 @@
     "tailwindcss": "npm:tailwindcss@3.3.5",
     "tailwindcss/": "npm:/tailwindcss@3.3.5/",
     "tailwindcss/plugin": "npm:/tailwindcss@3.3.5/plugin.js",
-    "@tailwindcss/typography": "npm:@tailwindcss/typography"
+    "@tailwindcss/typography": "npm:@tailwindcss/typography",
+    "react": "npm:react",
+    "@react-email/components": "npm:@react-email/components"
   },
   "compilerOptions": { "jsx": "react-jsx", "jsxImportSource": "preact" },
   "exclude": ["**/_fresh/*"]

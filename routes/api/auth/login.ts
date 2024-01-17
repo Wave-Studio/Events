@@ -8,6 +8,8 @@ import {
 import { deleteCookie, setCookie } from "$std/http/cookie.ts";
 import { sendEmail } from "@/utils/email/client.ts";
 
+const emailHTML = await Deno.readTextFile("./out/login.html");
+
 const emailRegex =
   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -45,10 +47,13 @@ export const handler: Handlers<{ email: string; otp: string }> = {
     }
 
     const otp = await generateOTP(email);
+
+    const otpHTML = emailHTML.replace("123456", otp);
+
     try {
       await sendEmail([email], "Your Events Authorization Code", {
-        content: `Your one time login code is ${otp}.<br/> <b>Do not share it with anyone</b>`,
-        html: true,
+        html: otpHTML,
+        fallback: `Your one time login code is ${otp}. Do not share it with anyone.`,
       });
     } catch (err) {
       console.error(err);
