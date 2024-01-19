@@ -1,19 +1,35 @@
 import CTA from "@/components/buttons/cta.tsx";
-import { useMemo, useRef, useState } from "preact/hooks";
+import { useEffect, useRef, useState } from "preact/hooks";
 import { JSX } from "preact/jsx-runtime";
 import { checkCode, genCode } from "@/utils/db/auth.ts";
+import { useSignal } from "@preact/signals";
+import { Loading } from "@/utils/loading.ts";
+import IconLoader2 from "$tabler/loader-2.tsx";
 
 // This page is a mess but it works so it's not worth fixing rn
 const LoginForm = ({ attending }: { attending: boolean }) => {
-  const [email, setEmail] = useState("");
-  const [code, setCode] = useState("");
+  const email = useSignal("");
+  const code = useSignal("");
   const [error, setError] = useState<string>();
-  const [stage, setStage] = useState(1);
-  const [loading, setLoading] = useState(false);
+  const stage = useSignal(0);
+  const loading = useSignal(false);
   const [updateState, setUpdateState] = useState(false);
 
   const codeRef = useRef<HTMLInputElement>(null);
   const [focused, setFocused] = useState(false);
+
+  useEffect(() => {
+    const onFocus = async () => {
+      if (stage.value != 1 || loading.value) return;
+      const clipboard = await navigator.clipboard.readText();
+      if (code.value.length != 0 || !/^[0-9]{6}$/g.test(clipboard)) return;
+      login(undefined, clipboard);
+    };
+    window.addEventListener("focus", onFocus);
+    return () => {
+      window.removeEventListener("focus", onFocus);
+    };
+  }, []);
 
   const sendEmail = async (e: JSX.TargetedEvent<HTMLFormElement, Event>) => {
     e.stopImmediatePropagation();
@@ -21,29 +37,29 @@ const LoginForm = ({ attending }: { attending: boolean }) => {
     setError(undefined);
     const passed =
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-        email,
+        email.value,
       );
     if (!passed) {
       setError("Enter a valid email");
       return;
     }
-    if (email == "rick@example.com") {
+    if (email.value == "rick@example.com") {
       setError("🤨");
       return;
     }
     setError(undefined);
-    setLoading(true);
+    loading.value = true;
 
-    const code = await genCode(email);
+    const res = await genCode(email.value);
 
-    setLoading(false);
+    loading.value = false;
 
-    if (code.error) {
-      setError(code.error);
+    if (res.error) {
+      setError(res.error);
       return;
     }
 
-    setStage(1);
+    stage.value = 1;
     if (codeRef.current) {
       setTimeout(() => {
         codeRef.current!.focus();
@@ -52,41 +68,50 @@ const LoginForm = ({ attending }: { attending: boolean }) => {
     }
   };
 
-  const login = async (e: JSX.TargetedEvent<HTMLFormElement, Event>) => {
-    e.preventDefault();
+  const login = async (
+    e?: JSX.TargetedEvent<HTMLFormElement, Event>,
+    clipboard?: string,
+  ) => {
+    if (e) e.preventDefault();
     setError(undefined);
-    setLoading(true);
+    loading.value = true;
+    stage.value = 2;
 
-    const response = await checkCode(email, code);
-
-    setLoading(false);
+    const response = await checkCode(email.value, clipboard || code.value);
 
     if (response.error || !response.success) {
       setError(response.error!);
+      loading.value = false;
+      stage.value = 1;
       return;
     }
-    window.location.href = `/events/${attending ? "attending" : "organizing"}`;
+
+    setTimeout(() => {
+      window.location.href = `/events/${
+        attending ? "attending" : "organizing"
+      }`;
+    }, 300);
   };
 
   const differentEmail = () => {
     setError(undefined);
-    setEmail("");
-    setCode("");
-    setStage(0);
+    email.value = "";
+    code.value = "";
+    stage.value = 0;
   };
 
-  const updateCode = (code: string) => {
-    code = code.replace(/[^0-9]/g, "");
-    setCode(code.slice(0, 6));
+  const updateCode = (newCode: string) => {
+    newCode = newCode.replace(/[^0-9]/g, "");
+    code.value = newCode.slice(0, 6);
     setUpdateState((u) => !u);
   };
 
   return (
-    <div className="w-[16.5rem] [@media(min-width:300px)]:w-[18.5rem] overflow-hidden p-1">
+    <div className="w-[16.5rem] [@media(min-width:300px)]:w-[18.5rem] overflow-hidden p-1 relative">
       {/* damn we're going jank already */}
       <div
         className={`flex ${
-          stage == 1
+          stage.value > 0
             ? "translate-x-[-16.25rem] [@media(min-width:300px)]:translate-x-[-18.25rem]"
             : ""
         } transition duration-300`}
@@ -94,7 +119,7 @@ const LoginForm = ({ attending }: { attending: boolean }) => {
         {/* email input */}
         <form
           class={`mt-10 ${
-            stage == 1 && "opacity-0 -translate-x-14"
+            stage.value > 0 && "opacity-0 -translate-x-14"
           } transition duration-150`}
           onSubmit={sendEmail}
           noValidate
@@ -107,7 +132,7 @@ const LoginForm = ({ attending }: { attending: boolean }) => {
               placeholder="rick@example.com"
               name="email"
               value={email}
-              onChange={(e) => setEmail(e.currentTarget.value)}
+              onChange={(e) => (email.value = e.currentTarget.value)}
             />
           </label>
           <p className={`mb-2 text-sm text-red-500 ${!error && "invisible"} `}>
@@ -131,7 +156,7 @@ const LoginForm = ({ attending }: { attending: boolean }) => {
               <span class="text-sm font-medium">code</span>
               <div className="grid grid-cols-6 gap-3 w-64 [@media(min-width:300px)]:w-72  cursor-text">
                 {[...new Array(6)].map((_, i) => {
-                  const selected = code.length == i;
+                  const selected = code.value.length == i;
                   return (
                     <div
                       class={`border-b-2 relative ${
@@ -150,6 +175,7 @@ const LoginForm = ({ attending }: { attending: boolean }) => {
                   );
                 })}
               </div>
+              {/* invis input class so you can paste into the input */}
               <div class="absolute">
                 <input
                   type="number"
@@ -165,7 +191,6 @@ const LoginForm = ({ attending }: { attending: boolean }) => {
                   onFocus={() => setFocused(true)}
                 />
                 <span class="hidden">{updateState ? "s" : "t"}</span>
-                
               </div>
             </label>
             <p
@@ -173,7 +198,11 @@ const LoginForm = ({ attending }: { attending: boolean }) => {
             >
               Error: {error}
             </p>
-            <CTA btnType="cta" disabled={(code.length != 6) || loading} type="submit">
+            <CTA
+              btnType="cta"
+              disabled={code.value.length != 6 || loading}
+              type="submit"
+            >
               Login
             </CTA>
           </form>
@@ -185,6 +214,13 @@ const LoginForm = ({ attending }: { attending: boolean }) => {
           </p>
         </div>
       </div>
+
+      {stage.value === 2 && (
+        <div class="absolute inset-0 bg-white/20 backdrop-blur-md flex items-center justify-center">
+          <IconLoader2 class="w-6 h-6 animate-spin" />{" "}
+          <h3 class="font-medium ml-2">Logging In</h3>
+        </div>
+      )}
     </div>
   );
 };

@@ -54,8 +54,8 @@ export default function LoginEmail({ otp = "123456" }: { otp: string }) {
             </Heading>
             {/* Some of the more jank classes I've written */}
             <Text className="text-2xl font-medium mt-20 mb-44 bg-gray-200 rounded-md w-max mx-auto px-6 py-3 ">
-              <span className="tracking-[1em]">{otp.slice(0, 5)}</span>
-              <span>{otp.slice(5)}</span>
+              <span className="tracking-[1em]">{`{{OTP-PART-1}}`}</span>
+              <span>{`{{OTP-PART-2}}`}</span>
             </Text>
             <Text>
               You can safely ignore this email if you did not request this login
