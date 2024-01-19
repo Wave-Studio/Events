@@ -43,7 +43,7 @@ export default defineRoute(async (req, ctx) => {
         </div>
         <div className="my-auto flex flex-col pb-12">
           <div className="rounded-md bg-theme-normal/10 border border-theme-normal/50 w-max px-2 mx-auto mb-3 font-medium text-sm text-theme-normal">
-            Closed Alpha
+            Coming Soon
           </div>
           <a href={loggedIn ? "/events/organizing" : "/login"}>
             <CTA btnType="cta">I'm organizing</CTA>

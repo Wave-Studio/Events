@@ -28,10 +28,27 @@ textarea {
   @apply p-2 border rounded-md border-gray-300;
 }
 
-.nostyle {
+.hideInput {
   @apply focus:outline-none;
-  /* caret-color: transparent; */
+  caret-color: transparent;
+  background-color: transparent;
+  border: none;
+  -moz-appearance: textfield;
+  appearance: textfield;
+  color: transparent
 }
+
+.hideInput::-webkit-outer-spin-button,
+.hideInput::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.hideInput::selection {
+  color: transparent;
+  background-color: transparent
+}
+
 
 .label-text {
   @apply font-medium text-sm mb-0.5 capitalize;

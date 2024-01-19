@@ -8,7 +8,7 @@ const LoginForm = ({ attending }: { attending: boolean }) => {
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
   const [error, setError] = useState<string>();
-  const [stage, setStage] = useState(0);
+  const [stage, setStage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [updateState, setUpdateState] = useState(false);
 
@@ -113,7 +113,7 @@ const LoginForm = ({ attending }: { attending: boolean }) => {
           <p className={`mb-2 text-sm text-red-500 ${!error && "invisible"} `}>
             Error: {error}
           </p>
-          <CTA btnType="cta" type="submit">
+          <CTA btnType="cta" type="submit" disabled={loading}>
             Confirm Email
           </CTA>
           <p className="mt-2 text-center text-sm cursor-pointer text-gray-500">
@@ -150,10 +150,10 @@ const LoginForm = ({ attending }: { attending: boolean }) => {
                   );
                 })}
               </div>
-              <div class="h-0 overflow-hidden">
+              <div class="absolute">
                 <input
                   type="number"
-                  class={`p-2 -translate-y-10 w-64 [@media(min-width:300px)]:w-72  `}
+                  class={`p-2 w-64 [@media(min-width:300px)]:w-72 translate-y-3 hideInput`}
                   name="code"
                   autoComplete="off"
                   id="test"
@@ -164,7 +164,8 @@ const LoginForm = ({ attending }: { attending: boolean }) => {
                   onBlur={() => setFocused(false)}
                   onFocus={() => setFocused(true)}
                 />
-                {updateState ? "s" : "t"}
+                <span class="hidden">{updateState ? "s" : "t"}</span>
+                
               </div>
             </label>
             <p
@@ -172,7 +173,7 @@ const LoginForm = ({ attending }: { attending: boolean }) => {
             >
               Error: {error}
             </p>
-            <CTA btnType="cta" disabled={code.length != 6} type="submit">
+            <CTA btnType="cta" disabled={(code.length != 6) || loading} type="submit">
               Login
             </CTA>
           </form>
