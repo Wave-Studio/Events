@@ -38,7 +38,7 @@ export default function LoginEmail({ otp = "123456" }: { otp: string }) {
         }}
       >
         <Body className="bg-white text-gray-800 text-center">
-          <Preview>Your autorication code to log in to Events</Preview>
+          <Preview>Your authorization code to log in to Events</Preview>
           <Container className="my-8">
             <Img
               src={`https://events.deno.dev/orange-logo.png`}
@@ -53,12 +53,12 @@ export default function LoginEmail({ otp = "123456" }: { otp: string }) {
               Enter the following code to finish logging in.
             </Heading>
             {/* Some of the more jank classes I've written */}
-            <Text className="text-2xl font-medium mt-20 mb-44 bg-gray-200 rounded-md w-max mx-auto tracking-[1em] pl-6 pr-[calc(1.5rem-1em)] py-3 ">
-              {otp}
+            <Text className="text-2xl font-medium mt-20 mb-44 bg-gray-200 rounded-md w-max mx-auto px-6 py-3 ">
+              <span className="tracking-[1em]">{otp.slice(0, 5)}</span>
+              <span>{otp.slice(5)}</span>
             </Text>
-
             <Text>
-              You can safly ignore this email if you did not request this login
+              You can safely ignore this email if you did not request this login
               code.
             </Text>
           </Container>
