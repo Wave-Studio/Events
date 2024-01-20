@@ -5,6 +5,7 @@ import { BarcodeDetector, DetectedBarcode } from "npm:barcode-detector";
 import { Ticket } from "@/utils/db/kv.types.ts";
 import { useSignal } from "@preact/signals";
 import Dropdown from "../components/pickers/dropdown.tsx";
+import CameraRotate from "$tabler/camera-rotate.tsx";
 
 export default function Scanner({
   className,
@@ -160,6 +161,8 @@ export default function Scanner({
             }
           };
 
+          let targetCodeCoords: { x: number; y: number } | null = null;
+
           const lookForBarcodes = async () => {
             const codes = await reader.detect(video);
             if (codes.length > 0) {
@@ -308,25 +311,40 @@ export default function Scanner({
         height={1080}
       />
       {error.value}
-      <div class="flex flex-col items-center max-w-full relative">
+      <div class="flex flex-col items-center max-w-full relative w-max mx-auto">
         <canvas id="scanui" className={className}></canvas>
+        {/* Camera switching */}
+        <div class="absolute top-4 right-4">
+          {cameraIds.value.length === 1 ||
+            (true && (
+              <button class="rounded-full bg-black/50 backdrop-blur w-10 h-10 text-white flex items-center justify-center" onClick={() => {
+                currentCamera.value = cameraIds.value.find(({deviceId}) => deviceId !== currentCamera.value)?.deviceId || ""
+              }}>
+                <CameraRotate class="w-6 h-6" />
+              </button>
+            ))}
+          {cameraIds.value.length > 2 && false && (
+            <Dropdown
+              options={cameraIds.value.map(({ deviceId, label }) => ({
+                content: label,
+                onClick: () => {
+                  if (currentCamera.value == deviceId) return;
+                  currentCamera.value = deviceId;
+                },
+              }))}
+            >
+              <h1>Market pire</h1>
+            </Dropdown>
+          )}
+        </div>
+
+        {/* Ticket scanning bit */}
         <div
-          class="absolute rounded-md bg-black/50 backdrop-blur px-4 py-2 text-white bottom-4"
+          class="rounded-md bg-black/50 backdrop-blur px-4 py-2 text-white absolute bottom-4"
           id="scantext"
         >
-          Bring a ticket code into view
+          Bring code into view
         </div>
-        <Dropdown
-          options={cameraIds.value.map(({ deviceId, label }) => ({
-            content: label,
-            onClick: () => {
-              if (currentCamera.value == deviceId) return;
-              currentCamera.value = deviceId;
-            },
-          }))}
-        >
-          <h1>Market pire</h1>
-        </Dropdown>
       </div>
     </>
   );
