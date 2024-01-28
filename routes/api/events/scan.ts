@@ -1,5 +1,6 @@
 import { Handlers } from "$fresh/server.ts";
 import { Event, getUser, kv, Ticket } from "@/utils/db/kv.ts";
+import { isUUID } from "@/utils/db/misc.ts";
 
 export const handler: Handlers = {
   async POST(req) {
@@ -45,6 +46,21 @@ export const handler: Handlers = {
         JSON.stringify({
           error: {
             message: "You are not a member of this event",
+          },
+        }),
+        {
+          status: 400,
+        },
+      );
+    }
+
+    const isValidTicket = ticketID.split("_").map((s) => isUUID(s)).includes(false);
+
+    if (!isValidTicket) {
+      return new Response(
+        JSON.stringify({
+          error: {
+            message: "Invalid ticket",
           },
         }),
         {

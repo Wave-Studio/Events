@@ -6,6 +6,7 @@ import { Ticket } from "@/utils/db/kv.types.ts";
 import { useSignal } from "@preact/signals";
 import Dropdown from "../components/pickers/dropdown.tsx";
 import CameraRotate from "$tabler/camera-rotate.tsx";
+import CameraPlus from "$tabler/camera-plus.tsx";
 
 export default function Scanner({ eventID }: { eventID: string }) {
   const error = useSignal<string | null>(null);
@@ -132,30 +133,65 @@ export default function Scanner({ eventID }: { eventID: string }) {
           };
 
           const fetchCodeInfo = async (code: string) => {
-            const res = await fetch(`/api/events/fetch`, {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({ ticketID: code, eventID: eventID }),
-            });
-            const data = await (res.json() as Promise<Ticket>);
+            try {
+              const res = await fetch(`/api/events/fetch`, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ ticketID: code, eventID: eventID }),
+              });
 
-            if (res.status == 400) {
+              const data = await (res.json() as Promise<Ticket>);
+
+              if (res.status == 400 || res.status == 500) {
+                checkedCodes.set(code, {
+                  status: "invalid",
+                  checkedAt: Date.now(),
+                });
+              } else {
+                checkedCodes.set(code, {
+                  status: data.hasBeenUsed ? "used" : "valid",
+                  ticketData: data,
+                  checkedAt: Date.now(),
+                });
+              }
+            } catch {
               checkedCodes.set(code, {
                 status: "invalid",
-                checkedAt: Date.now(),
-              });
-            } else {
-              checkedCodes.set(code, {
-                status: data.hasBeenUsed ? "used" : "valid",
-                ticketData: data,
                 checkedAt: Date.now(),
               });
             }
           };
 
-          let targetCodeCoords: { x: number; y: number } | null = null;
+          let targetQRCode: string | null = null;
+
+          canvas.onclick = async (e) => {
+            const x = e.offsetX;
+            const y = e.offsetY;
+
+            const codes = await reader.detect(video);
+
+            for (const code of codes) {
+              if (
+                code.cornerPoints[0].x < x &&
+                code.cornerPoints[0].y < y &&
+                code.cornerPoints[1].x > x &&
+                code.cornerPoints[1].y < y &&
+                code.cornerPoints[2].x > x &&
+                code.cornerPoints[2].y > y &&
+                code.cornerPoints[3].x < x &&
+                code.cornerPoints[3].y > y
+              ) {
+                console.log(code.cornerPoints);
+
+                targetQRCode = code.rawValue;
+                console.log("Targeting", code.rawValue);
+                return;
+              }
+            }
+            console.log("no codes found");
+          }
 
           const lookForBarcodes = async () => {
             const codes = await reader.detect(video);
@@ -169,6 +205,13 @@ export default function Scanner({ eventID }: { eventID: string }) {
               };
 
               for (const code of codes) {
+                if (targetQRCode != null) {
+                  if (code.rawValue == targetQRCode) {
+                    largestCode.code = code;
+                    break;
+                  }
+                }
+
                 if (
                   code.boundingBox.width * code.boundingBox.height >
                   largestCode.size
@@ -177,6 +220,10 @@ export default function Scanner({ eventID }: { eventID: string }) {
                     code.boundingBox.width * code.boundingBox.height;
                   largestCode.code = code;
                 }
+              }
+
+              if (targetQRCode != undefined && !codes.map((c) => c.rawValue).includes(targetQRCode)) {
+                targetQRCode = null;
               }
 
               if (largestCode.code != undefined) {
@@ -317,22 +364,22 @@ export default function Scanner({ eventID }: { eventID: string }) {
         ></canvas>
         {/* Camera switching */}
         <div class="absolute top-4 right-4">
-          {cameraIds.value.length === 1 ||
-            (true && (
-              <button
-                class="rounded-full bg-black/50 backdrop-blur w-10 h-10 text-white flex items-center justify-center"
-                onClick={() => {
-                  currentCamera.value =
-                    cameraIds.value.find(
-                      ({ deviceId }) => deviceId !== currentCamera.value,
-                    )?.deviceId || "";
-                }}
-              >
-                <CameraRotate class="w-6 h-6" />
-              </button>
-            ))}
-          {cameraIds.value.length > 2 && false && (
+          {cameraIds.value.length === 1 && (
+            <button
+              class=""
+              onClick={() => {
+                currentCamera.value =
+                  cameraIds.value.find(
+                    ({ deviceId }) => deviceId !== currentCamera.value,
+                  )?.deviceId || "";
+              }}
+            >
+              <CameraRotate class="w-6 h-6 text-white" />
+            </button>
+          )}
+          {cameraIds.value.length > 2 && (
             <Dropdown
+              className="rounded-full bg-black/50 backdrop-blur w-10 h-10 flex items-center justify-center"
               options={cameraIds.value.map(({ deviceId, label }) => ({
                 content: label,
                 onClick: () => {
@@ -341,7 +388,7 @@ export default function Scanner({ eventID }: { eventID: string }) {
                 },
               }))}
             >
-              <h1>Market pire</h1>
+              <CameraPlus class="w-6 h-6 text-white" />
             </Dropdown>
           )}
         </div>
