@@ -7,13 +7,7 @@ import { useSignal } from "@preact/signals";
 import Dropdown from "../components/pickers/dropdown.tsx";
 import CameraRotate from "$tabler/camera-rotate.tsx";
 
-export default function Scanner({
-  className,
-  eventID,
-}: {
-  className?: string;
-  eventID: string;
-}) {
+export default function Scanner({ eventID }: { eventID: string }) {
   const error = useSignal<string | null>(null);
   const isInitialized = useSignal(false);
   const currentTicket = useSignal<
@@ -27,6 +21,7 @@ export default function Scanner({
   >(null);
   const cameraIds = useSignal<MediaDeviceInfo[]>([]);
   const currentCamera = useSignal<string>("");
+  const isCameraSwitching = useSignal(false);
 
   useEffect(() => {
     (async () => {
@@ -93,6 +88,7 @@ export default function Scanner({
 
         video.onloadedmetadata = () => {
           video.play();
+          isCameraSwitching.value = false;
           canvas.width = video.videoWidth;
           canvas.height = video.videoHeight;
 
@@ -121,16 +117,14 @@ export default function Scanner({
           }, 5 * 1000);
 
           const switchCamera = async (deviceId: string) => {
+            isCameraSwitching.value = true;
+
             const devices = await navigator.mediaDevices.getUserMedia({
               video: {
                 facingMode: "environment",
                 deviceId: deviceId,
               },
             });
-
-            ctx.filter = "blur(30px)";
-
-            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
             currentCameraBeingRendered = deviceId;
 
@@ -282,7 +276,6 @@ export default function Scanner({
             }
 
             ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-            ctx.filter = "";
 
             lookForBarcodes();
 
@@ -311,15 +304,30 @@ export default function Scanner({
         height={1080}
       />
       {error.value}
-      <div class="flex flex-col items-center max-w-full relative w-max mx-auto">
-        <canvas id="scanui" className={className}></canvas>
+      <div
+        class={`flex flex-col items-center max-w-full relative w-max mx-auto rounded-md border border-gray-300 ${
+          isCameraSwitching.value && "overflow-hidden"
+        } `}
+      >
+        <canvas
+          id="scanui"
+          className={` h-max bg-gray-200 max-h-[70vh] w-max max-w-full transition-all ${
+            isCameraSwitching.value && "blur brightness-90"
+          }`}
+        ></canvas>
         {/* Camera switching */}
         <div class="absolute top-4 right-4">
           {cameraIds.value.length === 1 ||
             (true && (
-              <button class="rounded-full bg-black/50 backdrop-blur w-10 h-10 text-white flex items-center justify-center" onClick={() => {
-                currentCamera.value = cameraIds.value.find(({deviceId}) => deviceId !== currentCamera.value)?.deviceId || ""
-              }}>
+              <button
+                class="rounded-full bg-black/50 backdrop-blur w-10 h-10 text-white flex items-center justify-center"
+                onClick={() => {
+                  currentCamera.value =
+                    cameraIds.value.find(
+                      ({ deviceId }) => deviceId !== currentCamera.value,
+                    )?.deviceId || "";
+                }}
+              >
                 <CameraRotate class="w-6 h-6" />
               </button>
             ))}

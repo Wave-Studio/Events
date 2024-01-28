@@ -18,7 +18,6 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
       <EventHeader editPositon={0} role={user.role} />
 
       <Scanner
-        className="rounded-md border border-gray-300 h-max bg-gray-200 max-h-[70vh] w-max max-w-full"
         eventID={eventID}
       />
     </main>
