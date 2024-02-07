@@ -196,16 +196,17 @@ export default function EventRegister({
         className=""
       >
         <h2 class="font-bold text-lg">
-          {page.value == 2 ? "Your Ticket" : "Get Tickets"}
+          {page.value === 2 ? "Your Ticket" : "Get Tickets"}
         </h2>
         <Form class="gap-4 mt-4 flex flex-col">
-          {page.value == 0 ? (
+          {page.value === 0 ? (
             <>
               <SelectShowTime
                 changeOpen={changeOpen}
                 showTime={showTime}
                 showTimes={showTimes}
               />
+              {/* If user is already registered */}
               {acquired(user, eventID, showTime.value!) ? (
                 <>
                   <div className="mx-auto flex flex-col items-center">
@@ -228,6 +229,7 @@ export default function EventRegister({
                   </div>
                 </>
               ) : (
+                // Page 1
                 <>
                   <div class="flex flex-col md:flex-row gap-4 [&>label]:grow">
                     <label class="flex flex-col">
@@ -261,6 +263,7 @@ export default function EventRegister({
               )}
             </>
           ) : page.value == 1 ? (
+            // Page 2 of getting tickets
             <>
               {additionalFields
                 .filter((field) => field.type != "toggle")
@@ -302,6 +305,7 @@ export default function EventRegister({
               <Submit />
             </>
           ) : (
+            // After user has acquired tickets
             <>
               <div class="flex flex-col items-center pb-6">
                 <h3 class="font-bold text-lg text-center">
@@ -319,6 +323,9 @@ export default function EventRegister({
                 }
                 tickets={tickets.value}
               />
+              <a href={`/events/${eventID}/tickets/${ticketID.value!}`}>
+                <CTA btnType="secondary">View Ticket</CTA>
+              </a>
             </>
           )}
         </Form>

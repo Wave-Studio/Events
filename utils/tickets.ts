@@ -41,7 +41,7 @@ export const getShowtimeID = (
   user: User | undefined,
   eventID: string,
   ticketID: string,
-) => {
+): string | undefined => {
   if (!user) return undefined;
 
   const ticket = user.tickets.find(

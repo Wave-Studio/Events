@@ -16,13 +16,21 @@ export default defineRoute(
     const url = new URL(req.url);
     const queryValue = url.searchParams.get("s");
 
-    if (!user || user.role == undefined || user.role > 2) {
+    if (!user) {
       return badEventRequest;
     }
 
     const sid = getShowtimeID(user?.data, eventID, ticketID);
     const showTimeID: string | undefined = queryValue || sid;
     const id = `${eventID}_${showTimeID}_${ticketID}`;
+
+    // Scanners and above can view user's tickets
+    if (
+      (user.role == undefined || user.role > 3) &&
+      !user.data.tickets.includes(id)
+    ) {
+      return badEventRequest;
+    }
 
     if (!showTimeID) return badEventRequest;
 
@@ -64,7 +72,7 @@ export default defineRoute(
 
         <div className="flex flex-col min-h-screen">
           <main className="px-4 max-w-screen-md w-full mx-auto flex flex-col gap-8 grow mb-10 items-center mt-10 md:mt-24">
-            <h1 class="font-extrabold text-2xl text-center">Your Ticket</h1>
+            <h1 class="font-extrabold text-2xl text-center">{ticket.value.firstName}'s Ticket</h1>
             <div class="rounded-md px-6 pt-2 pb-4 border-2 border-theme-normal text-center">
               <TicketComponent
                 id={id}
