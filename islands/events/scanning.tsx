@@ -7,6 +7,7 @@ import { useSignal } from "@preact/signals";
 import Dropdown from "../components/pickers/dropdown.tsx";
 import CameraRotate from "$tabler/camera-rotate.tsx";
 import CameraPlus from "$tabler/camera-plus.tsx";
+import Popup from "@/components/popup.tsx";
 
 export default function Scanner({ eventID }: { eventID: string }) {
   const error = useSignal<string | null>(null);
@@ -23,6 +24,7 @@ export default function Scanner({ eventID }: { eventID: string }) {
   const cameraIds = useSignal<MediaDeviceInfo[]>([]);
   const currentCamera = useSignal<string>("");
   const isCameraSwitching = useSignal(false);
+  const cameraSwitchPopupOpen = useSignal(false);
 
   useEffect(() => {
     (async () => {
@@ -167,31 +169,40 @@ export default function Scanner({ eventID }: { eventID: string }) {
           let targetQRCode: string | null = null;
 
           canvas.onclick = async (e) => {
-            const x = e.offsetX;
-            const y = e.offsetY;
+            // THIS SHIT DOESN'T WORK
+            // WHY, HAS I EVER???? - Bloxs
+            console.log(e.offsetX);
+
+            let x = e.offsetX;
+            let y = e.offsetY;
+            const xOffset = canvas.clientWidth;
+            const yOffset = canvas.clientHeight;
+
+            // const xAdjustment = xOffset / x;
+            // const yAdjustment = yOffset / y;
+
+            // x *= xAdjustment;
+            // y *= yAdjustment;
 
             const codes = await reader.detect(video);
 
-            for (const code of codes) {
-              if (
-                code.cornerPoints[0].x < x &&
-                code.cornerPoints[0].y < y &&
-                code.cornerPoints[1].x > x &&
-                code.cornerPoints[1].y < y &&
-                code.cornerPoints[2].x > x &&
-                code.cornerPoints[2].y > y &&
-                code.cornerPoints[3].x < x &&
-                code.cornerPoints[3].y > y
-              ) {
-                console.log(code.cornerPoints);
+            console.log(codes, x, y);
 
-                targetQRCode = code.rawValue;
-                console.log("Targeting", code.rawValue);
-                return;
-              }
+            for (const code of codes) {
+              const lowestX = code.boundingBox.left;
+              const lowestY = code.boundingBox.top;
+              const highestX = code.boundingBox.right;
+              const highestY = code.boundingBox.bottom;
+
+              if (x < lowestX || x > highestX || y < lowestY || y > highestY)
+                continue;
+
+              console.log("Found code!", code.rawValue);
+
+              targetQRCode = code.rawValue;
+              break;
             }
-            console.log("no codes found");
-          }
+          };
 
           const lookForBarcodes = async () => {
             const codes = await reader.detect(video);
@@ -222,7 +233,10 @@ export default function Scanner({ eventID }: { eventID: string }) {
                 }
               }
 
-              if (targetQRCode != undefined && !codes.map((c) => c.rawValue).includes(targetQRCode)) {
+              if (
+                targetQRCode != undefined &&
+                !codes.map((c) => c.rawValue).includes(targetQRCode)
+              ) {
                 targetQRCode = null;
               }
 
@@ -378,18 +392,46 @@ export default function Scanner({ eventID }: { eventID: string }) {
             </button>
           )}
           {cameraIds.value.length > 2 && (
-            <Dropdown
-              className="rounded-full bg-black/50 backdrop-blur w-10 h-10 flex items-center justify-center"
-              options={cameraIds.value.map(({ deviceId, label }) => ({
-                content: label,
-                onClick: () => {
-                  if (currentCamera.value == deviceId) return;
-                  currentCamera.value = deviceId;
-                },
-              }))}
-            >
-              <CameraPlus class="w-6 h-6 text-white" />
-            </Dropdown>
+            <>
+              <Dropdown
+                className="rounded-full bg-black/50 backdrop-blur w-10 h-10 items-center justify-center hidden md:flex"
+                options={cameraIds.value.map(({ deviceId, label }) => ({
+                  content: label,
+                  onClick: () => {
+                    if (currentCamera.value == deviceId) return;
+                    currentCamera.value = deviceId;
+                  },
+                }))}
+              >
+                <CameraPlus class="w-6 h-6 text-white" />
+              </Dropdown>
+              <div
+                className="rounded-full bg-black/50 backdrop-blur w-10 h-10 items-center justify-center flex md:hidden"
+                onClick={() => (cameraSwitchPopupOpen.value = true)}
+              >
+                <CameraPlus class="w-6 h-6 text-white" />
+              </div>
+              <Popup
+                close={() => cameraSwitchPopupOpen.value = false}
+                isOpen={cameraSwitchPopupOpen.value}
+              >
+                <h3 class="font-semibold text-center mb-4">Select a Device</h3>
+                <div class="flex flex-col divide-y">
+                  {cameraIds.value.map(({ deviceId, label }) => (
+                    <button
+                      onClick={() => {
+                        if (currentCamera.value == deviceId) return;
+                        currentCamera.value = deviceId;
+                        cameraSwitchPopupOpen.value = false
+                      }}
+                      class="truncate text-sm font-medium py-2 max-w-xs"
+                    >
+                      {label}
+                    </button>
+                  ))}
+                </div>
+              </Popup>
+            </>
           )}
         </div>
 
