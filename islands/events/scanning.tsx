@@ -169,24 +169,23 @@ export default function Scanner({ eventID }: { eventID: string }) {
           let targetQRCode: string | null = null;
 
           canvas.onclick = async (e) => {
+            // This now works, but it makes no sense - Bloxs
+
             // THIS SHIT DOESN'T WORK
             // WHY, HAS I EVER???? - Bloxs
-            console.log(e.offsetX);
 
             let x = e.offsetX;
             let y = e.offsetY;
             const xOffset = canvas.clientWidth;
             const yOffset = canvas.clientHeight;
 
-            // const xAdjustment = xOffset / x;
-            // const yAdjustment = yOffset / y;
+            const xAdjustment = canvas.width / xOffset;
+            const yAdjustment = canvas.height / yOffset;
 
-            // x *= xAdjustment;
-            // y *= yAdjustment;
+            x *= xAdjustment;
+            y *= yAdjustment;
 
             const codes = await reader.detect(video);
-
-            console.log(codes, x, y);
 
             for (const code of codes) {
               const lowestX = code.boundingBox.left;
