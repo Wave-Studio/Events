@@ -1,13 +1,78 @@
 import { useEffect } from "preact/hooks";
 import { IS_BROWSER } from "$fresh/runtime.ts";
 // Currently causes issues, hopefully it's fixed soon
-import { BarcodeDetector, DetectedBarcode } from "npm:barcode-detector";
+import { BarcodeDetector } from "npm:barcode-detector";
+// import { BarcodeDetector } from "https://fastly.jsdelivr.net/npm/barcode-detector@2/dist/es/pure.min.js";
 import { Ticket } from "@/utils/db/kv.types.ts";
 import { useSignal } from "@preact/signals";
 import Dropdown from "../components/pickers/dropdown.tsx";
 import CameraRotate from "$tabler/camera-rotate.tsx";
 import CameraPlus from "$tabler/camera-plus.tsx";
 import Popup from "@/components/popup.tsx";
+
+// Chatgpt didn't manage to write this right, it's got issues with padding - Bloxs
+// Start chatgpt generated code because I'm too lazy to do math - Bloxs
+const rotatePoint = (
+  point: [number, number],
+  angle: number,
+): [number, number] => {
+  const [x, y] = point;
+  const rotatedX = x * Math.cos(angle) - y * Math.sin(angle);
+  const rotatedY = x * Math.sin(angle) + y * Math.cos(angle);
+  return [rotatedX, rotatedY];
+};
+
+const padRotatedBox = (
+  coordinates: [number, number][],
+  padding: number,
+): [number, number][] => {
+  const minX: number = Math.min(...coordinates.map((coord) => coord[0]));
+  const maxX: number = Math.max(...coordinates.map((coord) => coord[0]));
+  const minY: number = Math.min(...coordinates.map((coord) => coord[1]));
+  const maxY: number = Math.max(...coordinates.map((coord) => coord[1]));
+
+  const paddedMinX: number = minX - padding;
+  const paddedMaxX: number = maxX + padding;
+  const paddedMinY: number = minY - padding;
+  const paddedMaxY: number = maxY + padding;
+
+  const unrotatedPaddedCoords: [number, number][] = [
+    [paddedMinX, paddedMinY],
+    [paddedMaxX, paddedMinY],
+    [paddedMaxX, paddedMaxY],
+    [paddedMinX, paddedMaxY],
+  ];
+
+  const center: [number, number] = [
+    minX + (maxX - minX) / 2,
+    minY + (maxY - minY) / 2,
+  ];
+
+  const angle: number = Math.atan2(
+    coordinates[1][1] - coordinates[0][1],
+    coordinates[1][0] - coordinates[0][0],
+  );
+
+  const rotatedPaddedCoords: [number, number][] = unrotatedPaddedCoords.map(
+    (coord) => {
+      const translatedCoord: [number, number] = [
+        coord[0] - center[0],
+        coord[1] - center[1],
+      ];
+      const rotatedCoord: [number, number] = rotatePoint(
+        translatedCoord,
+        angle,
+      );
+      rotatedCoord[0] += center[0];
+      rotatedCoord[1] += center[1];
+      return rotatedCoord;
+    },
+  );
+
+  return rotatedPaddedCoords;
+};
+
+// End chatgpt generated code because I'm too lazy to do math - Bloxs
 
 export default function Scanner({ eventID }: { eventID: string }) {
   const error = useSignal<string | null>(null);
@@ -32,7 +97,7 @@ export default function Scanner({ eventID }: { eventID: string }) {
       if (isInitialized.value) return;
       isInitialized.value = true;
       const canvas = document.getElementById("scanui") as HTMLCanvasElement;
-      const barcodeReaderAPI = window["BarcodeDetector"] ?? BarcodeDetector;
+      const barcodeReaderAPI = globalThis["BarcodeDetector"] ?? BarcodeDetector;
       if (barcodeReaderAPI == null) {
         error.value =
           "BarcodeDetector API is required but not supported on your device! Please try another browser.";
@@ -279,19 +344,17 @@ export default function Scanner({ eventID }: { eventID: string }) {
                   inactive: "blue",
                 }[codeData.status];
 
+                const paddedCoords = padRotatedBox(
+                  code.cornerPoints.map((c) => [c.x, c.y]),
+                  0.01,
+                );
+
                 ctx.lineWidth = 10;
-                ctx.moveTo(code.cornerPoints[0].x, code.cornerPoints[0].y);
+                ctx.moveTo(paddedCoords[0][0], paddedCoords[0][1]);
                 ctx.beginPath();
 
-                let lowestY = 0;
-                let leftmostX = canvas.width;
-                let rightmostX = 0;
-
-                for (const point of code.cornerPoints) {
-                  lowestY = Math.max(lowestY, point.y);
-                  leftmostX = Math.min(leftmostX, point.x);
-                  rightmostX = Math.max(rightmostX, point.x);
-                  ctx.lineTo(point.x, point.y);
+                for (const point of paddedCoords) {
+                  ctx.lineTo(point[0], point[1]);
                 }
 
                 ctx.closePath();
@@ -411,7 +474,7 @@ export default function Scanner({ eventID }: { eventID: string }) {
                 <CameraPlus class="w-6 h-6 text-white" />
               </div>
               <Popup
-                close={() => cameraSwitchPopupOpen.value = false}
+                close={() => (cameraSwitchPopupOpen.value = false)}
                 isOpen={cameraSwitchPopupOpen.value}
               >
                 <h3 class="font-semibold text-center mb-4">Select a Device</h3>
@@ -421,7 +484,7 @@ export default function Scanner({ eventID }: { eventID: string }) {
                       onClick={() => {
                         if (currentCamera.value == deviceId) return;
                         currentCamera.value = deviceId;
-                        cameraSwitchPopupOpen.value = false
+                        cameraSwitchPopupOpen.value = false;
                       }}
                       class="truncate text-sm font-medium py-2 max-w-xs"
                     >
