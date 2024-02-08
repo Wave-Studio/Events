@@ -21,7 +21,7 @@ const Footer = ({ includeWave = true }: { includeWave?: boolean }) => {
   ];
 
   return (
-    <div class="flex flex-col items-center text-sm">
+    <div class="flex flex-col items-center text-sm print:hidden">
       {includeWave && (
         <p class="flex font-bold">
           a{" "}

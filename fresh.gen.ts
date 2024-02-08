@@ -77,6 +77,7 @@ import * as $events_viewing_availability from "./islands/events/viewing/availabi
 import * as $events_viewing_register from "./islands/events/viewing/register.tsx";
 import * as $events_viewing_selectShowTime from "./islands/events/viewing/selectShowTime.tsx";
 import * as $events_viewing_showtimes from "./islands/events/viewing/showtimes.tsx";
+import * as $events_viewing_ticketActions from "./islands/events/viewing/ticketActions.tsx";
 import * as $loginForm from "./islands/loginForm.tsx";
 import * as $queueManagement from "./islands/queueManagement.tsx";
 import * as $tickets_filters from "./islands/tickets/filters.tsx";
@@ -176,6 +177,7 @@ const manifest = {
     "./islands/events/viewing/selectShowTime.tsx":
       $events_viewing_selectShowTime,
     "./islands/events/viewing/showtimes.tsx": $events_viewing_showtimes,
+    "./islands/events/viewing/ticketActions.tsx": $events_viewing_ticketActions,
     "./islands/loginForm.tsx": $loginForm,
     "./islands/queueManagement.tsx": $queueManagement,
     "./islands/tickets/filters.tsx": $tickets_filters,

@@ -3,17 +3,18 @@ import { fmtDate, fmtTime } from "@/utils/dates.ts";
 import { useSignal } from "@preact/signals";
 import { useEffect } from "preact/hooks";
 import { qrcode } from "https://deno.land/x/qrcode@v2.0.0/mod.ts";
-import { asset } from "$fresh/runtime.ts";
 import { QR } from "@/components/svgs/qr.tsx";
 
 export default function Ticket({
   showTime,
   id,
   tickets,
+  venue,
 }: {
   tickets: number;
   showTime: ShowTime;
   id: string;
+  venue?: string;
 }) {
   const qr = useSignal<undefined | string>(undefined);
 
@@ -41,39 +42,36 @@ export default function Ticket({
       <div class="bg-gray-100 border font-semibold text-gray-700 px-1.5 text-sm rounded-md w-max mt-4 mb-2 ">
         {tickets} ticket{tickets > 1 && "s"}
       </div>
+
       {qr.value != undefined ? (
         <img src={qr.value} alt="QR Code" width={232} />
       ) : (
         <QR />
       )}
-      <p class="text-xs text-gray-500 text-center mt-4">
-        ID: {id.split("_")[2]}
-      </p>
-      <div class="grid gap-2">
+      <div class="grid gap-2 mt-4 font-medium ">
         <div>
-          <h5 class="font-medium mb-0.5 mt-4 text-sm text-center">
-            Event Date & Time
-          </h5>
-          <div class="bg-gray-100 border font-medium px-1.5 rounded-md text-center">
+          <div class="bg-gray-100 border px-1.5 rounded-md text-center">
             {fmtDate(new Date(showTime.startDate!))}
           </div>
         </div>
         <div class="flex justify-center">
           {showTime.startTime && (
-            <div class="lowercase bg-gray-100 border font-medium px-1.5 rounded-md">
+            <div class="lowercase bg-gray-100 border px-1.5 rounded-md">
               {fmtTime(new Date(showTime.startTime))}
             </div>
           )}
           {showTime.endTime && (
             <>
               <p class="px-3">-</p>
-              <div class="lowercase bg-gray-100 border font-medium px-1.5 rounded-md">
+              <div class="lowercase bg-gray-100 border px-1.5 rounded-md">
                 {fmtTime(new Date(showTime.endTime))}
               </div>
             </>
           )}
         </div>
       </div>
+
+      
     </div>
   );
 }

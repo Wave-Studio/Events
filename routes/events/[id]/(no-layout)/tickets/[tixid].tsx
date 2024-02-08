@@ -8,6 +8,8 @@ import { Ticket, kv } from "@/utils/db/kv.ts";
 import { Head } from "$fresh/runtime.ts";
 import Footer from "@/components/layout/footer.tsx";
 import TicketComponent from "@/islands/components/peices/ticket.tsx";
+import CTA from "@/components/buttons/cta.tsx";
+import TicketActions from "@/islands/events/viewing/ticketActions.tsx";
 
 export default defineRoute(
   async (req, ctx: RouteContext<void, EventContext>) => {
@@ -37,6 +39,23 @@ export default defineRoute(
     const ticket = await kv.get<Ticket>(["ticket", eventID, showTimeID, id]);
 
     if (!ticket.value) return badEventRequest;
+
+    const Indent = ({ className }: { className: string }) => (
+      <svg
+        width="124"
+        height="34"
+        viewBox="0 0 124 34"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        class={`absolute text-theme-normal  mx-auto z-10 right-0 left-0 bg-white ${className}`}
+      >
+        <path
+          d="M124 1.00001C92.0003 1.00001 124 1.00001 102 1C97.582 1 94.103 4.63735 93.013 8.91905C89.683 22 76.94 30 62 30C47.06 30 35 21.5 30.987 8.91905C29.897 4.63734 26.418 1 22 1C17.582 1 -1.52588e-05 0.999995 -1.52588e-05 0.999995"
+          stroke="currentColor"
+          strokeWidth={2}
+        />
+      </svg>
+    );
 
     return (
       <>
@@ -70,17 +89,35 @@ export default defineRoute(
           <meta name="theme-color" content="#DC6843" />
         </Head>
 
-        <div className="flex flex-col min-h-screen">
-          <main className="px-4 max-w-screen-md w-full mx-auto flex flex-col gap-8 grow mb-10 items-center mt-10 md:mt-24">
-            <h1 class="font-extrabold text-2xl text-center">{ticket.value.firstName}'s Ticket</h1>
-            <div class="rounded-md px-6 pt-2 pb-4 border-2 border-theme-normal text-center">
+        <div className="flex flex-col min-h-screen ">
+          <main className="px-4 max-w-screen-md w-full mx-auto flex flex-col gap-8 grow mb-10 items-center mt-4 md:mt-16 print:justify-center print:gap-12">
+            <h1 class="font-extrabold text-2xl text-center print:block">
+              {ticket.value.firstName}'s Ticket
+            </h1>
+            <div class="rounded-lg px-6 pt-8 pb-12 border-2 border-theme-normal text-center relative print:block">
+              <Indent className="-top-[2px]" />
               <TicketComponent
                 id={id}
                 showTime={event.showTimes.find((s) => s.id == showTimeID)!}
                 tickets={1}
+                venue={event.venue}
               />
+              <Indent className="-bottom-[2px] rotate-180" />
             </div>
+            <a href={`/events/${eventID}`} class="print:hidden">
+              <CTA btnType="cta" btnSize="sm">
+                View Event
+              </CTA>
+            </a>
+            <TicketActions />
           </main>
+          <p class="text-center max-w-sm mx-auto mb-4 text-sm px-4 print:hidden">
+            This event was made with{" "}
+            <a className="font-medium underline" href="/">
+              Events
+            </a>
+            , a simple and easy to use event booking platform.
+          </p>
           <Footer includeWave={false} />
         </div>
         {/* Print buttons and whatnot */}
