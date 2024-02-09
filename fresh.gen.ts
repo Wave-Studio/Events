@@ -22,7 +22,8 @@ import * as $api_events_scan from "./routes/api/events/scan.ts";
 import * as $api_events_team_invite from "./routes/api/events/team/invite.ts";
 import * as $api_events_team_remove from "./routes/api/events/team/remove.ts";
 import * as $api_events_team_update from "./routes/api/events/team/update.ts";
-import * as $api_events_ticket from "./routes/api/events/ticket.ts";
+import * as $api_events_ticket_delete from "./routes/api/events/ticket/delete.ts";
+import * as $api_events_ticket_index from "./routes/api/events/ticket/index.ts";
 import * as $events_pages_layout from "./routes/events/(pages)/_layout.tsx";
 import * as $events_pages_attending_layout from "./routes/events/(pages)/attending/_layout.tsx";
 import * as $events_pages_attending_index from "./routes/events/(pages)/attending/index.tsx";
@@ -75,6 +76,7 @@ import * as $events_teams_filters from "./islands/events/teams/filters.tsx";
 import * as $events_teams_invite from "./islands/events/teams/invite.tsx";
 import * as $events_teams_manage from "./islands/events/teams/manage.tsx";
 import * as $events_viewing_availability from "./islands/events/viewing/availability.tsx";
+import * as $events_viewing_delete from "./islands/events/viewing/delete.tsx";
 import * as $events_viewing_register from "./islands/events/viewing/register.tsx";
 import * as $events_viewing_selectShowTime from "./islands/events/viewing/selectShowTime.tsx";
 import * as $events_viewing_showtimes from "./islands/events/viewing/showtimes.tsx";
@@ -106,7 +108,8 @@ const manifest = {
     "./routes/api/events/team/invite.ts": $api_events_team_invite,
     "./routes/api/events/team/remove.ts": $api_events_team_remove,
     "./routes/api/events/team/update.ts": $api_events_team_update,
-    "./routes/api/events/ticket.ts": $api_events_ticket,
+    "./routes/api/events/ticket/delete.ts": $api_events_ticket_delete,
+    "./routes/api/events/ticket/index.ts": $api_events_ticket_index,
     "./routes/events/(pages)/_layout.tsx": $events_pages_layout,
     "./routes/events/(pages)/attending/_layout.tsx":
       $events_pages_attending_layout,
@@ -175,6 +178,7 @@ const manifest = {
     "./islands/events/teams/invite.tsx": $events_teams_invite,
     "./islands/events/teams/manage.tsx": $events_teams_manage,
     "./islands/events/viewing/availability.tsx": $events_viewing_availability,
+    "./islands/events/viewing/delete.tsx": $events_viewing_delete,
     "./islands/events/viewing/register.tsx": $events_viewing_register,
     "./islands/events/viewing/selectShowTime.tsx":
       $events_viewing_selectShowTime,

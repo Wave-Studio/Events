@@ -6,7 +6,7 @@ import { Signal } from "@preact/signals";
 import { ComponentChildren } from "preact";
 import Popup from "@/components/popup.tsx";
 
-export default function Deletion({
+const Deletion = ({
   fetch,
   name,
   open,
@@ -18,7 +18,7 @@ export default function Deletion({
   name: string;
   open: Signal<boolean>;
   children: ComponentChildren;
-}) {
+}) => {
   const [loading, setLoading] = useState<boolean | string>(false);
 
   const deleteEvent = async () => {
@@ -74,4 +74,6 @@ export default function Deletion({
       <DeleteUI />
     </>
   );
-}
+};
+
+export default Deletion

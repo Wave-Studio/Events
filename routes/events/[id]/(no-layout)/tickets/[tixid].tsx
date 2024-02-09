@@ -109,7 +109,7 @@ export default defineRoute(
                 View Event
               </CTA>
             </a>
-            <TicketActions />
+            <TicketActions ticketID={ticketID} />
           </main>
           <p class="text-center max-w-sm mx-auto mb-4 text-sm px-4 print:hidden">
             This event was made with{" "}
