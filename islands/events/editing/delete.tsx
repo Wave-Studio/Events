@@ -7,10 +7,12 @@ const EventDeletion = ({ eventID }: { eventID: string }) => {
 
   return (
     <Deletion
-      fetch={() => fetch("/api/events/delete", {
-        body: JSON.stringify({ eventID }),
-        method: "POST",
-      })}
+      fetch={() =>
+        fetch("/api/events/delete", {
+          body: JSON.stringify({ eventID }),
+          method: "POST",
+        })
+      }
       name="event"
       open={open}
       routeTo="/events/organizing"

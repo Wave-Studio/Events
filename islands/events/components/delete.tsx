@@ -76,4 +76,4 @@ const Deletion = ({
   );
 };
 
-export default Deletion
+export default Deletion;

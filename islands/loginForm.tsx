@@ -185,7 +185,9 @@ const LoginForm = ({ attending }: { attending: boolean }) => {
                   id="test"
                   pattern="[0-9]*"
                   value={code.value}
-                  onInput={(e) => updateCode(e.currentTarget.value.replace(/e/gi, ""))}
+                  onInput={(e) =>
+                    updateCode(e.currentTarget.value.replace(/e/gi, ""))
+                  }
                   ref={codeRef}
                   onBlur={() => setFocused(false)}
                   onFocus={() => setFocused(true)}

@@ -70,8 +70,6 @@ export default function Ticket({
           )}
         </div>
       </div>
-
-      
     </div>
   );
 }

@@ -8,15 +8,21 @@ const TicketDeletion = ({ ticketID }: { ticketID: string }) => {
 
   return (
     <Deletion
-      fetch={() => fetch("/api/events/ticket/delete", {
-        body: JSON.stringify({ ticketID }),
-        method: "POST",
-      })}
+      fetch={() =>
+        fetch("/api/events/ticket/delete", {
+          body: JSON.stringify({ ticketID }),
+          method: "POST",
+        })
+      }
       name="ticket"
       open={open}
       routeTo={`/events/${ticketID.split("_")[2]}`}
     >
-      <Button icon={<Trash class="size-6" />} label="Give Up Ticket" onClick={() => open.value = true} />
+      <Button
+        icon={<Trash class="size-6" />}
+        label="Give Up Ticket"
+        onClick={() => (open.value = true)}
+      />
     </Deletion>
   );
 };
