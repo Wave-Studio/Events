@@ -6,7 +6,7 @@ const TicketActions = () => {
   return (
     <div class="flex gap-4 print:hidden">
       <Button icon={<Printer class="size-6" />} label="Print Ticket" onClick={() => print()} />
-      <Button icon={<Trash class="size-6" />} label="Release Ticket" />
+      <Button icon={<Trash class="size-6" />} label="Give Up Ticket" />
     </div>
   );
 };

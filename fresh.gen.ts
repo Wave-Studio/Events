@@ -56,6 +56,7 @@ import * as $components_pickers_time from "./islands/components/pickers/time.tsx
 import * as $entriesManagement from "./islands/entriesManagement.tsx";
 import * as $entryManagement from "./islands/entryManagement.tsx";
 import * as $events_components_card from "./islands/events/components/card.tsx";
+import * as $events_components_delete from "./islands/events/components/delete.tsx";
 import * as $events_components_registerErrors from "./islands/events/components/registerErrors.tsx";
 import * as $events_creation_createForm from "./islands/events/creation/createForm.tsx";
 import * as $events_creation_one from "./islands/events/creation/one.tsx";
@@ -151,6 +152,7 @@ const manifest = {
     "./islands/entriesManagement.tsx": $entriesManagement,
     "./islands/entryManagement.tsx": $entryManagement,
     "./islands/events/components/card.tsx": $events_components_card,
+    "./islands/events/components/delete.tsx": $events_components_delete,
     "./islands/events/components/registerErrors.tsx":
       $events_components_registerErrors,
     "./islands/events/creation/createForm.tsx": $events_creation_createForm,
