@@ -18,6 +18,7 @@ import { acquired, getTicketID } from "@/utils/tickets.ts";
 import { EventRegisterError } from "@/utils/event/register.ts";
 import { RegisterErrors } from "../components/registerErrors.tsx";
 import SelectShowTime from "./selectShowTime.tsx";
+import { router } from "$fresh/src/server/router.ts";
 
 export default function EventRegister({
   eventID,
@@ -44,18 +45,25 @@ export default function EventRegister({
   const toggles = useSignal<Record<string, boolean>>({
     ...additionalFields
       .filter((field) => field.type == "toggle")
-      .reduce((acc, field) => {
-        acc[field.id] = false;
-        return acc;
-      }, {} as Record<string, boolean>),
+      .reduce(
+        (acc, field) => {
+          acc[field.id] = false;
+          return acc;
+        },
+        {} as Record<string, boolean>,
+      ),
   });
 
-  const perfEntries = performance.getEntriesByType('navigation');
+  const perfEntries = performance.getEntriesByType("navigation");
   useEffect(() => {
-    if (perfEntries.length && perfEntries[0].entryType === "back_forward") {
-      alert('Got here using the browser "Back" or "Forward" button.');
-  }
-  }, [])
+    //forces browser to fetch fresh data if using forward/back buttons rather than relying on cache
+    if (
+      perfEntries.length &&
+      (perfEntries[0] as PerformanceNavigationTiming).type === "back_forward"
+    ) {
+      window.location.reload();
+    }
+  }, []);
 
   const [Form, [Field, TextArea], formState] = useForm<{
     firstName: string;
@@ -69,10 +77,13 @@ export default function EventRegister({
       email: email || "",
       ...additionalFields
         .filter((field) => field.type != "toggle")
-        .reduce((acc, field) => {
-          acc[field.id] = field.type === "number" ? 0 : "";
-          return acc;
-        }, {} as Record<string, string | number>),
+        .reduce(
+          (acc, field) => {
+            acc[field.id] = field.type === "number" ? 0 : "";
+            return acc;
+          },
+          {} as Record<string, string | number>,
+        ),
     },
     onSubmit: (form) => createTicket(form.formState!),
     // TODO: add client side validation
@@ -324,8 +335,15 @@ export default function EventRegister({
                 }
                 tickets={tickets.value}
               />
-              <a href={`/events/${eventID}/tickets/${ticketID.value!.split("_")[2]}`} class="mx-auto pt-6">
-                <CTA btnType="secondary" btnSize="sm">View Ticket</CTA>
+              <a
+                href={`/events/${eventID}/tickets/${
+                  ticketID.value!.split("_")[2]
+                }`}
+                class="mx-auto pt-6"
+              >
+                <CTA btnType="secondary" btnSize="sm">
+                  View Ticket
+                </CTA>
               </a>
             </>
           )}
