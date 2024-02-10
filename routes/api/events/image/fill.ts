@@ -20,8 +20,8 @@ export const handler: Handlers = {
       });
     }
 
-    // this is likley all posible in one request using atomic transactions
-    // but my pretty basic knowlegde of how they work has convinced me it's
+    // this is likely all possible in one request using atomic transactions
+    // but my pretty basic knowledge of how they work has convinced me it's
     // not worth figuring out -LS
 
     const event = await kv.get<Event>(["event", eventID]);
@@ -29,7 +29,7 @@ export const handler: Handlers = {
     if (
       !event ||
       !event.value ||
-      // checks owner, probably unnessesary
+      // checks owner, probably unnecessary -LS
       !event.value.members.some((e) => e.email == user.email && e.role <= 2) ||
       // prevent people from uploading multiple things at the same time -LS
       event.value.banner.uploading == true

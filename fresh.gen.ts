@@ -47,13 +47,13 @@ import * as $kv_insights_layout from "./routes/kv-insights/_layout.tsx";
 import * as $kv_insights_middleware from "./routes/kv-insights/_middleware.ts";
 import * as $login from "./routes/login.tsx";
 import * as $components_dropinUI_trash from "./islands/components/dropinUI/trash.tsx";
-import * as $components_peices_navDropDown from "./islands/components/peices/navDropDown.tsx";
-import * as $components_peices_ticket from "./islands/components/peices/ticket.tsx";
 import * as $components_pickers_calender from "./islands/components/pickers/calender.tsx";
 import * as $components_pickers_dropdown from "./islands/components/pickers/dropdown.tsx";
 import * as $components_pickers_image from "./islands/components/pickers/image.tsx";
 import * as $components_pickers_select from "./islands/components/pickers/select.tsx";
 import * as $components_pickers_time from "./islands/components/pickers/time.tsx";
+import * as $components_pieces_navDropDown from "./islands/components/pieces/navDropDown.tsx";
+import * as $components_pieces_ticket from "./islands/components/pieces/ticket.tsx";
 import * as $entriesManagement from "./islands/entriesManagement.tsx";
 import * as $entryManagement from "./islands/entryManagement.tsx";
 import * as $events_components_card from "./islands/events/components/card.tsx";
@@ -144,14 +144,14 @@ const manifest = {
   },
   islands: {
     "./islands/components/dropinUI/trash.tsx": $components_dropinUI_trash,
-    "./islands/components/peices/navDropDown.tsx":
-      $components_peices_navDropDown,
-    "./islands/components/peices/ticket.tsx": $components_peices_ticket,
     "./islands/components/pickers/calender.tsx": $components_pickers_calender,
     "./islands/components/pickers/dropdown.tsx": $components_pickers_dropdown,
     "./islands/components/pickers/image.tsx": $components_pickers_image,
     "./islands/components/pickers/select.tsx": $components_pickers_select,
     "./islands/components/pickers/time.tsx": $components_pickers_time,
+    "./islands/components/pieces/navDropDown.tsx":
+      $components_pieces_navDropDown,
+    "./islands/components/pieces/ticket.tsx": $components_pieces_ticket,
     "./islands/entriesManagement.tsx": $entriesManagement,
     "./islands/entryManagement.tsx": $entryManagement,
     "./islands/events/components/card.tsx": $events_components_card,

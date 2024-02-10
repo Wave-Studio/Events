@@ -62,7 +62,7 @@ export default defineRoute(
 
     return (
       <main className="px-4 max-w-screen-md w-full mx-auto flex flex-col gap-2 grow mb-10 ">
-        <EventHeader editPositon={1} role={user.role} />
+        <EventHeader editPosition={1} role={user.role} />
 
         <ShowtimeSelector
           defaultShowTime={showTimeID}
@@ -81,7 +81,7 @@ export default defineRoute(
                 No one has signed up for this event yet
               </h2>
               <p class="mt-1 text-sm text-gray-700">
-                Share your event page to encorage others to sign up
+                Share your event page to encourage others to sign up
               </p>
             </div>
           </>

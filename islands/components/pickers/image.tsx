@@ -34,13 +34,13 @@ export default function ImagePicker({
       setError("Invalid file type");
       return;
     }
-    // seperate loading to show b64 conversion vs actual uploading
+    // Separate loading to show b64 conversion vs actual uploading
     setLoading(true);
     const b64 = encode(await file.arrayBuffer());
     setFile(b64);
     setLoading(false);
     setUploading(true);
-    // TODO: minimal client side rezising/optimization
+    // TODO: minimal client side resizing/optimization
 
     // upload file to imagekit
     const data = await fetch("/api/events/image/upload", {
@@ -136,7 +136,7 @@ export default function ImagePicker({
         />
       </label>
       <p className="text-center mt-1 mb-2 text-sm text-gray-600">
-        We reccomend images at least 1440 x 360 at an aspect ratio of 4:1
+        We recommend images at least 1440 x 360 at an aspect ratio of 4:1
       </p>
       {error && (
         <p className="text-center mt-1 mb-2 text-red-500">Error: {error}</p>
@@ -163,7 +163,7 @@ export default function ImagePicker({
           <Toggle
             disabled={uploading}
             name="Stretch to Fit"
-            description="Stretch your image to fit the width of banner box. The way an image stretchs will vary based on device screen size. "
+            description="Stretch your image to fit the width of banner box. The way an image stretches will vary based on device screen size. "
             setEnabled={setStretch as StateUpdater<boolean>}
             enabled={fill}
           />

@@ -4,7 +4,7 @@ import Check from "$tabler/circle-check.tsx";
 import Warn from "$tabler/alert-circle.tsx";
 import Urgent from "$tabler/urgent.tsx";
 
-export const Avalibility = ({
+export const Availability = ({
   maxTickets,
   tickets,
   happened,
@@ -21,10 +21,10 @@ export const Avalibility = ({
   const className = "flex items-center [&>svg]:w-5 [&>svg]:mr-2";
   const messages: JSX.Element[] = [
     <p class={`text-green-500 ${className}`}>
-      <Check /> Tickets Avalible
+      <Check /> Tickets Available
     </p>,
     <p class={`text-amber-500 flex ${className}`}>
-      <Warn /> Some Tickets Avalible
+      <Warn /> Some Tickets Available
     </p>,
     <p class={`text-orange-600 flex ${className}`}>
       <Warn /> Few Tickets Left
@@ -33,7 +33,7 @@ export const Avalibility = ({
       <Urgent /> {maxTickets - tickets} Tickets Left
     </p>,
     <p class={`text-red-500 flex ${className}`}>
-      <CalenderOff /> Already occured
+      <CalenderOff /> Already occurred
     </p>,
     <p class={`text-red-500 flex ${className}`}>
       <CalenderOff /> Purchase window closed
@@ -51,9 +51,9 @@ export const Avalibility = ({
 
   if (maxTickets - tickets < 10) return messages[3];
 
-  const diviser = tickets / maxTickets;
+  const divisor = tickets / maxTickets;
 
-  if (diviser < 0.6) return messages[0];
-  if (diviser < 0.7) return messages[1];
+  if (divisor < 0.6) return messages[0];
+  if (divisor < 0.7) return messages[1];
   return messages[2];
 };

@@ -85,7 +85,7 @@ const Pricing = async (req: Request) => {
         <p class=" text-center mx-auto mt-4">
           In order to run Events, we have some basic fees that are applicable to
           event guests (guests) and event organizers (hosts). Guests have to pay
-          fees that may be used for proccessing, handling, and delivery. All
+          fees that may be used for processing, handling, and delivery. All
           prices are in USD
         </p>
         <div>
@@ -126,7 +126,7 @@ export const Fees = ({ name, description, cost }: Fee) => (
 export const userFees: Fee[] = [
   {
     name: "Processing",
-    description: "Payment proccessing and other costs",
+    description: "Payment processing and other costs",
     cost: "12% + 49¢",
   },
   {

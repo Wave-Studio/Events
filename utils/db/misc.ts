@@ -5,3 +5,13 @@ export const isUUID = (uuid: string) => {
 
   return uuidRegex.test(uuid);
 };
+
+export const isTicketUUID = (uuid: string) => {
+  if (uuid.length != 110) return false;
+
+  for (const segment of uuid.split('_')) {
+    if (!isUUID(segment)) return false;
+  }
+
+  return true;
+};

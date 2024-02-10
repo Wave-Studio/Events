@@ -61,7 +61,7 @@ export const handler: Handlers<{ email: string; otp: string }> = {
       return new Response(
         JSON.stringify({
           error:
-            "An error occured while sending the confirmation email. Please try again.",
+            "An error occurred while sending the confirmation email. Please try again.",
         }),
         {
           status: 400,

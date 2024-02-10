@@ -35,7 +35,7 @@ export const tabs = [
   {
     name: "organizing",
     url: "/events/organizing",
-    desc: "Organize and manage your events in one convinient location",
+    desc: "Organize and manage your events in one convenient location",
   },
   {
     name: "attending",

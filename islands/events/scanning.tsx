@@ -10,69 +10,8 @@ import CameraRotate from "$tabler/camera-rotate.tsx";
 import CameraPlus from "$tabler/camera-plus.tsx";
 import Popup from "@/components/popup.tsx";
 
-// Chatgpt didn't manage to write this right, it's got issues with padding - Bloxs
-// Start chatgpt generated code because I'm too lazy to do math - Bloxs
-const rotatePoint = (
-  point: [number, number],
-  angle: number,
-): [number, number] => {
-  const [x, y] = point;
-  const rotatedX = x * Math.cos(angle) - y * Math.sin(angle);
-  const rotatedY = x * Math.sin(angle) + y * Math.cos(angle);
-  return [rotatedX, rotatedY];
-};
-
-const padRotatedBox = (
-  coordinates: [number, number][],
-  padding: number,
-): [number, number][] => {
-  const minX: number = Math.min(...coordinates.map((coord) => coord[0]));
-  const maxX: number = Math.max(...coordinates.map((coord) => coord[0]));
-  const minY: number = Math.min(...coordinates.map((coord) => coord[1]));
-  const maxY: number = Math.max(...coordinates.map((coord) => coord[1]));
-
-  const paddedMinX: number = minX - padding;
-  const paddedMaxX: number = maxX + padding;
-  const paddedMinY: number = minY - padding;
-  const paddedMaxY: number = maxY + padding;
-
-  const unrotatedPaddedCoords: [number, number][] = [
-    [paddedMinX, paddedMinY],
-    [paddedMaxX, paddedMinY],
-    [paddedMaxX, paddedMaxY],
-    [paddedMinX, paddedMaxY],
-  ];
-
-  const center: [number, number] = [
-    minX + (maxX - minX) / 2,
-    minY + (maxY - minY) / 2,
-  ];
-
-  const angle: number = Math.atan2(
-    coordinates[1][1] - coordinates[0][1],
-    coordinates[1][0] - coordinates[0][0],
-  );
-
-  const rotatedPaddedCoords: [number, number][] = unrotatedPaddedCoords.map(
-    (coord) => {
-      const translatedCoord: [number, number] = [
-        coord[0] - center[0],
-        coord[1] - center[1],
-      ];
-      const rotatedCoord: [number, number] = rotatePoint(
-        translatedCoord,
-        angle,
-      );
-      rotatedCoord[0] += center[0];
-      rotatedCoord[1] += center[1];
-      return rotatedCoord;
-    },
-  );
-
-  return rotatedPaddedCoords;
-};
-
-// End chatgpt generated code because I'm too lazy to do math - Bloxs
+// Chatgpt fucked this up too much so we're abandoning rotations - Bloxs
+// Should've paid attention in trig class - LS
 
 export default function Scanner({ eventID }: { eventID: string }) {
   const error = useSignal<string | null>(null);
@@ -344,21 +283,26 @@ export default function Scanner({ eventID }: { eventID: string }) {
                   inactive: "blue",
                 }[codeData.status];
 
-                const paddedCoords = padRotatedBox(
-                  code.cornerPoints.map((c) => [c.x, c.y]),
-                  0.01,
-                );
+                let leftX = canvas.width;
+                let rightX = 0;
+                let topY = canvas.height;
+                let bottomY = 0;
 
-                ctx.lineWidth = 10;
-                ctx.moveTo(paddedCoords[0][0], paddedCoords[0][1]);
-                ctx.beginPath();
-
-                for (const point of paddedCoords) {
-                  ctx.lineTo(point[0], point[1]);
+                for (const point of code.cornerPoints) {
+                  leftX = Math.min(leftX, point.x);
+                  rightX = Math.max(rightX, point.x);
+                  topY = Math.min(topY, point.y);
+                  bottomY = Math.max(bottomY, point.y);
                 }
 
-                ctx.closePath();
-                ctx.stroke();
+                leftX -= 10;
+                rightX += 10;
+
+                topY -= 10;
+                bottomY += 10;
+                
+                ctx.lineWidth = 5;
+                ctx.strokeRect(leftX, topY, rightX - leftX, bottomY - topY);
 
                 switch (codeData.status) {
                   case "loading": {

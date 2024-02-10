@@ -89,7 +89,7 @@ export default function ManageUser({
           className="bg-red-100 hover:bg-red-200 border border-red-300 text-red-500 mt-4 ml-auto"
           onClick={transferOwnership}
         >
-          {loading.value ? "Transfering..." : "Yes, transfer"}
+          {loading.value ? "Transferring..." : "Yes, transfer"}
         </CTA>
       </Popup>
     );

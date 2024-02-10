@@ -28,7 +28,7 @@ export const handler: Handlers = {
     if (
       !event ||
       !event.value ||
-      // checks owner, probably unnessesary
+      // checks owner, probably unnecessary -LS
       !event.value.members.some((e) => e.email == user.email && e.role == 0) ||
       // prevent people from uploading multiple things at the same time -LS
       event.value.banner.uploading == true

@@ -92,7 +92,7 @@ export default async function Homepage(req: Request, ctx: AppContext) {
       day: "2-digit",
     });
 
-    const pricefmt = new Intl.NumberFormat("en-US", {
+    const priceFmt = new Intl.NumberFormat("en-US", {
       style: "currency",
       currency: "USD",
     });
@@ -166,7 +166,7 @@ export default async function Homepage(req: Request, ctx: AppContext) {
             </div>
             {e.price !== 0 && (
               <div className="rounded-md flex items-center gap-2 text-white font-medium text-sm backdrop-blur-sm bg-black/20 px-2 py-0.5">
-                {pricefmt.format(e.price)}
+                {priceFmt.format(e.price)}
               </div>
             )}
           </div>

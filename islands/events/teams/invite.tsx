@@ -27,7 +27,7 @@ export default function Invite({ eventID }: { eventID: string }) {
       // Maybe eventually updated client side to not refresh - Bloxs
       location.reload();
     } else if (json.error || !json.success) {
-      error.value = json.error || "An unknown error occured";
+      error.value = json.error || "occurred";
     }
   };
 

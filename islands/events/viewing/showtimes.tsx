@@ -1,6 +1,6 @@
 import { Event, Roles, User } from "@/utils/db/kv.ts";
 import { happened, fmtDate, fmtTime } from "@/utils/dates.ts";
-import { Avalibility } from "@/islands/events/viewing/availability.tsx";
+import { Availability } from "@/islands/events/viewing/availability.tsx";
 import { EventContext } from "@/routes/events/[id]/_layout.tsx";
 import { acquired } from "@/utils/tickets.ts";
 
@@ -62,7 +62,7 @@ export const ShowTimes = ({ data }: { data: EventContext["data"] }) => {
                 </p>
               )}
               {
-                <Avalibility
+                <Availability
                   acquired={acquired(user?.data, eventID, time.id)}
                   maxTickets={time.maxTickets}
                   tickets={time.soldTickets}
@@ -80,7 +80,7 @@ export const ShowTimes = ({ data }: { data: EventContext["data"] }) => {
       </div>
       {user?.role != undefined && (
         <p class="text-center mt-2 italic text-sm">
-          Event times that already occured aren't shown to users
+          Event times that already occurred aren't shown to users
         </p>
       )}
     </>

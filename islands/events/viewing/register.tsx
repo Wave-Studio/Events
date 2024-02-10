@@ -13,7 +13,7 @@ import Button from "@/components/buttons/button.tsx";
 import ChevronLeft from "$tabler/chevron-left.tsx";
 import { createPortal } from "preact/compat";
 import Loading from "$tabler/loader-2.tsx";
-import Ticket from "@/islands/components/peices/ticket.tsx";
+import Ticket from "../../components/pieces/ticket.tsx";
 import { acquired, getTicketID } from "@/utils/tickets.ts";
 import { EventRegisterError } from "@/utils/event/register.ts";
 import { RegisterErrors } from "../components/registerErrors.tsx";
@@ -166,7 +166,7 @@ export default function EventRegister({
 
     if (ticket.error || !ticket.ticket) {
       error.value = ticket.error || {
-        message: "An unknown error has occured",
+        message: "An unknown error has occurred",
         code: EventRegisterError.OTHER,
       };
       ticketID.value = undefined;
@@ -214,7 +214,7 @@ export default function EventRegister({
                         user,
                         eventID,
                         showTime.value!,
-                      )}`}
+                      )!.split("_")[2]}`}
                     >
                       <CTA btnType="secondary" btnSize="sm" type="button">
                         View Ticket
@@ -330,7 +330,7 @@ export default function EventRegister({
   return (
     <div className="mx-auto flex flex-col items-center mt-14">
       <p class="font-semibold mb-4 text-center">
-        Want to attend? Regster and get your tickets now!
+        Want to attend? Register and get your tickets now!
       </p>
       <CTA btnType="cta" onClick={() => setOpen(true)}>
         Get Tickets
@@ -370,7 +370,7 @@ export const Contact = ({ email }: { email: string }) => {
               />
               <p>
                 I agree to interacting with this email in a professional way and
-                following our guildlines as outlined in our{" "}
+                following our guidelines as outlined in our{" "}
                 <a href="/terms-of-service" class="font-medium underline">
                   terms and conditions
                 </a>

@@ -20,9 +20,9 @@ export default function EventSettings(props: {
   const [error, setError] = useState<string>();
   const [loading, setLoading] = useState<Loading>(Loading.LOADED);
 
-  const { eventID, ...inital } = props;
-  const [initialState, setInitialState] = useState(inital);
-  const [formState, setFormState] = useState(inital);
+  const { eventID, ...initial } = props;
+  const [initialState, setInitialState] = useState(initial);
+  const [formState, setFormState] = useState(initial);
 
   const submitForm = async (e: JSX.TargetedEvent<HTMLFormElement>) => {
     e.preventDefault();

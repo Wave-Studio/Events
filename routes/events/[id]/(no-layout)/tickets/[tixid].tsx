@@ -7,7 +7,7 @@ import { getShowtimeID } from "@/utils/tickets.ts";
 import { Ticket, kv } from "@/utils/db/kv.ts";
 import { Head } from "$fresh/runtime.ts";
 import Footer from "@/components/layout/footer.tsx";
-import TicketComponent from "@/islands/components/peices/ticket.tsx";
+import TicketComponent from "../../../../../islands/components/pieces/ticket.tsx";
 import CTA from "@/components/buttons/cta.tsx";
 import TicketActions from "@/islands/events/viewing/ticketActions.tsx";
 
@@ -109,7 +109,7 @@ export default defineRoute(
                 View Event
               </CTA>
             </a>
-            <TicketActions ticketID={ticketID} />
+            <TicketActions ticketID={id} />
           </main>
           <p class="text-center max-w-sm mx-auto mb-4 text-sm px-4 print:hidden">
             This event was made with{" "}

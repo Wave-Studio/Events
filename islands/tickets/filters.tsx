@@ -38,7 +38,7 @@ export default function TicketsFilters({
       />
       <div class="flex gap-2">
         <Select
-          options={["Purchused", "Email A-Z", "Email Z-A"]}
+          options={["Purchased", "Email A-Z", "Email Z-A"]}
           selectClassName="py-2"
           className="grow"
           selected={sort.value}

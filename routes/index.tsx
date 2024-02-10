@@ -86,7 +86,7 @@ export default defineRoute(async (req, ctx) => {
           challenging to use. Our platform, Events, offers a simple,
           open-source, easy-to-use ticketing system for events that allows users
           to reserve their seats ahead of time. We make events simple and craft
-          simeple event ticketing systems! Our registration process lets users
+          simple event ticketing systems! Our registration process lets users
           sign up online using their email and receive a QR code that serves as
           their ticket, which an event organizer can scan to confirm their
           tickets. Simplify your ticketing management and provide your customers

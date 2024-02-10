@@ -67,11 +67,11 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
 
   return (
     <main className="px-4 max-w-screen-md w-full mx-auto flex flex-col gap-8 grow mb-10">
-      <EventHeader editPositon={2} role={user.role} />
+      <EventHeader editPosition={2} role={user.role} />
       <div class="rounded-md border p-4 mb-6 mt-2">
         <h2 class="text-lg font-semibold">Add Team Members</h2>
         <p class="text-sm">
-          Invite a team member! They'll recive an emil promtly after you invite
+          Invite a team member! They'll receive an emil promptly after you invite
           them.
         </p>
         <Invite eventID={eventID} />

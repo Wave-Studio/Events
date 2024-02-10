@@ -1,7 +1,6 @@
 import { Handlers } from "$fresh/server.ts";
 import { Event, getUser, kv, User } from "@/utils/db/kv.ts";
-import { isUUID } from "@/utils/db/misc.ts";
-import imageKit from "@/utils/imagekit.ts";
+import { isTicketUUID } from "@/utils/db/misc.ts";
 
 export const handler: Handlers = {
   async POST(req, _ctx) {
@@ -12,50 +11,49 @@ export const handler: Handlers = {
       });
     }
 
-    const { eventID }: { eventID: string } = await req.json();
+    const { ticketID }: { ticketID: string } = await req.json();
 
-    if (!isUUID(eventID)) {
+    if (!isTicketUUID(ticketID)) {
       return new Response(JSON.stringify({ error: "Invalid UUID" }), {
         status: 400,
       });
     }
 
+    const eventID = ticketID.split("_")[0];
+    const showtimeID = ticketID.split("_")[1];
+
     const event = await kv.get<Event>(["event", eventID]);
-/** ["ticket", eventId, showtimeId, eventId_showtimeId_ticketId] */
+    /** ["ticket", eventId, showtimeId, eventId_showtimeId_ticketId] */
+    /** ["user", email] */
     if (
       !event ||
       !event.value ||
       // checks to make sure only ticketholder or managers delete tickets
-      !event.value.members.some((e) => e.email == user.email && e.role <= 2) 
+      (!event.value.members.some((e) => e.email == user.email && e.role <= 2) &&
+        !user.tickets.includes(ticketID))
     ) {
       return new Response(JSON.stringify({ error: "Unauthorized" }), {
         status: 400,
       });
     }
 
-    if (event.value.banner.id) {
-      imageKit!.deleteFile(event.value.banner.id);
-    }
-
-    let atomic = kv.atomic().delete(["event", eventID]);
-
-    const members = await kv.getMany<User[]>(
-      event.value.members.map((e) => ["user", e.email]),
-    );
-
-    for (const member of members) {
-      const user = member.value!;
-
-      atomic = atomic.set(["user", user.email], {
+    const deletion = await kv
+      .atomic()
+      .delete(["ticket", eventID, showtimeID, ticketID])
+      .set(["user", user.email], {
         ...user,
-        events: user.events.filter((e) => e != eventID),
+        tickets: user.tickets.filter((ticket) => ticket !== ticketID),
+      } as User)
+      .commit();
+
+    if (deletion.ok) {
+      return new Response(JSON.stringify({ success: true }), {
+        status: 200,
       });
     }
-
-    const atomicResult = await atomic.commit();
-
-    return new Response(JSON.stringify({ success: atomicResult.ok }), {
-      status: 200,
+    return new Response(JSON.stringify({ error: "occurred" }), {
+      status: 400,
     });
+    
   },
 };

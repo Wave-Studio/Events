@@ -11,10 +11,10 @@ import Tickets from "$tabler/ticket.tsx";
 
 export default function EventHeader({
   role,
-  editPositon,
+  editPosition,
 }: {
   role: Roles;
-  editPositon: number;
+  editPosition: number;
 }) {
   const buttons: { label: string; icon: ComponentChildren; href: string }[] = [
     {
@@ -40,15 +40,15 @@ export default function EventHeader({
     },
   ];
 
-  if (editPositon > -1) {
+  if (editPosition > -1) {
     if (role <= 2) {
-      buttons[editPositon] = {
+      buttons[editPosition] = {
         label: "Edit Event",
         icon: <Edit class="w-6 h-6" />,
         href: "./editing",
       };
     } else {
-      buttons.splice(editPositon, 1);
+      buttons.splice(editPosition, 1);
     }
   }
 

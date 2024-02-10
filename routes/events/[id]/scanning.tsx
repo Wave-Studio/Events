@@ -15,7 +15,7 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
 
   return (
     <main className="px-4 max-w-screen-md w-full mx-auto flex flex-col gap-8 grow mb-10 ">
-      <EventHeader editPositon={0} role={user.role} />
+      <EventHeader editPosition={0} role={user.role} />
 
       <Scanner
         eventID={eventID}

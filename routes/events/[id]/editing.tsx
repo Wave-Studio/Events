@@ -52,7 +52,7 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
     <main class="flex flex-col grow">
       <div className="grow ">
         <div className="px-4 max-w-screen-md w-full mx-auto flex flex-col space-y-28 mb-20">
-          <EventHeader editPositon={-1} role={user.role} />
+          <EventHeader editPosition={-1} role={user.role} />
           <Section name="Banner">
             <EditingImagePicker
               event={event}

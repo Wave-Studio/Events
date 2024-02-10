@@ -95,7 +95,7 @@ export const handler: Handlers = {
     //   });
     // }
 
-    return new Response(JSON.stringify({ error: "Unknown error occured" }), {
+    return new Response(JSON.stringify({ error: "Unknown error occurred" }), {
       status: 400,
     });
   },

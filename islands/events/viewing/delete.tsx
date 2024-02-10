@@ -16,7 +16,7 @@ const TicketDeletion = ({ ticketID }: { ticketID: string }) => {
       }
       name="ticket"
       open={open}
-      routeTo={`/events/${ticketID.split("_")[2]}`}
+      routeTo={`/events/${ticketID.split("_")[0]}`}
     >
       <Button
         icon={<Trash class="size-6" />}

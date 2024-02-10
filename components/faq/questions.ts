@@ -7,11 +7,11 @@ export const faqs: FAQ[] = [
   },
   {
     q: "Is Events open source?",
-    a: "Yes! We are open source with an Apache 2.0 licence.",
+    a: "Yes! We are open source with an Apache 2.0 license.",
   },
   {
     q: "Is Events free?",
-    a: "We have a generous free teir that allows for a good amount of usage.",
+    a: "We have a generous free tier that allows for a good amount of usage.",
   },
   {
     q: "Can users register after my event has started?",

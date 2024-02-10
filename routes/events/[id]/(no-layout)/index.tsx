@@ -9,7 +9,7 @@ import Calender from "$tabler/calendar.tsx";
 import EventRegister, { Contact } from "@/islands/events/viewing/register.tsx";
 import Footer from "@/components/layout/footer.tsx";
 import { fmtDate, fmtTime, getTimeZone, happened } from "@/utils/dates.ts";
-import { Avalibility } from "@/islands/events/viewing/availability.tsx";
+import { Availability } from "@/islands/events/viewing/availability.tsx";
 import { ShowTimes } from "@/islands/events/viewing/showtimes.tsx";
 import { acquired, getTicketID } from "@/utils/tickets.ts";
 import CTA from "@/components/buttons/cta.tsx";
@@ -91,7 +91,7 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
           {event.name}
         </h1>
 
-        <h2 className="font-semibold mt-4 mb-1 text-sm">Event in Breif</h2>
+        <h2 className="font-semibold mt-4 mb-1 text-sm">Event in Brief</h2>
         <p class="mb-4">{event.summary}</p>
         <h2 className="font-semibold mb-1 text-sm">Event Description</h2>
         <p class=" whitespace-pre-line">{event.description}</p>
@@ -239,9 +239,9 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
           {booked && (
             <div class="text-center mt-10 mb-4 mx-auto">
               <p>
-                This event is either fully booked or prefermances have ended.
+                This event is either fully booked or performances have ended.
               </p>
-              <p>Contact the organizer if you belive this is incorrect.</p>
+              <p>Contact the organizer if you believe this is incorrect.</p>
             </div>
           )}
           <>
@@ -276,7 +276,7 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
 
             {event.showTimes.length === 1 && (
               <div class="mx-auto mt-2 text-sm text-center">
-                <Avalibility
+                <Availability
                   acquired={acquired(
                     user?.data,
                     eventID,

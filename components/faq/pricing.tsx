@@ -3,7 +3,7 @@ import { FAQ } from "@/components/faq/questions.ts";
 export const pricingfaqs: FAQ[] = [
   {
     q: "How do I get more of...?",
-    a: "To get more of a specific feature, you can upgrade your plan. Contact us if you have requierments outside of our pricing teirs. ",
+    a: "To get more of a specific feature, you can upgrade your plan. Contact us if you have requirements outside of our pricing tiers. ",
   },
   {
     q: "What counts as a concurrent event?",
@@ -27,7 +27,7 @@ export const pricingfaqs: FAQ[] = [
   },
   {
     q: "How much customization do I get with 'Basic email customization'",
-    a: "You'll be able to customize the email sender name, subject like, and provide a short message to attendes.",
+    a: "You'll be able to customize the email sender name, subject like, and provide a short message to attendees.",
   },
   {
     q: "How much customization do I get with 'Full event and email customization'",
@@ -55,7 +55,7 @@ export const pricingfaqs: FAQ[] = [
     ),
   },
   {
-    q: "What happends when I downgrade my plan?",
+    q: "What happens when I downgrade my plan?",
     a: "Your events will be downgraded to your new plan's limits. You will be asked to select which events to keep if you exceed your new plan's limits. The maximum number of attendees for each event will also be reduced to your new plan's max attendee limit.",
   },
   {
@@ -64,10 +64,10 @@ export const pricingfaqs: FAQ[] = [
   },
   {
     q: "What are 'Event color themes'",
-    a: "We provide a diverse set of hand crafted color palletes that can be used to change the look and feel of your event page.",
+    a: "We provide a diverse set of hand crafted color palettes that can be used to change the look and feel of your event page.",
   },
   {
     q: "Are any charges refundable?",
-    a: "If you would like to enquire if you could obtain a refund please contact us. Attempting to chargeback a payment will result in a permanant ban of your account and blacklist of your email from all Wave Studios services.",
+    a: "If you would like to enquire if you could obtain a refund please contact us. Attempting to chargeback a payment will result in a permanent ban of your account and blacklist of your email from all Wave Studios services.",
   },
 ];
