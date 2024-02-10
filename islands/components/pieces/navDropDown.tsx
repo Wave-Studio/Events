@@ -4,10 +4,13 @@ import Dropdown from "@/islands/components/pickers/dropdown.tsx";
 import CirclePlus from "$tabler/circle-plus.tsx";
 import Settings from "$tabler/settings.tsx";
 import UserCircle from "$tabler/user-circle.tsx";
+import Logout from "$tabler/logout-2.tsx"
 import { useSignal } from "@preact/signals";
+import { deleteCookie } from "$std/http/cookie.ts";
 
 const NavbarDropDown = ({ user }: { user: UserPartial }) => {
   const open = useSignal(false);
+  const headers = new Headers();
 
   return (
     <Dropdown
@@ -29,6 +32,16 @@ const NavbarDropDown = ({ user }: { user: UserPartial }) => {
             </div>
           ),
           onClick: () => alert("Settings is coming soon!"),
+        },
+        {
+          content: (
+            <div class="flex items-center text-red-500">
+              <Logout class="size-5 mr-2" /> <p>Logout</p>
+            </div>
+          ),
+          className: "bg-red-100 hover:!bg-red-200",
+          onClick: () => {deleteCookie(headers, "authToken", {path: "/"})},
+          //link: "/"
         },
       ]}
     >

@@ -13,6 +13,7 @@ export default function Dropdown({
     content: ComponentChild;
     onClick?: () => void;
     link?: string;
+    className?: string
   }[];
   children: ComponentChild;
   className?: string;
@@ -34,7 +35,7 @@ export default function Dropdown({
         <div
           className={`${
             open.value ? "block" : "hidden"
-          } absolute p-2 bg-white border rounded-md shadow-xl top-10 select-none transition z-50 grow`}
+          } absolute p-2 bg-white border rounded-md shadow-xl grid gap-2 top-10 select-none transition z-50 grow`}
         >
           {options.map((option) => {
             const o = (
@@ -43,7 +44,7 @@ export default function Dropdown({
                   open.value = false;
                   option.onClick && option.onClick();
                 }}
-                class="min-w-max hover:bg-gray-200 px-2 py-1 font-medium rounded-md w-full text-left focus:outline-none"
+                class={`min-w-max hover:bg-gray-200 px-2 py-1 font-medium rounded-md w-full text-left focus:outline-none transition ${option.className}`}
               >
                 {option.content}
               </button>
