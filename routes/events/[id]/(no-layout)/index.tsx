@@ -13,6 +13,7 @@ import { Availability } from "@/islands/events/viewing/availability.tsx";
 import { ShowTimes } from "@/islands/events/viewing/showtimes.tsx";
 import { acquired, getTicketID } from "@/utils/tickets.ts";
 import CTA from "@/components/buttons/cta.tsx";
+import { useEffect } from "preact/hooks";
 
 export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
   const { event, eventID, user } = ctx.state.data;

@@ -1,4 +1,4 @@
-import { useState } from "preact/hooks";
+import { useEffect, useState } from "preact/hooks";
 import CTA from "@/components/buttons/cta.tsx";
 import Popup from "@/components/popup.tsx";
 import { Field, ShowTime, User } from "@/utils/db/kv.types.ts";
@@ -49,6 +49,13 @@ export default function EventRegister({
         return acc;
       }, {} as Record<string, boolean>),
   });
+
+  const perfEntries = performance.getEntriesByType('navigation');
+  useEffect(() => {
+    if (perfEntries.length && perfEntries[0].entryType === "back_forward") {
+      alert('Got here using the browser "Back" or "Forward" button.');
+  }
+  }, [])
 
   const [Form, [Field, TextArea], formState] = useForm<{
     firstName: string;
@@ -214,7 +221,7 @@ export default function EventRegister({
                         user,
                         eventID,
                         showTime.value!,
-                      )!.split("_")[2]}`}
+                      )}`}
                     >
                       <CTA btnType="secondary" btnSize="sm" type="button">
                         View Ticket
@@ -317,8 +324,8 @@ export default function EventRegister({
                 }
                 tickets={tickets.value}
               />
-              <a href={`/events/${eventID}/tickets/${ticketID.value!}`}>
-                <CTA btnType="secondary">View Ticket</CTA>
+              <a href={`/events/${eventID}/tickets/${ticketID.value!.split("_")[2]}`} class="mx-auto pt-6">
+                <CTA btnType="secondary" btnSize="sm">View Ticket</CTA>
               </a>
             </>
           )}

@@ -295,14 +295,20 @@ export default function Scanner({ eventID }: { eventID: string }) {
                   bottomY = Math.max(bottomY, point.y);
                 }
 
-                leftX -= 10;
-                rightX += 10;
+                const padding = 20;
 
-                topY -= 10;
-                bottomY += 10;
+                leftX -= padding;
+                rightX += padding;
+
+                topY -= padding;
+                bottomY += padding;
                 
                 ctx.lineWidth = 5;
-                ctx.strokeRect(leftX, topY, rightX - leftX, bottomY - topY);
+                ctx.beginPath();
+                ctx.roundRect(leftX, topY, rightX - leftX, bottomY - topY, 20);
+                ctx.stroke();
+                ctx.closePath();
+                
 
                 switch (codeData.status) {
                   case "loading": {
