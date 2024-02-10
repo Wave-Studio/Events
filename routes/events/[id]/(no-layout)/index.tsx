@@ -79,7 +79,7 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
         </div>
         {event.venue && (
           <div className="flex items-center rounded-md bg-white/[0.85] backdrop-blur-xl border px-1.5 py-0.5 w-max max-w-full">
-            <Location class="w-4 h-4 mr-1.5 text-gray-700" />
+            <Location class="size-4 mr-1.5 text-gray-700" />
             <p className="truncate md:max-w-[12rem] w-max max-w-full">
               {event.venue}
             </p>
@@ -170,7 +170,7 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
             "Link to an event hosted on Events - Open Source Ticketing tool"
           }
         />
-        <meta name="theme-color" content="#DC6843" />
+        {/* <meta name="theme-color" content="#DC6843" /> */}
       </Head>
       <div className="flex flex-col min-h-screen">
         <div class="flex flex-col">
@@ -214,7 +214,7 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
                   href="/events/organizing"
                   class="group pl-0.5 rounded-md bg-black/20 border border-gray-300/20 backdrop-blur font-medium text-white pr-1.5 absolute top-3 left-3 text-sm flex items-center"
                 >
-                  <Left class="w-4 h-4 mr-1 group transition group-hover:-translate-x-0.5" />{" "}
+                  <Left class="size-4 mr-1 group transition group-hover:-translate-x-0.5" />{" "}
                   All Events
                 </a>
                 <a

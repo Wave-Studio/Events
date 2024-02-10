@@ -7,10 +7,10 @@ export const Trashcan = ({
 }: JSX.HTMLAttributes<HTMLButtonElement>) => {
   return (
     <button
-      className={`${className} rounded-md border border-red-300 font-medium text-red-500 grid place-items-center w-6 h-6 bg-red-100`}
+      className={`${className} rounded-md border border-red-300 font-medium text-red-500 grid place-items-center size-6 bg-red-100`}
       {...props}
     >
-      <Trash class="w-4 h-4" />
+      <Trash class="size-4" />
     </button>
   );
 };

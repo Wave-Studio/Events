@@ -185,10 +185,10 @@ export const ShowTimeUI = ({
           </div>
         </div>
         <button
-          className="rounded-md border border-red-300 font-medium text-red-500 grid place-items-center w-6 h-6 bg-red-100 mt-2 ml-auto"
+          className="rounded-md border border-red-300 font-medium text-red-500 grid place-items-center size-6 bg-red-100 mt-2 ml-auto"
           onClick={() => removeShowTime(showTime.id)}
         >
-          <Trash class="w-4 h-4" />
+          <Trash class="size-4" />
         </button>
       </div>
     </>

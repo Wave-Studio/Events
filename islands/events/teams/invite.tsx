@@ -50,7 +50,7 @@ export default function Invite({ eventID }: { eventID: string }) {
             className="grow md:grow-0"
           />
           <Button
-            icon={<Plus class="w-6 h-6" />}
+            icon={<Plus class="size-6" />}
             label="Add Member"
             onClick={invite}
           />

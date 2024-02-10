@@ -400,13 +400,13 @@ export default function Scanner({ eventID }: { eventID: string }) {
                   )?.deviceId || "";
               }}
             >
-              <CameraRotate class="w-6 h-6 text-white" />
+              <CameraRotate class="size-6 text-white" />
             </button>
           )}
           {cameraIds.value.length > 2 && (
             <>
               <Dropdown
-                className="rounded-full bg-black/50 backdrop-blur w-10 h-10 items-center justify-center hidden md:flex"
+                className="rounded-full bg-black/50 backdrop-blur size-10 items-center justify-center hidden md:flex"
                 options={cameraIds.value.map(({ deviceId, label }) => ({
                   content: label,
                   onClick: () => {
@@ -415,13 +415,13 @@ export default function Scanner({ eventID }: { eventID: string }) {
                   },
                 }))}
               >
-                <CameraPlus class="w-6 h-6 text-white" />
+                <CameraPlus class="size-6 text-white" />
               </Dropdown>
               <div
-                className="rounded-full bg-black/50 backdrop-blur w-10 h-10 items-center justify-center flex md:hidden"
+                className="rounded-full bg-black/50 backdrop-blur size-10 items-center justify-center flex md:hidden"
                 onClick={() => (cameraSwitchPopupOpen.value = true)}
               >
-                <CameraPlus class="w-6 h-6 text-white" />
+                <CameraPlus class="size-6 text-white" />
               </div>
               <Popup
                 close={() => (cameraSwitchPopupOpen.value = false)}

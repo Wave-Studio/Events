@@ -103,7 +103,7 @@ export default async function Homepage(req: Request, ctx: AppContext) {
       [
         {
           label: "Public Page",
-          icon: <World class="w-6 h-6" />,
+          icon: <World class="size-6" />,
           href: `/events/${id}`,
         },
       ];
@@ -111,7 +111,7 @@ export default async function Homepage(req: Request, ctx: AppContext) {
     if (role <= 2) {
       buttons.push({
         label: "Scan Tickets",
-        icon: <Scan class="w-6 h-6" />,
+        icon: <Scan class="size-6" />,
         href: `/events/${id}/scanning`,
       });
     }
@@ -204,7 +204,7 @@ export default async function Homepage(req: Request, ctx: AppContext) {
                   btnSize="sm"
                   className="!w-10 [@media(min-width:320px)]:!w-40 "
                 >
-                  <Edit class="w-6 h-6 [@media(min-width:320px)]:hidden mx-auto" />{" "}
+                  <Edit class="size-6 [@media(min-width:320px)]:hidden mx-auto" />{" "}
                   <p class="hidden [@media(min-width:320px)]:block">
                     Edit Event
                   </p>

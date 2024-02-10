@@ -45,7 +45,7 @@ export default function TicketsFilters({
           updateOption={(e) => (sort.value = e)}
         />
         <Button
-          icon={<Search class="w-5 h-5" />}
+          icon={<Search class="size-5" />}
           label="Search Users"
           type="submit"
         />

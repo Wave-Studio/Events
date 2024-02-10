@@ -19,23 +19,23 @@ export default function EventHeader({
   const buttons: { label: string; icon: ComponentChildren; href: string }[] = [
     {
       label: "Scan Tickets",
-      icon: <Scan class="w-6 h-6" />,
+      icon: <Scan class="size-6" />,
       href: "./scanning",
     },
     // all tickets and team members are potentially going to be popups
     {
       label: "All Tickets",
-      icon: <Tickets class="w-6 h-6" />,
+      icon: <Tickets class="size-6" />,
       href: "./tickets",
     },
     {
       label: "Team Members",
-      icon: <Users class="w-6 h-6" />,
+      icon: <Users class="size-6" />,
       href: "./team",
     },
     {
       label: "Public Page",
-      icon: <World class="w-6 h-6" />,
+      icon: <World class="size-6" />,
       href: "./",
     },
   ];
@@ -44,7 +44,7 @@ export default function EventHeader({
     if (role <= 2) {
       buttons[editPosition] = {
         label: "Edit Event",
-        icon: <Edit class="w-6 h-6" />,
+        icon: <Edit class="size-6" />,
         href: "./editing",
       };
     } else {
@@ -61,7 +61,7 @@ export default function EventHeader({
           className="!w-10 sm:!w-40 grid place-items-center"
         >
           <p class="hidden sm:block">Back to events</p>
-          <ChevronLeft class="sm:hidden w-6 h-6 mr-0.5" />
+          <ChevronLeft class="sm:hidden size-6 mr-0.5" />
         </CTA>
       </a>
       <div className="flex gap-2 md:gap-4 ml-auto">

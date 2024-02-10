@@ -156,7 +156,7 @@ export default function ImagePicker({
             />
             {uploading && (
               <div className="bottom-4 absolute flex items-center gap-2 text-white font-medium text-sm rounded-md bg-black/20 px-2 py-0.5">
-                <Loading class="w-4 h-4 animate-spin" /> Uploading...
+                <Loading class="size-4 animate-spin" /> Uploading...
               </div>
             )}
           </div>

@@ -103,7 +103,7 @@ export default function EventRegister({
           {showTimes.find((s) => s.id == showTime.value)!.multiPurchase && (
             <div class="flex gap-2 items-center">
               <button
-                class="group hover:bg-gray-200 w-6 h-6 grid place-items-center rounded-md transition"
+                class="group hover:bg-gray-200 size-6 grid place-items-center rounded-md transition"
                 onClick={() => tickets.value > 1 && tickets.value--}
                 type="button"
               >
@@ -113,7 +113,7 @@ export default function EventRegister({
                 {tickets.value}
               </p>
               <button
-                class="group hover:bg-gray-200 w-6 h-6 grid place-items-center rounded-md transition"
+                class="group hover:bg-gray-200 size-6 grid place-items-center rounded-md transition"
                 type="button"
                 onClick={() => tickets.value++}
               >
@@ -125,7 +125,7 @@ export default function EventRegister({
         <div class="flex">
           {page.value != 0 && (
             <Button
-              icon={<ChevronLeft class="w-6 h-6" />}
+              icon={<ChevronLeft class="size-6" />}
               label="Previous Page"
               onClick={() => page.value--}
             />
@@ -139,7 +139,7 @@ export default function EventRegister({
           >
             Register
             {ticketID.value == "loading" && (
-              <Loading class="w-5 h-5 animate-spin ml-2" />
+              <Loading class="size-5 animate-spin ml-2" />
             )}
           </CTA>
         </div>

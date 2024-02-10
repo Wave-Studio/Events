@@ -3,7 +3,7 @@ import Loading from "$tabler/loader-2.tsx";
 export const QR = () => (
   <div class="relative ">
     <div class="absolute inset-0 grid place-items-center z-10">
-      <Loading class="w-8 h-8 animate-spin text-white" />
+      <Loading class="size-8 animate-spin text-white" />
     </div>
     <svg
       xmlns="http://www.w3.org/2000/svg"

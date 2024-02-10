@@ -86,7 +86,7 @@ export default defineRoute(
               "Link to an event hosted on Events - Open Source Ticketing tool"
             }
           />
-          <meta name="theme-color" content="#DC6843" />
+          {/* <meta name="theme-color" content="#DC6843" /> */}
         </Head>
 
         <div className="flex flex-col min-h-screen ">

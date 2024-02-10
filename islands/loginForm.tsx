@@ -219,7 +219,7 @@ const LoginForm = ({ attending }: { attending: boolean }) => {
 
       {stage.value === 2 && (
         <div class="absolute inset-0 bg-white/20 backdrop-blur-md flex items-center justify-center">
-          <IconLoader2 class="w-6 h-6 animate-spin" />{" "}
+          <IconLoader2 class="size-6 animate-spin" />{" "}
           <h3 class="font-medium ml-2">Logging In</h3>
         </div>
       )}

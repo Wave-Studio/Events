@@ -59,7 +59,7 @@ const Deletion = ({
           className="absolute right-2 top-2 p-0.5 rounded-md hover:bg-gray-200 transition"
           onClick={close}
         >
-          <X class="w-5 h-5" />
+          <X class="size-5" />
         </button>
         {typeof loading == "string" && (
           <p className="text-red-500 mt-2">Error: {loading}</p>

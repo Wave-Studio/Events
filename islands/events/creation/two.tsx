@@ -228,15 +228,15 @@ export const FieldInput = ({
             ref={typeRef}
             onClick={() => setTypeOpen((t) => !t)}
           >
-            {field.type} <ChevronDown class="w-4 h-4 ml-1 mr-1" />
+            {field.type} <ChevronDown class="size-4 ml-1 mr-1" />
           </button>
           {typeOpen && <FieldPicker field={field.type} id={field.id} />}
         </div>
         <button
-          className="rounded-md border border-red-300 font-medium text-red-500 grid place-items-center w-6 h-6 bg-red-100"
+          className="rounded-md border border-red-300 font-medium text-red-500 grid place-items-center size-6 bg-red-100"
           onClick={() => removeField(field.id)}
         >
-          <Trash class="w-4 h-4" />
+          <Trash class="size-4" />
         </button>
       </div>
     </div>
