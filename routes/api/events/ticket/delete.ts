@@ -54,6 +54,5 @@ export const handler: Handlers = {
     return new Response(JSON.stringify({ error: "occurred" }), {
       status: 400,
     });
-    
   },
 };

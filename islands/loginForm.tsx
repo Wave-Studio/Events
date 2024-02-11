@@ -25,9 +25,9 @@ const LoginForm = ({ attending }: { attending: boolean }) => {
       if (code.value.length != 0 || !/^[0-9]{6}$/g.test(clipboard)) return;
       login(undefined, clipboard);
     };
-    window.addEventListener("focus", onFocus);
+    globalThis.addEventListener("focus", onFocus);
     return () => {
-      window.removeEventListener("focus", onFocus);
+      globalThis.removeEventListener("focus", onFocus);
     };
   }, []);
 

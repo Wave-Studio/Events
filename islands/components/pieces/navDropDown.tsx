@@ -1,16 +1,15 @@
-import { UserPartial } from "@/utils/db/kv.types.ts";
+import { User } from "@/utils/db/kv.types.ts";
 import Selector from "$tabler/selector.tsx";
 import Dropdown from "@/islands/components/pickers/dropdown.tsx";
 import CirclePlus from "$tabler/circle-plus.tsx";
 import Settings from "$tabler/settings.tsx";
 import UserCircle from "$tabler/user-circle.tsx";
-import Logout from "$tabler/logout-2.tsx"
+import Logout from "$tabler/logout-2.tsx";
 import { useSignal } from "@preact/signals";
 import { deleteCookie } from "$std/http/cookie.ts";
 
-const NavbarDropDown = ({ user }: { user: UserPartial }) => {
+const NavbarDropDown = ({ user }: { user: User }) => {
   const open = useSignal(false);
-  const headers = new Headers();
 
   return (
     <Dropdown
@@ -31,7 +30,7 @@ const NavbarDropDown = ({ user }: { user: UserPartial }) => {
               <Settings class="size-5 mr-2" /> <p>Settings</p>
             </div>
           ),
-          onClick: () => alert("Settings is coming soon!"),
+          link: "/user/settings",
         },
         {
           content: (
@@ -40,7 +39,11 @@ const NavbarDropDown = ({ user }: { user: UserPartial }) => {
             </div>
           ),
           className: "bg-red-100 hover:!bg-red-200",
-          onClick: () => {deleteCookie(headers, "authToken", {path: "/"})},
+          onClick: () => {
+            document.cookie =
+              "authToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            location.href = "/";
+          },
           //link: "/"
         },
       ]}

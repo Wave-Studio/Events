@@ -1,7 +1,7 @@
-import { UserPartial } from "@/utils/db/kv.ts";
+import { User } from "@/utils/db/kv.ts";
 import NavbarDropDown from "../../islands/components/pieces/navDropDown.tsx";
 
-const Navbar = ({ user }: { user: UserPartial | undefined }) => {
+const Navbar = ({ user }: { user: User | undefined }) => {
   const loggedIn = true;
 
   return (

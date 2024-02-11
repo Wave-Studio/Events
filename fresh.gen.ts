@@ -11,6 +11,7 @@ import * as $_404 from "./routes/_404.tsx";
 import * as $_app from "./routes/_app.tsx";
 import * as $_layout from "./routes/_layout.tsx";
 import * as $api_auth_login from "./routes/api/auth/login.tsx";
+import * as $api_auth_regen from "./routes/api/auth/regen.ts";
 import * as $api_auth_signout from "./routes/api/auth/signout.ts";
 import * as $api_events_create from "./routes/api/events/create.ts";
 import * as $api_events_delete from "./routes/api/events/delete.ts";
@@ -46,6 +47,9 @@ import * as $index from "./routes/index.tsx";
 import * as $kv_insights_layout from "./routes/kv-insights/_layout.tsx";
 import * as $kv_insights_middleware from "./routes/kv-insights/_middleware.ts";
 import * as $login from "./routes/login.tsx";
+import * as $user_settings_layout from "./routes/user/settings/_layout.tsx";
+import * as $user_settings_authentication from "./routes/user/settings/authentication.ts";
+import * as $user_settings_index from "./routes/user/settings/index.tsx";
 import * as $components_dropinUI_trash from "./islands/components/dropinUI/trash.tsx";
 import * as $components_pickers_calender from "./islands/components/pickers/calender.tsx";
 import * as $components_pickers_dropdown from "./islands/components/pickers/dropdown.tsx";
@@ -97,6 +101,7 @@ const manifest = {
     "./routes/_app.tsx": $_app,
     "./routes/_layout.tsx": $_layout,
     "./routes/api/auth/login.tsx": $api_auth_login,
+    "./routes/api/auth/regen.ts": $api_auth_regen,
     "./routes/api/auth/signout.ts": $api_auth_signout,
     "./routes/api/events/create.ts": $api_events_create,
     "./routes/api/events/delete.ts": $api_events_delete,
@@ -141,6 +146,9 @@ const manifest = {
     "./routes/kv-insights/_layout.tsx": $kv_insights_layout,
     "./routes/kv-insights/_middleware.ts": $kv_insights_middleware,
     "./routes/login.tsx": $login,
+    "./routes/user/settings/_layout.tsx": $user_settings_layout,
+    "./routes/user/settings/authentication.ts": $user_settings_authentication,
+    "./routes/user/settings/index.tsx": $user_settings_index,
   },
   islands: {
     "./islands/components/dropinUI/trash.tsx": $components_dropinUI_trash,

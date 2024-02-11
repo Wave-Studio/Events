@@ -1,4 +1,3 @@
-
 // basic switch if we ever need to use it
 export const Switch = ({
   enabled,

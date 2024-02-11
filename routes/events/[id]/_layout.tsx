@@ -1,5 +1,5 @@
 import { defineLayout } from "$fresh/server.ts";
-import { Event, Roles, User, getUser, kv } from "@/utils/db/kv.ts";
+import { Event, getUser, kv, Roles, User } from "@/utils/db/kv.ts";
 import CTA from "@/components/buttons/cta.tsx";
 import { isUUID } from "@/utils/db/misc.ts";
 import { router } from "$fresh/src/server/router.ts";

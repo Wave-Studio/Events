@@ -1,7 +1,7 @@
 import { defineRoute, RouteContext } from "$fresh/server.ts";
 import {
-  EventContext,
   badEventRequest,
+  EventContext,
 } from "@/routes/events/[id]/_layout.tsx";
 import EventHeader from "@/components/layout/eventEditNavbar.tsx";
 import Dropdown from "@/islands/components/pickers/dropdown.tsx";

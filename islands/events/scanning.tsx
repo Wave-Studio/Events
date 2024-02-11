@@ -197,8 +197,9 @@ export default function Scanner({ eventID }: { eventID: string }) {
               const highestX = code.boundingBox.right;
               const highestY = code.boundingBox.bottom;
 
-              if (x < lowestX || x > highestX || y < lowestY || y > highestY)
+              if (x < lowestX || x > highestX || y < lowestY || y > highestY) {
                 continue;
+              }
 
               console.log("Found code!", code.rawValue);
 
@@ -302,13 +303,12 @@ export default function Scanner({ eventID }: { eventID: string }) {
 
                 topY -= padding;
                 bottomY += padding;
-                
+
                 ctx.lineWidth = 5;
                 ctx.beginPath();
                 ctx.roundRect(leftX, topY, rightX - leftX, bottomY - topY, 20);
                 ctx.stroke();
                 ctx.closePath();
-                
 
                 switch (codeData.status) {
                   case "loading": {

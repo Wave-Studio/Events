@@ -1,18 +1,18 @@
 import {
   Body,
+  Column,
   Container,
+  Font,
   Head,
   Heading,
   Html,
   Img,
   Link,
+  Preview,
+  Row,
   Section,
   Tailwind,
   Text,
-  Preview,
-  Font,
-  Column,
-  Row,
 } from "@react-email/components";
 import * as React from "react";
 import config from "../tailwind.config.ts";

@@ -9,7 +9,7 @@ export const isUUID = (uuid: string) => {
 export const isTicketUUID = (uuid: string) => {
   if (uuid.length != 110) return false;
 
-  for (const segment of uuid.split('_')) {
+  for (const segment of uuid.split("_")) {
     if (!isUUID(segment)) return false;
   }
 

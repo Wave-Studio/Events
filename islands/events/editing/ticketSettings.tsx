@@ -1,18 +1,13 @@
-import { signal, useSignal } from "@preact/signals";
 import CTA from "@/components/buttons/cta.tsx";
-import useForm from "@/components/hooks/fakeFormik/index.tsx";
 import { Event, Field } from "@/utils/db/kv.types.ts";
 import { StateUpdater, useState } from "preact/hooks";
-import { FirstPageEventValidation } from "@/utils/types/events.ts";
 import { removeKeysWithSameValues } from "@/utils/misc.ts";
-import * as Yup from "yup";
-import { JSX } from "preact";
 import { Loading } from "@/utils/loading.ts";
 import { Toggle } from "@/components/buttons/toggle.tsx";
 import {
   AdditionalInputs,
-  FieldInput,
   defaultField,
+  FieldInput,
 } from "@/islands/events/creation/two.tsx";
 import Plus from "$tabler/plus.tsx";
 

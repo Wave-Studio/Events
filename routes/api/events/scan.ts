@@ -54,7 +54,10 @@ export const handler: Handlers = {
       );
     }
 
-    const isValidTicket = ticketID.split("_").map((s) => isUUID(s)).includes(false);
+    const isValidTicket = ticketID
+      .split("_")
+      .map((s) => isUUID(s))
+      .includes(false);
 
     if (!isValidTicket) {
       return new Response(

@@ -49,7 +49,9 @@ export const handler: Handlers<{ email: string; otp: string }> = {
     const otp = await generateOTP(email);
 
     // jank
-    const otpHTML = emailHTML.replace("{{OTP-PART-1}}", otp.slice(0,5)).replace("{{OTP-PART-2}}", otp.slice(5));
+    const otpHTML = emailHTML
+      .replace("{{OTP-PART-1}}", otp.slice(0, 5))
+      .replace("{{OTP-PART-2}}", otp.slice(5));
 
     try {
       await sendEmail([email], "Your Events Authorization Code", {
@@ -140,4 +142,3 @@ export const handler: Handlers<{ email: string; otp: string }> = {
     return resp;
   },
 };
-

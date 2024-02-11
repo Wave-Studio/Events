@@ -3,16 +3,6 @@ import { useState } from "preact/hooks";
 import { ComponentChild, JSX } from "preact";
 import * as Yup from "yup";
 
-type Json =
-  | null
-  | string
-  | number
-  | boolean
-  | Array<JSON>
-  | {
-      [prop: string]: Json;
-    };
-
 interface FormProps extends JSX.HTMLAttributes<HTMLFormElement> {
   children: ComponentChild;
 }

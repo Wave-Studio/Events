@@ -1,7 +1,7 @@
 import { defineRoute, RouteContext } from "$fresh/server.ts";
 import {
-  EventContext,
   badEventRequest,
+  EventContext,
 } from "@/routes/events/[id]/_layout.tsx";
 import EventHeader from "@/components/layout/eventEditNavbar.tsx";
 import Button from "@/components/buttons/button.tsx";
@@ -13,7 +13,7 @@ import { Trashcan } from "@/islands/components/dropinUI/trash.tsx";
 import Invite from "@/islands/events/teams/invite.tsx";
 import ManageUser from "@/islands/events/teams/manage.tsx";
 import Crown from "$tabler/crown.tsx";
-import { Roles, Event } from "@/utils/db/kv.ts";
+import { Event, Roles } from "@/utils/db/kv.ts";
 import TeamFilters from "@/islands/events/teams/filters.tsx";
 import { signal } from "@preact/signals";
 
@@ -71,8 +71,8 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
       <div class="rounded-md border p-4 mb-6 mt-2">
         <h2 class="text-lg font-semibold">Add Team Members</h2>
         <p class="text-sm">
-          Invite a team member! They'll receive an emil promptly after you invite
-          them.
+          Invite a team member! They'll receive an emil promptly after you
+          invite them.
         </p>
         <Invite eventID={eventID} />
       </div>

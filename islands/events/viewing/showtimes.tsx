@@ -1,5 +1,5 @@
 import { Event, Roles, User } from "@/utils/db/kv.ts";
-import { happened, fmtDate, fmtTime } from "@/utils/dates.ts";
+import { fmtDate, fmtTime, happened } from "@/utils/dates.ts";
 import { Availability } from "@/islands/events/viewing/availability.tsx";
 import { EventContext } from "@/routes/events/[id]/_layout.tsx";
 import { acquired } from "@/utils/tickets.ts";

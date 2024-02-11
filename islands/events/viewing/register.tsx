@@ -45,13 +45,10 @@ export default function EventRegister({
   const toggles = useSignal<Record<string, boolean>>({
     ...additionalFields
       .filter((field) => field.type == "toggle")
-      .reduce(
-        (acc, field) => {
-          acc[field.id] = false;
-          return acc;
-        },
-        {} as Record<string, boolean>,
-      ),
+      .reduce((acc, field) => {
+        acc[field.id] = false;
+        return acc;
+      }, {} as Record<string, boolean>),
   });
 
   const perfEntries = performance.getEntriesByType("navigation");
@@ -77,13 +74,10 @@ export default function EventRegister({
       email: email || "",
       ...additionalFields
         .filter((field) => field.type != "toggle")
-        .reduce(
-          (acc, field) => {
-            acc[field.id] = field.type === "number" ? 0 : "";
-            return acc;
-          },
-          {} as Record<string, string | number>,
-        ),
+        .reduce((acc, field) => {
+          acc[field.id] = field.type === "number" ? 0 : "";
+          return acc;
+        }, {} as Record<string, string | number>),
     },
     onSubmit: (form) => createTicket(form.formState!),
     // TODO: add client side validation

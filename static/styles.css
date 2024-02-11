@@ -35,20 +35,19 @@ textarea {
   border: none;
   -moz-appearance: textfield;
   appearance: textfield;
-  color: transparent
+  color: transparent;
 }
 
 .hideInput::-webkit-outer-spin-button,
 .hideInput::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .hideInput::selection {
   color: transparent;
-  background-color: transparent
+  background-color: transparent;
 }
-
 
 .label-text {
   @apply font-medium text-sm mb-0.5 capitalize;

@@ -1,10 +1,10 @@
-import { RouteContext, defineRoute } from "$fresh/server.ts";
+import { defineRoute, RouteContext } from "$fresh/server.ts";
 import {
-  EventContext,
   badEventRequest,
+  EventContext,
 } from "@/routes/events/[id]/_layout.tsx";
 import { getShowtimeID } from "@/utils/tickets.ts";
-import { Ticket, kv } from "@/utils/db/kv.ts";
+import { kv, Ticket } from "@/utils/db/kv.ts";
 import { Head } from "$fresh/runtime.ts";
 import Footer from "@/components/layout/footer.tsx";
 import TicketComponent from "../../../../../islands/components/pieces/ticket.tsx";

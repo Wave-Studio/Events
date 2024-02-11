@@ -1,7 +1,7 @@
 import {
-  SESClient,
   SendEmailCommand,
   SendEmailRequest,
+  SESClient,
 } from "npm:@aws-sdk/client-ses";
 
 export const sesClient = new SESClient({
@@ -14,10 +14,10 @@ export const sesClient = new SESClient({
 
 /**
  * Send an email
- * @param to 
- * @param subject 
+ * @param to
+ * @param subject
  * @param message Specific a fallback text version (required) and the html
- * @returns 
+ * @returns
  */
 export const sendEmail = async (
   to: string[],
@@ -25,9 +25,9 @@ export const sendEmail = async (
   message: { fallback: string; html?: string },
 ) => {
   const params: SendEmailRequest = {
-	// Due to fresh config stuff
-    Source: // Deno.env.get("AWS_EMAIL_SOURCE") || 
-	`"Events" <events@wavestudios.one>`,
+    // Due to fresh config stuff
+    // Deno.env.get("AWS_EMAIL_SOURCE") ||
+    Source: `"Events" <events@wavestudios.one>`,
     Destination: {
       ToAddresses: to,
     },

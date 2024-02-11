@@ -13,7 +13,7 @@ export default function Dropdown({
     content: ComponentChild;
     onClick?: () => void;
     link?: string;
-    className?: string
+    className?: string;
   }[];
   children: ComponentChild;
   className?: string;

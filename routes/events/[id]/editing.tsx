@@ -1,7 +1,7 @@
-import { RouteContext, defineRoute } from "$fresh/server.ts";
+import { defineRoute, RouteContext } from "$fresh/server.ts";
 import {
-  EventContext,
   badEventRequest,
+  EventContext,
 } from "@/routes/events/[id]/_layout.tsx";
 import EditingImagePicker from "@/islands/events/editing/images.tsx";
 import imageKit from "@/utils/imagekit.ts";

@@ -1,4 +1,4 @@
-import { AuthCode, Plan, User, UserPartial } from "./kv.types.ts";
+import { AuthCode, Plan, User } from "./kv.types.ts";
 import { getCookies, setCookie } from "$std/http/cookie.ts";
 
 export * from "./kv.types.ts";
@@ -37,7 +37,7 @@ export const getUser = async (req: Request) => {
     return undefined;
   }
 
-  const user = await kv.get<UserPartial>(["user", atob(email)]);
+  const user = await kv.get<User>(["user", atob(email)]);
 
   if (user.value == undefined) {
     return undefined;
@@ -55,7 +55,7 @@ export const getUser = async (req: Request) => {
 export const createUser = async (email: string) => {
   const userAuthToken = (await generateAuthToken(email, false))!;
 
-  const userInfo: UserPartial = {
+  const userInfo: User = {
     email,
     authToken: userAuthToken,
     events: [],
@@ -75,7 +75,7 @@ export const getUserEmailCode = async (
   authCode: string,
   req: Request,
 ) => {
-  const [authCodeData, user] = await kv.getMany<[AuthCode, UserPartial]>([
+  const [authCodeData, user] = await kv.getMany<[AuthCode, User]>([
     ["authCode", authCode, email],
     ["user", email],
   ]);
