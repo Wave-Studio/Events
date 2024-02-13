@@ -1,7 +1,7 @@
 const Settings = () => {
 	return (
 		<div>
-			test
+			Coming Soon
 		</div>
 	)
 }

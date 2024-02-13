@@ -48,7 +48,7 @@ import * as $kv_insights_layout from "./routes/kv-insights/_layout.tsx";
 import * as $kv_insights_middleware from "./routes/kv-insights/_middleware.ts";
 import * as $login from "./routes/login.tsx";
 import * as $user_settings_layout from "./routes/user/settings/_layout.tsx";
-import * as $user_settings_authentication from "./routes/user/settings/authentication.ts";
+import * as $user_settings_auth from "./routes/user/settings/auth.tsx";
 import * as $user_settings_index from "./routes/user/settings/index.tsx";
 import * as $components_dropinUI_trash from "./islands/components/dropinUI/trash.tsx";
 import * as $components_pickers_calender from "./islands/components/pickers/calender.tsx";
@@ -56,6 +56,7 @@ import * as $components_pickers_dropdown from "./islands/components/pickers/drop
 import * as $components_pickers_image from "./islands/components/pickers/image.tsx";
 import * as $components_pickers_select from "./islands/components/pickers/select.tsx";
 import * as $components_pickers_time from "./islands/components/pickers/time.tsx";
+import * as $components_pieces_deleteToken from "./islands/components/pieces/deleteToken.tsx";
 import * as $components_pieces_navDropDown from "./islands/components/pieces/navDropDown.tsx";
 import * as $components_pieces_ticket from "./islands/components/pieces/ticket.tsx";
 import * as $entriesManagement from "./islands/entriesManagement.tsx";
@@ -147,7 +148,7 @@ const manifest = {
     "./routes/kv-insights/_middleware.ts": $kv_insights_middleware,
     "./routes/login.tsx": $login,
     "./routes/user/settings/_layout.tsx": $user_settings_layout,
-    "./routes/user/settings/authentication.ts": $user_settings_authentication,
+    "./routes/user/settings/auth.tsx": $user_settings_auth,
     "./routes/user/settings/index.tsx": $user_settings_index,
   },
   islands: {
@@ -157,6 +158,8 @@ const manifest = {
     "./islands/components/pickers/image.tsx": $components_pickers_image,
     "./islands/components/pickers/select.tsx": $components_pickers_select,
     "./islands/components/pickers/time.tsx": $components_pickers_time,
+    "./islands/components/pieces/deleteToken.tsx":
+      $components_pieces_deleteToken,
     "./islands/components/pieces/navDropDown.tsx":
       $components_pieces_navDropDown,
     "./islands/components/pieces/ticket.tsx": $components_pieces_ticket,

@@ -12,18 +12,20 @@ const Deletion = ({
   open,
   routeTo,
   children,
+  customMsg,
 }: {
   fetch: () => Promise<Response>;
-  routeTo: string;
+  routeTo?: string;
   name: string;
   open: Signal<boolean>;
   children: ComponentChildren;
+  customMsg?: string;
 }) => {
   const [loading, setLoading] = useState<boolean | string>(false);
 
   const deleteEvent = async () => {
     setLoading(true);
-    setLoading(false);
+   
     const res = await fetch();
     const data = await res.json();
     if (data.error) {
@@ -31,8 +33,11 @@ const Deletion = ({
     } else if (!res.ok) {
       setLoading("An unknown error occurred");
     } else {
-      window.location.href = routeTo;
+      if (routeTo) {
+        location.href = routeTo;
+      }
     }
+    setLoading(false);
   };
 
   const DeleteUI = () => {
@@ -44,8 +49,8 @@ const Deletion = ({
           Delete <span class="capitalize">{name}</span>
         </h5>
         <p>
-          Are you sure you want to delete this {name}? This action is
-          irrevocable and cannot be undone!
+          {customMsg || `Are you sure you want to delete this ${name}? This action is
+          irrevocable and cannot be undone!`}
         </p>
         <CTA
           btnType="secondary"

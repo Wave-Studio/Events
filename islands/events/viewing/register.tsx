@@ -8,7 +8,6 @@ import { useSignal } from "@preact/signals";
 import { Toggle } from "@/components/buttons/toggle.tsx";
 import Minus from "$tabler/minus.tsx";
 import Plus from "$tabler/plus.tsx";
-import { fmtDate, fmtHour, fmtTime } from "@/utils/dates.ts";
 import Button from "@/components/buttons/button.tsx";
 import ChevronLeft from "$tabler/chevron-left.tsx";
 import { createPortal } from "preact/compat";
@@ -18,7 +17,7 @@ import { acquired, getTicketID } from "@/utils/tickets.ts";
 import { EventRegisterError } from "@/utils/event/register.ts";
 import { RegisterErrors } from "../components/registerErrors.tsx";
 import SelectShowTime from "./selectShowTime.tsx";
-import { router } from "$fresh/src/server/router.ts";
+import { isUUID } from "@/utils/db/misc.ts";
 
 export default function EventRegister({
   eventID,
@@ -155,13 +154,20 @@ export default function EventRegister({
     lastName: string;
     email: string;
   }) => {
+    const formStates: { id: string, value: unknown }[] = [];
+
+    for (const [key, value] of [...Object.entries(toggles.value), ...Object.entries(formState)]) {
+      if (isUUID(key)) {
+        formStates.push({ id: key, value });
+      }
+    }
+
     const fullTicket = {
       ...formState,
-      ...toggles.value,
       tickets: tickets.value,
       showtimeID: showTime.value,
       eventID,
-      fieldData: [],
+      fieldData: formStates,
     };
     error.value = undefined;
     ticketID.value = "loading";

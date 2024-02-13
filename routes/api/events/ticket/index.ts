@@ -13,8 +13,23 @@ import { EventRegisterError } from "@/utils/event/register.ts";
 
 export const handler: Handlers = {
   async POST(req) {
-    const { eventID, email, showtimeID, fieldData, firstName, lastName } =
-      await req.json();
+    const {
+      eventID,
+      email,
+      showtimeID,
+      fieldData,
+      firstName,
+      lastName,
+      tickets,
+    }: {
+      eventID: string;
+      email: string;
+      showtimeID: string;
+      fieldData: { id: string; value: string }[];
+      firstName: string;
+      lastName: string;
+      tickets: number;
+    } = await req.json();
 
     const basicParamValidation = Yup.object({
       eventID: Yup.string().uuid().required(),
@@ -23,6 +38,7 @@ export const handler: Handlers = {
       firstName: Yup.string().required().min(1),
       lastName: Yup.string().required().min(1),
       fieldData: Yup.array().required(),
+      tickets: Yup.number().required().min(1).max(10),
     });
 
     try {
@@ -34,6 +50,7 @@ export const handler: Handlers = {
           firstName,
           lastName,
           fieldData,
+          tickets,
         },
         {
           strict: true,
@@ -64,6 +81,114 @@ export const handler: Handlers = {
           status: 400,
         },
       );
+    }
+
+    if (
+      fieldData.length != event.value.additionalFields.length ||
+      fieldData
+        .map((f) => f.id)
+        .some(
+          (id) => !event.value.additionalFields.map((f) => f.id).includes(id),
+        )
+    ) {
+      return new Response(
+        JSON.stringify({
+          error: {
+            message: "Invalid field data",
+            code: EventRegisterError.OTHER,
+          },
+        }),
+        {
+          status: 400,
+        },
+      );
+    }
+
+    for (const field of event.value.additionalFields) {
+      if (
+        fieldData.find((f) => f.id === field.id)?.value == undefined &&
+        (field.required ?? true) == true
+      ) {
+        return new Response(
+          JSON.stringify({
+            error: {
+              message: "Missing required field",
+              code: EventRegisterError.OTHER,
+            },
+          }),
+          {
+            status: 400,
+          },
+        );
+      }
+
+      if (fieldData.find((f) => f.id === field.id)?.value == undefined) {
+        continue;
+      }
+
+      const value = fieldData.find((f) => f.id === field.id);
+
+      const defaultYupSchema = {
+        id: Yup.string().uuid().required(),
+      };
+
+      let schema = Yup.object({
+        ...defaultYupSchema,
+      });
+
+      switch (field.type) {
+        case "text": {
+          schema = Yup.object({
+            ...defaultYupSchema,
+            value: Yup.string().required(),
+          });
+
+          break;
+        }
+
+        case "toggle": {
+          schema = Yup.object({
+            ...defaultYupSchema,
+            value: Yup.boolean().nonNullable(),
+          });
+
+          break;
+        }
+
+        case "email": {
+          schema = Yup.object({
+            ...defaultYupSchema,
+            value: Yup.string().email().required(),
+          });
+
+          break;
+        }
+
+        case "number": {
+          schema = Yup.object({
+            ...defaultYupSchema,
+            value: Yup.number().required(),
+          });
+
+          break;
+        }
+      }
+
+      try {
+        schema.validateSync(value, { strict: true });
+      } catch (e) {
+        return new Response(
+          JSON.stringify({
+            error: {
+              message: e.message,
+              code: EventRegisterError.OTHER,
+            },
+          }),
+          {
+            status: 400,
+          },
+        );
+      }
     }
 
     const showtime = event.value.showTimes.find((s) => s.id === showtimeID);
@@ -119,14 +244,15 @@ export const handler: Handlers = {
     const user =
       eventUser.value ??
       ({
-        onboarded: false,
         tickets: [],
         events: [],
         plan: Plan.BASIC,
         email,
+        joinedAt: Date.now().toString(),
+        authToken: "unregistered",
       } satisfies User);
 
-    if (user.onboarded) {
+    if (user.authToken != "unregistered") {
       const authToken = getUserAuthToken(req);
 
       if (authToken != user.authToken) {
@@ -219,6 +345,8 @@ export const handler: Handlers = {
         firstName,
         lastName,
         fieldData: fieldData,
+        tickets,
+        uses: 0,
       })
       .commit();
 

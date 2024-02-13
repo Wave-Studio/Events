@@ -60,7 +60,6 @@ export const createUser = async (email: string) => {
     authToken: userAuthToken,
     events: [],
     tickets: [],
-    onboarded: true,
     plan: Plan.BASIC,
     joinedAt: Date.now().toString(),
   };

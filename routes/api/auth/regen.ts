@@ -15,18 +15,22 @@ export const handler: Handlers = {
     const user = await getUser(req);
 
     if (user == undefined) {
-      deleteCookie(req.headers, "authToken");
-      return new Response(JSON.stringify({ error: "User not found" }), {
+      const resp = new Response(JSON.stringify({ error: "User not found" }), {
         status: 400,
       });
+
+      deleteCookie(resp.headers, "authToken");
+      return resp;
     }
 
     await generateAuthToken(user.email, true);
 
-    deleteCookie(req.headers, "authToken");
-
-    return new Response(JSON.stringify({ status: 200 }), {
+    const resp = new Response(JSON.stringify({ status: 200 }), {
       status: 200,
     });
+
+    deleteCookie(resp.headers, "authToken");
+
+    return resp;
   },
 };

@@ -2,6 +2,7 @@ export interface Field {
   id: string;
   name: string;
   description: string;
+  required?: boolean;
   type: "text" | "email" | "number" | "toggle";
 }
 
@@ -84,6 +85,8 @@ export interface Ticket {
   firstName: string;
   lastName: string;
   fieldData: FieldEntry[];
+  tickets: number;
+  uses: number;
 }
 
 /** ["user", email] */
@@ -95,7 +98,6 @@ export interface User {
   authToken: string;
   plan: Plan;
   joinedAt: string;
-  onboarded: true;
 }
 
 export const enum Roles {

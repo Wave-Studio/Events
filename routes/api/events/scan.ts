@@ -100,8 +100,10 @@ export const handler: Handlers = {
 
     const isUsed = ticket.value.hasBeenUsed;
 
-    if (!isUsed) {
+    if (!isUsed || ticket.value.tickets > 0) {
       ticket.value.hasBeenUsed = true;
+      ticket.value.uses += 1;
+
       await kv.set(
         [
           "ticket",

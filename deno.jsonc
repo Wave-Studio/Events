@@ -4,10 +4,10 @@
     "check": "deno fmt --check && deno lint && deno check **/*.ts && deno check **/*.tsx",
     // Do items like reordering imports
     "fmt": "deno fmt && npx prettier . --write",
-    "start": "deno run -A --unstable --watch=static/,routes/ dev.ts",
-    "build": "deno run -A --unstable dev.ts build",
-    "preview": "deno run --unstable -A main.ts",
-    "update": "deno run --unstable -A -r https://fresh.deno.dev/update ."
+    "start": "deno run -A --unstable-kv --watch=static/,routes/ dev.ts",
+    "build": "deno run -A --unstable-kv dev.ts build",
+    "preview": "deno run --unstable-kv -A main.ts",
+    "update": "deno run --unstable-kv -A -r https://fresh.deno.dev/update ."
   },
   "lint": {
     "rules": { "tags": ["fresh", "recommended"], "include": ["no-unused-vars"] }
