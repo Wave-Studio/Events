@@ -12,8 +12,6 @@ export default defineRoute((req, ctx: RouteContext<void, TicketContext>) => {
   }
 
   return (
-    <main className="px-4 max-w-screen-md w-full mx-auto flex flex-col gap-8 grow mb-10 ">
-
-    </main>
+    <main className="px-4 max-w-screen-md w-full mx-auto flex flex-col gap-8 grow mb-10 "></main>
   );
 });

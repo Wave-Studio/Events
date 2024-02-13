@@ -35,9 +35,7 @@ export default defineRoute(
 
     const request = ["ticket", eventID];
     if (showTimeID !== "0") request.push(showTimeID);
-    const tix = kv.list<Ticket>(
-      { prefix: request }
-    );
+    const tix = kv.list<Ticket>({ prefix: request });
     let tickets: Deno.KvEntry<Ticket>[] = [];
     for await (const ticket of tix) {
       tickets.push(ticket);

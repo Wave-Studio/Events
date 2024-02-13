@@ -207,32 +207,33 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
             />
           )}
 
-          {user && (user.role != undefined ? (
-            user.role <= 2 && (
-              <>
-                <a
-                  href="/events/organizing"
-                  class="group pl-0.5 rounded-md bg-black/20 border border-gray-300/20 backdrop-blur font-medium text-white pr-1.5 absolute top-3 left-3 text-sm flex items-center"
-                >
-                  <Left class="size-4 mr-1 group transition group-hover:-translate-x-0.5" />{" "}
-                  All Events
-                </a>
-                <a
-                  href={`/events/${eventID}/editing`}
-                  class="rounded-md bg-black/20 border border-gray-300/20 backdrop-blur font-medium text-white px-1.5 absolute top-3 right-3 text-sm flex items-center"
-                >
-                  Edit Event
-                </a>
-              </>
-            )
-          ) : (
-            <a
-              href={`/events/attending`}
-              class="rounded-md bg-black/20 border border-gray-300/20 backdrop-blur font-medium text-white px-1.5 absolute top-3 right-3 text-sm flex items-center"
-            >
-              Your tickets
-            </a>
-          ))}
+          {user &&
+            (user.role != undefined ? (
+              user.role <= 2 && (
+                <>
+                  <a
+                    href="/events/organizing"
+                    class="group pl-0.5 rounded-md bg-black/20 border border-gray-300/20 backdrop-blur font-medium text-white pr-1.5 absolute top-3 left-3 text-sm flex items-center"
+                  >
+                    <Left class="size-4 mr-1 group transition group-hover:-translate-x-0.5" />{" "}
+                    All Events
+                  </a>
+                  <a
+                    href={`/events/${eventID}/editing`}
+                    class="rounded-md bg-black/20 border border-gray-300/20 backdrop-blur font-medium text-white px-1.5 absolute top-3 right-3 text-sm flex items-center"
+                  >
+                    Edit Event
+                  </a>
+                </>
+              )
+            ) : (
+              <a
+                href={`/events/attending`}
+                class="rounded-md bg-black/20 border border-gray-300/20 backdrop-blur font-medium text-white px-1.5 absolute top-3 right-3 text-sm flex items-center"
+              >
+                Your tickets
+              </a>
+            ))}
         </div>
         <div className="max-w-2xl mx-auto w-full mb-36 md:mb-16 mt-4 md:-mt-28 flex flex-col px-4 static grow">
           <Header />

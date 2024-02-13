@@ -120,6 +120,7 @@ export default function EventRegister({
             <Button
               icon={<ChevronLeft class="size-6" />}
               label="Previous Page"
+              labelOnTop
               onClick={() => page.value--}
             />
           )}
