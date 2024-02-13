@@ -1,9 +1,20 @@
 import { defineLayout, RouteContext } from "$fresh/server.ts";
+import { getUser } from "@/utils/db/kv.ts";
 
-export default defineLayout((req: Request, ctx) => {
+export default defineLayout(async (req: Request, ctx) => {
   const organizingTabs = ["upcoming", "past"];
   const url = new URL(req.url);
   const tabName = url.pathname.split("/")[3] ?? "upcoming";
+  const user = await getUser(req);
+
+  if (user == undefined) {
+    return new Response(undefined, {
+      headers: {
+        Location: "/login",
+      },
+      status: 307,
+    });
+  }
 
   return (
     <>

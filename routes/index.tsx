@@ -32,7 +32,7 @@ export default defineRoute(async (req, ctx) => {
         {/* <meta name="theme-color" content="#DC6843" /> */}
       </Head>
 
-      <div className="flex flex-col h-[calc(100dvh-4.5rem)] items-center">
+      <div className="flex flex-col h-[calc(100svh-4.5rem)] items-center">
         <div class="flex flex-col px-4 items-center">
           <h1 class="text-center text-4xl font-bold">Events</h1>
           <div class="w-60 flex items-center mt-2">

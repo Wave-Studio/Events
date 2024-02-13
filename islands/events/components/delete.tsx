@@ -25,7 +25,7 @@ const Deletion = ({
 
   const deleteEvent = async () => {
     setLoading(true);
-   
+
     const res = await fetch();
     const data = await res.json();
     if (data.error) {
@@ -49,7 +49,8 @@ const Deletion = ({
           Delete <span class="capitalize">{name}</span>
         </h5>
         <p>
-          {customMsg || `Are you sure you want to delete this ${name}? This action is
+          {customMsg ||
+            `Are you sure you want to delete this ${name}? This action is
           irrevocable and cannot be undone!`}
         </p>
         <CTA

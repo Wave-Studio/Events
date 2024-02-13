@@ -5,8 +5,8 @@ import Home from "$tabler/home.tsx";
 import { getUser } from "@/utils/db/kv.ts";
 
 export default defineLayout(async (req, ctx) => {
-	const user = await getUser(req);
-	const route = new URL(req.url).pathname;
+  const user = await getUser(req);
+  const route = new URL(req.url).pathname;
 
   if (user == undefined) {
     return new Response(undefined, {
@@ -16,7 +16,7 @@ export default defineLayout(async (req, ctx) => {
       status: 307,
     });
   }
-	
+
   const pages: { name: string; icon: ComponentChildren; route: string }[] = [
     {
       name: "Home",
@@ -29,8 +29,6 @@ export default defineLayout(async (req, ctx) => {
       route: "/user/settings/auth",
     },
   ];
-
-  
 
   return (
     <>

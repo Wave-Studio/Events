@@ -11,9 +11,11 @@ const DeleteToken = () => {
       fetch={() => fetch("/api/auth/regen")}
       open={open}
       routeTo="/"
-			customMsg="Resetting your authentication token will log you out of all devices. Please proceed with caution!"
+      customMsg="Resetting your authentication token will log you out of all devices. Please proceed with caution!"
     >
-      <CTA btnType="secondary" onClick={() => open.value = true} btnSize="sm">Delete Token</CTA>
+      <CTA btnType="secondary" onClick={() => (open.value = true)} btnSize="sm">
+        Delete Token
+      </CTA>
     </Deletion>
   );
 };

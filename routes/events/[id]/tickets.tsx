@@ -24,8 +24,6 @@ export default defineRoute(
     const url = new URL(req.url);
     const queryValue = url.searchParams.get("q");
     const showTimeID = url.searchParams.get("id") ?? event.showTimes[0].id;
-    const page = url.searchParams.get("p") ?? 0;
-    const cursor = url.searchParams.get("c");
     let sortValue = parseInt(url.searchParams.get("s") ?? "0");
 
     if (isNaN(sortValue) || sortValue > 4 || sortValue < 0) {
@@ -37,18 +35,13 @@ export default defineRoute(
 
     const request = ["ticket", eventID];
     if (showTimeID !== "0") request.push(showTimeID);
-    const pageSize = 1;
     const tix = kv.list<Ticket>(
-      { prefix: request },
-      { limit: pageSize, cursor: cursor || undefined },
+      { prefix: request }
     );
     let tickets: Deno.KvEntry<Ticket>[] = [];
     for await (const ticket of tix) {
       tickets.push(ticket);
     }
-
-    console.log(tix.cursor);
-    console.log(await tix.next());
 
     if (queryValue) {
       tickets = tickets.filter(

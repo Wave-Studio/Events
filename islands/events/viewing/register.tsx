@@ -154,9 +154,12 @@ export default function EventRegister({
     lastName: string;
     email: string;
   }) => {
-    const formStates: { id: string, value: unknown }[] = [];
+    const formStates: { id: string; value: unknown }[] = [];
 
-    for (const [key, value] of [...Object.entries(toggles.value), ...Object.entries(formState)]) {
+    for (const [key, value] of [
+      ...Object.entries(toggles.value),
+      ...Object.entries(formState),
+    ]) {
       if (isUUID(key)) {
         formStates.push({ id: key, value });
       }

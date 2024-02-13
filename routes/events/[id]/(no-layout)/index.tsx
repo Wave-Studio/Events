@@ -207,7 +207,7 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
             />
           )}
 
-          {user && user.role != undefined ? (
+          {user && (user.role != undefined ? (
             user.role <= 2 && (
               <>
                 <a
@@ -232,7 +232,7 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
             >
               Your tickets
             </a>
-          )}
+          ))}
         </div>
         <div className="max-w-2xl mx-auto w-full mb-36 md:mb-16 mt-4 md:-mt-28 flex flex-col px-4 static grow">
           <Header />
