@@ -1,7 +1,7 @@
 import { defineLayout, RouteContext } from "$fresh/server.ts";
-import { getUser } from "@/utils/db/kv.ts";
+import { Event, getUser, kv, Ticket, User } from "@/utils/db/kv.ts";
 
-export default defineLayout(async (req: Request, ctx) => {
+export default defineLayout(async (req: Request, ctx: RouteContext<void, TicketContext>) => {
   const organizingTabs = ["upcoming", "past"];
   const url = new URL(req.url);
   const tabName = url.pathname.split("/")[3] ?? "upcoming";
@@ -14,6 +14,32 @@ export default defineLayout(async (req: Request, ctx) => {
       },
       status: 307,
     });
+  }
+
+  
+  const events = await kv.getMany(user.tickets.map(ticket => {
+    return ["event", ticket.split("_")[0]]
+  }))
+
+  console.log(events)
+
+  const tickets = events.map((e) => {
+    const event = e.value as Event
+    const id = e.key[1]
+    //theoreticlly I could just plug the iteration into the array of tickets but this should catch any wierd edge cases
+    const ticket = user.tickets.find(ticket => ticket.split("_")[0] === id)!
+    const showTime = event.showTimes.find(showTime => showTime.id === ticket.split("_")[1])!
+
+    return {
+      id: id as string,
+      date: new Date(showTime.startDate),
+      event: event
+    }
+  })
+
+  ctx.state.data = {
+    user,
+    tickets
   }
 
   return (
@@ -40,3 +66,14 @@ export default defineLayout(async (req: Request, ctx) => {
     </>
   );
 });
+
+export interface TicketContext {
+  data: {
+    tickets: {
+      id: string;
+      event: Event;
+      date: Date
+    }[];
+    user: User;
+  };
+}
