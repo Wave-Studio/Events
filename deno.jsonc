@@ -13,7 +13,7 @@
     "rules": { "tags": ["fresh", "recommended"], "include": ["no-unused-vars"] }
   },
   "imports": {
-    "$fresh/": "https://deno.land/x/fresh@1.6.3/",
+    "$fresh/": "https://deno.land/x/fresh@1.6.5/",
     "preact": "https://esm.sh/preact@10.19.2",
     "preact/": "https://esm.sh/preact@10.19.2/",
     "preact-render-to-string": "https://esm.sh/*preact-render-to-string@6.2.2",
