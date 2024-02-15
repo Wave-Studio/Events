@@ -2,7 +2,7 @@ import { Event, getUser, kv, Roles } from "@/utils/db/kv.ts";
 import { AppContext } from "$fresh/server.ts";
 import { renderToString } from "preact-render-to-string";
 import CTA from "@/components/buttons/cta.tsx";
-import imageKit from "@/utils/imagekit.ts";
+import imageKit from "../../../../utils/imagekit/index.ts";
 import World from "$tabler/world.tsx";
 import Scan from "$tabler/text-scan-2.tsx";
 import Edit from "$tabler/edit.tsx";

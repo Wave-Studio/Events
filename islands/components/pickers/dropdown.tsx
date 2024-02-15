@@ -14,6 +14,7 @@ export default function Dropdown({
     onClick?: () => void;
     link?: string;
     className?: string;
+    breakBelow?: boolean;
   }[];
   children: ComponentChild;
   className?: string;
@@ -38,7 +39,7 @@ export default function Dropdown({
           } absolute p-2 bg-white border rounded-md shadow-xl grid gap-2 top-10 select-none transition z-50 grow`}
         >
           {options.map((option) => {
-            const o = (
+            const btn = (
               <button
                 onClick={() => {
                   open.value = false;
@@ -50,11 +51,12 @@ export default function Dropdown({
               </button>
             );
 
-            if (option.link) {
-              return <a href={option.link}>{o}</a>;
-            }
-
-            return o;
+            return (
+              <>
+              {option.link ? <a href={option.link}>{btn}</a> : btn}
+              {option.breakBelow && <div class="h-0.5 rounded-full bg-gray-200 px-2"/> }
+              </>
+            )
           })}
         </div>
       </div>

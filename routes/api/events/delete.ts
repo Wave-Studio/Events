@@ -1,7 +1,7 @@
 import { Handlers } from "$fresh/server.ts";
 import { Event, getUser, kv, User } from "@/utils/db/kv.ts";
 import { isUUID } from "@/utils/db/misc.ts";
-import imageKit from "@/utils/imagekit.ts";
+import imageKit from "../../../utils/imagekit/index.ts";
 
 export const handler: Handlers = {
   async POST(req, _ctx) {

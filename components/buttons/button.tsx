@@ -13,7 +13,7 @@ const Button = ({
   label: string;
   icon: ComponentChildren;
   href?: string;
-  labelOnTop: boolean;
+  labelOnTop?: boolean;
   onClick?: () => void;
   small?: boolean;
   type?: string;

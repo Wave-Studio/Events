@@ -1,6 +1,5 @@
 import { type Config } from "tailwindcss";
 import typography from "@tailwindcss/typography";
-import containers from "npm:@tailwindcss/container-queries";
 
 export default {
   content: ["{routes,islands,components}/**/*.{ts,tsx}"],
@@ -28,5 +27,5 @@ export default {
       },
     },
   },
-  plugins: [typography(), containers],
+  plugins: [typography()],
 } as Config;

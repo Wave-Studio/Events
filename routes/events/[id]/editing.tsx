@@ -4,7 +4,7 @@ import {
   EventContext,
 } from "@/routes/events/[id]/_layout.tsx";
 import EditingImagePicker from "@/islands/events/editing/images.tsx";
-import imageKit from "@/utils/imagekit.ts";
+import imageKit from "../../../utils/imagekit/index.ts";
 import { ComponentChildren } from "preact";
 import EventSettings from "@/islands/events/editing/settings.tsx";
 import ShowTimeSettings from "@/islands/events/editing/showtimesettings.tsx";

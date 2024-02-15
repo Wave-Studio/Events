@@ -28,6 +28,7 @@ import * as $api_events_ticket_index from "./routes/api/events/ticket/index.ts";
 import * as $events_pages_layout from "./routes/events/(pages)/_layout.tsx";
 import * as $events_pages_attending_layout from "./routes/events/(pages)/attending/_layout.tsx";
 import * as $events_pages_attending_index from "./routes/events/(pages)/attending/index.tsx";
+import * as $events_pages_attending_past from "./routes/events/(pages)/attending/past.tsx";
 import * as $events_pages_organizing_layout from "./routes/events/(pages)/organizing/_layout.tsx";
 import * as $events_pages_organizing_accounting from "./routes/events/(pages)/organizing/accounting.tsx";
 import * as $events_pages_organizing_collections from "./routes/events/(pages)/organizing/collections.tsx";
@@ -121,6 +122,7 @@ const manifest = {
       $events_pages_attending_layout,
     "./routes/events/(pages)/attending/index.tsx":
       $events_pages_attending_index,
+    "./routes/events/(pages)/attending/past.tsx": $events_pages_attending_past,
     "./routes/events/(pages)/organizing/_layout.tsx":
       $events_pages_organizing_layout,
     "./routes/events/(pages)/organizing/accounting.tsx":

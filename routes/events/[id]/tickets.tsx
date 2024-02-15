@@ -106,14 +106,14 @@ export default defineRoute(
                         ]}
                       >
                         <div
-                          className={`w-8 grid place-items-center border h-8 rounded-md`}
+                          className={`w-8 grid place-items-center border h-8 rounded-md hover:bg-gray-200 transition`}
                         >
                           <DotsVertical class="h-5 w-5" />
                         </div>
                       </Dropdown>
                     </div>
                     <div class="flex gap-2 flex-wrap">
-                      {/* need some  */}
+                      {/* need some */}
                       <div class="rounded-md border text-sm font-semibold px-1 text-gray-700 bg-gray-100">
                         2/2 tickets
                       </div>

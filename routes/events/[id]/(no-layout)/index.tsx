@@ -1,7 +1,7 @@
 import { defineRoute, LayoutConfig, RouteContext } from "$fresh/server.ts";
 import { Head } from "$fresh/runtime.ts";
 import { EventContext } from "@/routes/events/[id]/_layout.tsx";
-import imagekit from "@/utils/imagekit.ts";
+import imagekit from "../../../../utils/imagekit/index.ts";
 import Left from "$tabler/chevron-left.tsx";
 import Location from "$tabler/map-pin.tsx";
 import Calender from "$tabler/calendar.tsx";
@@ -14,6 +14,7 @@ import { ShowTimes } from "@/islands/events/viewing/showtimes.tsx";
 import { acquired, getTicketID } from "@/utils/tickets.ts";
 import CTA from "@/components/buttons/cta.tsx";
 import { useEffect } from "preact/hooks";
+import ImagekitImage from "@/components/imagekitimg.tsx";
 
 export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
   const { event, eventID, user } = ctx.state.data;
@@ -26,35 +27,7 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
     event.showTimes.every((time) => happened(time.startDate, time.startTime)) ||
     event.showTimes.every((time) => time.soldTickets == time.maxTickets);
 
-  const banner = () => {
-    if (imagekit && event.banner.path) {
-      const getURL = (width: number) =>
-        ["png", "webp"].map((fmt) =>
-          imagekit!.url({
-            path: event.banner.path!,
-            transformation: [
-              {
-                width: width.toString(),
-                quality: "85",
-                format: fmt,
-              },
-            ],
-          }),
-        );
-
-      return {
-        320: getURL(320),
-        480: getURL(480),
-        720: getURL(720),
-        900: getURL(900),
-        1080: getURL(1080),
-        1280: getURL(1280),
-        1440: getURL(1440),
-        2160: getURL(2160),
-        4320: getURL(4320),
-      };
-    }
-  };
+  const sizes = [320, 480, 720, 900, 1080, 1280, 1440, 2160, 4320];
 
   const Header = () => (
     <>
@@ -174,30 +147,15 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
       </Head>
       <div className="flex flex-col min-h-screen">
         <div class="flex flex-col">
-          {banner() ? (
-            <picture>
-              {Object.entries(banner()!).map(([width, [png, webp]]) => (
-                <>
-                  <source
-                    srcset={png}
-                    type="image/png"
-                    media={`(max-width: ${width}px)`}
-                  />
-                  <source
-                    srcset={webp}
-                    type="image/webp"
-                    media={`(max-width: ${width}px)`}
-                  />
-                </>
-              ))}
-              <img
-                src={banner()![480]?.[0]}
-                alt="Project icon"
-                class={`${
-                  event.banner.fill ? "object-fill" : "object-cover"
-                } h-56 md:h-96 w-full rounded-b-lg md:rounded-b-2xl`}
-              />
-            </picture>
+          {event.banner.path ? (
+            <ImagekitImage
+              alt="Image of this event"
+              path={event.banner.path!}
+              sizes={sizes}
+              className={`${
+                event.banner.fill ? "object-fill" : "object-cover"
+              } h-56 md:h-96 w-full rounded-b-lg md:rounded-b-2xl`}
+            />
           ) : (
             <img
               class="object-cover h-56 md:h-96 rounded-b-lg md:rounded-b-2xl "
