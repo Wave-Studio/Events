@@ -52,7 +52,11 @@ const Button = ({
             {icon}
           </CTA>
         </Wrapper>
-        <div className={`absolute w-32 bg-white border border-gray-300 rounded-md text-center shadow-xl ${labelOnTop ? "bottom-12" : "top-12"} select-none scale-95 opacity-0 peer-hover:scale-100 peer-hover:opacity-100 transition z-50`}>
+        <div
+          className={`absolute w-32 bg-white border border-gray-300 rounded-md text-center shadow-xl ${
+            labelOnTop ? "bottom-12" : "top-12"
+          } select-none scale-95 opacity-0 peer-hover:scale-100 peer-hover:opacity-100 transition z-50`}
+        >
           {label}
         </div>
       </div>

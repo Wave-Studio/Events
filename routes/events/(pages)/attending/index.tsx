@@ -5,6 +5,9 @@ import Scanner from "@/islands/events/scanning.tsx";
 import { badEventRequest } from "@/routes/events/[id]/_layout.tsx";
 import ImagekitImage from "@/components/imagekitimg.tsx";
 import CTA from "@/components/buttons/cta.tsx";
+import { fmtDate } from "@/utils/dates.ts";
+import { fmtTime } from "@/utils/dates.ts";
+import { ClientDate } from "@/islands/events/viewing/dates.tsx";
 
 export default defineRoute((req, ctx: RouteContext<void, TicketContext>) => {
   const { tickets, user } = ctx.state.data;
@@ -17,7 +20,20 @@ export default defineRoute((req, ctx: RouteContext<void, TicketContext>) => {
     <main className="px-4 max-w-screen-md w-full mx-auto flex flex-col gap-8 grow mb-10">
       <div class="grid md:grid-cols-2 gap-4">
         {tickets.map((ticket) => (
-          <div class="rounded-md border flex flex-col p-3">
+          <div class="rounded-md border flex flex-col p-4">
+            <div class="rounded-md border bg-gray-100 px-1 mb-4 font-medium mx-auto">
+              {ticket.time.startTime ? (
+                <>
+                  {fmtDate(new Date(ticket.time.startDate))}
+                  <span class="lowercase">
+                    {ticket.time.startTime &&
+                      ` at ${fmtTime(new Date(ticket.time.startTime))}`}
+                  </span>
+                </>
+              ) : (
+                <ClientDate date={ticket.time.startDate} />
+              )}
+            </div>
             <div class="relative">
               {ticket.event.banner.path ? (
                 <ImagekitImage
@@ -38,8 +54,12 @@ export default defineRoute((req, ctx: RouteContext<void, TicketContext>) => {
               )}
             </div>
             <div class=" mt-4 flex flex-col items-center grow">
-              <h3 class="text-xl font-bold text-center line-clamp-1 max-w-max">{ticket.event.name}</h3>
-              <p class="line-clamp-3 text-sm text-pretty text-center mt-2 mb-4">{ticket.event.summary}</p>
+              <h3 class="text-xl font-bold text-center line-clamp-1 max-w-max">
+                {ticket.event.name}
+              </h3>
+              <p class="line-clamp-3 text-sm text-pretty text-center mt-2 mb-4">
+                {ticket.event.summary}
+              </p>
               <CTA btnType="secondary" btnSize="sm" className="mt-auto">
                 View Ticket
               </CTA>

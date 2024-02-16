@@ -19,12 +19,12 @@ export const faqs: FAQ[] = [
   },
   {
     q: "How do timezones work for events without a time?",
-    a: "Events without a specific time of day set will always have the same date, regardless of timezone. Note that the event settings page may display an incorrect date if you're in a different timezone than when the date was selected."
-  }, 
+    a: "Events without a specific time of day set will always have the same date, regardless of timezone. Note that the event settings page may display an incorrect date if you're in a different timezone than when the date was selected.",
+  },
   {
     q: "How do timezones work for events with a time?",
-    a: "Events with a time of day set will always convert to the user's timezone that is viewing the event. The event settings page will do it's best to convert to the user's local timezone."
-  }
+    a: "Events with a time of day set will always convert to the user's timezone that is viewing the event. The event settings page will do it's best to convert to the user's local timezone.",
+  },
 ];
 
 export interface FAQ {

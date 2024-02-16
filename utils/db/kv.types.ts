@@ -30,6 +30,7 @@ export interface Event {
   published: boolean;
 }
 
+// known to users as Event Times
 export interface ShowTime {
   startDate: string;
   startTime?: string;

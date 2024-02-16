@@ -53,10 +53,12 @@ export default function Dropdown({
 
             return (
               <>
-              {option.link ? <a href={option.link}>{btn}</a> : btn}
-              {option.breakBelow && <div class="h-0.5 rounded-full bg-gray-200 px-2"/> }
+                {option.link ? <a href={option.link}>{btn}</a> : btn}
+                {option.breakBelow && (
+                  <div class="h-0.5 rounded-full bg-gray-200 px-2" />
+                )}
               </>
-            )
+            );
           })}
         </div>
       </div>

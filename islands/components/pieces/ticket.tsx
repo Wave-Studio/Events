@@ -4,6 +4,7 @@ import { useSignal } from "@preact/signals";
 import { useEffect } from "preact/hooks";
 import { qrcode } from "https://deno.land/x/qrcode@v2.0.0/mod.ts";
 import { QR } from "@/components/svgs/qr.tsx";
+import { ClientDate } from "@/islands/events/viewing/dates.tsx";
 
 export default function Ticket({
   showTime,
@@ -51,7 +52,11 @@ export default function Ticket({
       <div class="grid gap-2 mt-4 font-medium ">
         <div>
           <div class="bg-gray-100 border px-1.5 rounded-md text-center">
-            {fmtDate(new Date(showTime.startDate!))}
+            {showTime.startTime ? (
+              fmtDate(new Date(showTime.startDate))
+            ) : (
+              <ClientDate date={showTime.startDate} />
+            )}
           </div>
         </div>
         <div class="flex justify-center">

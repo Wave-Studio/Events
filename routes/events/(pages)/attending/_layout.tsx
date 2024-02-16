@@ -1,5 +1,5 @@
 import { defineLayout, RouteContext } from "$fresh/server.ts";
-import { Event, getUser, kv, Ticket, User } from "@/utils/db/kv.ts";
+import { Event, getUser, kv, ShowTime, Ticket, User } from "@/utils/db/kv.ts";
 
 export default defineLayout(
   async (req: Request, ctx: RouteContext<void, TicketContext>) => {
@@ -36,7 +36,7 @@ export default defineLayout(
 
       return {
         id: id as string,
-        date: new Date(showTime.startDate),
+        time: showTime,
         event: event,
       };
     });
@@ -77,7 +77,7 @@ export interface TicketContext {
     tickets: {
       id: string;
       event: Event;
-      date: Date;
+      time: ShowTime;
     }[];
     user: User;
   };
