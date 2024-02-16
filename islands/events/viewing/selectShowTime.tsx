@@ -2,6 +2,7 @@ import { ShowTime } from "@/utils/db/kv.types.ts";
 import { Signal } from "@preact/signals";
 import Popup from "@/components/popup.tsx";
 import { fmtDate, fmtHour, fmtTime } from "@/utils/dates.ts";
+import { ClientDate } from "@/islands/events/viewing/dates.tsx";
 
 const SelectShowTime = ({
   showTimes,
@@ -20,7 +21,7 @@ const SelectShowTime = ({
     typeof showTime == "string"
       ? time.id == showTime
       : time.id == showTime.value,
-  );
+  )!;
   return (
     <>
       <button
@@ -35,7 +36,12 @@ const SelectShowTime = ({
         >
           {selectedTime ? (
             <>
-              {fmtDate(new Date(selectedTime.startDate!))}
+              {selectedTime.startTime ? (
+                fmtDate(new Date(selectedTime.startDate!))
+              ) : (
+                /* force dates to be the same across timezones if there's no startime */
+                <ClientDate date={selectedTime.startDate!} />
+              )}
               {selectedTime.startTime &&
                 ` at ${fmtHour(
                   new Date(selectedTime.startTime),
@@ -94,10 +100,17 @@ const SelectShowTime = ({
               type="button"
             >
               <p class="flex">
-                {fmtDate(new Date(time.startDate!))}
-                <span class="lowercase">
-                  {time.startTime && ` at ${fmtTime(new Date(time.startTime))}`}
-                </span>
+                {time.startTime ? (
+                  <>
+                    {fmtDate(new Date(time.startDate!))}
+                    <span class="lowercase">
+                      {time.startTime &&
+                        ` at ${fmtTime(new Date(time.startTime))}`}
+                    </span>
+                  </>
+                ) : (
+                  <ClientDate date={time.startDate!} />
+                )}
               </p>
             </button>
           ))}

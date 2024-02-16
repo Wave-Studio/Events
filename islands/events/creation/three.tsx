@@ -3,6 +3,7 @@ import { StateUpdater, useEffect, useState } from "preact/hooks";
 import { Event } from "@/utils/db/kv.types.ts";
 import ImagePicker from "../../components/pickers/image.tsx";
 import CTA from "@/components/buttons/cta.tsx";
+import { fixDate } from "@/utils/event/fixDate.ts";
 
 export default function StageThree({
   eventState,
@@ -18,6 +19,13 @@ export default function StageThree({
 
   useEffect(() => {
     (async () => {
+      // last minute fixes for date
+      // ensure that if a user sets a date for something the timezone works
+      eventState.value = {
+        ...eventState.value,
+        showTimes: fixDate(eventState.value.showTimes),
+      };
+
       setError(undefined);
       const data = await (
         await fetch("/api/events/create", {

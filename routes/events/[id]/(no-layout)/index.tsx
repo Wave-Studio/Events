@@ -15,6 +15,7 @@ import { acquired, getTicketID } from "@/utils/tickets.ts";
 import CTA from "@/components/buttons/cta.tsx";
 import { useEffect } from "preact/hooks";
 import ImagekitImage from "@/components/imagekitimg.tsx";
+import { ClientDate } from "@/islands/events/viewing/dates.tsx";
 
 export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
   const { event, eventID, user } = ctx.state.data;
@@ -37,7 +38,12 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
           <p class="break-keep">
             {event.showTimes.length > 1 && "Begins"}{" "}
             <span className="font-medium">
-              {fmtDate(new Date(event.showTimes[0].startDate))}{" "}
+              {event.showTimes[0].startTime ? (
+                fmtDate(new Date(event.showTimes[0].startDate))
+              ) : (
+                /* force dates to be the same across timezones if there's no startime */
+                <ClientDate date={event.showTimes[0].startDate} />
+              )}{" "}
               <span class="lowercase">
                 {event.showTimes.length == 1 &&
                   event.showTimes[0].startTime &&
@@ -78,8 +84,9 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
         {event.showTimes.length == 1 && event.showTimes[0].lastPurchaseDate && (
           <p class="text-xs text-gray-600 text-center mt-2">
             The last day to get tickets is{" "}
-            {fmtDate(new Date(event.showTimes[0].lastPurchaseDate))} at Midnight
-            ({getTimeZone(new Date(event.showTimes[0].lastPurchaseDate))})
+            <ClientDate date={event.showTimes[0].lastPurchaseDate} /> at
+            Midnight (
+            {getTimeZone(new Date(event.showTimes[0].lastPurchaseDate))})
           </p>
         )}
       </div>

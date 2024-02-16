@@ -6,6 +6,7 @@ import { ShowTimeUI } from "@/islands/events/creation/one.tsx";
 import Plus from "$tabler/plus.tsx";
 import { useSignal } from "@preact/signals";
 import { Event } from "@/utils/db/kv.ts";
+import { fixDate } from "@/utils/event/fixDate.ts";
 
 export default function ShowTimeSettings({
   showTimes,
@@ -31,7 +32,7 @@ export default function ShowTimeSettings({
     const res = await fetch("/api/events/edit", {
       body: JSON.stringify({
         eventID,
-        newEventData: { showTimes: currentState.value } as Partial<Event>,
+        newEventData: { showTimes: fixDate(currentState.value) } as Partial<Event>,
       }),
       method: "POST",
     });

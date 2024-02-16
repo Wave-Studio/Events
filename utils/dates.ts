@@ -34,4 +34,4 @@ export const fmtHour = (date: Date) => hourFmt.format(date);
 export const fmtTime = (date: Date) => timeFmt.format(date);
 // not an ideal solution
 export const getTimeZone = (date: Date) =>
-  timezoneFmt.format(date).split(", ")[1];
+  date.toString().split("(")[1].slice(undefined, date.toString().split("(")[1].length - 1);
