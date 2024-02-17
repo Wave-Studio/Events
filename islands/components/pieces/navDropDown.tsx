@@ -9,13 +9,27 @@ import UserCircle from "$tabler/user-circle.tsx";
 import Logout from "$tabler/logout-2.tsx";
 import { useSignal } from "@preact/signals";
 
-const NavbarDropDown = ({ user }: { user: User }) => {
+const NavbarDropDown = ({
+  user,
+  translucent,
+}: {
+  user: User;
+  translucent?: boolean;
+}) => {
   const open = useSignal(false);
+
+  const openStyle = translucent
+    ? "bg-gray-200/75 backdrop-blur border-transparent border"
+    : "bg-gray-200";
+  const closedStyle = translucent
+    ? "hover:bg-gray-200/75 bg-black/20 backdrop-blur border-gray-300/20 hover:border-transparent border"
+    : "hover:bg-gray-200";
 
   return (
     <Dropdown
       isOpen={open}
       className="ml-auto mr-3 md:mr-2 z-30 focus:outline-none my-auto"
+      dropdownClassName={translucent ? "bg-white/90 backdrop-blur" : undefined}
       options={[
         {
           content: (
@@ -68,14 +82,21 @@ const NavbarDropDown = ({ user }: { user: User }) => {
     >
       <button
         class={`${
-          open.value ? "bg-gray-200" : "hover:bg-gray-200"
-        } flex p-1 md:px-3 md:py-1.5 items-center transition md:rounded-md rounded-full`}
+          open.value ? openStyle : closedStyle
+        } flex p-1 md:px-3 md:py-1.5 items-center transition md:rounded-md rounded-full group focus:outline-none`}
       >
-        <p class="font-medium hidden md:block max-w-sm truncate">
+        <p
+          class={`font-medium hidden md:block max-w-sm truncate transition ${
+            translucent &&
+            (open.value
+              ? "text-gray-900"
+              : "text-gray-100 group-hover:text-gray-900")
+          }`}
+        >
           {user.email.split("@")[0]}
         </p>
-        <Selector class="size-5 ml-1 hidden md:block text-gray-600" />
-        <UserCircle class="size-6 block md:hidden" />
+        <Selector class={`size-5 ml-1 hidden md:block ${(translucent && !open.value) ? "text-gray-300 group-hover:text-gray-600 " : "text-gray-600 "}`} />
+        <UserCircle class={`size-6 block md:hidden ${(translucent && !open.value) ? "text-gray-300 group-hover:text-gray-900 " : "text-gray-900 "}`} />
       </button>
     </Dropdown>
   );

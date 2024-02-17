@@ -7,6 +7,7 @@ export default function Dropdown({
   options,
   children,
   className,
+  dropdownClassName,
   isOpen,
 }: {
   options: {
@@ -18,6 +19,7 @@ export default function Dropdown({
   }[];
   children: ComponentChild;
   className?: string;
+  dropdownClassName?: string;
   isOpen?: Signal<boolean>;
 }) {
   const open = isOpen || useSignal(false);
@@ -36,7 +38,7 @@ export default function Dropdown({
         <div
           className={`${
             open.value ? "block" : "hidden"
-          } absolute p-2 bg-white border rounded-md shadow-xl grid gap-2 top-10 select-none transition z-50 grow`}
+          } absolute p-2 bg-white border rounded-md shadow-xl grid gap-2 top-10 select-none transition z-50 grow ${dropdownClassName}`}
         >
           {options.map((option) => {
             const btn = (

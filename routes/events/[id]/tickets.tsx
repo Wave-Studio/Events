@@ -4,14 +4,14 @@ import {
   EventContext,
 } from "@/routes/events/[id]/_layout.tsx";
 import EventHeader from "@/components/layout/eventEditNavbar.tsx";
-import Dropdown from "@/islands/components/pickers/dropdown.tsx";
-import DotsVertical from "$tabler/dots-vertical.tsx";
 import TicketsFilters from "@/islands/tickets/filters.tsx";
 import { signal } from "@preact/signals";
 import ShowtimeSelector from "@/islands/events/editing/showtimeSelector.tsx";
 import { kv, Ticket } from "@/utils/db/kv.ts";
 import { fmtDate } from "@/utils/dates.ts";
 import { NotFound } from "@/components/svgs/not-found.tsx";
+import TicketDropdown from "@/islands/events/list/ticketDropdown.tsx";
+import ExportTicketData from "@/islands/events/list/exportTicketData.tsx";
 
 export default defineRoute(
   async (req, ctx: RouteContext<void, EventContext>) => {
@@ -59,6 +59,13 @@ export default defineRoute(
           defaultShowTime={showTimeID}
           showTimes={event.showTimes}
         />
+        <ExportTicketData
+          tickets={tickets.map(
+            ({ key, value }) =>
+              [(key[3] as string).split("_")[2], value] as [string, Ticket],
+          )}
+          fields={event.additionalFields}
+        />
         <TicketsFilters query={query} sort={sort} />
 
         <h2 class="font-medium text-sm mb-0.5 mt-8">Tickets</h2>
@@ -94,28 +101,17 @@ export default defineRoute(
                         <p class="text-xs text-gray-700">{value.userEmail}</p>
                       </div>
 
-                      <Dropdown
-                        options={[
-                          {
-                            content: "See Ticket",
-                            link: `./tickets/${ticketID}?s=${key[2] as string}`,
-                          },
-                          {
-                            content: "Delete Ticket",
-                          },
-                        ]}
-                      >
-                        <div
-                          className={`w-8 grid place-items-center border h-8 rounded-md hover:bg-gray-200 transition`}
-                        >
-                          <DotsVertical class="h-5 w-5" />
-                        </div>
-                      </Dropdown>
+                      <TicketDropdown
+                        key={key[2] as string}
+                        value={value}
+                        ticketID={ticketID}
+                        fields={event.additionalFields}
+                      />
                     </div>
                     <div class="flex gap-2 flex-wrap">
                       {/* need some */}
                       <div class="rounded-md border text-sm font-semibold px-1 text-gray-700 bg-gray-100">
-                        2/2 tickets
+                        {value.tickets} tickets
                       </div>
                       {showTimeID === "0" && (
                         <div class="rounded-md border text-sm font-semibold px-1 text-gray-700 bg-gray-100">
