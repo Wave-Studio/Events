@@ -6,18 +6,13 @@ import useForm from "@/components/hooks/fakeFormik/index.tsx";
 import * as Yup from "yup";
 import { useSignal } from "@preact/signals";
 import { Toggle } from "@/components/buttons/toggle.tsx";
-import Minus from "$tabler/minus.tsx";
-import Plus from "$tabler/plus.tsx";
-import Button from "@/components/buttons/button.tsx";
-import ChevronLeft from "$tabler/chevron-left.tsx";
-import { createPortal } from "preact/compat";
-import Loading from "$tabler/loader-2.tsx";
-import Ticket from "../../components/pieces/ticket.tsx";
+import Ticket from "@/islands/components/pieces/ticket.tsx";
 import { acquired, getTicketID } from "@/utils/tickets.ts";
 import { EventRegisterError } from "@/utils/event/register.ts";
-import { RegisterErrors } from "../components/registerErrors.tsx";
-import SelectShowTime from "./selectShowTime.tsx";
+import { RegisterErrors } from "@/islands/events/components/registerErrors.tsx";
+import SelectShowTime from "@/islands/events/viewing/selectShowTime.tsx";
 import { isUUID } from "@/utils/db/misc.ts";
+import Submit from "@/islands/events/viewing/register/submit.tsx";
 
 export default function EventRegister({
   eventID,
@@ -82,72 +77,6 @@ export default function EventRegister({
     // TODO: add client side validation
     validationSchema: Yup.object({}),
   });
-
-  const Submit = () => (
-    <>
-      <div class="flex justify-between mt-4 items-center">
-        <div class="flex flex-col items-center">
-          {/* We could not show this UI at all when there's only 1 ticket, but I think this may be better UX since it makes it a bit more obvious the user can't get more */}
-          <span class="text-xs font-medium">
-            Tickets
-            {!showTimes.find((s) => s.id == showTime.value)!.multiPurchase &&
-              ": 1 (max)"}
-          </span>
-          {showTimes.find((s) => s.id == showTime.value)!.multiPurchase && (
-            <div class="flex gap-2 items-center">
-              <button
-                class="group hover:bg-gray-200 size-6 grid place-items-center rounded-md transition"
-                onClick={() => tickets.value > 1 && tickets.value--}
-                type="button"
-              >
-                <Minus class="h-4 w-4 text-gray-500 group-hover:text-gray-700" />
-              </button>
-              <p class="px-1.5 bg-gray-100 border-2 font-medium rounded-md text-gray-600">
-                {tickets.value}
-              </p>
-              <button
-                class="group hover:bg-gray-200 size-6 grid place-items-center rounded-md transition"
-                type="button"
-                onClick={() => tickets.value++}
-              >
-                <Plus class="h-4 w-4 text-gray-500 group-hover:text-gray-700" />
-              </button>
-            </div>
-          )}
-        </div>
-        <div class="flex">
-          {page.value != 0 && (
-            <Button
-              icon={<ChevronLeft class="size-6" />}
-              label="Previous Page"
-              labelOnTop
-              onClick={() => page.value--}
-            />
-          )}
-          <CTA
-            btnType="cta"
-            type="submit"
-            btnSize="sm"
-            className="ml-2 flex items-center justify-center"
-            disabled={ticketID.value == "loading"}
-          >
-            Register
-            {ticketID.value == "loading" && (
-              <Loading class="size-5 animate-spin ml-2" />
-            )}
-          </CTA>
-        </div>
-      </div>
-      {error.value && (
-        <div class="flex flex-col items-center">
-          <p class="text-center text-red-500 text-sm mb-2">
-            {error.value.message}
-          </p>
-          <RegisterErrors code={error.value.code} />
-        </div>
-      )}
-    </>
-  );
 
   const createTicket = async (formState: {
     [key: string]: string | number;
@@ -273,7 +202,14 @@ export default function EventRegister({
                       Next
                     </CTA>
                   ) : (
-                    <Submit />
+                    <Submit
+                      error={error}
+                      page={page}
+                      showTime={showTime}
+                      showTimes={showTimes}
+                      ticketID={ticketID}
+                      tickets={tickets}
+                    />
                   )}
                 </>
               )}
@@ -318,7 +254,14 @@ export default function EventRegister({
                     />
                   </>
                 ))}
-              <Submit />
+              <Submit
+                error={error}
+                page={page}
+                showTime={showTime}
+                showTimes={showTimes}
+                ticketID={ticketID}
+                tickets={tickets}
+              />
             </>
           ) : (
             // After user has acquired tickets
@@ -368,54 +311,3 @@ export default function EventRegister({
     </div>
   );
 }
-
-export const Contact = ({ email }: { email: string }) => {
-  const [open, setOpen] = useState(false);
-  const checked = useSignal(false);
-  return (
-    <>
-      <button
-        className="flex items-center select-none font-medium hover:bg-gray-200/75 hover:text-gray-900 transition text-sm mt-4 rounded-md bg-white/25 backdrop-blur-xl border px-1.5 py-0.5"
-        onClick={() => setOpen(true)}
-      >
-        Contact Organizer
-      </button>
-      {globalThis.document != undefined &&
-        createPortal(
-          <Popup
-            isOpen={open}
-            close={() => {
-              setOpen(false);
-              checked.value = false;
-            }}
-          >
-            <h2 class="font-bold text-lg">Contact Organizer</h2>
-            <label class="flex mt-4 items-start cursor-pointer">
-              <input
-                type="checkbox"
-                name="agreed"
-                class="mr-4 mt-1.5"
-                onClick={(e) => (checked.value = e.currentTarget.checked)}
-              />
-              <p>
-                I agree to interacting with this email in a professional way and
-                following our guidelines as outlined in our{" "}
-                <a href="/terms-of-service" class="font-medium underline">
-                  terms and conditions
-                </a>
-              </p>
-            </label>
-            {checked.value && (
-              <p class="mt-6">
-                Organizer contact email:{" "}
-                <a href={`mailto:${email}`} class="font-medium underline">
-                  {email}
-                </a>
-              </p>
-            )}
-          </Popup>,
-          document.body,
-        )}
-    </>
-  );
-};

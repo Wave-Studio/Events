@@ -21,7 +21,7 @@ const ShowtimeSelector = ({
   };
 
   return (
-    <div class="mt-8 mb-2 ml-auto">
+    
       <SelectShowTime
         all={true}
         changeOpen={changeOpen}
@@ -29,7 +29,7 @@ const ShowtimeSelector = ({
         showTimes={showTimes}
         setShowTime={setShowTime}
       />
-    </div>
+    
   );
 };
 

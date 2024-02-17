@@ -91,13 +91,13 @@ export default defineRoute(
         </Head>
 
         <div className="flex flex-col min-h-screen ">
-        {user && (
-          <>
-            <div class="flex absolute top-0 h-14 z-30 w-full items-center justify-end px-3 py-1">
-              <NavbarDropDown user={user.data} />
-            </div>
-          </>
-        )}
+          {user && (
+            <>
+              <div class="flex absolute top-0 h-14 z-30 w-full items-center justify-end px-3 py-1">
+                <NavbarDropDown user={user.data} />
+              </div>
+            </>
+          )}
           <main className="px-4 max-w-screen-md w-full mx-auto flex flex-col gap-8 grow mb-10 items-center mt-4 md:mt-16 print:justify-center print:gap-12">
             <h1 class="font-extrabold text-2xl text-center print:block">
               {ticket.value.firstName}'s Ticket

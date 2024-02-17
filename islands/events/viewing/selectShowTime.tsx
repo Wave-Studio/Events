@@ -62,7 +62,7 @@ const SelectShowTime = ({
         isOpen={changeOpen.value}
         className="md:!max-w-md"
       >
-        <h3 class="font-bold text-lg mb-2">Change</h3>
+        <h3 class="font-bold text-lg mb-2">Pick Time</h3>
         <div class="grid gap-2">
           {/* All event times button */}
           {all && (

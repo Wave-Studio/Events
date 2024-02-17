@@ -84,9 +84,11 @@ import * as $events_teams_filters from "./islands/events/teams/filters.tsx";
 import * as $events_teams_invite from "./islands/events/teams/invite.tsx";
 import * as $events_teams_manage from "./islands/events/teams/manage.tsx";
 import * as $events_viewing_availability from "./islands/events/viewing/availability.tsx";
+import * as $events_viewing_contact from "./islands/events/viewing/contact.tsx";
 import * as $events_viewing_dates from "./islands/events/viewing/dates.tsx";
 import * as $events_viewing_delete from "./islands/events/viewing/delete.tsx";
-import * as $events_viewing_register from "./islands/events/viewing/register.tsx";
+import * as $events_viewing_register_index from "./islands/events/viewing/register/index.tsx";
+import * as $events_viewing_register_submit from "./islands/events/viewing/register/submit.tsx";
 import * as $events_viewing_selectShowTime from "./islands/events/viewing/selectShowTime.tsx";
 import * as $events_viewing_showtimes from "./islands/events/viewing/showtimes.tsx";
 import * as $events_viewing_ticketActions from "./islands/events/viewing/ticketActions.tsx";
@@ -196,9 +198,13 @@ const manifest = {
     "./islands/events/teams/invite.tsx": $events_teams_invite,
     "./islands/events/teams/manage.tsx": $events_teams_manage,
     "./islands/events/viewing/availability.tsx": $events_viewing_availability,
+    "./islands/events/viewing/contact.tsx": $events_viewing_contact,
     "./islands/events/viewing/dates.tsx": $events_viewing_dates,
     "./islands/events/viewing/delete.tsx": $events_viewing_delete,
-    "./islands/events/viewing/register.tsx": $events_viewing_register,
+    "./islands/events/viewing/register/index.tsx":
+      $events_viewing_register_index,
+    "./islands/events/viewing/register/submit.tsx":
+      $events_viewing_register_submit,
     "./islands/events/viewing/selectShowTime.tsx":
       $events_viewing_selectShowTime,
     "./islands/events/viewing/showtimes.tsx": $events_viewing_showtimes,

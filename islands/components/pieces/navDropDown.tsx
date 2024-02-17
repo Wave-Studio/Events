@@ -95,8 +95,20 @@ const NavbarDropDown = ({
         >
           {user.email.split("@")[0]}
         </p>
-        <Selector class={`size-5 ml-1 hidden md:block ${(translucent && !open.value) ? "text-gray-300 group-hover:text-gray-600 " : "text-gray-600 "}`} />
-        <UserCircle class={`size-6 block md:hidden ${(translucent && !open.value) ? "text-gray-300 group-hover:text-gray-900 " : "text-gray-900 "}`} />
+        <Selector
+          class={`size-5 ml-1 hidden md:block transition ${
+            translucent && !open.value
+              ? "text-gray-300 group-hover:text-gray-600 "
+              : "text-gray-600 "
+          }`}
+        />
+        <UserCircle
+          class={`size-6 block md:hidden transition ${
+            translucent && !open.value
+              ? "text-gray-300 group-hover:text-gray-900 "
+              : "text-gray-900 "
+          }`}
+        />
       </button>
     </Dropdown>
   );

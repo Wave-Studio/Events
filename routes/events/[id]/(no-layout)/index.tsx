@@ -1,22 +1,19 @@
 import { defineRoute, LayoutConfig, RouteContext } from "$fresh/server.ts";
 import { Head } from "$fresh/runtime.ts";
 import { EventContext } from "@/routes/events/[id]/_layout.tsx";
-import imagekit from "../../../../utils/imagekit/index.ts";
-import Left from "$tabler/chevron-left.tsx";
 import Location from "$tabler/map-pin.tsx";
 import Calender from "$tabler/calendar.tsx";
-
-import EventRegister, { Contact } from "@/islands/events/viewing/register.tsx";
+import EventRegister from "@/islands/events/viewing/register/index.tsx";
 import Footer from "@/components/layout/footer.tsx";
 import { fmtDate, fmtTime, getTimeZone, happened } from "@/utils/dates.ts";
 import { Availability } from "@/islands/events/viewing/availability.tsx";
 import { ShowTimes } from "@/islands/events/viewing/showtimes.tsx";
 import { acquired, getTicketID } from "@/utils/tickets.ts";
 import CTA from "@/components/buttons/cta.tsx";
-import { useEffect } from "preact/hooks";
 import ImagekitImage from "@/components/imagekitimg.tsx";
 import { ClientDate } from "@/islands/events/viewing/dates.tsx";
 import NavbarDropDown from "@/islands/components/pieces/navDropDown.tsx";
+import { Contact } from "@/islands/events/viewing/contact.tsx";
 
 export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
   const { event, eventID, user } = ctx.state.data;

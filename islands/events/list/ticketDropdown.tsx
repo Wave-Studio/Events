@@ -1,15 +1,15 @@
 import Dropdown from "@/islands/components/pickers/dropdown.tsx";
 import DotsVertical from "$tabler/dots-vertical.tsx";
-import { Ticket, Field } from "@/utils/db/kv.types.ts";
+import { Field, Ticket } from "@/utils/db/kv.types.ts";
 
 export default function TicketDropdown({
   ticketID,
-  key,
+  showtime,
   value,
   fields,
 }: {
   ticketID: string;
-  key: string;
+  showtime: string;
   value: Ticket;
   fields: Field[];
 }) {
@@ -18,7 +18,7 @@ export default function TicketDropdown({
       options={[
         {
           content: "See Ticket",
-          link: `./tickets/${ticketID}?s=${key}`,
+          link: `./tickets/${ticketID}?s=${showtime}`,
         },
         {
           content: "Delete Ticket",

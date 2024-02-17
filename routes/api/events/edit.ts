@@ -50,11 +50,12 @@ export const handler: Handlers = {
     try {
       FullEventValidation.validateSync(combinedEvent, { strict: false });
     } catch (e) {
+      console.log("smth broken");
       return new Response(JSON.stringify({ error: e.message }), {
         status: 400,
       });
     }
-
+    console.log("nothing broken");
     const res = await kv.set(["event", eventID], combinedEvent);
 
     return new Response(JSON.stringify({ success: res.ok }), {

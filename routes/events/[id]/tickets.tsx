@@ -54,18 +54,25 @@ export default defineRoute(
     return (
       <main className="px-4 max-w-screen-md w-full mx-auto flex flex-col gap-2 grow mb-10 ">
         <EventHeader editPosition={1} role={user.role} />
-
-        <ShowtimeSelector
-          defaultShowTime={showTimeID}
-          showTimes={event.showTimes}
-        />
-        <ExportTicketData
-          tickets={tickets.map(
-            ({ key, value }) =>
-              [(key[3] as string).split("_")[2], value] as [string, Ticket],
-          )}
-          fields={event.additionalFields}
-        />
+        <div class="mt-8 mb-2 ml-auto flex gap-2">
+          <ShowtimeSelector
+            defaultShowTime={showTimeID}
+            showTimes={event.showTimes}
+          />
+          <ExportTicketData
+            tickets={tickets.map(
+              ({ key, value }) =>
+                [key[2] as string, (key[3] as string).split("_")[2], value] as [
+                  string,
+                  string,
+                  Ticket,
+                ],
+            )}
+            fields={event.additionalFields}
+            showTimes={event.showTimes}
+            selectedShowTime={showTimeID}
+          />
+        </div>
         <TicketsFilters query={query} sort={sort} />
 
         <h2 class="font-medium text-sm mb-0.5 mt-8">Tickets</h2>
@@ -102,7 +109,7 @@ export default defineRoute(
                       </div>
 
                       <TicketDropdown
-                        key={key[2] as string}
+                        showtime={key[2].toString()}
                         value={value}
                         ticketID={ticketID}
                         fields={event.additionalFields}
@@ -111,7 +118,7 @@ export default defineRoute(
                     <div class="flex gap-2 flex-wrap">
                       {/* need some */}
                       <div class="rounded-md border text-sm font-semibold px-1 text-gray-700 bg-gray-100">
-                        {value.tickets} tickets
+                        {value.tickets} ticket{value.tickets !== 1 ? "s" : ""}
                       </div>
                       {showTimeID === "0" && (
                         <div class="rounded-md border text-sm font-semibold px-1 text-gray-700 bg-gray-100">
