@@ -173,7 +173,7 @@ const LoginForm = ({
         {/* login code input */}
         <div class="ml-1">
           <p class="mt-2 mb-8 w-64 [@media(min-width:300px)]:w-72 text-center">
-            We just emailed you a login code! Please enter it below.
+            {emailInputted ? "To verify that you're you, please enter the code we emailed you below" : "We just emailed you a login code! Please enter it below."}
           </p>
           <form onSubmit={login} noValidate>
             <label class="flex flex-col">

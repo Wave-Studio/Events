@@ -17,30 +17,32 @@ export default defineLayout(
       });
     }
 
-    const events = await kv.getMany(
-      user.tickets.map((ticket) => {
-        return ["event", ticket.split("_")[0]];
-      }),
+    const eventsToFetch: string[] = [];
+
+    for (const ticket of user.tickets) {
+      if (!eventsToFetch.includes(ticket.split("_")[0])) {
+        eventsToFetch.push(ticket.split("_")[0]);
+      }
+    }
+
+    const events = await kv.getMany<Event[]>(
+      eventsToFetch.map((id) => ["event", id]),
     );
 
-    const tickets = events.map((e) => {
-      const event = e.value as Event;
-      const id = e.key[1];
-      //theoreticlly I could just plug the iteration into the array of tickets but this should catch any wierd edge cases
-      const ticket = user.tickets.find(
-        (ticket) => ticket.split("_")[0] === id,
-      )!;
-      const showTime = event.showTimes.find(
-        (showTime) => showTime.id === ticket.split("_")[1],
-      )!;
+    const tickets: TicketContext["data"]["tickets"] = [];
 
-      return {
-        eventID: id as string,
-        time: showTime,
-        event: event,
-        ticketID: ticket.split("_")[2],
-      };
-    });
+    for (const ticket of user.tickets) {
+      const [eventID, showtimeID, ticketID] = ticket.split("_");
+      const event = events.find((e) => e.key[1] === eventID)!.value!;
+      const showtime = event.showTimes.find((s) => s.id === showtimeID)!;
+
+      tickets.push({
+        eventID,
+        ticketID,
+        event,
+        time: showtime,
+      })
+    }
 
     ctx.state.data = {
       user,
