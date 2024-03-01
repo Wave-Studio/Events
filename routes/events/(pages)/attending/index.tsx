@@ -60,9 +60,11 @@ export default defineRoute((req, ctx: RouteContext<void, TicketContext>) => {
               <p class="line-clamp-3 text-sm text-pretty text-center mt-2 mb-4">
                 {ticket.event.summary}
               </p>
+              <a href={`/events/${ticket.eventID}/tickets/${ticket.ticketID}?s=${ticket.time.id}`}>
               <CTA btnType="secondary" btnSize="sm" className="mt-auto">
                 View Ticket
               </CTA>
+              </a>
             </div>
           </div>
         ))}

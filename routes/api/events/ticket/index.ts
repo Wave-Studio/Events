@@ -239,64 +239,43 @@ export const handler: Handlers = {
       );
     }
 
-    const eventUser = await kv.get<User>(["user", email]);
+    const user = await getUser(req);
 
-    const user =
-      eventUser.value ??
-      ({
-        tickets: [],
-        events: [],
-        plan: Plan.BASIC,
-        email,
-        joinedAt: Date.now().toString(),
-        authToken: "unregistered",
-      } satisfies User);
+    if (!user) {
+      return new Response(
+        JSON.stringify({
+          error: {
+            message: "You must log in to register for this event!",
+            code: EventRegisterError.PREVIOUSLY_LOGGED_IN,
+          },
+        }),
+        {
+          status: 400,
+        },
+      );
+    }
 
-    if (user.authToken != "unregistered") {
-      const authToken = getUserAuthToken(req);
+    const organizer = event.value.members.find((m) => m.email == user.email);
 
-      if (authToken != user.authToken) {
-        if (authToken == undefined) {
-          return new Response(
-            JSON.stringify({
-              error: {
-                message: "You must log in to register for this event!",
-                code: EventRegisterError.PREVIOUSLY_LOGGED_IN,
-              },
-            }),
-            {
-              status: 400,
-            },
-          );
-        } else {
-          const loggedInUser = await getUser(req);
-
-          const organizer = event.value.members.find(
-            (m) => m.email == loggedInUser?.email,
-          );
-
-          if (
-            organizer == undefined ||
-            ![Roles.OWNER, Roles.ADMIN, Roles.MANAGER, Roles.SCANNER].includes(
-              organizer.role,
-            ) ||
-            loggedInUser == undefined
-          ) {
-            return new Response(
-              JSON.stringify({
-                error: {
-                  message:
-                    "You are not logged in as the user you are trying to register for",
-                  code: EventRegisterError.PURCHASED_NOT_LOGGED_IN,
-                },
-              }),
-              {
-                status: 400,
-              },
-            );
-          }
-        }
-      }
+    if (
+      !(user.email === email) &&
+      (organizer == undefined ||
+        ![Roles.OWNER, Roles.ADMIN, Roles.MANAGER, Roles.SCANNER].includes(
+          organizer.role,
+        ))
+    ) {
+      return new Response(
+        JSON.stringify({
+          error: {
+            message:
+              "You are not logged in as the user you are trying to register for",
+            code: EventRegisterError.PURCHASED_NOT_LOGGED_IN,
+          },
+        }),
+        {
+          status: 400,
+        },
+      );
     }
 
     if (

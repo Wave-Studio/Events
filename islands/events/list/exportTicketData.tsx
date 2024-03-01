@@ -5,13 +5,13 @@ export default function ExportTicketData({
   tickets,
   fields,
   showTimes,
-  selectedShowTime
+  selectedShowTime,
 }: {
   // showtimeID, ticketID, ticket
   tickets: [string, string, Ticket][];
   fields: Field[];
   showTimes: ShowTime[];
-  selectedShowTime: string
+  selectedShowTime: string;
 }) {
   const exportTickets = (showtime?: string) => {
     const filteredTickets = tickets.filter(
@@ -63,7 +63,24 @@ export default function ExportTicketData({
       }),
     ].join("\n");
 
-    return data;
+    const element = document.createElement("a");
+    element.setAttribute(
+      "href",
+      "data:text/csv;charset=utf-8," + encodeURIComponent(data),
+    );
+    element.setAttribute(
+      "download",
+      `Events Ticket Data - ${
+        showtime == undefined ? "All Showtimes" : showtime
+      }.csv`,
+    );
+
+    element.style.display = "none";
+    document.body.appendChild(element);
+
+    element.click();
+
+    document.body.removeChild(element);
   };
 
   return (
@@ -71,7 +88,11 @@ export default function ExportTicketData({
       <button
         type="button"
         onClick={() => {
-          console.log(exportTickets(selectedShowTime == "0" ? undefined : selectedShowTime));
+          console.log(
+            exportTickets(
+              selectedShowTime == "0" ? undefined : selectedShowTime,
+            ),
+          );
         }}
         class="rounded-md bg-gray-200 h-8 grid place-content-center px-2 font-medium hover:brightness-95 transition"
       >

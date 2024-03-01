@@ -35,9 +35,10 @@ export default defineLayout(
       )!;
 
       return {
-        id: id as string,
+        eventID: id as string,
         time: showTime,
         event: event,
+        ticketID: ticket.split("_")[2],
       };
     });
 
@@ -75,9 +76,10 @@ export default defineLayout(
 export interface TicketContext {
   data: {
     tickets: {
-      id: string;
+      eventID: string;
       event: Event;
       time: ShowTime;
+      ticketID: string;
     }[];
     user: User;
   };

@@ -88,6 +88,7 @@ import * as $events_viewing_contact from "./islands/events/viewing/contact.tsx";
 import * as $events_viewing_dates from "./islands/events/viewing/dates.tsx";
 import * as $events_viewing_delete from "./islands/events/viewing/delete.tsx";
 import * as $events_viewing_register_index from "./islands/events/viewing/register/index.tsx";
+import * as $events_viewing_register_login from "./islands/events/viewing/register/login.tsx";
 import * as $events_viewing_register_submit from "./islands/events/viewing/register/submit.tsx";
 import * as $events_viewing_selectShowTime from "./islands/events/viewing/selectShowTime.tsx";
 import * as $events_viewing_showtimes from "./islands/events/viewing/showtimes.tsx";
@@ -203,6 +204,8 @@ const manifest = {
     "./islands/events/viewing/delete.tsx": $events_viewing_delete,
     "./islands/events/viewing/register/index.tsx":
       $events_viewing_register_index,
+    "./islands/events/viewing/register/login.tsx":
+      $events_viewing_register_login,
     "./islands/events/viewing/register/submit.tsx":
       $events_viewing_register_submit,
     "./islands/events/viewing/selectShowTime.tsx":

@@ -13,6 +13,7 @@ import { RegisterErrors } from "@/islands/events/components/registerErrors.tsx";
 import SelectShowTime from "@/islands/events/viewing/selectShowTime.tsx";
 import { isUUID } from "@/utils/db/misc.ts";
 import Submit from "@/islands/events/viewing/register/submit.tsx";
+import Login from "./login.tsx";
 
 export default function EventRegister({
   eventID,
@@ -39,10 +40,13 @@ export default function EventRegister({
   const toggles = useSignal<Record<string, boolean>>({
     ...additionalFields
       .filter((field) => field.type == "toggle")
-      .reduce((acc, field) => {
-        acc[field.id] = false;
-        return acc;
-      }, {} as Record<string, boolean>),
+      .reduce(
+        (acc, field) => {
+          acc[field.id] = false;
+          return acc;
+        },
+        {} as Record<string, boolean>,
+      ),
   });
 
   const perfEntries = performance.getEntriesByType("navigation");
@@ -56,34 +60,42 @@ export default function EventRegister({
     }
   }, []);
 
-  const [Form, [Field, TextArea], formState] = useForm<{
+  interface FormState {
+    [key: string]: string | number;
     firstName: string;
     lastName: string;
     email: string;
-    [key: string]: string | number;
-  }>({
+  }
+
+  const [Form, [Field, TextArea], formState] = useForm<FormState>({
     initialState: {
       firstName: "",
       lastName: "",
       email: email || "",
       ...additionalFields
         .filter((field) => field.type != "toggle")
-        .reduce((acc, field) => {
-          acc[field.id] = field.type === "number" ? 0 : "";
-          return acc;
-        }, {} as Record<string, string | number>),
+        .reduce(
+          (acc, field) => {
+            acc[field.id] = field.type === "number" ? 0 : "";
+            return acc;
+          },
+          {} as Record<string, string | number>,
+        ),
     },
-    onSubmit: (form) => createTicket(form.formState!),
+    onSubmit: (form) => submitForm(form.formState!),
     // TODO: add client side validation
     validationSchema: Yup.object({}),
   });
 
-  const createTicket = async (formState: {
-    [key: string]: string | number;
-    firstName: string;
-    lastName: string;
-    email: string;
-  }) => {
+  const submitForm = (formState: FormState) => {
+    if (user) {
+      createTicket(formState)
+      return;
+    }
+    
+  }
+
+  const createTicket = async (formState: FormState) => {
     const formStates: { id: string; value: unknown }[] = [];
 
     for (const [key, value] of [
@@ -123,7 +135,7 @@ export default function EventRegister({
       ticketID.value = undefined;
     } else {
       ticketID.value = ticket.ticket;
-      page.value = 2;
+      page.value = 3;
     }
   };
 
@@ -141,10 +153,10 @@ export default function EventRegister({
         className=""
       >
         <h2 class="font-bold text-lg">
-          {page.value === 2 ? "Your Ticket" : "Get Tickets"}
+          {page.value === 3 ? "Your Ticket" : "Get Tickets"}
         </h2>
         <Form class="gap-4 mt-4 flex flex-col">
-          {page.value === 0 ? (
+          {page.value === 0 && (
             <>
               <SelectShowTime
                 changeOpen={changeOpen}
@@ -214,8 +226,9 @@ export default function EventRegister({
                 </>
               )}
             </>
-          ) : page.value == 1 ? (
-            // Page 2 of getting tickets
+          )}
+          {page.value === 1 && (
+            // Page 2 (technically 1) of getting tickets, after logging in (if needed)
             <>
               {additionalFields
                 .filter((field) => field.type != "toggle")
@@ -263,7 +276,11 @@ export default function EventRegister({
                 tickets={tickets}
               />
             </>
-          ) : (
+          )}
+          {
+            page.value === 3 && <Login showTime={showTime} showTimes={showTimes} ticketID={ticketID} tickets={tickets}  />
+          }
+          {page.value === 3 && (
             // After user has acquired tickets
             <>
               <div class="flex flex-col items-center pb-6">
