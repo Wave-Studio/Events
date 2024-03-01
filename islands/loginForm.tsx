@@ -49,10 +49,9 @@ const LoginForm = ({
 
     setError(undefined);
     const passed =
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-        .test(
-          email.value,
-        );
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+        email.value,
+      );
     if (!passed) {
       setError("Enter a valid email");
       return;
@@ -173,7 +172,9 @@ const LoginForm = ({
         {/* login code input */}
         <div class="ml-1">
           <p class="mt-2 mb-8 w-64 [@media(min-width:300px)]:w-72 text-center">
-            {emailInputted ? "To verify that you're you, please enter the code we emailed you below" : "We just emailed you a login code! Please enter it below."}
+            {emailInputted
+              ? "To verify that you're you, please enter the code we emailed you below"
+              : "We just emailed you a login code! Please enter it below."}
           </p>
           <form onSubmit={login} noValidate>
             <label class="flex flex-col">
@@ -210,7 +211,8 @@ const LoginForm = ({
                   pattern="[0-9]*"
                   value={code.value}
                   onInput={(e) =>
-                    updateCode(e.currentTarget.value.replace(/e/gi, ""))}
+                    updateCode(e.currentTarget.value.replace(/e/gi, ""))
+                  }
                   ref={codeRef}
                   onBlur={() => setFocused(false)}
                   onFocus={() => setFocused(true)}

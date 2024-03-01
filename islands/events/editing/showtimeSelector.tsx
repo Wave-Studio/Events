@@ -21,15 +21,13 @@ const ShowtimeSelector = ({
   };
 
   return (
-    
-      <SelectShowTime
-        all={true}
-        changeOpen={changeOpen}
-        showTime={defaultShowTime}
-        showTimes={showTimes}
-        setShowTime={setShowTime}
-      />
-    
+    <SelectShowTime
+      all={true}
+      changeOpen={changeOpen}
+      showTime={defaultShowTime}
+      showTimes={showTimes}
+      setShowTime={setShowTime}
+    />
   );
 };
 

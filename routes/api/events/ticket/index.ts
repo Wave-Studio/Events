@@ -1,13 +1,5 @@
 import { Handlers } from "$fresh/server.ts";
-import {
-  Event,
-  getUser,
-  getUserAuthToken,
-  kv,
-  Plan,
-  Roles,
-  User,
-} from "@/utils/db/kv.ts";
+import { Event, getUser, kv, Roles } from "@/utils/db/kv.ts";
 import * as Yup from "yup";
 import { EventRegisterError } from "@/utils/event/register.ts";
 

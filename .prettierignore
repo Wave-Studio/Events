@@ -3,3 +3,4 @@ _fresh/
 /db
 /static/output.css
 /out
+.react-email

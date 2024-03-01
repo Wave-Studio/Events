@@ -41,7 +41,7 @@ export default defineLayout(
         ticketID,
         event,
         time: showtime,
-      })
+      });
     }
 
     ctx.state.data = {

@@ -20,12 +20,11 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
   const { event, eventID, user } = ctx.state.data;
   // # of tickets that the user has
   const tickets = event.showTimes.filter((time) =>
-    acquired(user?.data, eventID, time.id)
+    acquired(user?.data, eventID, time.id),
   ).length;
 
-  const booked = event.showTimes.every((time) =>
-    happened(time.startDate, time.startTime)
-  ) ||
+  const booked =
+    event.showTimes.every((time) => happened(time.startDate, time.startTime)) ||
     event.showTimes.every((time) => time.soldTickets == time.maxTickets);
 
   const sizes = [320, 480, 720, 900, 1080, 1280, 1440, 2160, 4320];
@@ -40,14 +39,12 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
           <p class="break-keep">
             {event.showTimes.length > 1 && "Begins"}{" "}
             <span className="font-medium">
-              {event.showTimes[0].startTime
-                ? (
-                  fmtDate(new Date(event.showTimes[0].startDate))
-                )
-                : (
-                  /* force dates to be the same across timezones if there's no startime */
-                  <ClientDate date={event.showTimes[0].startDate} />
-                )}{" "}
+              {event.showTimes[0].startTime ? (
+                fmtDate(new Date(event.showTimes[0].startDate))
+              ) : (
+                /* force dates to be the same across timezones if there's no startime */
+                <ClientDate date={event.showTimes[0].startDate} />
+              )}{" "}
               <span class="lowercase">
                 {event.showTimes.length == 1 &&
                   event.showTimes[0].startTime &&
@@ -87,8 +84,7 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
                 dangerouslySetInnerHTML={{
                   __html: md.render(event.description),
                 }}
-              >
-              </div>
+              ></div>
             </p>
           </>
         )}
@@ -101,8 +97,8 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
         {event.showTimes.length == 1 && event.showTimes[0].lastPurchaseDate && (
           <p class="text-xs text-gray-600 text-center mt-2">
             The last day to get tickets is{" "}
-            <ClientDate date={event.showTimes[0].lastPurchaseDate} />{" "}
-            at Midnight (
+            <ClientDate date={event.showTimes[0].lastPurchaseDate} /> at
+            Midnight (
             {getTimeZone(new Date(event.showTimes[0].lastPurchaseDate))})
           </p>
         )}
@@ -155,13 +151,17 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
         />
         <meta
           property="og:description"
-          content={event.description ??
-            "Link to an event hosted on Events - Open Source Ticketing tool"}
+          content={
+            event.description ??
+            "Link to an event hosted on Events - Open Source Ticketing tool"
+          }
         />
         <meta
           name="description"
-          content={event.description ??
-            "Link to an event hosted on Events - Open Source Ticketing tool"}
+          content={
+            event.description ??
+            "Link to an event hosted on Events - Open Source Ticketing tool"
+          }
         />
         {/* <meta name="theme-color" content="#DC6843" /> */}
       </Head>
@@ -184,25 +184,23 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
           </>
         )}
         <div class="flex flex-col">
-          {event.banner.path
-            ? (
-              <ImagekitImage
-                alt="Image of this event"
-                path={event.banner.path!}
-                sizes={sizes}
-                className={`${
-                  event.banner.fill ? "object-fill" : "object-cover"
-                } h-56 md:h-96 w-full rounded-b-lg md:rounded-b-2xl`}
-              />
-            )
-            : (
-              <img
-                class="object-cover h-56 md:h-96 rounded-b-lg md:rounded-b-2xl "
-                src="/placeholder-small.jpg"
-                srcset="/placeholder-small.jpg 640w, /placeholder.jpg 1440w, /placeholder-full.jpg 2100w"
-                alt="Placeholder Image"
-              />
-            )}
+          {event.banner.path ? (
+            <ImagekitImage
+              alt="Image of this event"
+              path={event.banner.path!}
+              sizes={sizes}
+              className={`${
+                event.banner.fill ? "object-fill" : "object-cover"
+              } h-56 md:h-96 w-full rounded-b-lg md:rounded-b-2xl`}
+            />
+          ) : (
+            <img
+              class="object-cover h-56 md:h-96 rounded-b-lg md:rounded-b-2xl "
+              src="/placeholder-small.jpg"
+              srcset="/placeholder-small.jpg 640w, /placeholder.jpg 1440w, /placeholder-full.jpg 2100w"
+              alt="Placeholder Image"
+            />
+          )}
         </div>
         <div className="max-w-2xl mx-auto w-full mb-36 md:mb-16 mt-4 md:-mt-28 flex flex-col px-4 static grow">
           <Header />
@@ -216,38 +214,34 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
             </div>
           )}
           <>
-            {event.showTimes.length === 1 && tickets === 1
-              ? (
-                <div className="mx-auto flex flex-col items-center mt-14">
-                  <p class="font-semibold mb-4 text-center">
-                    You're already registered for this event! Edit or view
-                    ticket below.
-                  </p>
-                  <a
-                    href={`/events/${eventID}/tickets/${
-                      getTicketID(
-                        user?.data,
-                        eventID,
-                        event.showTimes[0].id,
-                      )
-                    }`}
-                  >
-                    <CTA btnType="secondary">View Ticket</CTA>
-                  </a>
-                </div>
+            {event.showTimes.length === 1 && tickets === 1 ? (
+              <div className="mx-auto flex flex-col items-center mt-14">
+                <p class="font-semibold mb-4 text-center">
+                  You're already registered for this event! Edit or view ticket
+                  below.
+                </p>
+                <a
+                  href={`/events/${eventID}/tickets/${getTicketID(
+                    user?.data,
+                    eventID,
+                    event.showTimes[0].id,
+                  )}`}
+                >
+                  <CTA btnType="secondary">View Ticket</CTA>
+                </a>
+              </div>
+            ) : (
+              !booked &&
+              clientShowTimes.length > 0 && (
+                <EventRegister
+                  eventID={eventID}
+                  showTimes={clientShowTimes}
+                  email={user?.data.email}
+                  additionalFields={event.additionalFields}
+                  user={user?.data}
+                />
               )
-              : (
-                !booked &&
-                clientShowTimes.length > 0 && (
-                  <EventRegister
-                    eventID={eventID}
-                    showTimes={clientShowTimes}
-                    email={user?.data.email}
-                    additionalFields={event.additionalFields}
-                    user={user?.data}
-                  />
-                )
-              )}
+            )}
 
             {event.showTimes.length === 1 && (
               <div class="mx-auto mt-2 text-sm text-center">
@@ -263,9 +257,11 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
                     event.showTimes[0].startDate,
                     event.showTimes[0].startTime,
                   )}
-                  windowClosed={event.showTimes[0].lastPurchaseDate != undefined
-                    ? happened(event.showTimes[0].lastPurchaseDate)
-                    : false}
+                  windowClosed={
+                    event.showTimes[0].lastPurchaseDate != undefined
+                      ? happened(event.showTimes[0].lastPurchaseDate)
+                      : false
+                  }
                 />
               </div>
             )}

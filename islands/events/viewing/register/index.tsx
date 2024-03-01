@@ -40,13 +40,10 @@ export default function EventRegister({
   const toggles = useSignal<Record<string, boolean>>({
     ...additionalFields
       .filter((field) => field.type == "toggle")
-      .reduce(
-        (acc, field) => {
-          acc[field.id] = false;
-          return acc;
-        },
-        {} as Record<string, boolean>,
-      ),
+      .reduce((acc, field) => {
+        acc[field.id] = false;
+        return acc;
+      }, {} as Record<string, boolean>),
   });
 
   const perfEntries = performance.getEntriesByType("navigation");
@@ -74,13 +71,10 @@ export default function EventRegister({
       email: email || "",
       ...additionalFields
         .filter((field) => field.type != "toggle")
-        .reduce(
-          (acc, field) => {
-            acc[field.id] = field.type === "number" ? 0 : "";
-            return acc;
-          },
-          {} as Record<string, string | number>,
-        ),
+        .reduce((acc, field) => {
+          acc[field.id] = field.type === "number" ? 0 : "";
+          return acc;
+        }, {} as Record<string, string | number>),
     },
     onSubmit: (form) => submitForm(form.formState!),
     // TODO: add client side validation
@@ -89,11 +83,11 @@ export default function EventRegister({
 
   const submitForm = (formState: FormState) => {
     if (user) {
-      createTicket(formState)
+      createTicket(formState);
       return;
     }
-    page.value = 2
-  }
+    page.value = 2;
+  };
 
   const createTicket = async (formState: FormState) => {
     const formStates: { id: string; value: unknown }[] = [];
@@ -277,9 +271,17 @@ export default function EventRegister({
               />
             </>
           )}
-          {
-            page.value === 2 && <Login email={formState().email} showTime={showTime} showTimes={showTimes} ticketID={ticketID} tickets={tickets} createTicket={() => createTicket(formState())} error={error} />
-          }
+          {page.value === 2 && (
+            <Login
+              email={formState().email}
+              showTime={showTime}
+              showTimes={showTimes}
+              ticketID={ticketID}
+              tickets={tickets}
+              createTicket={() => createTicket(formState())}
+              error={error}
+            />
+          )}
           {page.value === 3 && (
             // After user has acquired tickets
             <>

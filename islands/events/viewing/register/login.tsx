@@ -29,7 +29,11 @@ const Login = ({
 }) => (
   <>
     <div class="flex my-4 items-center justify-center">
-      <LoginForm attending={false} emailInputted={email} createTicket={createTicket}/>
+      <LoginForm
+        attending={false}
+        emailInputted={email}
+        createTicket={createTicket}
+      />
     </div>
     {error.value && (
       <div class="flex flex-col items-center">

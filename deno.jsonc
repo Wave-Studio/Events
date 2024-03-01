@@ -33,5 +33,5 @@
     "@react-email/components": "npm:@react-email/components"
   },
   "compilerOptions": { "jsx": "react-jsx", "jsxImportSource": "preact" },
-  "exclude": ["**/_fresh/*"]
+  "exclude": ["**/_fresh/*", "./.react-email/*"]
 }
