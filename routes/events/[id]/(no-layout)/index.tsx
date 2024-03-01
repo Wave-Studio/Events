@@ -14,6 +14,7 @@ import ImagekitImage from "@/components/imagekitimg.tsx";
 import { ClientDate } from "@/islands/events/viewing/dates.tsx";
 import NavbarDropDown from "@/islands/components/pieces/navDropDown.tsx";
 import { Contact } from "@/islands/events/viewing/contact.tsx";
+import MarkdownIt from "npm:markdown-it";
 
 export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
   const { event, eventID, user } = ctx.state.data;
@@ -28,6 +29,8 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
     event.showTimes.every((time) => time.soldTickets == time.maxTickets);
 
   const sizes = [320, 480, 720, 900, 1080, 1280, 1440, 2160, 4320];
+
+  const md = MarkdownIt().disable(["image"]);
 
   const Header = () => (
     <>
@@ -77,13 +80,15 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
         {event.description && (
           <>
             <h2 className="font-semibold mb-1 text-sm">Event Description</h2>
-            <p
-              class=" whitespace-pre-line"
-              // dangerouslySetInnerHTML={{
-              //   __html: "",
-              // }}
-            >
-              {event.description}
+            {/* I'm not sure why but if I remove this p element something breaks - Bloxs */}
+            <p>
+              <div
+                class="whitespace-pre-line prose break-words text-pretty flex flex-col [&>ol]:flex [&>ol]:flex-col [&>ul]:flex [&>ul]:flex-col"
+                dangerouslySetInnerHTML={{
+                  __html: md.render(event.description),
+                }}
+              >
+              </div>
             </p>
           </>
         )}

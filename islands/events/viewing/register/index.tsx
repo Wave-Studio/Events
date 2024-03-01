@@ -92,7 +92,7 @@ export default function EventRegister({
       createTicket(formState)
       return;
     }
-    
+    page.value = 2
   }
 
   const createTicket = async (formState: FormState) => {
@@ -278,7 +278,7 @@ export default function EventRegister({
             </>
           )}
           {
-            page.value === 3 && <Login showTime={showTime} showTimes={showTimes} ticketID={ticketID} tickets={tickets}  />
+            page.value === 2 && <Login email={formState().email} showTime={showTime} showTimes={showTimes} ticketID={ticketID} tickets={tickets} createTicket={() => createTicket(formState())} error={error} />
           }
           {page.value === 3 && (
             // After user has acquired tickets

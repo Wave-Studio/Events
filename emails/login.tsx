@@ -38,7 +38,7 @@ export default function LoginEmail({ otp = "123456" }: { otp: string }) {
         }}
       >
         <Body className="bg-white text-gray-800 text-center">
-          <Preview>Your authorization code to log in to Events</Preview>
+          <Preview>Your authorization code for Events is {`{{OTP-PART-1}}{{OTP-PART-2}}`}</Preview>
           <Container className="my-8">
             <Img
               src={`https://events.deno.dev/orange-logo.png`}

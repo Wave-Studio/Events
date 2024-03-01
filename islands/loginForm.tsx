@@ -7,11 +7,19 @@ import { Loading } from "@/utils/loading.ts";
 import IconLoader2 from "$tabler/loader-2.tsx";
 
 // This page is a mess but it works so it's not worth fixing rn
-const LoginForm = ({ attending }: { attending: boolean }) => {
+const LoginForm = ({
+  attending,
+  emailInputted,
+  createTicket,
+}: {
+  attending: boolean;
+  emailInputted?: string;
+  createTicket?: () => void;
+}) => {
   const email = useSignal("");
   const code = useSignal("");
   const [error, setError] = useState<string>();
-  const stage = useSignal(0);
+  const stage = useSignal(emailInputted ? 1 : 0);
   const loading = useSignal(false);
   const [updateState, setUpdateState] = useState(false);
 
@@ -31,19 +39,25 @@ const LoginForm = ({ attending }: { attending: boolean }) => {
     };
   }, []);
 
-  const sendEmail = async (e: JSX.TargetedEvent<HTMLFormElement, Event>) => {
-    e.stopImmediatePropagation();
-    e.preventDefault();
+  const sendEmail = async (e?: JSX.TargetedEvent<HTMLFormElement, Event>) => {
+    if (e) {
+      e.stopImmediatePropagation();
+      e.preventDefault();
+    } else {
+      email.value = emailInputted!;
+    }
+
     setError(undefined);
     const passed =
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-        email.value,
-      );
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        .test(
+          email.value,
+        );
     if (!passed) {
       setError("Enter a valid email");
       return;
     }
-    if (email.value == "rick@example.com") {
+    if (email.value === "rick@example.com") {
       setError("🤨");
       return;
     }
@@ -68,6 +82,12 @@ const LoginForm = ({ attending }: { attending: boolean }) => {
     }
   };
 
+  useEffect(() => {
+    if (emailInputted) {
+      sendEmail();
+    }
+  }, [emailInputted]);
+
   const login = async (
     e?: JSX.TargetedEvent<HTMLFormElement, Event>,
     clipboard?: string,
@@ -86,11 +106,15 @@ const LoginForm = ({ attending }: { attending: boolean }) => {
       return;
     }
 
-    setTimeout(() => {
-      window.location.href = `/events/${
-        attending ? "attending" : "organizing"
-      }`;
-    }, 300);
+    if (!emailInputted) {
+      setTimeout(() => {
+        window.location.href = `/events/${
+          attending ? "attending" : "organizing"
+        }`;
+      }, 300);
+    } else {
+      createTicket!();
+    }
   };
 
   const differentEmail = () => {
@@ -186,8 +210,7 @@ const LoginForm = ({ attending }: { attending: boolean }) => {
                   pattern="[0-9]*"
                   value={code.value}
                   onInput={(e) =>
-                    updateCode(e.currentTarget.value.replace(/e/gi, ""))
-                  }
+                    updateCode(e.currentTarget.value.replace(/e/gi, ""))}
                   ref={codeRef}
                   onBlur={() => setFocused(false)}
                   onFocus={() => setFocused(true)}

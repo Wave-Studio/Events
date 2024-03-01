@@ -121,7 +121,7 @@ export default function EventSettings(props: {
         <p class="label-text">Short Description</p>
         <textarea
           name="description"
-          class="h-56 md:h-48 min-h-[6rem] max-h-[20rem] md:max-h-[16rem]"
+          class="h-56 md:h-48 min-h-[6rem] max-h-[130rem] md:max-h-[16rem]"
           value={formState.description}
           onInput={(e) =>
             setFormState((state) => ({
