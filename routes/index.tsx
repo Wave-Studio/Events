@@ -54,7 +54,7 @@ export default defineRoute(async (req, ctx) => {
           >
             <CTA btnType="secondary">I'm attending</CTA>
           </a>
-          <a
+          {/* <a
             href="https://github.com/Wave-Studio/events"
             referrerpolicy="no-referrer"
             target="_blank"
@@ -62,7 +62,7 @@ export default defineRoute(async (req, ctx) => {
           >
             <StarFilled class="h-5 w-5 mr-1 group-hover:text-yellow-500 transition" />
             Star us on GitHub
-          </a>
+          </a> */}
         </div>
 
         <div class="text-lg text-gray-500">Scroll for More</div>
@@ -90,15 +90,15 @@ export default defineRoute(async (req, ctx) => {
           sign up online using their email and receive a QR code that serves as
           their ticket, which an event organizer can scan to confirm their
           tickets. Simplify your ticketing management and provide your customers
-          with a seamless booking experience today! Contact quick007 on discord
-          to join the closed beta.
+          with a seamless booking experience today! Currently access is limited but 
+          you can reach out to us at support@events-help.freshdesk.com to request access.
         </p>
         <div class="flex flex-col sm:flex-row justify-center gap-4">
-          <a href="/features">
+          {/* <a href="/features">
             <CTA btnType="secondary" btnSize="sm">
               All Features
             </CTA>
-          </a>
+          </a> */}
           <a href="/faq">
             <CTA btnType="secondary" btnSize="sm">
               FAQ

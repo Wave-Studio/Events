@@ -13,11 +13,11 @@ const Footer = ({ includeWave = true }: { includeWave?: boolean }) => {
       name: "Terms",
       link: "/terms-of-service",
     },
-    {
-      name: "GitHub",
-      link: "https://github.com/Wave-Studio/Events",
-      diffSite: true,
-    },
+    // {
+    //   name: "GitHub",
+    //   link: "https://github.com/Wave-Studio/Events",
+    //   diffSite: true,
+    // },
   ];
 
   return (
@@ -26,7 +26,7 @@ const Footer = ({ includeWave = true }: { includeWave?: boolean }) => {
         <p class="flex font-bold">
           a{" "}
           <a
-            href="https://wave-studios.netlify.app/"
+            href="https://wavestudios.one/"
             target="_blank"
             class="mx-1 bg-gradient-to-b from-[#234c70] to-[#0a3860] text-transparent bg-clip-text hover:brightness-200 transition duration-300"
           >

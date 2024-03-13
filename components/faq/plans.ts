@@ -6,7 +6,7 @@ export const plans: {
   color: string;
 }[] = [
   {
-    name: "Free Forever",
+    name: "Free",
     best: false,
     cost: 0.0,
     features: [
