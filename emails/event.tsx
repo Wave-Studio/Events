@@ -55,17 +55,29 @@ export default function LoginEmail({ otp = "123456" }: { otp: string }) {
 
             <Heading className="font-bold mt-4 text-xl">Your QR Code</Heading>
             <Text>You'll scan this when entering your event. </Text>
-            <p className="bg-gray-100 border font-semibold text-gray-700  text-sm rounded-md mt-4 mb-2 mx-auto px-2 py-1">
-              {`{{TICKETS}}`} ticket(s)
-            </p>
-
-            <img src={`{{QR-VALUE}}`} alt="QR Code" width={232} />
+            <Container className="bg-gray-100 w-80">
+              <p className="border font-semibold text-gray-700  text-sm rounded-md mb-2 mx-auto mt-4 px-2 py-1">
+                {`{{TICKETS}}`} ticket(s)
+              </p>
+              <img
+                src={`{{QR-VALUE}}`}
+                alt="QR Code"
+                width={232}
+                className="mb-4"
+              />
+            </Container>
           </Container>
           <Container className="my-8">
-            <Button href="http://localhost:8000/events/d0535ce8-bd87-4639-a35d-493ddb23c7db/tickets/9504c647-763b-4d9d-8afb-4b2efc8cb82e" className="mr-3 rounded-md font-semibold peer z-10 hover:brightness-95 transition hover:focus:ring-1 hover:focus:brightness-100 disabled:brightness-90 disabled:cursor-not-allowed bg-theme-normal ring-[#da7351] text-white px-4 py-2">
+            <Button
+              href="{{TICKET-LINK}}"
+              className="mr-3 rounded-md font-semibold peer z-10 hover:brightness-95 transition hover:focus:ring-1 hover:focus:brightness-100 disabled:brightness-90 disabled:cursor-not-allowed bg-theme-normal ring-[#da7351] text-white px-4 py-2"
+            >
               View Ticket
             </Button>
-						<Button href="http://localhost:8000/events/d0535ce8-bd87-4639-a35d-493ddb23c7db/" className="ml-3 rounded-md font-semibold peer z-10 hover:brightness-95 transition hover:focus:ring-1 hover:focus:brightness-100 disabled:brightness-90 disabled:cursor-not-allowed bg-gray-300 ring-gray-400/50 text-gray-800 px-4 py-2">
+            <Button
+              href="{{EVENT-LINK}}"
+              className="ml-3 rounded-md font-semibold peer z-10 hover:brightness-95 transition hover:focus:ring-1 hover:focus:brightness-100 disabled:brightness-90 disabled:cursor-not-allowed bg-gray-300 ring-gray-400/50 text-gray-800 px-4 py-2"
+            >
               View Event
             </Button>
           </Container>
