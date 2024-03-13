@@ -1,10 +1,10 @@
 const Footer = ({ includeWave = true }: { includeWave?: boolean }) => {
   const links: { name: string; link: string; diffSite?: boolean }[] = [
     // imo looks bad with 4 links, we'll put the faq on the homepage
-    // {
-    //   name: "faq",
-    //   link: "/faq"
-    // },
+    {
+      name: "Faq",
+      link: "/faq"
+    },
     {
       name: "Privacy",
       link: "/privacy-policy",
