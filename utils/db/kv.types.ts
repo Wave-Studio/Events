@@ -40,6 +40,7 @@ export interface ShowTime {
   soldTickets: number;
   maxTickets: number;
   multiPurchase: boolean;
+  hasEmailed?: boolean;
 }
 
 export const defaultEvent: Event = {
@@ -64,6 +65,7 @@ export const defaultEvent: Event = {
       soldTickets: 0,
       maxTickets: 75,
       multiPurchase: true,
+	  hasEmailed: false,
     },
   ],
 

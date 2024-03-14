@@ -12,9 +12,6 @@ const timeFmt = new Intl.DateTimeFormat("en-US", {
   hour: "numeric",
   minute: "2-digit",
 });
-const timezoneFmt = new Intl.DateTimeFormat("en-US", {
-  timeZoneName: "short",
-});
 
 export const happened = (startDate: string, startTime?: string) => {
   const date = new Date(startDate);
