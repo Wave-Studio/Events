@@ -17,6 +17,7 @@ import { Contact } from "@/islands/events/viewing/contact.tsx";
 import MarkdownIt from "npm:markdown-it";
 import Cookies from "@/islands/components/pieces/acceptCookies.tsx";
 import { getCookies } from "$std/http/cookie.ts";
+import { ClientDateTimezone } from "@/islands/events/viewing/dates.tsx";
 
 export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
   const { event, eventID, user } = ctx.state.data;
@@ -42,7 +43,7 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
             {event.showTimes.length > 1 && "Begins"}{" "}
             <span className="font-medium">
               {event.showTimes[0].startTime ? (
-                fmtDate(new Date(event.showTimes[0].startDate))
+                <ClientDateTimezone date={event.showTimes[0].startDate} />
               ) : (
                 /* force dates to be the same across timezones if there's no startime */
                 <ClientDate date={event.showTimes[0].startDate} />
@@ -278,8 +279,7 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
         </p>
         <Footer includeWave={false} />
       </div>
-      {!getCookies(req.headers)["accepted-privacy"] && 
-        <Cookies />}
+      {!getCookies(req.headers)["accepted-privacy"] && <Cookies />}
     </>
   );
 });

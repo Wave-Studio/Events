@@ -4,3 +4,7 @@ import { fmtDate } from "@/utils/dates.ts";
 export const ClientDate = ({ date }: { date: string }) => (
   <>{fmtDate(new Date(date.split("GMT")[0]))}</>
 );
+
+export const ClientDateTimezone = ({ date }: { date: string }) => (
+  <>{fmtDate(new Date(date))}</>
+);
