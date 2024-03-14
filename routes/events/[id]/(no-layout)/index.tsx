@@ -3,7 +3,7 @@ import { Head } from "$fresh/runtime.ts";
 import { EventContext } from "@/routes/events/[id]/_layout.tsx";
 import Location from "$tabler/map-pin.tsx";
 import Calender from "$tabler/calendar.tsx";
-import EventRegister from "@/islands/events/viewing/register/index.tsx";
+import EventRegister from "../../../../islands/tickets/register/index.tsx";
 import Footer from "@/components/layout/footer.tsx";
 import { fmtDate, fmtTime, getTimeZone, happened } from "@/utils/dates.ts";
 import { Availability } from "@/islands/events/viewing/availability.tsx";
@@ -104,7 +104,7 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
         )}
       </div>
       <div class="flex flex-col-reverse md:flex-row gap-4 justify-center items-center">
-        <Contact email={event.supportEmail} />
+        {user && <Contact email={event.supportEmail} />}
         {(!user ||
           (tickets < event.showTimes.length &&
             event.showTimes.length !== 1 &&

@@ -1,10 +1,10 @@
-import { FAQ } from "@/components/faq/questions.ts";
+import { FAQ } from "./questions.tsx";
 
 export const artDesignFAQs: FAQ[] = [
-  {
-    q: "Who made the logo for this website?",
-    a: "Lukas (quick007 on discord) made the logos and designed this website.",
-  },
+  // {
+  //   q: "Who made the logo for this website?",
+  //   a: "Lukas (quick007 on discord) made the logos and designed this website.",
+  // },
   {
     q: "Where are the placeholder photos from?",
     a: (

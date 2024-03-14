@@ -2,6 +2,9 @@ import { Handlers } from "$fresh/server.ts";
 import { Event, getUser, kv, Roles } from "@/utils/db/kv.ts";
 import * as Yup from "yup";
 import { EventRegisterError } from "@/utils/event/register.ts";
+import { sendEmail } from "@/utils/email/client.ts";
+
+const ticketHTML = await Deno.readTextFile(`${Deno.cwd()}/out/event.html`);
 
 export const handler: Handlers = {
   async POST(req) {
@@ -22,6 +25,8 @@ export const handler: Handlers = {
       lastName: string;
       tickets: number;
     } = await req.json();
+
+    const url = new URL(req.url);
 
     const basicParamValidation = Yup.object({
       eventID: Yup.string().uuid().required(),
@@ -273,8 +278,8 @@ export const handler: Handlers = {
     if (
       user.tickets
         .map((t) => t.substring(0, t.lastIndexOf("_")))
-        .includes(`${eventID}_${showtimeID}`) &&
-      !showtime.multiPurchase
+        .includes(`${eventID}_${showtimeID}`) 
+        //&& !showtime.multiPurchase
     ) {
       return new Response(
         JSON.stringify({
@@ -289,7 +294,8 @@ export const handler: Handlers = {
       );
     }
 
-    const ticket = `${eventID}_${showtimeID}_${crypto.randomUUID()}`;
+    const ticketID = crypto.randomUUID();
+    const ticket = `${eventID}_${showtimeID}_${ticketID}`;
 
     await kv
       .atomic()
@@ -320,6 +326,28 @@ export const handler: Handlers = {
         uses: 0,
       })
       .commit();
+
+    // jank
+    // I should probably abstract this
+    // this probably has like some code injection issue too
+
+    const emailHTML = ticketHTML
+      .replace("{{TICKETS}}", tickets.toString())
+      .replaceAll("{{QR-VALUE}}", `https://events.deno.dev/api/qr?ticket=${eventID}_${showtimeID}_${ticketID}`)
+      .replace(
+        "{{TICKET-LINK}}",
+        `${url.protocol}//${url.host}/events/${eventID}/tickets/${ticketID}?s=${showtimeID}`,
+      )
+      .replace(
+        "{{EVENT-LINK}}",
+        `${url.protocol}//${url.host}/events/${eventID}`,
+      )
+      .replaceAll("{{EVENT-NAME}}", event.value.name);
+
+    await sendEmail([user.email], `Your Tickets for ${event.value.name}!`, {
+      html: emailHTML,
+      fallback: `View your ticket at ${url.protocol}//${url.host}/events/${eventID}/tickets/${ticketID}?s=${showtimeID}`,
+    });
 
     return new Response(JSON.stringify({ ticket }), {
       status: 200,

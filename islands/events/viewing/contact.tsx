@@ -24,12 +24,26 @@ export const Contact = ({ email }: { email: string }) => {
             }}
           >
             <h2 class="font-bold text-lg">Contact Organizer</h2>
+            <h3 class="font-medium mt-2">Are you sure?</h3>
+            <p>
+              Are you looking for Events support or an organizer contact email?
+              It's simple and easy to contact Events, the ticketing platform
+              used to make this event. Create a ticket by emailing Events at{" "}
+              <a href="mailto:support@events-help.freshdesk.com" class="underline font-medium">
+                support@events-help.freshdesk.com
+              </a>.
+            </p>
+            <p class="mt-4 text-pretty">
+              Still want to contact the organizer? Agree to our terms below to
+              access it.
+            </p>
             <label class="flex mt-4 items-start cursor-pointer">
               <input
                 type="checkbox"
                 name="agreed"
                 class="mr-4 mt-1.5"
                 onClick={(e) => (checked.value = e.currentTarget.checked)}
+                disabled={checked.value}
               />
               <p>
                 I agree to interacting with this email in a professional way and

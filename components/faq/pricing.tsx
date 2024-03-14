@@ -1,4 +1,4 @@
-import { FAQ } from "@/components/faq/questions.ts";
+import { FAQ } from "./questions.tsx";
 
 export const pricingfaqs: FAQ[] = [
   {

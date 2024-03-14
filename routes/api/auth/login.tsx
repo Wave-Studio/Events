@@ -50,8 +50,8 @@ export const handler: Handlers<{ email: string; otp: string }> = {
 
     // jank
     const otpHTML = emailHTML
-      .replace("{{OTP-PART-1}}", otp.slice(0, 5))
-      .replace("{{OTP-PART-2}}", otp.slice(5));
+      .replaceAll("{{OTP-PART-1}}", otp.slice(0, 5))
+      .replaceAll("{{OTP-PART-2}}", otp.slice(5));
 
     try {
       await sendEmail([email], "Your Events Authorization Code", {
@@ -102,12 +102,7 @@ export const handler: Handlers<{ email: string; otp: string }> = {
     }
 
     const user = await validateOTP(email, otp);
-    let userAuthToken =
-      typeof user == "object"
-        ? user.onboarded
-          ? user.authToken
-          : undefined
-        : undefined;
+    let userAuthToken = typeof user === "object" ? user.authToken : undefined;
 
     if (user == undefined) {
       const response = new Response(JSON.stringify({ error: "Invalid OTP" }), {
@@ -136,7 +131,7 @@ export const handler: Handlers<{ email: string; otp: string }> = {
       expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
       value: userAuthToken!,
       path: "/",
-      sameSite: "Strict",
+      sameSite: "Lax",
     });
 
     return resp;

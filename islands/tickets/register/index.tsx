@@ -12,7 +12,7 @@ import { EventRegisterError } from "@/utils/event/register.ts";
 import { RegisterErrors } from "@/islands/events/components/registerErrors.tsx";
 import SelectShowTime from "@/islands/events/viewing/selectShowTime.tsx";
 import { isUUID } from "@/utils/db/misc.ts";
-import Submit from "@/islands/events/viewing/register/submit.tsx";
+import Submit from "./submit.tsx";
 import Login from "./login.tsx";
 
 export default function EventRegister({

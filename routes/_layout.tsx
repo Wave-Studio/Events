@@ -3,6 +3,7 @@ import Footer from "../components/layout/footer.tsx";
 import Navbar from "../components/layout/navbar.tsx";
 import { Partial } from "$fresh/runtime.ts";
 import { getUser } from "@/utils/db/kv.ts";
+import Cookies from "@/islands/components/pieces/acceptCookies.tsx";
 
 export default defineLayout(async (req, { Component }) => {
   const user = await getUser(req);
@@ -16,6 +17,7 @@ export default defineLayout(async (req, { Component }) => {
       </div>
       {/* </Partial> */}
       <Footer />
+      <Cookies />
     </div>
   );
 });

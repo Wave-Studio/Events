@@ -117,7 +117,7 @@ export const enum Plan {
 }
 
 export const PlanMaxEvents = {
-  [Plan.BASIC]: 1,
+  [Plan.BASIC]: 0,
   [Plan.PLUS]: 5,
   [Plan.PRO]: 10,
   [Plan.ENTERPRISE]: Infinity,

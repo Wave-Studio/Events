@@ -90,8 +90,15 @@ export default defineRoute(async (req, ctx) => {
           sign up online using their email and receive a QR code that serves as
           their ticket, which an event organizer can scan to confirm their
           tickets. Simplify your ticketing management and provide your customers
-          with a seamless booking experience today! Currently access is limited but 
-          you can reach out to us at support@events-help.freshdesk.com to request access.
+          with a seamless booking experience today! Currently access is limited
+          but you can reach out to us at{" "}
+          <a
+            href="mailto:support@events-help.freshdesk.com"
+            class="underline font-medium"
+          >
+            support@events-help.freshdesk.com
+          </a>{" "}
+          to request access.
         </p>
         <div class="flex flex-col sm:flex-row justify-center gap-4">
           {/* <a href="/features">

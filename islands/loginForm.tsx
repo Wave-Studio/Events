@@ -233,11 +233,23 @@ const LoginForm = ({
               Login
             </CTA>
           </form>
-          <p
-            className="mt-2 text-center underline text-sm cursor-pointer"
-            onClick={differentEmail}
-          >
-            Enter a Different Email
+          {!emailInputted && (
+            <p
+              className="mt-2 text-center underline text-sm cursor-pointer"
+              onClick={differentEmail}
+            >
+              Enter a Different Email
+            </p>
+          )}
+          <p class="text-center mt-4 text-gray-700">
+            By logging in, you agree to our{" "}
+            <a href="/terms-of-service" class="underline font-medium">
+              Terms of Service
+            </a>{" "}
+            and{" "}
+            <a href="/privacy-policy" class="underline font-medium">
+              Privacy Policy
+            </a>
           </p>
         </div>
       </div>

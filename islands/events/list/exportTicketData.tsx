@@ -96,7 +96,7 @@ export default function ExportTicketData({
         }}
         class="rounded-md bg-gray-200 h-8 grid place-content-center px-2 font-medium hover:brightness-95 transition"
       >
-        .csv Export
+        .csv
       </button>
     </>
   );

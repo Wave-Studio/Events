@@ -17,7 +17,6 @@ import {
 } from "@react-email/components";
 import * as React from "react";
 import config from "../tailwind.config.ts";
-import Ticket from "@/islands/components/pieces/ticket.tsx";
 
 export default function LoginEmail({ otp = "123456" }: { otp: string }) {
   return (
@@ -53,8 +52,8 @@ export default function LoginEmail({ otp = "123456" }: { otp: string }) {
             <Heading className="mt-10 mb-0">Your Tickets!</Heading>
             <Text className="mt-0">{`{{EVENT-NAME}}`}</Text>
 
-            <Heading className="font-bold mt-4 text-xl">Your QR Code</Heading>
-            <Text>You'll scan this when entering your event. </Text>
+            {/* <Heading className="font-bold mt-4 text-xl">Your QR Code</Heading>
+            <Text>You'll scan this when entering your event. </Text> */}
             <Container className="bg-gray-100 w-80">
               <p className="border font-semibold text-gray-700  text-sm rounded-md mb-2 mx-auto mt-4 px-2 py-1">
                 {`{{TICKETS}}`} ticket(s)
@@ -65,6 +64,7 @@ export default function LoginEmail({ otp = "123456" }: { otp: string }) {
                 width={232}
                 className="mb-4"
               />
+							{`{{QR-VALUE}}`}
             </Container>
           </Container>
           <Container className="my-8">
@@ -74,12 +74,13 @@ export default function LoginEmail({ otp = "123456" }: { otp: string }) {
             >
               View Ticket
             </Button>
-            <Button
+            <a
               href="{{EVENT-LINK}}"
+							rel="_blank"
               className="ml-3 rounded-md font-semibold peer z-10 hover:brightness-95 transition hover:focus:ring-1 hover:focus:brightness-100 disabled:brightness-90 disabled:cursor-not-allowed bg-gray-300 ring-gray-400/50 text-gray-800 px-4 py-2"
             >
               View Event
-            </Button>
+            </a>
           </Container>
         </Body>
       </Tailwind>

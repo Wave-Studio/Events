@@ -2,6 +2,10 @@ import { ComponentChildren } from "preact";
 
 export const faqs: FAQ[] = [
   {
+    q: "How do I contact Events?",
+    a: ( <>You can contact us at <a  href="mailto:support@events-help.freshdesk.com" class="underline font-medium">support@events-help.freshdesk.com</a></> )
+  },
+  {
     q: "How can I get alpha access?",
     a: "We are currently in a closed alpha and not accepting new clients",
   },

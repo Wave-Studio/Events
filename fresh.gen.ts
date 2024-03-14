@@ -25,6 +25,7 @@ import * as $api_events_team_remove from "./routes/api/events/team/remove.ts";
 import * as $api_events_team_update from "./routes/api/events/team/update.ts";
 import * as $api_events_ticket_delete from "./routes/api/events/ticket/delete.ts";
 import * as $api_events_ticket_index from "./routes/api/events/ticket/index.ts";
+import * as $api_qr from "./routes/api/qr.ts";
 import * as $events_pages_layout from "./routes/events/(pages)/_layout.tsx";
 import * as $events_pages_attending_layout from "./routes/events/(pages)/attending/_layout.tsx";
 import * as $events_pages_attending_index from "./routes/events/(pages)/attending/index.tsx";
@@ -57,6 +58,7 @@ import * as $components_pickers_dropdown from "./islands/components/pickers/drop
 import * as $components_pickers_image from "./islands/components/pickers/image.tsx";
 import * as $components_pickers_select from "./islands/components/pickers/select.tsx";
 import * as $components_pickers_time from "./islands/components/pickers/time.tsx";
+import * as $components_pieces_acceptCookies from "./islands/components/pieces/acceptCookies.tsx";
 import * as $components_pieces_deleteToken from "./islands/components/pieces/deleteToken.tsx";
 import * as $components_pieces_navDropDown from "./islands/components/pieces/navDropDown.tsx";
 import * as $components_pieces_ticket from "./islands/components/pieces/ticket.tsx";
@@ -87,15 +89,15 @@ import * as $events_viewing_availability from "./islands/events/viewing/availabi
 import * as $events_viewing_contact from "./islands/events/viewing/contact.tsx";
 import * as $events_viewing_dates from "./islands/events/viewing/dates.tsx";
 import * as $events_viewing_delete from "./islands/events/viewing/delete.tsx";
-import * as $events_viewing_register_index from "./islands/events/viewing/register/index.tsx";
-import * as $events_viewing_register_login from "./islands/events/viewing/register/login.tsx";
-import * as $events_viewing_register_submit from "./islands/events/viewing/register/submit.tsx";
 import * as $events_viewing_selectShowTime from "./islands/events/viewing/selectShowTime.tsx";
 import * as $events_viewing_showtimes from "./islands/events/viewing/showtimes.tsx";
 import * as $events_viewing_ticketActions from "./islands/events/viewing/ticketActions.tsx";
 import * as $loginForm from "./islands/loginForm.tsx";
 import * as $queueManagement from "./islands/queueManagement.tsx";
 import * as $tickets_filters from "./islands/tickets/filters.tsx";
+import * as $tickets_register_index from "./islands/tickets/register/index.tsx";
+import * as $tickets_register_login from "./islands/tickets/register/login.tsx";
+import * as $tickets_register_submit from "./islands/tickets/register/submit.tsx";
 import { type Manifest } from "$fresh/server.ts";
 
 const manifest = {
@@ -123,6 +125,7 @@ const manifest = {
     "./routes/api/events/team/update.ts": $api_events_team_update,
     "./routes/api/events/ticket/delete.ts": $api_events_ticket_delete,
     "./routes/api/events/ticket/index.ts": $api_events_ticket_index,
+    "./routes/api/qr.ts": $api_qr,
     "./routes/events/(pages)/_layout.tsx": $events_pages_layout,
     "./routes/events/(pages)/attending/_layout.tsx":
       $events_pages_attending_layout,
@@ -166,6 +169,8 @@ const manifest = {
     "./islands/components/pickers/image.tsx": $components_pickers_image,
     "./islands/components/pickers/select.tsx": $components_pickers_select,
     "./islands/components/pickers/time.tsx": $components_pickers_time,
+    "./islands/components/pieces/acceptCookies.tsx":
+      $components_pieces_acceptCookies,
     "./islands/components/pieces/deleteToken.tsx":
       $components_pieces_deleteToken,
     "./islands/components/pieces/navDropDown.tsx":
@@ -202,12 +207,6 @@ const manifest = {
     "./islands/events/viewing/contact.tsx": $events_viewing_contact,
     "./islands/events/viewing/dates.tsx": $events_viewing_dates,
     "./islands/events/viewing/delete.tsx": $events_viewing_delete,
-    "./islands/events/viewing/register/index.tsx":
-      $events_viewing_register_index,
-    "./islands/events/viewing/register/login.tsx":
-      $events_viewing_register_login,
-    "./islands/events/viewing/register/submit.tsx":
-      $events_viewing_register_submit,
     "./islands/events/viewing/selectShowTime.tsx":
       $events_viewing_selectShowTime,
     "./islands/events/viewing/showtimes.tsx": $events_viewing_showtimes,
@@ -215,6 +214,9 @@ const manifest = {
     "./islands/loginForm.tsx": $loginForm,
     "./islands/queueManagement.tsx": $queueManagement,
     "./islands/tickets/filters.tsx": $tickets_filters,
+    "./islands/tickets/register/index.tsx": $tickets_register_index,
+    "./islands/tickets/register/login.tsx": $tickets_register_login,
+    "./islands/tickets/register/submit.tsx": $tickets_register_submit,
   },
   baseUrl: import.meta.url,
 } satisfies Manifest;
