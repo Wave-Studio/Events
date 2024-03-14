@@ -337,7 +337,7 @@ export const handler: Handlers = {
         "{{QR-VALUE}}",
         `https://events.deno.dev/api/qr?ticket=${eventID}_${showtimeID}_${ticketID}`,
       )
-      .replace(
+      .replaceAll(
         "{{TICKET-LINK}}",
         `${url.protocol}//${url.host}/events/${eventID}/tickets/${ticketID}?s=${showtimeID}`,
       )
