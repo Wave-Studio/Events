@@ -11,10 +11,12 @@ const LoginForm = ({
   attending,
   emailInputted,
   createTicket,
+  redirectTo,
 }: {
   attending: boolean;
   emailInputted?: string;
   createTicket?: () => void;
+  redirectTo?: string | null;
 }) => {
   const email = useSignal("");
   const code = useSignal("");
@@ -107,9 +109,9 @@ const LoginForm = ({
 
     if (!emailInputted) {
       setTimeout(() => {
-        window.location.href = `/events/${
-          attending ? "attending" : "organizing"
-        }`;
+        window.location.href = redirectTo
+          ? redirectTo
+          : `/events/${attending ? "attending" : "organizing"}`;
       }, 300);
     } else {
       createTicket!();

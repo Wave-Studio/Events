@@ -4,7 +4,7 @@ import { isTicketUUID } from "@/utils/db/misc.ts";
 import qr from "npm:qrcode";
 
 export const handler: Handlers = {
-	async GET(req, _ctx) {
+  async GET(req, _ctx) {
     const url = new URL(req.url);
     const search = url.searchParams;
     const ticket = search.get("ticket");
@@ -18,13 +18,13 @@ export const handler: Handlers = {
     if (isTicketUUID(ticket)) {
       const qrcode = await qr.toBuffer(ticket, {
         color: {
-          light: "#f3f4f6"
-        }
-      })
+          light: "#f3f4f6",
+        },
+      });
 
       return new Response(qrcode, {
         headers: {
-			"Content-Type": "image/png",
+          "Content-Type": "image/png",
         },
       });
     }

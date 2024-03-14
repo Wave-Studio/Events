@@ -3,7 +3,7 @@ const Footer = ({ includeWave = true }: { includeWave?: boolean }) => {
     // imo looks bad with 4 links, we'll put the faq on the homepage
     {
       name: "Faq",
-      link: "/faq"
+      link: "/faq",
     },
     {
       name: "Privacy",

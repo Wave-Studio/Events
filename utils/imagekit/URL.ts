@@ -7,7 +7,7 @@ export const getURL = (width: number, path: string) =>
       transformation: [
         {
           width: width.toString(),
-          quality: "85",
+          quality: "95",
           format: fmt,
         },
       ],

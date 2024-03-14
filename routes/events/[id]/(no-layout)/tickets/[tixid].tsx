@@ -22,7 +22,19 @@ export default defineRoute(
     const queryValue = url.searchParams.get("s");
 
     if (!user) {
-      return badEventRequest;
+      return (
+        <div class="flex flex-col items-center justify-center min-h-screen text-center ">
+          <h1 class="font-bold px-2">
+            You need to log in to view this ticket
+          </h1>
+          <p class="mt-2 text-sm">We require users to login to ensure they're not using someone elses ticket.</p>
+          <a href={`/login?eventID=${eventID}&ticketID=${ticketID}`}>
+            <CTA btnType="cta" className="mt-10" btnSize="sm">
+              Log In
+            </CTA>
+          </a>
+        </div>
+      );
     }
 
     const sid = getShowtimeID(user?.data, eventID, ticketID);
@@ -131,8 +143,7 @@ export default defineRoute(
           <Footer includeWave={false} />
         </div>
         {/* Print buttons and whatnot */}
-        {!getCookies(req.headers)["accepted-privacy"] && 
-        <Cookies />}
+        {!getCookies(req.headers)["accepted-privacy"] && <Cookies />}
       </>
     );
   },

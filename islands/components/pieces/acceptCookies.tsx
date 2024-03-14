@@ -32,7 +32,7 @@ const Cookies = () => {
     );
   }
 
-	return null;
+  return null;
 };
 
 export default Cookies;

@@ -14,8 +14,7 @@ export default defineLayout(async (req, { Component }) => {
       <Navbar /*f-client-nav*/ user={user} />
       {/* <Partial name="navbar"> */}
       <div className="flex flex-col grow">
-        {!getCookies(req.headers)["accepted-privacy"] && 
-        <Cookies />}
+        {!getCookies(req.headers)["accepted-privacy"] && <Cookies />}
         <Component />
       </div>
       {/* </Partial> */}

@@ -75,7 +75,10 @@ export default defineRoute(
         </div>
         <TicketsFilters query={query} sort={sort} />
 
-        <h2 class="font-medium text-sm mb-0.5 mt-8 flex">Tickets <div class="rounded px-1 bg-gray-100 ml-2">{tickets.length}</div></h2>
+        <h2 class="font-medium text-sm mb-0.5 mt-8 flex">
+          Tickets{" "}
+          <div class="rounded px-1 bg-gray-100 ml-2">{tickets.length}</div>
+        </h2>
         {tickets.length === 0 ? (
           <>
             <div class="flex flex-col items-center justify-center grow py-2 text-center">

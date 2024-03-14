@@ -278,8 +278,8 @@ export const handler: Handlers = {
     if (
       user.tickets
         .map((t) => t.substring(0, t.lastIndexOf("_")))
-        .includes(`${eventID}_${showtimeID}`) 
-        //&& !showtime.multiPurchase
+        .includes(`${eventID}_${showtimeID}`)
+      //&& !showtime.multiPurchase
     ) {
       return new Response(
         JSON.stringify({
@@ -333,7 +333,10 @@ export const handler: Handlers = {
 
     const emailHTML = ticketHTML
       .replace("{{TICKETS}}", tickets.toString())
-      .replaceAll("{{QR-VALUE}}", `https://events.deno.dev/api/qr?ticket=${eventID}_${showtimeID}_${ticketID}`)
+      .replaceAll(
+        "{{QR-VALUE}}",
+        `https://events.deno.dev/api/qr?ticket=${eventID}_${showtimeID}_${ticketID}`,
+      )
       .replace(
         "{{TICKET-LINK}}",
         `${url.protocol}//${url.host}/events/${eventID}/tickets/${ticketID}?s=${showtimeID}`,

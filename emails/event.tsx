@@ -75,12 +75,15 @@ export default function LoginEmail() {
             </Button>
             <a
               href="{{EVENT-LINK}}"
-							rel="_blank"
+              rel="_blank"
               className="ml-3 rounded-md font-semibold peer z-10 hover:brightness-95 transition hover:focus:ring-1 hover:focus:brightness-100 disabled:brightness-90 disabled:cursor-not-allowed bg-gray-300 ring-gray-400/50 text-gray-800 px-4 py-2"
             >
               View Event
             </a>
-						<p className="mt-8 text-sm">Buttons not working? Copy and paste this in your browser: {`{{TICKET-LINK}}`}</p>
+            <p className="mt-8 text-sm">
+              Buttons not working? Copy and paste this in your browser:{" "}
+              {`{{TICKET-LINK}}`}
+            </p>
           </Container>
         </Body>
       </Tailwind>

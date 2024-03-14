@@ -4,12 +4,6 @@ import {
   EventContext,
 } from "@/routes/events/[id]/_layout.tsx";
 import EventHeader from "@/components/layout/eventEditNavbar.tsx";
-import Button from "@/components/buttons/button.tsx";
-import Select from "@/islands/components/pickers/select.tsx";
-import UserMinus from "$tabler/user-minus.tsx";
-import Dropdown from "@/islands/components/pickers/dropdown.tsx";
-import DotsVertical from "$tabler/dots-vertical.tsx";
-import { Trashcan } from "@/islands/components/dropinUI/trash.tsx";
 import Invite from "@/islands/events/teams/invite.tsx";
 import ManageUser from "@/islands/events/teams/manage.tsx";
 import Crown from "$tabler/crown.tsx";
