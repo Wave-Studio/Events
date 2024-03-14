@@ -16,7 +16,11 @@ export const handler: Handlers = {
     }
 
     if (isTicketUUID(ticket)) {
-      const qrcode = await qr.toBuffer(ticket)
+      const qrcode = await qr.toBuffer(ticket, {
+        color: {
+          light: "#f3f4f6"
+        }
+      })
 
       return new Response(qrcode, {
         headers: {

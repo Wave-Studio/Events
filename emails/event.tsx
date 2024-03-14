@@ -18,7 +18,7 @@ import {
 import * as React from "react";
 import config from "../tailwind.config.ts";
 
-export default function LoginEmail({ otp = "123456" }: { otp: string }) {
+export default function LoginEmail() {
   return (
     <Html>
       <Head>
@@ -64,7 +64,6 @@ export default function LoginEmail({ otp = "123456" }: { otp: string }) {
                 width={232}
                 className="mb-4"
               />
-							{`{{QR-VALUE}}`}
             </Container>
           </Container>
           <Container className="my-8">
@@ -81,6 +80,7 @@ export default function LoginEmail({ otp = "123456" }: { otp: string }) {
             >
               View Event
             </a>
+						<p className="mt-8 text-sm">Buttons not working? Copy and paste this in your browser: {`{{TICKET-LINK}}`}</p>
           </Container>
         </Body>
       </Tailwind>

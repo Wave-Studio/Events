@@ -15,6 +15,8 @@ import { ClientDate } from "@/islands/events/viewing/dates.tsx";
 import NavbarDropDown from "@/islands/components/pieces/navDropDown.tsx";
 import { Contact } from "@/islands/events/viewing/contact.tsx";
 import MarkdownIt from "npm:markdown-it";
+import Cookies from "@/islands/components/pieces/acceptCookies.tsx";
+import { getCookies } from "$std/http/cookie.ts";
 
 export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
   const { event, eventID, user } = ctx.state.data;
@@ -276,6 +278,8 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
         </p>
         <Footer includeWave={false} />
       </div>
+      {!getCookies(req.headers)["accepted-privacy"] && 
+        <Cookies />}
     </>
   );
 });

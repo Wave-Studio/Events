@@ -11,6 +11,8 @@ import TicketComponent from "../../../../../islands/components/pieces/ticket.tsx
 import CTA from "@/components/buttons/cta.tsx";
 import TicketActions from "@/islands/events/viewing/ticketActions.tsx";
 import NavbarDropDown from "@/islands/components/pieces/navDropDown.tsx";
+import Cookies from "@/islands/components/pieces/acceptCookies.tsx";
+import { getCookies } from "$std/http/cookie.ts";
 
 export default defineRoute(
   async (req, ctx: RouteContext<void, EventContext>) => {
@@ -129,6 +131,8 @@ export default defineRoute(
           <Footer includeWave={false} />
         </div>
         {/* Print buttons and whatnot */}
+        {!getCookies(req.headers)["accepted-privacy"] && 
+        <Cookies />}
       </>
     );
   },
