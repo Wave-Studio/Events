@@ -64,6 +64,21 @@ export const handler: Handlers = {
       );
     }
 
+    if (tickets > 10 || tickets < 1) {
+      return new Response(
+        JSON.stringify({
+          error: {
+            message:
+              "You can only buy up to 10 tickets, please contact support@events-help.freshdesk.com to bulk buy tickets",
+            code: EventRegisterError.OTHER,
+          },
+        }),
+        {
+          status: 400,
+        },
+      );
+    }
+
     const event = await kv.get<Event>(["event", eventID]);
 
     if (event.value == undefined) {
@@ -222,7 +237,7 @@ export const handler: Handlers = {
       }
     }
 
-    if (showtime.soldTickets >= (showtime.maxTickets ?? 75)) {
+    if (showtime.soldTickets + tickets > (showtime.maxTickets ?? 75)) {
       return new Response(
         JSON.stringify({
           error: {
@@ -309,7 +324,7 @@ export const handler: Handlers = {
           if (s.id === showtimeID) {
             return {
               ...s,
-              soldTickets: s.soldTickets + 1,
+              soldTickets: s.soldTickets + tickets,
             };
           }
 
@@ -349,7 +364,8 @@ export const handler: Handlers = {
 
     await sendEmail([user.email], `Your Tickets for ${event.value.name}!`, {
       html: emailHTML,
-      fallback: `View your ticket at ${url.protocol}//${url.host}/events/${eventID}/tickets/${ticketID}?s=${showtimeID}`,
+      fallback:
+        `View your ticket at ${url.protocol}//${url.host}/events/${eventID}/tickets/${ticketID}?s=${showtimeID}`,
     });
 
     return new Response(JSON.stringify({ ticket }), {
