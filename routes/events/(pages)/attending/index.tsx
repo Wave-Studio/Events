@@ -1,7 +1,7 @@
 import { TicketContext } from "@/routes/events/(pages)/attending/_layout.tsx";
 import { defineRoute, RouteContext } from "$fresh/server.ts";
 import EventHeader from "@/components/layout/eventEditNavbar.tsx";
-import Scanner from "@/islands/events/scanning.tsx";
+import Scanner from "../../../../islands/events/scanning/index.tsx";
 import { badEventRequest } from "@/routes/events/[id]/_layout.tsx";
 import ImagekitImage from "@/components/imagekitimg.tsx";
 import CTA from "@/components/buttons/cta.tsx";

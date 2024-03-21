@@ -81,7 +81,8 @@ import * as $events_editing_ticketSettings from "./islands/events/editing/ticket
 import * as $events_list_exportTicketData from "./islands/events/list/exportTicketData.tsx";
 import * as $events_list_filters from "./islands/events/list/filters.tsx";
 import * as $events_list_ticketDropdown from "./islands/events/list/ticketDropdown.tsx";
-import * as $events_scanning from "./islands/events/scanning.tsx";
+import * as $events_scanning_index from "./islands/events/scanning/index.tsx";
+import * as $events_scanning_scanning_types from "./islands/events/scanning/scanning.types.ts";
 import * as $events_teams_filters from "./islands/events/teams/filters.tsx";
 import * as $events_teams_invite from "./islands/events/teams/invite.tsx";
 import * as $events_teams_manage from "./islands/events/teams/manage.tsx";
@@ -199,7 +200,9 @@ const manifest = {
     "./islands/events/list/exportTicketData.tsx": $events_list_exportTicketData,
     "./islands/events/list/filters.tsx": $events_list_filters,
     "./islands/events/list/ticketDropdown.tsx": $events_list_ticketDropdown,
-    "./islands/events/scanning.tsx": $events_scanning,
+    "./islands/events/scanning/index.tsx": $events_scanning_index,
+    "./islands/events/scanning/scanning.types.ts":
+      $events_scanning_scanning_types,
     "./islands/events/teams/filters.tsx": $events_teams_filters,
     "./islands/events/teams/invite.tsx": $events_teams_invite,
     "./islands/events/teams/manage.tsx": $events_teams_manage,

@@ -3,7 +3,7 @@ import {
   badEventRequest,
   EventContext,
 } from "@/routes/events/[id]/_layout.tsx";
-import Scanner from "@/islands/events/scanning.tsx";
+import Scanner from "../../../islands/events/scanning/index.tsx";
 import EventHeader from "@/components/layout/eventEditNavbar.tsx";
 
 export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {

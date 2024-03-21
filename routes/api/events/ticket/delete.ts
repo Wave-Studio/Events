@@ -44,8 +44,6 @@ export const handler: Handlers = {
 			});
 		}
 
-    const showTime = event.value.showTimes.find((time) => time.id === showTimeID)
-
 		const deletion = await kv
 			.atomic()
 			.delete(["ticket", eventID, showTimeID, ticketID])

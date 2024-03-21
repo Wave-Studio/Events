@@ -5,10 +5,14 @@ import { BarcodeDetector } from "npm:barcode-detector";
 // import { BarcodeDetector } from "https://fastly.jsdelivr.net/npm/barcode-detector@2/dist/es/pure.min.js";
 import { Ticket } from "@/utils/db/kv.types.ts";
 import { useSignal } from "@preact/signals";
-import Dropdown from "../components/pickers/dropdown.tsx";
+import Dropdown from "../../components/pickers/dropdown.tsx";
 import CameraRotate from "$tabler/camera-rotate.tsx";
 import CameraPlus from "$tabler/camera-plus.tsx";
 import Popup from "@/components/popup.tsx";
+import {
+  ScanningState,
+  TicketState,
+} from "@/islands/events/scanning/scanning.types.ts";
 
 // Chatgpt fucked this up too much so we're abandoning rotations - Bloxs
 // Should've paid attention in trig class - LS
@@ -16,19 +20,29 @@ import Popup from "@/components/popup.tsx";
 export default function Scanner({ eventID }: { eventID: string }) {
   const error = useSignal<string | null>(null);
   const isInitialized = useSignal(false);
-  const currentTicket = useSignal<
-    | { code: string; status: "invalid" | "loading"; ticketData: null }
-    | {
-        code: string;
-        status: "used" | "valid" | "inactive";
-        ticketData: Ticket;
-      }
-    | null
-  >(null);
+  const currentTicket = useSignal<TicketState | null>(null);
   const cameraIds = useSignal<MediaDeviceInfo[]>([]);
   const currentCamera = useSignal<string>("");
   const isCameraSwitching = useSignal(false);
   const cameraSwitchPopupOpen = useSignal(false);
+  const scanningState = useSignal<ScanningState>(ScanningState.READY);
+
+  const scanCode = async (code: string) => {
+    try {
+      const res = await fetch(`/api/events/scanned`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ ticketID: code, eventID: eventID }),
+      });
+
+      if (res.status != 200) return false;
+      return true;
+    } catch {
+      return false;
+    }
+  };
 
   useEffect(() => {
     (async () => {
@@ -99,21 +113,16 @@ export default function Scanner({ eventID }: { eventID: string }) {
           canvas.width = video.videoWidth;
           canvas.height = video.videoHeight;
 
-          const checkedCodes: Map<
-            string,
-            | { status: "loading" | "invalid"; checkedAt: number }
-            | {
-                status: "valid" | "used" | "inactive";
-                ticketData: Ticket;
-                checkedAt: number;
-              }
-          > = new Map();
+          const checkedCodes: Map<string, TicketState> = new Map();
 
           setInterval(() => {
             for (const [code, codeData] of checkedCodes) {
               const timeSinceScan = Date.now() - codeData.checkedAt;
 
-              if (codeData.status == "loading" && timeSinceScan > 5 * 1000) {
+              if (
+                codeData.status === ScanningState.LOADING &&
+                timeSinceScan > 5 * 1000
+              ) {
                 checkedCodes.delete(code);
               }
 
@@ -152,19 +161,21 @@ export default function Scanner({ eventID }: { eventID: string }) {
 
               if (res.status == 400 || res.status == 500) {
                 checkedCodes.set(code, {
-                  status: "invalid",
+                  status: ScanningState.INVALID,
                   checkedAt: Date.now(),
                 });
               } else {
                 checkedCodes.set(code, {
-                  status: data.hasBeenUsed ? "used" : "valid",
+                  status: data.hasBeenUsed
+                    ? ScanningState.USED
+                    : ScanningState.VALID,
                   ticketData: data,
                   checkedAt: Date.now(),
                 });
               }
             } catch {
               checkedCodes.set(code, {
-                status: "invalid",
+                status: ScanningState.INVALID,
                 checkedAt: Date.now(),
               });
             }
@@ -229,10 +240,10 @@ export default function Scanner({ eventID }: { eventID: string }) {
 
                 if (
                   code.boundingBox.width * code.boundingBox.height >
-                  largestCode.size
+                    largestCode.size
                 ) {
-                  largestCode.size =
-                    code.boundingBox.width * code.boundingBox.height;
+                  largestCode.size = code.boundingBox.width *
+                    code.boundingBox.height;
                   largestCode.code = code;
                 }
               }
@@ -249,7 +260,7 @@ export default function Scanner({ eventID }: { eventID: string }) {
 
                 if (!checkedCodes.has(code.rawValue)) {
                   checkedCodes.set(code.rawValue, {
-                    status: "loading",
+                    status: ScanningState.LOADING,
                     checkedAt: Date.now(),
                   });
 
@@ -263,16 +274,15 @@ export default function Scanner({ eventID }: { eventID: string }) {
 
                 const codeData = checkedCodes.get(code.rawValue)!;
 
-                const ticketObj = {
-                  code: code.rawValue,
+                const ticketObj: TicketState = {
                   status: codeData.status,
                   ticketData: Object.hasOwn(codeData, "ticketData")
                     ? (codeData as { ticketData: Ticket }).ticketData
                     : null,
-                };
+                  checkedAt: codeData.checkedAt,
+                } as TicketState;
 
                 if (currentTicket.value != ticketObj) {
-                  // @ts-expect-error Types be like
                   currentTicket.value = ticketObj;
                 }
 
@@ -296,7 +306,14 @@ export default function Scanner({ eventID }: { eventID: string }) {
                   bottomY = Math.max(bottomY, point.y);
                 }
 
-                const padding = 20;
+                const canvasArea = canvas.width * canvas.height;
+                const codeArea = largestCode.size;
+
+                const ratio = codeArea / canvasArea;
+
+                // TODO: @lukas add all of your'e dum scaling stuff here
+
+                const padding = 16;
 
                 leftX -= padding;
                 rightX += padding;
@@ -304,39 +321,15 @@ export default function Scanner({ eventID }: { eventID: string }) {
                 topY -= padding;
                 bottomY += padding;
 
-                ctx.lineWidth = 5;
+                ctx.lineWidth = 3;
                 ctx.beginPath();
                 ctx.roundRect(leftX, topY, rightX - leftX, bottomY - topY, 20);
                 ctx.stroke();
                 ctx.closePath();
 
-                switch (codeData.status) {
-                  case "loading": {
-                    updateStringIfChanged("Loading...");
-                    break;
-                  }
-
-                  case "invalid": {
-                    updateStringIfChanged("Invalid code!");
-                    break;
-                  }
-
-                  case "valid": {
-                    updateStringIfChanged("Scan ticket");
-                    break;
-                  }
-
-                  case "used": {
-                    updateStringIfChanged("Ticket already used!");
-                    break;
-                  }
-
-                  case "inactive": {
-                    updateStringIfChanged("Unactivated ticket!");
-                    break;
-                  }
-                }
+                scanningState.value = codeData.status;
               } else {
+                scanningState.value = ScanningState.READY;
                 currentTicket.value = null;
               }
             }
@@ -387,17 +380,17 @@ export default function Scanner({ eventID }: { eventID: string }) {
           className={` h-max bg-gray-200 max-h-[70vh] w-max max-w-full transition-all ${
             isCameraSwitching.value && "blur brightness-90"
           }`}
-        ></canvas>
+        >
+        </canvas>
         {/* Camera switching */}
         <div class="absolute top-4 right-4">
           {cameraIds.value.length === 1 && (
             <button
               class=""
               onClick={() => {
-                currentCamera.value =
-                  cameraIds.value.find(
-                    ({ deviceId }) => deviceId !== currentCamera.value,
-                  )?.deviceId || "";
+                currentCamera.value = cameraIds.value.find(
+                  ({ deviceId }) => deviceId !== currentCamera.value,
+                )?.deviceId || "";
               }}
             >
               <CameraRotate class="size-6 text-white" />
