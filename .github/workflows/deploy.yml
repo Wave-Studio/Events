@@ -1,7 +1,7 @@
 name: Deploy
 on:
   push:
-    branches: [main]
+    branches: main
   pull_request:
     branches: main
 
@@ -23,19 +23,12 @@ jobs:
         with:
           deno-version: v1.x
 
-      - name: Build Fresh Website
-        env:
-          ALLOWED_EMAILS: ${{ secrets.ALLOWED_EMAILS }}
-          IMAGEKIT_ENABLED: ${{ secrets.IMAGEKIT_ENABLED }}
-          IMAGEKIT_PRIVATE_KEY: ${{ secrets.IMAGEKIT_PRIVATE_KEY }}
-          IMAGEKIT_PUBLIC_KEY: ${{ secrets.IMAGEKIT_PUBLIC_KEY }}
-          IMAGEKIT_URL_ENDPOINT: ${{ secrets.IMAGEKIT_URL_ENDPOINT }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: "deno task build" # 📝 Update the build command(s) if necessary
+      - name: Build step
+        run: "deno task build"
 
       - name: Upload to Deno Deploy
         uses: denoland/deployctl@v1
         with:
-          project: "events" # 📝 Update the deploy project name if necessary
-          entrypoint: "./main.ts" # 📝 Update the entrypoint if necessary
+          project: "events"
+          entrypoint: "./main.ts"
+          root: ""
