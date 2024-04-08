@@ -3,7 +3,7 @@ import { Toggle } from "@/components/buttons/toggle.tsx";
 import CameraPlus from "$tabler/photo-plus.tsx";
 import UpArrow from "$tabler/arrow-up.tsx";
 import Loading from "$tabler/loader-2.tsx";
-import { encode } from "$std/encoding/base64.ts";
+import { encodeBase64 } from "$std/encoding/base64.ts";
 import { JSX } from "preact";
 
 export default function ImagePicker({
@@ -36,7 +36,7 @@ export default function ImagePicker({
     }
     // Separate loading to show b64 conversion vs actual uploading
     setLoading(true);
-    const b64 = encode(await file.arrayBuffer());
+    const b64 = encodeBase64(await file.arrayBuffer());
     setFile(b64);
     setLoading(false);
     setUploading(true);

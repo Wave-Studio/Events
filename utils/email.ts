@@ -147,6 +147,7 @@ kv.listenQueue(async (msg) => {
 					`https://events.deno.dev/events/${eventID}`,
 				)
 				.replace("Tickets for the {{EVENT-NAME}} event!", `Your tickets for {{EVENT-NAME}} next week!`)
+				.replace("Your Tickets!", `Use this as your ticket for {{EVENT-NAME}} next week:`)
 				.replaceAll("{{EVENT-NAME}}", eventName);
 
 			await sendEmail([data.payload.to], `Your Tickets for ${eventName} next week!`, {

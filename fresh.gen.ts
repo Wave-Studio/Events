@@ -15,6 +15,7 @@ import * as $api_auth_regen from "./routes/api/auth/regen.ts";
 import * as $api_auth_signout from "./routes/api/auth/signout.ts";
 import * as $api_events_create from "./routes/api/events/create.ts";
 import * as $api_events_delete from "./routes/api/events/delete.ts";
+import * as $api_events_dev_sendemails from "./routes/api/events/dev/sendemails.ts";
 import * as $api_events_edit from "./routes/api/events/edit.ts";
 import * as $api_events_fetch from "./routes/api/events/fetch.ts";
 import * as $api_events_image_fill from "./routes/api/events/image/fill.ts";
@@ -62,8 +63,6 @@ import * as $components_pieces_acceptCookies from "./islands/components/pieces/a
 import * as $components_pieces_deleteToken from "./islands/components/pieces/deleteToken.tsx";
 import * as $components_pieces_navDropDown from "./islands/components/pieces/navDropDown.tsx";
 import * as $components_pieces_ticket from "./islands/components/pieces/ticket.tsx";
-import * as $entriesManagement from "./islands/entriesManagement.tsx";
-import * as $entryManagement from "./islands/entryManagement.tsx";
 import * as $events_components_card from "./islands/events/components/card.tsx";
 import * as $events_components_delete from "./islands/events/components/delete.tsx";
 import * as $events_components_registerErrors from "./islands/events/components/registerErrors.tsx";
@@ -94,7 +93,6 @@ import * as $events_viewing_selectShowTime from "./islands/events/viewing/select
 import * as $events_viewing_showtimes from "./islands/events/viewing/showtimes.tsx";
 import * as $events_viewing_ticketActions from "./islands/events/viewing/ticketActions.tsx";
 import * as $loginForm from "./islands/loginForm.tsx";
-import * as $queueManagement from "./islands/queueManagement.tsx";
 import * as $tickets_filters from "./islands/tickets/filters.tsx";
 import * as $tickets_register_index from "./islands/tickets/register/index.tsx";
 import * as $tickets_register_login from "./islands/tickets/register/login.tsx";
@@ -116,6 +114,7 @@ const manifest = {
     "./routes/api/auth/signout.ts": $api_auth_signout,
     "./routes/api/events/create.ts": $api_events_create,
     "./routes/api/events/delete.ts": $api_events_delete,
+    "./routes/api/events/dev/sendemails.ts": $api_events_dev_sendemails,
     "./routes/api/events/edit.ts": $api_events_edit,
     "./routes/api/events/fetch.ts": $api_events_fetch,
     "./routes/api/events/image/fill.ts": $api_events_image_fill,
@@ -177,8 +176,6 @@ const manifest = {
     "./islands/components/pieces/navDropDown.tsx":
       $components_pieces_navDropDown,
     "./islands/components/pieces/ticket.tsx": $components_pieces_ticket,
-    "./islands/entriesManagement.tsx": $entriesManagement,
-    "./islands/entryManagement.tsx": $entryManagement,
     "./islands/events/components/card.tsx": $events_components_card,
     "./islands/events/components/delete.tsx": $events_components_delete,
     "./islands/events/components/registerErrors.tsx":
@@ -215,7 +212,6 @@ const manifest = {
     "./islands/events/viewing/showtimes.tsx": $events_viewing_showtimes,
     "./islands/events/viewing/ticketActions.tsx": $events_viewing_ticketActions,
     "./islands/loginForm.tsx": $loginForm,
-    "./islands/queueManagement.tsx": $queueManagement,
     "./islands/tickets/filters.tsx": $tickets_filters,
     "./islands/tickets/register/index.tsx": $tickets_register_index,
     "./islands/tickets/register/login.tsx": $tickets_register_login,
