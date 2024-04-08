@@ -2,6 +2,9 @@ import {
   SendEmailCommand,
   SendEmailRequest,
   SESClient,
+  SendBulkTemplatedEmailCommand,
+  CreateTemplateCommand,
+  SendBulkTemplatedEmailCommandInput
 } from "npm:@aws-sdk/client-ses";
 
 export const sesClient = new SESClient({

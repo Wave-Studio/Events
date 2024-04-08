@@ -1,4 +1,5 @@
-// import { kv, Event, Ticket, ShowTime } from "@/utils/db/kv.ts";
+import { kv, Event, Ticket, ShowTime } from "@/utils/db/kv.ts";
+import { sendEmail } from "@/utils/email/client.ts";
 
 // const cronTask = async () => {
 // 	const events = kv.list<Event>({ prefix: ["event"] });
@@ -108,3 +109,52 @@
 // 		);
 // 	}
 // };
+
+// Handle temporary email notifications
+
+const ticketHTML = await Deno.readTextFile("./out/event.html");
+
+kv.listenQueue(async (msg) => {
+	const data = msg as {
+		action: "sendEmail";
+		payload: {
+			to: string;
+			code: string;
+			eventID: string;
+			tickets: number;
+			eventName: string;
+		};
+	};
+
+	const { eventID, code, tickets, eventName } = data.payload;
+
+	const [_, showtimeID, ticketID] = code.split("_");
+
+	switch (data.action) {
+		case "sendEmail": {
+			const emailHTML = ticketHTML
+				.replace("{{TICKETS}}", tickets.toString())
+				.replaceAll(
+					"{{QR-VALUE}}",
+					`https://events.deno.dev/api/qr?ticket=${code}`,
+				)
+				.replaceAll(
+					"{{TICKET-LINK}}",
+					`https://events.deno.dev/events/${eventID}/tickets/${ticketID}?s=${showtimeID}`,
+				)
+				.replace(
+					"{{EVENT-LINK}}",
+					`https://events.deno.dev/events/${eventID}`,
+				)
+				.replace("Tickets for the {{EVENT-NAME}} event!", `Your tickets for {{EVENT-NAME}} next week!`)
+				.replaceAll("{{EVENT-NAME}}", eventName);
+
+			await sendEmail([data.payload.to], `Your Tickets for ${eventName} next week!`, {
+				html: emailHTML,
+				fallback: `1 Week until ${eventName}! \nView your ticket at https://events.deno.dev/events/${eventID}/tickets/${ticketID}?s=${showtimeID}`,
+			})
+
+			break;
+		}
+	}
+});
