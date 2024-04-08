@@ -65,7 +65,7 @@ export const defaultEvent: Event = {
       soldTickets: 0,
       maxTickets: 75,
       multiPurchase: true,
-	  hasEmailed: false,
+      hasEmailed: false,
     },
   ],
 

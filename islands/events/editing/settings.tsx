@@ -66,8 +66,7 @@ export default function EventSettings(props: {
               setFormState((state) => ({
                 ...state,
                 name: e.currentTarget.value,
-              }))
-            }
+              }))}
           />
         </label>
         <label class="flex flex-col ">
@@ -81,8 +80,7 @@ export default function EventSettings(props: {
               setFormState((state) => ({
                 ...state,
                 supportEmail: e.currentTarget.value,
-              }))
-            }
+              }))}
           />
         </label>
       </div>
@@ -97,8 +95,7 @@ export default function EventSettings(props: {
             setFormState((state) => ({
               ...state,
               venue: e.currentTarget.value,
-            }))
-          }
+            }))}
         />
       </label>
       <label class="flex flex-col">
@@ -113,8 +110,7 @@ export default function EventSettings(props: {
             setFormState((state) => ({
               ...state,
               summary: e.currentTarget.value,
-            }))
-          }
+            }))}
         />
       </label>
       <label class="flex flex-col">
@@ -127,8 +123,7 @@ export default function EventSettings(props: {
             setFormState((state) => ({
               ...state,
               description: e.currentTarget.value,
-            }))
-          }
+            }))}
         />
       </label>
 
@@ -136,10 +131,8 @@ export default function EventSettings(props: {
         btnType="cta"
         className="!w-full mx-auto sm:!w-72"
         type="submit"
-        disabled={
-          JSON.stringify(formState) === JSON.stringify(initialState) ||
-          loading == Loading.LOADING
-        }
+        disabled={JSON.stringify(formState) === JSON.stringify(initialState) ||
+          loading == Loading.LOADING}
       >
         {loading == Loading.LOADING && "Saving..."}
         {loading == Loading.LOADED && "Save"}

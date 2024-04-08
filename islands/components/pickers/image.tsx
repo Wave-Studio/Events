@@ -112,11 +112,13 @@ export default function ImagePicker({
             file ? "h-12" : "h-36"
           } grow border border-gray-300 border-dashed rounded-md flex items-center justify-center group cursor-pointer transition hover:bg-gray-100`}
         >
-          {dragging ? (
-            <UpArrow class="text-gray-500 group-hover:text-gray-600 transition animate-bounce mt-1" />
-          ) : (
-            <CameraPlus class="text-gray-500 group-hover:text-gray-600 transition" />
-          )}
+          {dragging
+            ? (
+              <UpArrow class="text-gray-500 group-hover:text-gray-600 transition animate-bounce mt-1" />
+            )
+            : (
+              <CameraPlus class="text-gray-500 group-hover:text-gray-600 transition" />
+            )}
           <p class="ml-2 font-medium text-gray-600 group-hover:text-gray-700 transition">
             {loading
               ? "Converting..."
@@ -145,11 +147,9 @@ export default function ImagePicker({
         <>
           <div className="relative flex flex-col items-center">
             <img
-              src={
-                file.startsWith("https://")
-                  ? file
-                  : "data:image/png;base64, " + file
-              }
+              src={file.startsWith("https://")
+                ? file
+                : "data:image/png;base64, " + file}
               class={`rounded-md mt-4 ${
                 fill ? "object-fill" : "object-cover"
               } object-center h-36 w-full mb-2`}

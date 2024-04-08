@@ -8,17 +8,11 @@ const FAQS = () => {
       <h1 class="text-center text-4xl font-bold">Faq</h1>
       <p class=" text-center mt-4">Frequently Asked Questions</p>
       <Heading name="General" />
-      {faqs.map(({ a, q }) => (
-        <QA q={q} a={a} />
-      ))}
+      {faqs.map(({ a, q }) => <QA q={q} a={a} />)}
       <Heading name="Pricing" />
-      {pricingfaqs.map(({ a, q }) => (
-        <QA q={q} a={a} />
-      ))}
+      {pricingfaqs.map(({ a, q }) => <QA q={q} a={a} />)}
       <Heading name="Art & Design" />
-      {artDesignFAQs.map(({ a, q }) => (
-        <QA q={q} a={a} />
-      ))}
+      {artDesignFAQs.map(({ a, q }) => <QA q={q} a={a} />)}
     </div>
   );
 };

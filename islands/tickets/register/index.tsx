@@ -92,10 +92,12 @@ export default function EventRegister({
   const createTicket = async (formState: FormState) => {
     const formStates: { id: string; value: unknown }[] = [];
 
-    for (const [key, value] of [
-      ...Object.entries(toggles.value),
-      ...Object.entries(formState),
-    ]) {
+    for (
+      const [key, value] of [
+        ...Object.entries(toggles.value),
+        ...Object.entries(formState),
+      ]
+    ) {
       if (isUUID(key)) {
         formStates.push({ id: key, value });
       }
@@ -158,67 +160,75 @@ export default function EventRegister({
                 showTimes={showTimes}
               />
               {/* If user is already registered */}
-              {acquired(user, eventID, showTime.value!) ? (
-                <>
-                  <div className="mx-auto flex flex-col items-center">
-                    <p class="font-semibold mb-4 text-center">
-                      You're already registered for this event! Edit or view
-                      ticket below. Tap "Change" to get a ticket for a different
-                      event.
-                    </p>
-                    <a
-                      href={`/events/${eventID}/tickets/${getTicketID(
-                        user,
-                        eventID,
-                        showTime.value!,
-                      )}`}
-                    >
-                      <CTA btnType="secondary" btnSize="sm" type="button">
-                        View Ticket
-                      </CTA>
-                    </a>
-                  </div>
-                </>
-              ) : (
-                // Page 1
-                <>
-                  <div class="flex flex-col md:flex-row gap-4 [&>label]:grow">
-                    <label class="flex flex-col">
-                      <span class="label-text label-required">First Name</span>
-                      <Field name="firstName" />
-                    </label>
+              {acquired(user, eventID, showTime.value!)
+                ? (
+                  <>
+                    <div className="mx-auto flex flex-col items-center">
+                      <p class="font-semibold mb-4 text-center">
+                        You're already registered for this event! Edit or view
+                        ticket below. Tap "Change" to get a ticket for a
+                        different event.
+                      </p>
+                      <a
+                        href={`/events/${eventID}/tickets/${
+                          getTicketID(
+                            user,
+                            eventID,
+                            showTime.value!,
+                          )
+                        }`}
+                      >
+                        <CTA btnType="secondary" btnSize="sm" type="button">
+                          View Ticket
+                        </CTA>
+                      </a>
+                    </div>
+                  </>
+                )
+                : (
+                  // Page 1
+                  <>
+                    <div class="flex flex-col md:flex-row gap-4 [&>label]:grow">
+                      <label class="flex flex-col">
+                        <span class="label-text label-required">
+                          First Name
+                        </span>
+                        <Field name="firstName" />
+                      </label>
 
+                      <label class="flex flex-col">
+                        <span class="label-text label-required">Last Name</span>
+                        <Field name="lastName" />
+                      </label>
+                    </div>
                     <label class="flex flex-col">
-                      <span class="label-text label-required">Last Name</span>
-                      <Field name="lastName" />
+                      <span class="label-text label-required">Email</span>
+                      <Field name="email" />
                     </label>
-                  </div>
-                  <label class="flex flex-col">
-                    <span class="label-text label-required">Email</span>
-                    <Field name="email" />
-                  </label>
-                  {additionalFields.length > 0 ? (
-                    <CTA
-                      btnType="cta"
-                      type="button"
-                      btnSize="sm"
-                      className="ml-auto mt-4"
-                      onClick={() => (page.value = 1)}
-                    >
-                      Next
-                    </CTA>
-                  ) : (
-                    <Submit
-                      error={error}
-                      page={page}
-                      showTime={showTime}
-                      showTimes={showTimes}
-                      ticketID={ticketID}
-                      tickets={tickets}
-                    />
-                  )}
-                </>
-              )}
+                    {additionalFields.length > 0
+                      ? (
+                        <CTA
+                          btnType="cta"
+                          type="button"
+                          btnSize="sm"
+                          className="ml-auto mt-4"
+                          onClick={() => (page.value = 1)}
+                        >
+                          Next
+                        </CTA>
+                      )
+                      : (
+                        <Submit
+                          error={error}
+                          page={page}
+                          showTime={showTime}
+                          showTimes={showTimes}
+                          ticketID={ticketID}
+                          tickets={tickets}
+                        />
+                      )}
+                  </>
+                )}
             </>
           )}
           {page.value === 1 && (
@@ -252,12 +262,10 @@ export default function EventRegister({
                       enabled={toggles.value[field.id]}
                       name={field.name}
                       description={field.description}
-                      setEnabled={(state) =>
-                        (toggles.value = {
-                          ...toggles.value,
-                          [field.id]: state,
-                        })
-                      }
+                      setEnabled={(state) => (toggles.value = {
+                        ...toggles.value,
+                        [field.id]: state,
+                      })}
                     />
                   </>
                 ))}
@@ -296,9 +304,9 @@ export default function EventRegister({
               </div>
               <Ticket
                 id={ticketID.value!}
-                showTime={
-                  showTimes.find((s) => s.id == showTime.value)! as ShowTime
-                }
+                showTime={showTimes.find((s) =>
+                  s.id == showTime.value
+                )! as ShowTime}
                 tickets={tickets.value}
               />
               <a

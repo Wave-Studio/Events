@@ -23,8 +23,8 @@ export const handler: Handlers = {
       eventID,
       ticketID,
       showtimeID,
-    }: { eventID: string; ticketID: string; showtimeID?: string } =
-      await req.json();
+    }: { eventID: string; ticketID: string; showtimeID?: string } = await req
+      .json();
 
     const event = await kv.get<Event>(["event", eventID]);
 

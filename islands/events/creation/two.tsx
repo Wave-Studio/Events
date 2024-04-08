@@ -20,13 +20,13 @@ export default function StageTwo({
   const [fields, setFields] = useState<Field[]>(
     additionalFields.length == 0
       ? [
-          {
-            name: "",
-            description: "",
-            id: crypto.randomUUID(),
-            type: "text",
-          },
-        ]
+        {
+          name: "",
+          description: "",
+          id: crypto.randomUUID(),
+          type: "text",
+        },
+      ]
       : additionalFields,
   );
   const [mEntry, setMEntry] = useState(multiEntry);
@@ -162,7 +162,7 @@ export const FieldInput = ({
           ...field,
           ...update,
         };
-      }),
+      })
     );
   };
 
@@ -208,8 +208,7 @@ export const FieldInput = ({
           class="nostyle border-b-2 border-dashed sm:w-64"
           value={fields.find((f) => f.id == field.id)?.name}
           onChange={(e) =>
-            updateField({ id: field.id, name: e.currentTarget.value })
-          }
+            updateField({ id: field.id, name: e.currentTarget.value })}
         />
         <input
           placeholder="Optional description"
@@ -217,8 +216,7 @@ export const FieldInput = ({
           class="nostyle border-b-2 border-dashed text-sm mt-2 sm:w-80"
           value={fields.find((f) => f.id == field.id)?.description}
           onChange={(e) =>
-            updateField({ id: field.id, description: e.currentTarget.value })
-          }
+            updateField({ id: field.id, description: e.currentTarget.value })}
         />
       </div>
       <div className="flex gap-2 mt-2 sm:mt-0">

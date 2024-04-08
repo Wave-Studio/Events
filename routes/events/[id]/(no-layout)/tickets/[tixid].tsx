@@ -27,7 +27,10 @@ export default defineRoute(
           <h1 class="font-bold px-2">
             You need to log in to view this ticket
           </h1>
-          <p class="mt-2 text-sm">We require users to login to ensure they're not using someone elses ticket.</p>
+          <p class="mt-2 text-sm">
+            We require users to login to ensure they're not using someone elses
+            ticket.
+          </p>
           <a href={`/login?eventID=${eventID}&ticketID=${ticketID}`}>
             <CTA btnType="cta" className="mt-10" btnSize="sm">
               Log In
@@ -89,17 +92,13 @@ export default defineRoute(
           />
           <meta
             property="og:description"
-            content={
-              event.description ??
-              "Link to an event hosted on Events - Open Source Ticketing tool"
-            }
+            content={event.description ??
+              "Link to an event hosted on Events - Open Source Ticketing tool"}
           />
           <meta
             name="description"
-            content={
-              event.description ??
-              "Link to an event hosted on Events - Open Source Ticketing tool"
-            }
+            content={event.description ??
+              "Link to an event hosted on Events - Open Source Ticketing tool"}
           />
           {/* <meta name="theme-color" content="#DC6843" /> */}
         </Head>

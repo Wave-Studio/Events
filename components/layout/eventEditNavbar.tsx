@@ -65,9 +65,7 @@ export default function EventHeader({
         </CTA>
       </a>
       <div className="flex gap-2 md:gap-4 ml-auto">
-        {buttons.map((btn) => (
-          <Button {...btn} />
-        ))}
+        {buttons.map((btn) => <Button {...btn} />)}
       </div>
     </div>
   );

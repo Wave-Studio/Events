@@ -26,15 +26,17 @@ const Button = ({
   }) => {
     const { children, href, onClick } = props;
 
-    return href != undefined ? (
-      <a {...props} href={href}>
-        {children}
-      </a>
-    ) : (
-      <button {...props} type={type} onClick={onClick}>
-        {children}
-      </button>
-    );
+    return href != undefined
+      ? (
+        <a {...props} href={href}>
+          {children}
+        </a>
+      )
+      : (
+        <button {...props} type={type} onClick={onClick}>
+          {children}
+        </button>
+      );
   };
 
   return (

@@ -80,7 +80,7 @@ export const handler: Handlers = {
             ? { ...m, role }
             : role == Roles.OWNER && m.email == user.email
             ? { ...m, role: Roles.ADMIN }
-            : m,
+            : m
         ),
       ],
     });

@@ -11,8 +11,7 @@ const EventDeletion = ({ eventID }: { eventID: string }) => {
         fetch("/api/events/delete", {
           body: JSON.stringify({ eventID }),
           method: "POST",
-        })
-      }
+        })}
       name="event"
       open={open}
       routeTo="/events/organizing"

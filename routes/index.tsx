@@ -54,7 +54,8 @@ export default defineRoute(async (req, ctx) => {
           >
             <CTA btnType="secondary">I'm attending</CTA>
           </a>
-          {/* <a
+          {
+            /* <a
             href="https://github.com/Wave-Studio/events"
             referrerpolicy="no-referrer"
             target="_blank"
@@ -62,7 +63,8 @@ export default defineRoute(async (req, ctx) => {
           >
             <StarFilled class="h-5 w-5 mr-1 group-hover:text-yellow-500 transition" />
             Star us on GitHub
-          </a> */}
+          </a> */
+          }
         </div>
 
         <div class="text-lg text-gray-500">Scroll for More</div>
@@ -101,11 +103,13 @@ export default defineRoute(async (req, ctx) => {
           to request access.
         </p>
         <div class="flex flex-col sm:flex-row justify-center gap-4">
-          {/* <a href="/features">
+          {
+            /* <a href="/features">
             <CTA btnType="secondary" btnSize="sm">
               All Features
             </CTA>
-          </a> */}
+          </a> */
+          }
           <a href="/faq">
             <CTA btnType="secondary" btnSize="sm">
               FAQ

@@ -37,8 +37,9 @@ export default function TimePicker({
     }
     const date = time ? new Date(time) : new Date();
     if (newTime.meridiem == undefined) {
-      newTime.meridiem =
-        (time?.getHours() ?? 0) < 12 ? Meridiem.ANTE : Meridiem.POST;
+      newTime.meridiem = (time?.getHours() ?? 0) < 12
+        ? Meridiem.ANTE
+        : Meridiem.POST;
     }
 
     if (newTime.hour) {
@@ -71,20 +72,20 @@ export default function TimePicker({
         onClick={() => setOpen((open) => !open)}
         ref={timeInputRef}
       >
-        {time ? (
-          <>
-            <p class="font-semibold">{formatter.format(time).slice(0, 2)}</p>
-            <p class="text-x text-gray-400 mx-0.5">:</p>
-            <p class="font-semibold">
-              {time.getMinutes() < 10
-                ? "0" + time.getMinutes()
-                : time.getMinutes()}
-              <span class="lowercase">{formatter.format(time).slice(2)}</span>
-            </p>
-          </>
-        ) : (
-          <p class="text-gray-500 font-medium">No time</p>
-        )}
+        {time
+          ? (
+            <>
+              <p class="font-semibold">{formatter.format(time).slice(0, 2)}</p>
+              <p class="text-x text-gray-400 mx-0.5">:</p>
+              <p class="font-semibold">
+                {time.getMinutes() < 10
+                  ? "0" + time.getMinutes()
+                  : time.getMinutes()}
+                <span class="lowercase">{formatter.format(time).slice(2)}</span>
+              </p>
+            </>
+          )
+          : <p class="text-gray-500 font-medium">No time</p>}
         {/* would be cool to have these clocks match the hour the user selects, that a project for the future though */}
         <ClockHour5 class="ml-auto text-gray-500 group-hover:text-gray-600 transition" />
       </div>
@@ -135,9 +136,9 @@ export default function TimePicker({
             <div
               className={`w-10 min-h-[2.5rem] rounded grid place-items-center hover:text-gray-700 cursor-pointer text-gray-600 transition uppercase ${
                 time &&
-                (time.getHours() > 12
-                  ? h.id == Meridiem.POST
-                  : h.id == Meridiem.ANTE)
+                  (time.getHours() > 12
+                    ? h.id == Meridiem.POST
+                    : h.id == Meridiem.ANTE)
                   ? "border-2 border-gray-300 hover:bg-gray-50"
                   : "hover:bg-gray-200"
               }`}

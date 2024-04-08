@@ -56,7 +56,8 @@ export const handler: Handlers<{ email: string; otp: string }> = {
     try {
       await sendEmail([email], "Your Events Authorization Code", {
         html: otpHTML,
-        fallback: `Your one time login code is ${otp}. Do not share it with anyone.`,
+        fallback:
+          `Your one time login code is ${otp}. Do not share it with anyone.`,
       });
     } catch (err) {
       console.error(err);

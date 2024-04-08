@@ -14,8 +14,8 @@ export const handler: Handlers = {
       });
     }
 
-    const { file, eventID }: { file: string; eventID: string } =
-      await req.json();
+    const { file, eventID }: { file: string; eventID: string } = await req
+      .json();
 
     if (!isUUID(eventID)) {
       return new Response(JSON.stringify({ error: "Invalid UUID" }), {

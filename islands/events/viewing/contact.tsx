@@ -28,7 +28,8 @@ export const Contact = ({ email }: { email: string }) => {
             <p>
               Are you looking for Events support or an organizer contact email?
               It's simple and easy to contact Events, the ticketing platform
-              used to make this event. Create a ticket by emailing Events at{" "}
+              used to make this event. Create a ticket by emailing Events at
+              {" "}
               <a
                 href="mailto:support@events-help.freshdesk.com"
                 class="underline font-medium"

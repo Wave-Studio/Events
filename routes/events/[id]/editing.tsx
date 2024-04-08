@@ -18,8 +18,7 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
     return badEventRequest;
   }
 
-  const imageURL =
-    event.banner.path &&
+  const imageURL = event.banner.path &&
     imageKit!.url({
       path: event.banner.path,
       transformation: [

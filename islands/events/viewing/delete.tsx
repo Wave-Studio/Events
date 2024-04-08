@@ -12,8 +12,7 @@ const TicketDeletion = ({ ticketID }: { ticketID: string }) => {
         fetch("/api/events/ticket/delete", {
           body: JSON.stringify({ ticketID }),
           method: "POST",
-        })
-      }
+        })}
       name="ticket"
       open={open}
       routeTo={`/events/${ticketID.split("_")[0]}`}

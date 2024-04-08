@@ -78,19 +78,19 @@ export default function CalenderPicker({
         onClick={() => setOpen((open) => !open)}
         ref={calInputRef}
       >
-        {date ? (
-          <>
-            <p class="font-semibold">{date.getMonth() + 1}</p>
-            <p class="text-xl text-gray-400 mx-2.5">/</p>
-            <p class="font-semibold">{date.getDate()}</p>
-            <p class="text-xl text-gray-400 mx-2.5">/</p>
-            <p class="font-semibold">
-              {date.getFullYear().toString().slice(2)}
-            </p>
-          </>
-        ) : (
-          <p class="text-gray-500 font-medium">No date selected</p>
-        )}
+        {date
+          ? (
+            <>
+              <p class="font-semibold">{date.getMonth() + 1}</p>
+              <p class="text-xl text-gray-400 mx-2.5">/</p>
+              <p class="font-semibold">{date.getDate()}</p>
+              <p class="text-xl text-gray-400 mx-2.5">/</p>
+              <p class="font-semibold">
+                {date.getFullYear().toString().slice(2)}
+              </p>
+            </>
+          )
+          : <p class="text-gray-500 font-medium">No date selected</p>}
         <Calendar class="ml-auto text-gray-500" />
       </div>
       {open && <Cal />}
@@ -138,26 +138,28 @@ export default function CalenderPicker({
         </div>
         <div class="grid grid-cols-7 place-items-center gap-2 mt-3 mx-1 font-medium">
           {getMonthDays(cal.month, cal.year).map((day) =>
-            day.inMonth ? (
-              <div
-                onClick={() => changeDate(day.number)}
-                class={` w-7 h-7 rounded grid place-items-center hover:text-gray-700 cursor-pointer text-gray-600 transition ${
-                  date &&
-                  cal.year == date.getFullYear() &&
-                  cal.month == date.getMonth() &&
-                  day.number == date.getDate()
-                    ? // is selected date
-                      "border-2 border-gray-300 hover:bg-gray-50"
-                    : "hover:bg-gray-200"
-                }`}
-              >
-                {day.number}
-              </div>
-            ) : (
-              <div class=" w-7 h-7 rounded grid place-items-center text-gray-300">
-                {day.number}
-              </div>
-            ),
+            day.inMonth
+              ? (
+                <div
+                  onClick={() => changeDate(day.number)}
+                  class={` w-7 h-7 rounded grid place-items-center hover:text-gray-700 cursor-pointer text-gray-600 transition ${
+                    date &&
+                      cal.year == date.getFullYear() &&
+                      cal.month == date.getMonth() &&
+                      day.number == date.getDate()
+                      // is selected date
+                      ? "border-2 border-gray-300 hover:bg-gray-50"
+                      : "hover:bg-gray-200"
+                  }`}
+                >
+                  {day.number}
+                </div>
+              )
+              : (
+                <div class=" w-7 h-7 rounded grid place-items-center text-gray-300">
+                  {day.number}
+                </div>
+              )
           )}
         </div>{" "}
         <p

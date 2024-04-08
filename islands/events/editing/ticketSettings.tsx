@@ -67,16 +67,14 @@ export default function EventTicketSettings(props: {
         name="Allow Multi-Entry"
         description="Allow attendees to enter multiple times on the same ticket"
         setEnabled={(state: boolean) =>
-          setFormState((f) => ({ ...f, multiEntry: state }))
-        }
+          setFormState((f) => ({ ...f, multiEntry: state }))}
         enabled={formState.multiEntry}
       />
       <Toggle
         name="Allow Multiple Ticket Sales"
         description="Allow attendees to buy multiple tickets across one or multiple transactions (tracked using their email)"
         setEnabled={(state: boolean) =>
-          setFormState((f) => ({ ...f, multiPurchase: state }))
-        }
+          setFormState((f) => ({ ...f, multiPurchase: state }))}
         enabled={formState.multiPurchase}
       />
       <AdditionalInputs />
@@ -126,10 +124,8 @@ export default function EventTicketSettings(props: {
         btnType="cta"
         className="!w-full mx-auto sm:!w-72"
         onClick={submitForm}
-        disabled={
-          JSON.stringify(formState) === JSON.stringify(initialState) ||
-          loading == Loading.LOADING
-        }
+        disabled={JSON.stringify(formState) === JSON.stringify(initialState) ||
+          loading == Loading.LOADING}
       >
         {loading == Loading.LOADING && "Saving..."}
         {loading == Loading.LOADED && "Save"}

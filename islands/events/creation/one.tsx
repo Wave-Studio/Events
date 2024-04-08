@@ -25,11 +25,11 @@ export default function StageOne({
           <ShowTimeUI
             showTime={showTime}
             key={showTime.id}
-            setShowTime={(state) =>
-              (eventState.value.showTimes = showTimes.map((s) =>
-                s.id != state.id ? s : state,
-              ))
-            }
+            setShowTime={(
+              state,
+            ) => (eventState.value.showTimes = showTimes.map((s) =>
+              s.id != state.id ? s : state
+            ))}
             removeShowTime={(id) => {
               if (showTimes.length != 1) {
                 eventState.value.showTimes = showTimes.filter(
@@ -107,52 +107,46 @@ export const ShowTimeUI = ({
                 setShowTime({
                   ...showTime,
                   startDate: (date ?? new Date()).toString(),
-                })
-              }
+                })}
             />
           </label>
           <label class="md:col-span-2 flex flex-col">
             <p class="label-text">Last Purchase Date</p>
             <CalenderPicker
-              initialDate={
-                showTime.lastPurchaseDate
-                  ? new Date(showTime.lastPurchaseDate)
-                  : undefined
-              }
+              initialDate={showTime.lastPurchaseDate
+                ? new Date(showTime.lastPurchaseDate)
+                : undefined}
               updateDate={(date) =>
                 setShowTime({
                   ...showTime,
                   lastPurchaseDate: date ? date.toString() : undefined,
-                })
-              }
+                })}
             />
           </label>
           <label class="flex flex-col">
             <p class="label-text">Start Time</p>
             <TimePicker
-              initialTime={
-                showTime.startTime ? new Date(showTime.startTime) : undefined
-              }
+              initialTime={showTime.startTime
+                ? new Date(showTime.startTime)
+                : undefined}
               updateTime={(time) =>
                 setShowTime({
                   ...showTime,
                   startTime: time ? time.toString() : undefined,
-                })
-              }
+                })}
             />
           </label>
           <label class="flex flex-col">
             <p class="label-text">End Time</p>
             <TimePicker
-              initialTime={
-                showTime.endTime ? new Date(showTime.endTime) : undefined
-              }
+              initialTime={showTime.endTime
+                ? new Date(showTime.endTime)
+                : undefined}
               updateTime={(time) =>
                 setShowTime({
                   ...showTime,
                   endTime: time ? time.toString() : undefined,
-                })
-              }
+                })}
             />
           </label>
           <div class="flex gap-4 flex-col md:flex-row md:col-span-2">
@@ -167,8 +161,7 @@ export const ShowTimeUI = ({
                   setShowTime({
                     ...showTime,
                     maxTickets: parseInt(e.currentTarget.value),
-                  })
-                }
+                  })}
               />
             </label>
             <Toggle
@@ -178,8 +171,7 @@ export const ShowTimeUI = ({
                 setShowTime({
                   ...showTime,
                   multiPurchase: state,
-                })
-              }
+                })}
               enabled={showTime.multiPurchase}
             />
           </div>

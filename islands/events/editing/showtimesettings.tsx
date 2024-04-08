@@ -59,30 +59,28 @@ export default function ShowTimeSettings({
             showTime={showTime}
             removeShowTime={removeShowTime}
             key={showTime.id}
-            setShowTime={(state) =>
-              (currentState.value = currentState.value.map((s) =>
-                s.id != state.id ? s : state,
-              ))
-            }
+            setShowTime={(
+              state,
+            ) => (currentState.value = currentState.value.map((s) =>
+              s.id != state.id ? s : state
+            ))}
           />
         ))}
       </div>
       <button
         className="flex font-medium text-gray-500 hover:text-gray-600 transition  items-center cursor-pointer py-1 group w-full"
-        onClick={() =>
-          (currentState.value = currentState.value.concat([
-            {
-              startDate: new Date().toString(),
-              startTime: undefined,
-              endTime: undefined,
-              lastPurchaseDate: undefined,
-              id: crypto.randomUUID(),
-              soldTickets: 0,
-              maxTickets: 75,
-              multiPurchase: false,
-            },
-          ]))
-        }
+        onClick={() => (currentState.value = currentState.value.concat([
+          {
+            startDate: new Date().toString(),
+            startTime: undefined,
+            endTime: undefined,
+            lastPurchaseDate: undefined,
+            id: crypto.randomUUID(),
+            soldTickets: 0,
+            maxTickets: 75,
+            multiPurchase: false,
+          },
+        ]))}
       >
         <div className="grow h-0.5 bg-gray-300" />
         <div class="mx-2 flex items-center">
@@ -93,10 +91,9 @@ export default function ShowTimeSettings({
       <CTA
         btnType="cta"
         className="!w-full mx-auto sm:!w-72"
-        disabled={
-          JSON.stringify(currentState.value) === JSON.stringify(initialState) ||
-          loading == Loading.LOADING
-        }
+        disabled={JSON.stringify(currentState.value) ===
+            JSON.stringify(initialState) ||
+          loading == Loading.LOADING}
         onClick={updateShowTimes}
       >
         {loading == Loading.LOADING && "Saving..."}

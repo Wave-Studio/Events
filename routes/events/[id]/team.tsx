@@ -77,35 +77,37 @@ export default defineRoute((req, ctx: RouteContext<void, EventContext>) => {
           {event.members
             .sort(sortMembers)
             .filter((m) =>
-              m.email.toLowerCase().includes((query.value ?? "").toLowerCase()),
+              m.email.toLowerCase().includes((query.value ?? "").toLowerCase())
             )
             .map((m) => (
               <>
-                {m.role == Roles.OWNER ? (
-                  <div class="p-3  flex group gap-2 items-center">
-                    <div class="grow my-auto truncate">
-                      <p class="font-medium max-w-sm truncate">{m.email}</p>
+                {m.role == Roles.OWNER
+                  ? (
+                    <div class="p-3  flex group gap-2 items-center">
+                      <div class="grow my-auto truncate">
+                        <p class="font-medium max-w-sm truncate">{m.email}</p>
+                      </div>
+
+                      <p class="my-auto font-medium">Owner</p>
+
+                      {/* I couldn't decide if I prefer it before or after - Bloxs */}
+                      <Crown class="min-w-[1.5rem] h-6" />
                     </div>
+                  )
+                  : (
+                    <div class="p-3  flex group gap-2 flex-col md:flex-row">
+                      <div class="grow my-auto">
+                        <p class="font-medium max-w-sm truncate">{m.email}</p>
+                      </div>
 
-                    <p class="my-auto font-medium">Owner</p>
-
-                    {/* I couldn't decide if I prefer it before or after - Bloxs */}
-                    <Crown class="min-w-[1.5rem] h-6" />
-                  </div>
-                ) : (
-                  <div class="p-3  flex group gap-2 flex-col md:flex-row">
-                    <div class="grow my-auto">
-                      <p class="font-medium max-w-sm truncate">{m.email}</p>
+                      <ManageUser
+                        user={m}
+                        eventID={eventID}
+                        client={user.data}
+                        clientRole={user.role!}
+                      />
                     </div>
-
-                    <ManageUser
-                      user={m}
-                      eventID={eventID}
-                      client={user.data}
-                      clientRole={user.role!}
-                    />
-                  </div>
-                )}
+                  )}
               </>
             ))}
         </div>

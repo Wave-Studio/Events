@@ -22,7 +22,7 @@ export default function Ticket({
   useEffect(() => {
     (async () => {
       await new Promise((resolve) =>
-        setTimeout(resolve, 400 + (Math.random() * 200 + 1)),
+        setTimeout(resolve, 400 + (Math.random() * 200 + 1))
       );
 
       const qrObj = (await qrcode(id, {
@@ -44,19 +44,17 @@ export default function Ticket({
         {tickets} ticket{tickets > 1 && "s"}
       </div>
 
-      {qr.value != undefined ? (
-        <img src={qr.value} alt="QR Code" width={232} />
-      ) : (
-        <QR />
-      )}
+      {qr.value != undefined
+        ? <img src={qr.value} alt="QR Code" width={232} />
+        : <QR />}
       <div class="grid gap-2 mt-4 font-medium ">
         <div>
           <div class="bg-gray-100 border px-1.5 rounded-md text-center">
-            {showTime.startTime ? (
-              fmtDate(new Date(showTime.startDate))
-            ) : (
-              <ClientDate date={showTime.startDate} />
-            )}
+            {showTime.startTime
+              ? (
+                fmtDate(new Date(showTime.startDate))
+              )
+              : <ClientDate date={showTime.startDate} />}
           </div>
         </div>
         <div class="flex justify-center">

@@ -36,9 +36,11 @@ export default function ExportTicketData({
       ...filteredTickets.map(([showtimeID, ticketID, ticket]) => {
         const showtime = showTimes.find((st) => st.id === showtimeID)!;
 
-        const showtimeDateFormatted = `${fmtDate(
-          new Date(showtime.startDate),
-        )} ${
+        const showtimeDateFormatted = `${
+          fmtDate(
+            new Date(showtime.startDate),
+          )
+        } ${
           showtime.startTime
             ? `at ${fmtHour(new Date(showtime.startTime)).toLowerCase()}`
             : ""

@@ -37,10 +37,9 @@ export default function HomeFilters({
 
           console.log(searchParams.toString());
 
-          location.search =
-            searchParams.toString().trim() == ""
-              ? ""
-              : `?${searchParams.toString()}`;
+          location.search = searchParams.toString().trim() == ""
+            ? ""
+            : `?${searchParams.toString()}`;
         }}
       >
         <input

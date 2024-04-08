@@ -51,9 +51,10 @@ const LoginForm = ({
 
     setError(undefined);
     const passed =
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-        email.value,
-      );
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        .test(
+          email.value,
+        );
     if (!passed) {
       setError("Enter a valid email");
       return;
@@ -213,8 +214,7 @@ const LoginForm = ({
                   pattern="[0-9]*"
                   value={code.value}
                   onInput={(e) =>
-                    updateCode(e.currentTarget.value.replace(/e/gi, ""))
-                  }
+                    updateCode(e.currentTarget.value.replace(/e/gi, ""))}
                   ref={codeRef}
                   onBlur={() => setFocused(false)}
                   onFocus={() => setFocused(true)}

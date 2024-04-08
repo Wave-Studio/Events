@@ -25,7 +25,7 @@ const YupShowtimeValidation = Yup.array()
       maxTickets: Yup.number().required(),
       id: Yup.string().uuid().required(),
       multiPurchase: Yup.boolean().required(),
-	  hasEmailed: Yup.boolean().optional()
+      hasEmailed: Yup.boolean().optional(),
     }),
   );
 

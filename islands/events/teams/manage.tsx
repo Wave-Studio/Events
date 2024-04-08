@@ -115,32 +115,32 @@ export default function ManageUser({
         />
 
         {clientRole == Roles.SCANNER ||
-        (clientRole >= user.role && user.email != client.email) ? (
-          <></>
-        ) : (
-          <Dropdown
-            options={[
-              ...(user.role == Roles.OWNER
-                ? [
+            (clientRole >= user.role && user.email != client.email)
+          ? <></>
+          : (
+            <Dropdown
+              options={[
+                ...(user.role == Roles.OWNER
+                  ? [
                     {
                       content: "Transfer Ownership",
                       onClick: () => (transferOpen.value = true),
                     },
                   ]
-                : []),
-              {
-                content: "Remove User",
-                onClick: removeUser,
-              },
-            ]}
-          >
-            <div
-              className={`w-8 grid place-items-center border h-8 rounded-md`}
+                  : []),
+                {
+                  content: "Remove User",
+                  onClick: removeUser,
+                },
+              ]}
             >
-              <DotsVertical class="h-5 w-5" />
-            </div>
-          </Dropdown>
-        )}
+              <div
+                className={`w-8 grid place-items-center border h-8 rounded-md`}
+              >
+                <DotsVertical class="h-5 w-5" />
+              </div>
+            </Dropdown>
+          )}
       </div>
     </>
   );

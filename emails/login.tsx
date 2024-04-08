@@ -25,7 +25,8 @@ export default function LoginEmail({ otp = "123456" }: { otp: string }) {
           fontFamily="Inter"
           fallbackFontFamily="sans-serif"
           webFont={{
-            url: "https://github.com/google/fonts/raw/main/ofl/inter/Inter%5Bslnt,wght%5D.ttf",
+            url:
+              "https://github.com/google/fonts/raw/main/ofl/inter/Inter%5Bslnt,wght%5D.ttf",
             format: "woff2",
           }}
           fontWeight={400}

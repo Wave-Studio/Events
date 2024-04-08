@@ -26,7 +26,8 @@ export default function LoginEmail() {
           fontFamily="Inter"
           fallbackFontFamily="sans-serif"
           webFont={{
-            url: "https://github.com/google/fonts/raw/main/ofl/inter/Inter%5Bslnt,wght%5D.ttf",
+            url:
+              "https://github.com/google/fonts/raw/main/ofl/inter/Inter%5Bslnt,wght%5D.ttf",
             format: "woff2",
           }}
           fontWeight={400}
@@ -52,8 +53,10 @@ export default function LoginEmail() {
             <Heading className="mt-10 mb-0">Your Tickets!</Heading>
             <Text className="mt-0">{`{{EVENT-NAME}}`}</Text>
 
-            {/* <Heading className="font-bold mt-4 text-xl">Your QR Code</Heading>
-            <Text>You'll scan this when entering your event. </Text> */}
+            {
+              /* <Heading className="font-bold mt-4 text-xl">Your QR Code</Heading>
+            <Text>You'll scan this when entering your event. </Text> */
+            }
             <Container className="bg-gray-100 w-80">
               <p className="border font-semibold text-gray-700  text-sm rounded-md mb-2 mx-auto mt-4 px-2 py-1">
                 {`{{TICKETS}}`} ticket(s)

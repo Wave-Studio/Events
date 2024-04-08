@@ -22,36 +22,38 @@ export default defineRoute((req, ctx: RouteContext<void, TicketContext>) => {
         {tickets.map((ticket) => (
           <div class="rounded-md border flex flex-col p-4">
             <div class="rounded-md border bg-gray-100 px-1 mb-4 font-medium mx-auto">
-              {ticket.time.startTime ? (
-                <>
-                  {fmtDate(new Date(ticket.time.startDate))}
-                  <span class="lowercase">
-                    {ticket.time.startTime &&
-                      ` at ${fmtTime(new Date(ticket.time.startTime))}`}
-                  </span>
-                </>
-              ) : (
-                <ClientDate date={ticket.time.startDate} />
-              )}
+              {ticket.time.startTime
+                ? (
+                  <>
+                    {fmtDate(new Date(ticket.time.startDate))}
+                    <span class="lowercase">
+                      {ticket.time.startTime &&
+                        ` at ${fmtTime(new Date(ticket.time.startTime))}`}
+                    </span>
+                  </>
+                )
+                : <ClientDate date={ticket.time.startDate} />}
             </div>
             <div class="relative">
-              {ticket.event.banner.path ? (
-                <ImagekitImage
-                  alt="Event image"
-                  path={ticket.event.banner.path}
-                  sizes={[240, 360, 480, 520]}
-                  className={`${
-                    ticket.event.banner.fill ? "object-fill" : "object-cover"
-                  } h-24 md:h-36 w-full rounded-md`}
-                />
-              ) : (
-                <img
-                  class="object-cover h-24 md:h-36 rounded-md"
-                  src="/placeholder-small.jpg"
-                  srcset="/placeholder-small.jpg 640w, /placeholder.jpg 1440w, /placeholder-full.jpg 2100w"
-                  alt="Placeholder Image"
-                />
-              )}
+              {ticket.event.banner.path
+                ? (
+                  <ImagekitImage
+                    alt="Event image"
+                    path={ticket.event.banner.path}
+                    sizes={[240, 360, 480, 520]}
+                    className={`${
+                      ticket.event.banner.fill ? "object-fill" : "object-cover"
+                    } h-24 md:h-36 w-full rounded-md`}
+                  />
+                )
+                : (
+                  <img
+                    class="object-cover h-24 md:h-36 rounded-md"
+                    src="/placeholder-small.jpg"
+                    srcset="/placeholder-small.jpg 640w, /placeholder.jpg 1440w, /placeholder-full.jpg 2100w"
+                    alt="Placeholder Image"
+                  />
+                )}
             </div>
             <div class=" mt-4 flex flex-col items-center grow">
               <h3 class="text-xl font-bold text-center line-clamp-1 max-w-max">

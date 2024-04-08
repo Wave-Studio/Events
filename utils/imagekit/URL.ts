@@ -11,5 +11,5 @@ export const getURL = (width: number, path: string) =>
           format: fmt,
         },
       ],
-    }),
+    })
   );

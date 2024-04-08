@@ -47,7 +47,11 @@ export default defineRoute((req, ctx) => {
       <div className="flex flex-col grow items-center">
         <h1 class="text-center text-4xl font-bold">Login</h1>
         <div className="my-auto flex flex-col gap-4 pb-36 pt-6">
-          <LoginForm attending={Boolean(attending)} redirectTo={eventID && ticketID && `/events/${eventID}/tickets/${ticketID}`} />
+          <LoginForm
+            attending={Boolean(attending)}
+            redirectTo={eventID && ticketID &&
+              `/events/${eventID}/tickets/${ticketID}`}
+          />
         </div>
       </div>
     </>

@@ -49,11 +49,9 @@ export default function StageThree({
         </h2>
         {/* btw fresh does caching automagiclly for images */}
         {/* <img src="/loading (2).svg" class="animate-spin" /> */}
-        {error ? (
-          <p className="text-8xl">🫠</p>
-        ) : (
-          <img src="/logo.svg" class="animate-ping" />
-        )}
+        {error
+          ? <p className="text-8xl">🫠</p>
+          : <img src="/logo.svg" class="animate-ping" />}
 
         {error && (
           <>

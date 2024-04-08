@@ -20,7 +20,7 @@ const SelectShowTime = ({
   const selectedTime = showTimes.find((time) =>
     typeof showTime == "string"
       ? time.id == showTime
-      : time.id == showTime.value,
+      : time.id == showTime.value
   )!;
   return (
     <>
@@ -34,22 +34,28 @@ const SelectShowTime = ({
         <div
           class={`border transition select-none px-2 h-8 rounded-md font-medium whitespace-pre border-theme-normal bg-theme-normal/5 grid place-content-center`}
         >
-          {selectedTime ? (
-            <>
-              {selectedTime.startTime ? (
-                fmtDate(new Date(selectedTime.startDate!))
-              ) : (
-                /* force dates to be the same across timezones if there's no startime */
-                <ClientDate date={selectedTime.startDate!} />
-              )}
-              {selectedTime.startTime &&
-                ` at ${fmtHour(
-                  new Date(selectedTime.startTime),
-                ).toLowerCase()}`}
-            </>
-          ) : (
-            "All Event Times"
-          )}
+          {selectedTime
+            ? (
+              <>
+                {selectedTime.startTime
+                  ? (
+                    fmtDate(new Date(selectedTime.startDate!))
+                  )
+                  : (
+                    /* force dates to be the same across timezones if there's no startime */
+                    <ClientDate date={selectedTime.startDate!} />
+                  )}
+                {selectedTime.startTime &&
+                  ` at ${
+                    fmtHour(
+                      new Date(selectedTime.startTime),
+                    ).toLowerCase()
+                  }`}
+              </>
+            )
+            : (
+              "All Event Times"
+            )}
         </div>
         {showTimes.length > 1 && (
           <div class="rounded-md bg-gray-200 h-8 grid place-content-center px-2 font-medium hover:brightness-95 transition">
@@ -70,8 +76,7 @@ const SelectShowTime = ({
               onClick={() =>
                 typeof showTime == "string"
                   ? setShowTime && setShowTime("0")
-                  : (showTime.value = "0")
-              }
+                  : (showTime.value = "0")}
               class={`border transition select-none px-2 rounded-md font-medium whitespace-pre grid place-items-center h-8 ${
                 (typeof showTime == "string"
                   ? "0" == showTime
@@ -89,8 +94,7 @@ const SelectShowTime = ({
               onClick={() =>
                 typeof showTime == "string"
                   ? setShowTime && setShowTime(time.id!)
-                  : (showTime.value = time.id)
-              }
+                  : (showTime.value = time.id)}
               class={`border transition select-none px-2 rounded-md font-medium whitespace-pre grid place-items-center h-8 ${
                 (typeof showTime == "string"
                   ? time.id == showTime
@@ -100,17 +104,17 @@ const SelectShowTime = ({
               type="button"
             >
               <p class="flex">
-                {time.startTime ? (
-                  <>
-                    {fmtDate(new Date(time.startDate!))}
-                    <span class="lowercase">
-                      {time.startTime &&
-                        ` at ${fmtTime(new Date(time.startTime))}`}
-                    </span>
-                  </>
-                ) : (
-                  <ClientDate date={time.startDate!} />
-                )}
+                {time.startTime
+                  ? (
+                    <>
+                      {fmtDate(new Date(time.startDate!))}
+                      <span class="lowercase">
+                        {time.startTime &&
+                          ` at ${fmtTime(new Date(time.startTime))}`}
+                      </span>
+                    </>
+                  )
+                  : <ClientDate date={time.startDate!} />}
               </p>
             </button>
           ))}

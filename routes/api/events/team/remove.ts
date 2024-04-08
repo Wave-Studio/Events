@@ -11,8 +11,8 @@ export const handler: Handlers = {
       });
     }
 
-    const { eventID, email }: { eventID: string; email: string } =
-      await req.json();
+    const { eventID, email }: { eventID: string; email: string } = await req
+      .json();
 
     if (!email) {
       return new Response(JSON.stringify({ error: "Missing email" }), {

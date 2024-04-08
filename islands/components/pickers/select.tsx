@@ -20,8 +20,7 @@ export default function Select({
       <select
         class={`pr-1 focus:outline-none grow cursor-pointer bg-white font-medium ${selectClassName}`}
         onInput={(e) =>
-          updateOption && updateOption(e.currentTarget.selectedIndex)
-        }
+          updateOption && updateOption(e.currentTarget.selectedIndex)}
         disabled={disabled}
       >
         {options.map((option, i) => (

@@ -67,11 +67,9 @@ export const ShowTimes = ({ data }: { data: EventContext["data"] }) => {
                   maxTickets={time.maxTickets}
                   tickets={time.soldTickets}
                   happened={happened(time.startDate, time.startTime)}
-                  windowClosed={
-                    time.lastPurchaseDate != undefined
-                      ? happened(time.lastPurchaseDate!)
-                      : false
-                  }
+                  windowClosed={time.lastPurchaseDate != undefined
+                    ? happened(time.lastPurchaseDate!)
+                    : false}
                 />
               }
             </div>
