@@ -1,18 +1,18 @@
 {
-  "name": "emails",
-  "version": "0.0.18",
-  "private": true,
-  "workspaces": [
-    ".react-email"
-  ],
-  "scripts": {
-    "dev": "email dev",
-    "export": "email export",
-    "ionic:serve": "npm run dev"
-  },
-  "dependencies": {
-    "@react-email/components": "^0.0.12",
-    "@tailwindcss/typography": "^0.5.10",
-    "react-email": "1.10.0"
-  }
+	"name": "emails",
+	"version": "0.0.18",
+	"private": true,
+	"workspaces": [
+		".react-email"
+	],
+	"scripts": {
+		"dev": "email dev",
+		"export": "email export",
+		"ionic:serve": "npm run dev"
+	},
+	"dependencies": {
+		"@react-email/components": "^0.0.12",
+		"@tailwindcss/typography": "^0.5.10",
+		"react-email": "1.10.0"
+	}
 }

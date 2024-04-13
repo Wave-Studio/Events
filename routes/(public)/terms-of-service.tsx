@@ -1,172 +1,172 @@
 export default function TOS() {
-  return (
-    <div class="px-4 max-w-xl w-full mx-auto prose">
-      <h1>Website Terms and Conditions</h1>
+	return (
+		<div class="px-4 max-w-xl w-full mx-auto prose">
+			<h1>Website Terms and Conditions</h1>
 
-      <h2>1. Terms</h2>
+			<h2>1. Terms</h2>
 
-      <p>
-        By accessing this Website, accessible from https://events.deno.dev, you
-        are agreeing to be bound by these Website Terms and Conditions of Use
-        and agree that you are responsible for the agreement with any applicable
-        local laws. If you disagree with any of these terms, you are prohibited
-        from accessing this site. The materials contained in this Website are
-        protected by copyright and trade mark law.
-      </p>
+			<p>
+				By accessing this Website, accessible from https://events.deno.dev, you
+				are agreeing to be bound by these Website Terms and Conditions of Use
+				and agree that you are responsible for the agreement with any applicable
+				local laws. If you disagree with any of these terms, you are prohibited
+				from accessing this site. The materials contained in this Website are
+				protected by copyright and trade mark law.
+			</p>
 
-      <h2>2. Use License</h2>
+			<h2>2. Use License</h2>
 
-      <p>
-        Permission is granted to temporarily download one copy of the materials
-        on Wave Studio's Website for personal, non-commercial transitory viewing
-        only. This is the grant of a license, not a transfer of title, and under
-        this license you may not:
-      </p>
+			<p>
+				Permission is granted to temporarily download one copy of the materials
+				on Wave Studio's Website for personal, non-commercial transitory viewing
+				only. This is the grant of a license, not a transfer of title, and under
+				this license you may not:
+			</p>
 
-      <ul>
-        <li>modify or copy the materials;</li>
-        <li>
-          use the materials for any commercial purpose or for any public display
-          without express written consent;
-        </li>
-        <li>
-          attempt to reverse engineer any software contained on Wave Studio's
-          Website;
-        </li>
-        <li>
-          remove any copyright or other proprietary notations from the
-          materials; or
-        </li>
-        <li>
-          transferring the materials to another person or "mirror" the materials
-          on any other server.
-        </li>
-      </ul>
+			<ul>
+				<li>modify or copy the materials;</li>
+				<li>
+					use the materials for any commercial purpose or for any public display
+					without express written consent;
+				</li>
+				<li>
+					attempt to reverse engineer any software contained on Wave Studio's
+					Website;
+				</li>
+				<li>
+					remove any copyright or other proprietary notations from the
+					materials; or
+				</li>
+				<li>
+					transferring the materials to another person or "mirror" the materials
+					on any other server.
+				</li>
+			</ul>
 
-      <p>
-        This will let Wave Studio to terminate your relationship with us upon
-        violations of any of these restrictions. Upon termination, your viewing
-        right will also be terminated and you should destroy any downloaded
-        materials in your possession whether it is printed or electronic format.
-      </p>
+			<p>
+				This will let Wave Studio to terminate your relationship with us upon
+				violations of any of these restrictions. Upon termination, your viewing
+				right will also be terminated and you should destroy any downloaded
+				materials in your possession whether it is printed or electronic format.
+			</p>
 
-      <h2>3. Disclaimer</h2>
+			<h2>3. Disclaimer</h2>
 
-      <p>
-        All the materials on Wave Studio's Website are provided "as is". Wave
-        Studio makes no warranties, may it be expressed or implied, therefore
-        negates all other warranties. Furthermore, Wave Studio does not make any
-        representations concerning the accuracy or reliability of the use of the
-        materials on its Website or otherwise relating to such materials or any
-        sites linked to this Website.
-      </p>
+			<p>
+				All the materials on Wave Studio's Website are provided "as is". Wave
+				Studio makes no warranties, may it be expressed or implied, therefore
+				negates all other warranties. Furthermore, Wave Studio does not make any
+				representations concerning the accuracy or reliability of the use of the
+				materials on its Website or otherwise relating to such materials or any
+				sites linked to this Website.
+			</p>
 
-      <h2>4. Limitations</h2>
+			<h2>4. Limitations</h2>
 
-      <p>
-        Wave Studio or its suppliers will not be hold accountable for any
-        damages that will arise with the use or inability to use the materials
-        on Wave Studio's Website, even if Wave Studio or an authorize
-        representative of this Website has been notified, orally or written, of
-        the possibility of such damage. Some jurisdiction does not allow
-        limitations on implied warranties or limitations of liability for
-        incidental damages, these limitations may not apply to you.
-      </p>
+			<p>
+				Wave Studio or its suppliers will not be hold accountable for any
+				damages that will arise with the use or inability to use the materials
+				on Wave Studio's Website, even if Wave Studio or an authorize
+				representative of this Website has been notified, orally or written, of
+				the possibility of such damage. Some jurisdiction does not allow
+				limitations on implied warranties or limitations of liability for
+				incidental damages, these limitations may not apply to you.
+			</p>
 
-      <h2>5. Revisions and Errata</h2>
+			<h2>5. Revisions and Errata</h2>
 
-      <p>
-        The materials appearing on Wave Studio's Website may include technical,
-        typographical, or photographic errors. Wave Studio will not promise that
-        any of the materials in this Website are accurate, complete, or current.
-        Wave Studio may change the materials contained on its Website at any
-        time without notice. Wave Studio does not make any commitment to update
-        the materials.
-      </p>
+			<p>
+				The materials appearing on Wave Studio's Website may include technical,
+				typographical, or photographic errors. Wave Studio will not promise that
+				any of the materials in this Website are accurate, complete, or current.
+				Wave Studio may change the materials contained on its Website at any
+				time without notice. Wave Studio does not make any commitment to update
+				the materials.
+			</p>
 
-      <h2>6. Links</h2>
+			<h2>6. Links</h2>
 
-      <p>
-        Wave Studio has not reviewed all of the sites linked to its Website and
-        is not responsible for the contents of any such linked site. The
-        presence of any link does not imply endorsement by Wave Studio of the
-        site. The use of any linked website is at the user's own risk.
-      </p>
+			<p>
+				Wave Studio has not reviewed all of the sites linked to its Website and
+				is not responsible for the contents of any such linked site. The
+				presence of any link does not imply endorsement by Wave Studio of the
+				site. The use of any linked website is at the user's own risk.
+			</p>
 
-      <h2>7. Site Terms of Use Modifications</h2>
+			<h2>7. Site Terms of Use Modifications</h2>
 
-      <p>
-        Wave Studio may revise these Terms of Use for its Website at any time
-        without prior notice. By using this Website, you are agreeing to be
-        bound by the current version of these Terms and Conditions of Use.
-      </p>
+			<p>
+				Wave Studio may revise these Terms of Use for its Website at any time
+				without prior notice. By using this Website, you are agreeing to be
+				bound by the current version of these Terms and Conditions of Use.
+			</p>
 
-      <h2>8. Your Privacy</h2>
+			<h2>8. Your Privacy</h2>
 
-      <p>Please read our Privacy Policy.</p>
+			<p>Please read our Privacy Policy.</p>
 
-      <h2>9. Governing Law</h2>
+			<h2>9. Governing Law</h2>
 
-      <p>
-        Any claim related to Wave Studio's Website shall be governed by the laws
-        of us without regards to its conflict of law provisions.
-      </p>
+			<p>
+				Any claim related to Wave Studio's Website shall be governed by the laws
+				of us without regards to its conflict of law provisions.
+			</p>
 
-      <h2>10. User Generated Content of Event Organizers</h2>
+			<h2>10. User Generated Content of Event Organizers</h2>
 
-      <h3>10.1 Content Submission</h3>
-      <p>
-        Event organizers may submit content, including but not limited to event
-        details, descriptions, and images, to be displayed on the Website. By
-        submitting such content, organizers grant Wave Studio a non-exclusive,
-        worldwide, royalty-free license to use, reproduce, modify, adapt,
-        publish, translate, create derivative works from, distribute, and
-        display the content throughout the Website.
-      </p>
+			<h3>10.1 Content Submission</h3>
+			<p>
+				Event organizers may submit content, including but not limited to event
+				details, descriptions, and images, to be displayed on the Website. By
+				submitting such content, organizers grant Wave Studio a non-exclusive,
+				worldwide, royalty-free license to use, reproduce, modify, adapt,
+				publish, translate, create derivative works from, distribute, and
+				display the content throughout the Website.
+			</p>
 
-      <h3>10.2 Responsibility</h3>
-      <p>
-        Organizers are solely responsible for the accuracy, legality, and
-        appropriateness of the content they submit. Wave Studio reserves the
-        right to review, edit, or remove any content that violates these Terms
-        and Conditions or is deemed inappropriate without prior notice.
-        Organizers may be held liable for any damages resulting from the
-        submission of inaccurate, illegal, or inappropriate content.
-      </p>
+			<h3>10.2 Responsibility</h3>
+			<p>
+				Organizers are solely responsible for the accuracy, legality, and
+				appropriateness of the content they submit. Wave Studio reserves the
+				right to review, edit, or remove any content that violates these Terms
+				and Conditions or is deemed inappropriate without prior notice.
+				Organizers may be held liable for any damages resulting from the
+				submission of inaccurate, illegal, or inappropriate content.
+			</p>
 
-      <h2>11. Interaction with Organizer Emails for Attendees/Guests</h2>
+			<h2>11. Interaction with Organizer Emails for Attendees/Guests</h2>
 
-      <h3>11.1 Email Communication</h3>
-      <p>
-        By purchasing tickets through the Website, attendees/guests consent to
-        receive email communication from the us and/or event organizers
-        regarding event details, updates, and related information.
-        Attendees/guests may opt-out of non-essential email communications by
-        using the unsubscribe link provided in the emails.
-      </p>
+			<h3>11.1 Email Communication</h3>
+			<p>
+				By purchasing tickets through the Website, attendees/guests consent to
+				receive email communication from the us and/or event organizers
+				regarding event details, updates, and related information.
+				Attendees/guests may opt-out of non-essential email communications by
+				using the unsubscribe link provided in the emails.
+			</p>
 
-      <h3>11.2 Information Use</h3>
-      <p>
-        Event organizers agree not to misuse attendee/guest contact information
-        obtained through the Website. Attendees/guests' personal information
-        should be treated with confidentiality and used solely for communication
-        related to the specific event for which the tickets were purchased. Any
-        unauthorized use or sharing of attendee/guest information may result in
-        termination of the organizer's account and legal action.
-      </p>
+			<h3>11.2 Information Use</h3>
+			<p>
+				Event organizers agree not to misuse attendee/guest contact information
+				obtained through the Website. Attendees/guests' personal information
+				should be treated with confidentiality and used solely for communication
+				related to the specific event for which the tickets were purchased. Any
+				unauthorized use or sharing of attendee/guest information may result in
+				termination of the organizer's account and legal action.
+			</p>
 
-      <h3>11.3 Behavior with Organizer Emails</h3>
-      <p>
-        Users contacting event organizers via the "Contact Organizers" button on
-        the Website agree to use this communication channel responsibly and
-        professionally. Any communication should be relevant to the event,
-        respectful, and in compliance with applicable laws. Users are prohibited
-        from engaging in spam, harassment, or any malicious activities. Wave
-        Studio reserves the right to take appropriate action, including account
-        suspension, for users found violating these guidelines.
-      </p>
-    </div>
-  );
+			<h3>11.3 Behavior with Organizer Emails</h3>
+			<p>
+				Users contacting event organizers via the "Contact Organizers" button on
+				the Website agree to use this communication channel responsibly and
+				professionally. Any communication should be relevant to the event,
+				respectful, and in compliance with applicable laws. Users are prohibited
+				from engaging in spam, harassment, or any malicious activities. Wave
+				Studio reserves the right to take appropriate action, including account
+				suspension, for users found violating these guidelines.
+			</p>
+		</div>
+	);
 }
 
 // could also use

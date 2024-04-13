@@ -4,21 +4,21 @@ import { getUser } from "@/utils/db/kv.ts";
 export const handler = [handleKVInsightsAuthorization];
 
 async function handleKVInsightsAuthorization(
-  request: Request,
-  context: FreshContext,
+	request: Request,
+	context: FreshContext,
 ) {
-  const user = await getUser(request);
+	const user = await getUser(request);
 
-  const allowedUsers = JSON.parse(Deno.env.get("ALLOWED_EMAILS") ?? "[]");
+	const allowedUsers = JSON.parse(Deno.env.get("ALLOWED_EMAILS") ?? "[]");
 
-  if (user && allowedUsers.includes(user.email)) {
-    return context.next();
-  }
+	if (user && allowedUsers.includes(user.email)) {
+		return context.next();
+	}
 
-  return new Response("Not permitted! Redirecting...", {
-    headers: {
-      Location: "/",
-    },
-    status: 307,
-  });
+	return new Response("Not permitted! Redirecting...", {
+		headers: {
+			Location: "/",
+		},
+		status: 307,
+	});
 }

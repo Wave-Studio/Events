@@ -113,66 +113,71 @@ import { sendEmail } from "@/utils/email/client.ts";
 // Handle temporary email notifications
 
 if (!Deno.args.includes("build")) {
-  const ticketHTML = await Deno.readTextFile("./out/event.html");
+	const ticketHTML = await Deno.readTextFile("./out/event.html");
 
-  let count = 1;
+	let count = 1;
 
-  kv.listenQueue(async (msg) => {
-    const data = msg as {
-      action: "sendEmail";
-      payload: {
-        to: string;
-        code: string;
-        eventID: string;
-        tickets: number;
-        eventName: string;
-      };
-    };
+	kv.listenQueue(async (msg) => {
+		const data = msg as {
+			action: "sendEmail";
+			payload: {
+				to: string;
+				code: string;
+				eventID: string;
+				tickets: number;
+				eventName: string;
+			};
+		};
 
-    const { eventID, code, tickets, eventName } = data.payload;
+		const { eventID, code, tickets, eventName } = data.payload;
 
-    const [_, showtimeID, ticketID] = code.split("_");
+		const [_, showtimeID, ticketID] = code.split("_");
 
-    switch (data.action) {
-      case "sendEmail": {
-        const emailHTML = ticketHTML
-          .replace("{{TICKETS}}", tickets.toString())
-          .replaceAll(
-            "{{QR-VALUE}}",
-            `https://events.deno.dev/api/qr?ticket=${code}`,
-          )
-          .replaceAll(
-            "{{TICKET-LINK}}",
-            `https://events.deno.dev/events/${eventID}/tickets/${ticketID}?s=${showtimeID}`,
-          )
-          .replace(
-            "{{EVENT-LINK}}",
-            `https://events.deno.dev/events/${eventID}`,
-          )
-          .replace(
-            "Tickets for the {{EVENT-NAME}} event!",
-            `Your tickets for {{EVENT-NAME}} next week!`,
-          )
-          .replace(
-            "Your Tickets!",
-            `Use this as your ticket for {{EVENT-NAME}} next week:`,
-          )
-          .replaceAll("{{EVENT-NAME}}", eventName);
+		switch (data.action) {
+			case "sendEmail": {
+				const emailHTML = ticketHTML
+					.replace("{{TICKETS}}", tickets.toString())
+					.replaceAll(
+						"{{QR-VALUE}}",
+						`https://events.deno.dev/api/qr?ticket=${code}`,
+					)
+					.replaceAll(
+						"{{TICKET-LINK}}",
+						`https://events.deno.dev/events/${eventID}/tickets/${ticketID}?s=${showtimeID}`,
+					)
+					.replace(
+						"{{EVENT-LINK}}",
+						`https://events.deno.dev/events/${eventID}`,
+					)
+					.replace(
+						"Tickets for the {{EVENT-NAME}} event!",
+						`Your tickets for {{EVENT-NAME}} tomorrow!`,
+					)
+					.replace("Your Tickets!", `Your tickets for {{EVENT-NAME}} tomorrow:`)
+					.replaceAll("{{EVENT-NAME}}", eventName);
 
-        await sendEmail(
-          [data.payload.to],
-          `Your Tickets for ${eventName} next week!`,
-          {
-            html: emailHTML,
-            fallback:
-              `1 Week until ${eventName}! \nView your ticket at https://events.deno.dev/events/${eventID}/tickets/${ticketID}?s=${showtimeID}`,
-          },
-        );
+				try {
+					await sendEmail(
+						[data.payload.to],
+						`Your Tickets for ${eventName} tomorrow!`,
+						{
+							html: emailHTML,
+							fallback: `${eventName} is tomorrow! \nView your ticket at https://events.deno.dev/events/${eventID}/tickets/${ticketID}?s=${showtimeID}`,
+						},
+					);
+					console.log("Sent email", count++);
+				} catch (e) {
+					console.error("Failed to send email to", data.payload.to);
+					console.error(e);
 
-        console.log("Sent email", count++);
+					await kv.enqueue({
+						action: "sendEmail",
+						payload: data.payload,
+					});
+				}
 
-        break;
-      }
-    }
-  });
+				break;
+			}
+		}
+	});
 }

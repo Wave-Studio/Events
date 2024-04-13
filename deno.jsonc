@@ -1,36 +1,39 @@
 {
-  "lock": false,
-  "tasks": {
-    "check": "deno fmt --check && deno lint && deno check **/*.ts && deno check **/*.tsx",
-    "fmt": "deno fmt && npx prettier . --write",
-    "start": "deno run -A --unstable-kv --watch=static/,routes/ dev.ts",
-    "build": "deno run -A --unstable-kv dev.ts build",
-    "preview": "deno run --unstable-kv -A main.ts",
-    "update": "deno run --unstable-kv -A -r https://fresh.deno.dev/update ."
-  },
-  "lint": {
-    "rules": { "tags": ["fresh", "recommended"], "include": ["no-unused-vars"] }
-  },
-  "imports": {
-    "$fresh/": "https://deno.land/x/fresh@1.6.8/",
-    "preact": "https://esm.sh/preact@10.19.6",
-    "preact/": "https://esm.sh/preact@10.19.6/",
-    "preact-render-to-string": "https://esm.sh/*preact-render-to-string@6.2.2",
-    "@preact/signals": "https://esm.sh/*@preact/signals@1.2.2",
-    "@preact/signals-core": "https://esm.sh/*@preact/signals-core@1.5.1",
-    "$std/": "https://deno.land/std@0.221.0/",
-    "@/": "./",
-    "$tabler/": "https://deno.land/x/tabler_icons_tsx@0.0.5/tsx/",
-    "yup": "https://esm.sh/yup@1.2.0",
-    "imagekit": "npm:imagekit@4.1.3",
-    "barcode-polyfill": "https://esm.sh/barcode-detector@2.0.3",
-    "tailwindcss": "npm:tailwindcss@3.4.1",
-    "tailwindcss/": "npm:/tailwindcss@3.4.1/",
-    "tailwindcss/plugin": "npm:/tailwindcss@3.4.1/plugin.js",
-    "@tailwindcss/typography": "npm:@tailwindcss/typography",
-    "react": "npm:react",
-    "@react-email/components": "npm:@react-email/components"
-  },
-  "compilerOptions": { "jsx": "react-jsx", "jsxImportSource": "preact" },
-  "exclude": ["**/_fresh/*", "./.react-email/*"]
+	"lock": false,
+	"tasks": {
+		"check": "deno fmt --check && deno lint && deno check **/*.ts && deno check **/*.tsx",
+		"fmt": "deno fmt && npx prettier . --write",
+		"start": "deno run -A --unstable-kv --watch=static/,routes/ dev.ts",
+		"build": "deno run -A --unstable-kv dev.ts build",
+		"preview": "deno run --unstable-kv -A main.ts",
+		"update": "deno run --unstable-kv -A -r https://fresh.deno.dev/update .",
+	},
+	"lint": {
+		"rules": {
+			"tags": ["fresh", "recommended"],
+			"include": ["no-unused-vars"],
+		},
+	},
+	"imports": {
+		"$fresh/": "https://deno.land/x/fresh@1.6.8/",
+		"preact": "https://esm.sh/preact@10.19.6",
+		"preact/": "https://esm.sh/preact@10.19.6/",
+		"preact-render-to-string": "https://esm.sh/*preact-render-to-string@6.2.2",
+		"@preact/signals": "https://esm.sh/*@preact/signals@1.2.2",
+		"@preact/signals-core": "https://esm.sh/*@preact/signals-core@1.5.1",
+		"$std/": "https://deno.land/std@0.221.0/",
+		"@/": "./",
+		"$tabler/": "https://deno.land/x/tabler_icons_tsx@0.0.5/tsx/",
+		"yup": "https://esm.sh/yup@1.2.0",
+		"imagekit": "npm:imagekit@4.1.3",
+		"barcode-polyfill": "https://esm.sh/barcode-detector@2.0.3",
+		"tailwindcss": "npm:tailwindcss@3.4.1",
+		"tailwindcss/": "npm:/tailwindcss@3.4.1/",
+		"tailwindcss/plugin": "npm:/tailwindcss@3.4.1/plugin.js",
+		"@tailwindcss/typography": "npm:@tailwindcss/typography",
+		"react": "npm:react",
+		"@react-email/components": "npm:@react-email/components",
+	},
+	"compilerOptions": { "jsx": "react-jsx", "jsxImportSource": "preact" },
+	"exclude": ["**/_fresh/*", "./.react-email/*"],
 }

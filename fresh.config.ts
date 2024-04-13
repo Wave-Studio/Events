@@ -5,10 +5,10 @@ import { kv } from "@/utils/db/kv.ts";
 import "./utils/email.ts";
 
 export default defineConfig({
-  plugins: [
-    kvInsightsPlugin({
-      kv,
-    }),
-    tailwind(),
-  ],
+	plugins: [
+		kvInsightsPlugin({
+			kv,
+		}),
+		tailwind(),
+	],
 });

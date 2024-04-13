@@ -5,62 +5,62 @@ import { isUUID } from "@/utils/db/misc.ts";
 import { router } from "$fresh/src/server/router.ts";
 
 export const badEventRequest = new Response(undefined, {
-  headers: {
-    Location: "/events/notfound",
-  },
-  status: 307,
+	headers: {
+		Location: "/events/notfound",
+	},
+	status: 307,
 });
 
 export default defineLayout(async (req, ctx) => {
-  const eventID = ctx.params.id;
+	const eventID = ctx.params.id;
 
-  if (!isUUID(eventID)) {
-    return badEventRequest;
-  }
+	if (!isUUID(eventID)) {
+		return badEventRequest;
+	}
 
-  const event = await kv.get<Event>(["event", eventID]);
+	const event = await kv.get<Event>(["event", eventID]);
 
-  if (!event || !event.value) {
-    return badEventRequest;
-  }
+	if (!event || !event.value) {
+		return badEventRequest;
+	}
 
-  const user = await getUser(req);
+	const user = await getUser(req);
 
-  if (!user) {
-    (ctx.state as EventContext).data = { event: event.value, eventID };
-  } else {
-    const role: Roles | undefined = event.value.members.find(
-      (m) => m.email === user!.email,
-    )?.role;
-    if (role == undefined) {
-      (ctx.state as EventContext).data = {
-        event: event.value,
-        eventID,
-        user: { data: user },
-      };
-    } else {
-      (ctx.state as EventContext).data = {
-        event: event.value,
-        eventID,
-        user: { data: user, role },
-      };
-    }
-  }
+	if (!user) {
+		(ctx.state as EventContext).data = { event: event.value, eventID };
+	} else {
+		const role: Roles | undefined = event.value.members.find(
+			(m) => m.email === user!.email,
+		)?.role;
+		if (role == undefined) {
+			(ctx.state as EventContext).data = {
+				event: event.value,
+				eventID,
+				user: { data: user },
+			};
+		} else {
+			(ctx.state as EventContext).data = {
+				event: event.value,
+				eventID,
+				user: { data: user, role },
+			};
+		}
+	}
 
-  return (
-    <>
-      <ctx.Component />
-    </>
-  );
+	return (
+		<>
+			<ctx.Component />
+		</>
+	);
 });
 
 export interface EventContext {
-  data: {
-    event: Event;
-    eventID: string;
-    user?: {
-      data: User;
-      role?: Roles;
-    };
-  };
+	data: {
+		event: Event;
+		eventID: string;
+		user?: {
+			data: User;
+			role?: Roles;
+		};
+	};
 }
