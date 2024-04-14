@@ -125,6 +125,12 @@ export default defineRoute(
 											/>
 										</div>
 										<div class="flex gap-2 flex-wrap">
+											{/* TODO: Fix this @quick007 because apparently I'm not good at css - Bloxs */}
+											{(value.hasBeenUsed || value.uses > 0) && (
+												<div class="rounded-md border text-sm font-semibold px-1 text-white bg-theme-normal">
+													Used
+												</div>
+											)}
 											{/* need some */}
 											<div class="rounded-md border text-sm font-semibold px-1 text-gray-700 bg-gray-100">
 												{value.tickets} ticket{value.tickets !== 1 ? "s" : ""}

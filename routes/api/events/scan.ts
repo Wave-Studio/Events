@@ -1,6 +1,6 @@
 import { Handlers } from "$fresh/server.ts";
 import { Event, getUser, kv, Ticket } from "@/utils/db/kv.ts";
-import { isUUID } from "@/utils/db/misc.ts";
+import { isTicketUUID, isUUID } from "@/utils/db/misc.ts";
 
 export const handler: Handlers = {
 	async POST(req) {
@@ -54,10 +54,7 @@ export const handler: Handlers = {
 			);
 		}
 
-		const isValidTicket = ticketID
-			.split("_")
-			.map((s) => isUUID(s))
-			.includes(false);
+		const isValidTicket = isTicketUUID(ticketID) && isUUID(eventID);
 
 		if (!isValidTicket) {
 			return new Response(

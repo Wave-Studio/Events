@@ -13,6 +13,8 @@ import {
 	ScanningState,
 	TicketState,
 } from "@/islands/events/scanning/scanning.types.ts";
+import { ScanningStates } from "./scanningStates.tsx";
+import CTA from "@/components/buttons/cta.tsx";
 
 // Chatgpt fucked this up too much so we're abandoning rotations - Bloxs
 // Should've paid attention in trig class - LS
@@ -20,16 +22,20 @@ import {
 export default function Scanner({ eventID }: { eventID: string }) {
 	const error = useSignal<string | null>(null);
 	const isInitialized = useSignal(false);
-	const currentTicket = useSignal<TicketState | null>(null);
+	const currentTicket = useSignal<{ id: string; ticket: TicketState } | null>(
+		null,
+	);
 	const cameraIds = useSignal<MediaDeviceInfo[]>([]);
 	const currentCamera = useSignal<string>("");
 	const isCameraSwitching = useSignal(false);
 	const cameraSwitchPopupOpen = useSignal(false);
 	const scanningState = useSignal<ScanningState>(ScanningState.READY);
+	const checkedCodes = useSignal<Map<string, TicketState>>(new Map());
+	const isTicketInformationOpen = useSignal<boolean>(false);
 
 	const scanCode = async (code: string) => {
 		try {
-			const res = await fetch(`/api/events/scanned`, {
+			const res = await fetch(`/api/events/scan`, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
@@ -37,9 +43,12 @@ export default function Scanner({ eventID }: { eventID: string }) {
 				body: JSON.stringify({ ticketID: code, eventID: eventID }),
 			});
 
+			checkedCodes.value.delete(code);
+
 			if (res.status != 200) return false;
 			return true;
 		} catch {
+			checkedCodes.value.delete(code);
 			return false;
 		}
 	};
@@ -48,21 +57,28 @@ export default function Scanner({ eventID }: { eventID: string }) {
 		(async () => {
 			if (!IS_BROWSER) return;
 			if (isInitialized.value) return;
+
 			isInitialized.value = true;
+
 			const canvas = document.getElementById("scanui") as HTMLCanvasElement;
 			const barcodeReaderAPI = globalThis["BarcodeDetector"] ?? BarcodeDetector;
+
 			if (barcodeReaderAPI == null) {
 				error.value =
 					"BarcodeDetector API is required but not supported on your device! Please try another browser.";
 				return;
 			}
+
 			const reader = new barcodeReaderAPI({
 				formats: ["qr_code"],
 			});
+
 			if (canvas == null) return;
+
 			const ctx = canvas.getContext("2d", {
 				willReadFrequently: true,
 			});
+
 			if (ctx == null) {
 				error.value =
 					"2D HTML Canvas is required but not supported on your device! Please try another browser.";
@@ -89,15 +105,6 @@ export default function Scanner({ eventID }: { eventID: string }) {
 				console.log(videoDevices);
 
 				const video = document.getElementById("camera") as HTMLVideoElement;
-				const infoText = document.getElementById("scantext") as HTMLDivElement;
-				let lastStr = infoText.innerText;
-
-				const updateStringIfChanged = (str: string) => {
-					if (lastStr != str) {
-						lastStr = str;
-						infoText.innerText = str;
-					}
-				};
 
 				if (!video) return;
 
@@ -113,21 +120,19 @@ export default function Scanner({ eventID }: { eventID: string }) {
 					canvas.width = video.videoWidth;
 					canvas.height = video.videoHeight;
 
-					const checkedCodes: Map<string, TicketState> = new Map();
-
 					setInterval(() => {
-						for (const [code, codeData] of checkedCodes) {
+						for (const [code, codeData] of checkedCodes.value) {
 							const timeSinceScan = Date.now() - codeData.checkedAt;
 
 							if (
 								codeData.status === ScanningState.LOADING &&
 								timeSinceScan > 5 * 1000
 							) {
-								checkedCodes.delete(code);
+								checkedCodes.value.delete(code);
 							}
 
 							if (timeSinceScan > 15 * 1000) {
-								checkedCodes.delete(code);
+								checkedCodes.value.delete(code);
 							}
 						}
 					}, 5 * 1000);
@@ -160,12 +165,12 @@ export default function Scanner({ eventID }: { eventID: string }) {
 							const data = await (res.json() as Promise<Ticket>);
 
 							if (res.status == 400 || res.status == 500) {
-								checkedCodes.set(code, {
+								checkedCodes.value.set(code, {
 									status: ScanningState.INVALID,
 									checkedAt: Date.now(),
 								});
 							} else {
-								checkedCodes.set(code, {
+								checkedCodes.value.set(code, {
 									status: data.hasBeenUsed
 										? ScanningState.USED
 										: ScanningState.VALID,
@@ -174,7 +179,7 @@ export default function Scanner({ eventID }: { eventID: string }) {
 								});
 							}
 						} catch {
-							checkedCodes.set(code, {
+							checkedCodes.value.set(code, {
 								status: ScanningState.INVALID,
 								checkedAt: Date.now(),
 							});
@@ -258,21 +263,21 @@ export default function Scanner({ eventID }: { eventID: string }) {
 							if (largestCode.code != undefined) {
 								const code = largestCode.code;
 
-								if (!checkedCodes.has(code.rawValue)) {
-									checkedCodes.set(code.rawValue, {
+								if (!checkedCodes.value.has(code.rawValue)) {
+									checkedCodes.value.set(code.rawValue, {
 										status: ScanningState.LOADING,
 										checkedAt: Date.now(),
 									});
 
 									fetchCodeInfo(code.rawValue);
 								} else {
-									const codeData = checkedCodes.get(code.rawValue)!;
+									const codeData = checkedCodes.value.get(code.rawValue)!;
 
 									codeData.checkedAt = Date.now();
-									checkedCodes.set(code.rawValue, codeData);
+									checkedCodes.value.set(code.rawValue, codeData);
 								}
 
-								const codeData = checkedCodes.get(code.rawValue)!;
+								const codeData = checkedCodes.value.get(code.rawValue)!;
 
 								const ticketObj: TicketState = {
 									status: codeData.status,
@@ -282,8 +287,11 @@ export default function Scanner({ eventID }: { eventID: string }) {
 									checkedAt: codeData.checkedAt,
 								} as TicketState;
 
-								if (currentTicket.value != ticketObj) {
-									currentTicket.value = ticketObj;
+								if (currentTicket.value?.ticket != ticketObj) {
+									currentTicket.value = {
+										id: code.rawValue,
+										ticket: ticketObj,
+									};
 								}
 
 								ctx.fillStyle = ctx.strokeStyle = {
@@ -332,6 +340,9 @@ export default function Scanner({ eventID }: { eventID: string }) {
 								scanningState.value = ScanningState.READY;
 								currentTicket.value = null;
 							}
+						} else {
+							scanningState.value = ScanningState.READY;
+							currentTicket.value = null;
 						}
 					};
 
@@ -441,11 +452,21 @@ export default function Scanner({ eventID }: { eventID: string }) {
 				</div>
 
 				{/* Ticket scanning bit */}
-				<div
-					class="rounded-md bg-black/50 backdrop-blur px-4 py-2 text-white absolute bottom-4"
-					id="scantext"
-				>
-					Bring code into view
+				<div class="absolute bottom-4 flex gap-4 select-none">
+					<ScanningStates scanningState={scanningState.value} />
+					{(scanningState.value === ScanningState.USED ||
+						scanningState.value === ScanningState.VALID) && (
+						<button
+							class={`py-2 px-4 ${
+								scanningState.value === ScanningState.USED
+									? "bg-yellow-200"
+									: "bg-gray-50"
+							} rounded-md font-semibold`}
+							onClick={() => scanCode(currentTicket.value!.id)}
+						>
+							Scan
+						</button>
+					)}
 				</div>
 			</div>
 		</>

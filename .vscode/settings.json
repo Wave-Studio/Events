@@ -11,6 +11,7 @@
 	"deno.disablePaths": ["./.react-email"],
 	"css.customData": [".vscode/tailwind.json"],
 	"workbench.iconTheme": "vscode-icons",
+	"emmet.showExpandedAbbreviation": "always",
 	// Lukas can't spell for shit - Bloxs
 	"cSpell.words": [
 		"asynciterable",
