@@ -187,6 +187,11 @@ export default function Scanner({ eventID }: { eventID: string }) {
 					};
 
 					let targetQRCode: string | null = null;
+					let currentCodeData: {
+						ticketID: string;
+						cornerPoints: { x: number; y: number }[];
+						lastSeen: number;
+					} | null = null;
 
 					canvas.onclick = async (e) => {
 						// This now works, but it makes no sense - Bloxs
@@ -226,7 +231,7 @@ export default function Scanner({ eventID }: { eventID: string }) {
 
 					const lookForBarcodes = async () => {
 						const codes = await reader.detect(video);
-						if (codes.length > 0) {
+						if (codes.length > 0 || currentCodeData != undefined) {
 							const largestCode: {
 								size: number;
 								code: DetectedBarcode | null;
@@ -260,8 +265,29 @@ export default function Scanner({ eventID }: { eventID: string }) {
 								targetQRCode = null;
 							}
 
-							if (largestCode.code != undefined) {
-								const code = largestCode.code;
+							if (largestCode.code != null) {
+								currentCodeData = {
+									ticketID: largestCode.code.rawValue,
+									cornerPoints: largestCode.code.cornerPoints,
+									lastSeen: Date.now(),
+								};
+							}
+
+							if (
+								currentCodeData != undefined &&
+								currentCodeData.lastSeen + 250 < Date.now()
+							) {
+								currentCodeData = null;
+							}
+
+							if (
+								largestCode.code != undefined ||
+								currentCodeData != undefined
+							) {
+								const code = largestCode.code ?? {
+									rawValue: currentCodeData!.ticketID,
+									cornerPoints: currentCodeData!.cornerPoints,
+								};
 
 								if (!checkedCodes.value.has(code.rawValue)) {
 									checkedCodes.value.set(code.rawValue, {
