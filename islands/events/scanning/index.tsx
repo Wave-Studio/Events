@@ -275,7 +275,7 @@ export default function Scanner({ eventID }: { eventID: string }) {
 
 							if (
 								currentCodeData != undefined &&
-								currentCodeData.lastSeen + 250 < Date.now()
+								currentCodeData.lastSeen + 500 < Date.now()
 							) {
 								currentCodeData = null;
 							}
