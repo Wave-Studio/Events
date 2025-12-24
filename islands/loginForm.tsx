@@ -224,6 +224,11 @@ const LoginForm = ({
 						</label>
 						<p
 							className={`mb-2 text-sm text-red-500 ${!error && "invisible"} `}
+							onClick={() => {
+								if (stage.value == 0) {
+									stage.value = 1
+								} 
+							}}
 						>
 							Error: {error}
 						</p>
